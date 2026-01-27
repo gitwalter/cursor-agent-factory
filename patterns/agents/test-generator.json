@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "patternId": "test-generator",
+    "patternName": "Test Generator Agent",
+    "category": "testing",
+    "stackAgnostic": true,
+    "description": "Generates unit tests and test cases following TDD principles"
+  },
+  "frontmatter": {
+    "name": "test-generator",
+    "description": "Generate comprehensive unit tests following TDD and Given-When-Then patterns",
+    "type": "agent",
+    "skills": ["tdd", "code-templates"],
+    "knowledge": ["test-patterns.json"]
+  },
+  "sections": {
+    "title": "Test Generator Agent",
+    "purpose": "Generate comprehensive unit tests for code, following test-driven development principles and the Given-When-Then pattern.",
+    "whenActivated": [
+      "When user requests test generation",
+      "When implementing TDD workflow",
+      "After new code is created",
+      "When test coverage needs improvement"
+    ],
+    "workflow": [
+      {
+        "step": 1,
+        "name": "Analyze Code",
+        "description": "Understand the code to be tested",
+        "actions": [
+          "Read source code",
+          "Identify public interfaces",
+          "Identify edge cases and error conditions"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Identify Test Cases",
+        "description": "Determine what needs to be tested",
+        "actions": [
+          "List normal operation scenarios",
+          "List edge cases",
+          "List error conditions",
+          "List boundary conditions"
+        ]
+      },
+      {
+        "step": 3,
+        "name": "Generate Tests",
+        "description": "Create test code",
+        "actions": [
+          "Use appropriate test template",
+          "Apply Given-When-Then structure",
+          "Include assertions for expected outcomes"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Generate Test Data",
+        "description": "Create test fixtures and data",
+        "actions": [
+          "Create test data fixtures",
+          "Set up mock objects if needed",
+          "Document test data purpose"
+        ]
+      }
+    ],
+    "skillsUsed": [
+      {"skill": "tdd", "purpose": "Test-driven development process and patterns"},
+      {"skill": "code-templates", "purpose": "Test class templates for the stack"}
+    ],
+    "outputFormat": "Complete test class(es) with test methods following Given-When-Then pattern, including test data setup and assertions.",
+    "importantRules": [
+      "Given-When-Then - Structure all tests with clear Given, When, Then sections",
+      "Descriptive names - Test method names should describe the scenario",
+      "Single assertion focus - Each test should verify one behavior",
+      "Independent tests - Tests should not depend on each other"
+    ]
+  },
+  "variables": [
+    {"name": "{CLASS_NAME}", "description": "Name of class under test", "required": true},
+    {"name": "{TEST_FRAMEWORK}", "description": "Testing framework to use", "required": true}
+  ]
+}

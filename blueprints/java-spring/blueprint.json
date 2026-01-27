@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "blueprintId": "java-spring",
+    "blueprintName": "Java Spring Boot Blueprint",
+    "description": "Enterprise application development with Java and Spring Boot",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["java", "spring", "backend", "enterprise"]
+  },
+  "stack": {
+    "primaryLanguage": "java",
+    "frameworks": [
+      {"name": "Spring Boot", "version": "3.2+", "purpose": "Application framework"},
+      {"name": "Spring Data JPA", "version": "3.2+", "purpose": "Data access"},
+      {"name": "Spring Security", "version": "6.2+", "purpose": "Security"},
+      {"name": "Spring Web", "version": "6.1+", "purpose": "REST APIs"}
+    ],
+    "databases": [
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Primary database"},
+      {"type": "sql", "name": "H2", "purpose": "Testing"}
+    ],
+    "tools": [
+      {"name": "JUnit 5", "purpose": "Testing"},
+      {"name": "Mockito", "purpose": "Mocking"},
+      {"name": "Maven/Gradle", "purpose": "Build"},
+      {"name": "Checkstyle", "purpose": "Linting"}
+    ],
+    "styleGuides": [
+      {"name": "google", "description": "Google Java Style Guide"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true},
+    {"patternId": "test-generator", "required": true},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "Java naming conventions"},
+    {"filename": "spring-patterns.json", "description": "Spring Boot patterns"},
+    {"filename": "test-patterns.json", "description": "JUnit patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "controller", "directory": "templates/java/controller/"},
+      {"category": "service", "directory": "templates/java/service/"},
+      {"category": "repository", "directory": "templates/java/repository/"},
+      {"category": "entity", "directory": "templates/java/entity/"},
+      {"category": "dto", "directory": "templates/java/dto/"},
+      {"category": "test", "directory": "templates/java/test/"}
+    ]
+  },
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/", "purpose": "Code templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/main/java/", "purpose": "Java source"},
+      {"path": "src/main/resources/", "purpose": "Resources"},
+      {"path": "src/test/java/", "purpose": "Test files"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "pom.xml", "purpose": "Maven config"}
+    ]
+  }
+}

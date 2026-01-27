@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow Patterns",
+  "description": "Common workflow patterns for Cursor agent systems",
+  "version": "1.0.0",
+  "triggerTypes": {
+    "jira": {
+      "name": "Jira Ticket",
+      "description": "Workflow triggered by Jira ticket mention",
+      "patternExample": "{PROJECT_KEY}-{NUMBER}",
+      "mcpServer": "atlassian",
+      "mcpTools": [
+        "getJiraIssue",
+        "searchJiraIssuesUsingJql",
+        "addCommentToJiraIssue",
+        "transitionJiraIssue"
+      ],
+      "suggestedSkills": ["bugfix-workflow"],
+      "suggestedAgents": ["code-reviewer"]
+    },
+    "confluence": {
+      "name": "Confluence Page",
+      "description": "Workflow triggered by Confluence page reference",
+      "patternExample": "Page ID or URL",
+      "mcpServer": "atlassian",
+      "mcpTools": [
+        "getConfluencePage",
+        "createConfluencePage",
+        "updateConfluencePage"
+      ],
+      "suggestedSkills": ["feature-workflow"],
+      "suggestedAgents": ["documentation-agent"]
+    },
+    "github": {
+      "name": "GitHub Issue/PR",
+      "description": "Workflow triggered by GitHub issues or pull requests",
+      "patternExample": "#123 or PR URL",
+      "mcpServer": "github",
+      "suggestedSkills": ["bugfix-workflow", "feature-workflow"],
+      "suggestedAgents": ["code-reviewer"]
+    },
+    "gitlab": {
+      "name": "GitLab Issue/MR",
+      "description": "Workflow triggered by GitLab issues or merge requests",
+      "patternExample": "#123 or MR URL",
+      "mcpServer": "gitlab",
+      "suggestedSkills": ["bugfix-workflow", "feature-workflow"],
+      "suggestedAgents": ["code-reviewer"]
+    },
+    "manual": {
+      "name": "Manual Trigger",
+      "description": "Workflow triggered by explicit user request",
+      "patternExample": "User command",
+      "mcpServer": null,
+      "suggestedSkills": ["code-templates"],
+      "suggestedAgents": ["code-reviewer", "test-generator"]
+    }
+  },
+  "workflowPatterns": {
+    "bugfix": {
+      "name": "Bugfix Workflow",
+      "description": "Complete workflow for fixing bugs from tickets",
+      "phases": [
+        {"name": "Read Ticket", "description": "Fetch and analyze the ticket"},
+        {"name": "Fetch Source", "description": "Acquire source code"},
+        {"name": "Ground Data", "description": "Verify data models"},
+        {"name": "Analyze Code", "description": "Find root cause"},
+        {"name": "Create Plan", "description": "Document implementation plan"},
+        {"name": "Implement Fix", "description": "Create code changes"},
+        {"name": "Update Ticket", "description": "Update ticket status"}
+      ],
+      "artifacts": ["implementation_plan.md", "code_changes"],
+      "applicableTriggers": ["jira", "github", "gitlab"]
+    },
+    "feature": {
+      "name": "Feature Workflow",
+      "description": "Complete workflow for implementing new features",
+      "phases": [
+        {"name": "Read Requirements", "description": "Fetch and analyze specs"},
+        {"name": "Ground Data Model", "description": "Verify data structures"},
+        {"name": "Create Architecture", "description": "Design solution"},
+        {"name": "Create Tech Design", "description": "Detailed specification"},
+        {"name": "Fetch Source", "description": "Acquire existing code"},
+        {"name": "Create Impl Plan", "description": "Implementation steps"},
+        {"name": "Create Test Plan", "description": "Testing requirements"},
+        {"name": "Execute Development", "description": "Create code"}
+      ],
+      "artifacts": ["architecture.md", "technical_spec.md", "implementation_plan.md", "test_plan.md", "code"],
+      "applicableTriggers": ["confluence", "github", "gitlab"]
+    },
+    "code-review": {
+      "name": "Code Review Workflow",
+      "description": "Workflow for reviewing code quality",
+      "phases": [
+        {"name": "Detect Style", "description": "Identify coding style"},
+        {"name": "Analyze Code", "description": "Review code structure"},
+        {"name": "Check Standards", "description": "Verify against standards"},
+        {"name": "Generate Report", "description": "Create review report"}
+      ],
+      "artifacts": ["review_report.md"],
+      "applicableTriggers": ["manual", "github", "gitlab"]
+    },
+    "tdd": {
+      "name": "Test-Driven Development",
+      "description": "Workflow for test-driven development",
+      "phases": [
+        {"name": "Write Test", "description": "Create failing test"},
+        {"name": "Implement Code", "description": "Make test pass"},
+        {"name": "Refactor", "description": "Improve code quality"},
+        {"name": "Repeat", "description": "Continue cycle"}
+      ],
+      "artifacts": ["test_files", "implementation_files"],
+      "applicableTriggers": ["manual"]
+    }
+  },
+  "methodologies": {
+    "agile": {
+      "name": "Agile",
+      "description": "Iterative development with sprints",
+      "suggestedWorkflows": ["bugfix", "feature", "tdd"],
+      "suggestedTriggers": ["jira", "confluence"]
+    },
+    "kanban": {
+      "name": "Kanban",
+      "description": "Continuous flow development",
+      "suggestedWorkflows": ["bugfix", "feature"],
+      "suggestedTriggers": ["jira", "github"]
+    },
+    "waterfall": {
+      "name": "Waterfall",
+      "description": "Sequential development phases",
+      "suggestedWorkflows": ["feature"],
+      "suggestedTriggers": ["confluence"]
+    }
+  }
+}

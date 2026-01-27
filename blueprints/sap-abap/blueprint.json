@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "blueprintId": "sap-abap",
+    "blueprintName": "SAP ABAP Blueprint",
+    "description": "SAP ABAP development with RAP and CAP support",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["sap", "abap", "rap", "cap", "enterprise"],
+    "reference": "https://github.com/fielmann-ag/cursor-sap-development-workflow"
+  },
+  "stack": {
+    "primaryLanguage": "abap",
+    "secondaryLanguages": ["cds", "javascript"],
+    "frameworks": [
+      {"name": "RAP", "purpose": "RESTful Application Programming"},
+      {"name": "CAP", "purpose": "Cloud Application Programming"}
+    ],
+    "tools": [
+      {"name": "ABAP Unit", "purpose": "Testing"},
+      {"name": "abaplint", "purpose": "Linting"},
+      {"name": "Eclipse ADT", "purpose": "IDE"}
+    ],
+    "styleGuides": [
+      {"name": "clean-abap", "description": "SAP Clean ABAP", "reference": "https://github.com/SAP/styleguides"},
+      {"name": "hungarian", "description": "Traditional Hungarian Notation"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"name": "code-reviewer", "skills": ["clean-code-review", "sap-grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd-abap"]}},
+    {"patternId": "explorer", "required": true, "customizations": {"name": "explorer-sap"}},
+    {"patternId": "grounding-verifier", "required": true, "customizations": {"skills": ["sap-grounding"]}}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true, "customizations": {"name": "sap-bugfix"}},
+    {"patternId": "feature-workflow", "required": true, "customizations": {"name": "sap-feature"}},
+    {"patternId": "grounding", "required": true, "customizations": {"name": "sap-grounding"}},
+    {"patternId": "tdd", "required": true, "customizations": {"name": "tdd-abap"}},
+    {"patternId": "code-templates", "required": true},
+    {"patternId": "cap-development", "required": false}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "ABAP naming conventions (Clean/Hungarian)"},
+    {"filename": "cdhdr-object-classes.json", "description": "Change document object classes"},
+    {"filename": "common-table-patterns.json", "description": "SAP table patterns"},
+    {"filename": "tadir-object-types.json", "description": "ABAP object types"},
+    {"filename": "service-class-catalog.json", "description": "Service class patterns"},
+    {"filename": "sap-reference-repos.json", "description": "SAP sample repositories"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "service-class", "directory": "templates/abap/{style}/service-class/"},
+      {"category": "global-class", "directory": "templates/abap/{style}/global-class/"},
+      {"category": "test-class", "directory": "templates/abap/{style}/test-class/"},
+      {"category": "exception-class", "directory": "templates/abap/{style}/exception-class/"},
+      {"category": "enhancement", "directory": "templates/abap/{style}/enhancement/"},
+      {"category": "rap", "directory": "templates/abap/{style}/rap/"},
+      {"category": "report", "directory": "templates/abap/{style}/report/"},
+      {"category": "function", "directory": "templates/abap/{style}/function/"}
+    ],
+    "capTemplates": [
+      {"category": "schema", "directory": "templates/cap/nodejs/db/"},
+      {"category": "service", "directory": "templates/cap/nodejs/srv/"},
+      {"category": "handler", "directory": "templates/cap/nodejs/srv/"}
+    ],
+    "promptTemplates": [
+      {"category": "rap", "directory": "templates/prompts/rap/"},
+      {"category": "service-class", "directory": "templates/prompts/service-class/"},
+      {"category": "test-class", "directory": "templates/prompts/test-class/"}
+    ]
+  },
+  "mcpServers": [
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": true},
+    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal", "required": true},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "SAP sample repos", "required": true},
+    {"name": "sequentialthinking", "url": "https://remote.mcpservers.org/sequentialthinking/mcp", "purpose": "Complex analysis", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "SAP reference data"},
+      {"path": "templates/abap/clean-abap/", "purpose": "Clean ABAP templates"},
+      {"path": "templates/abap/hungarian/", "purpose": "Hungarian notation templates"},
+      {"path": "templates/cap/", "purpose": "CAP templates"},
+      {"path": "templates/prompts/", "purpose": "AI prompt templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/", "purpose": "ABAP source files"},
+      {"path": "docs/", "purpose": "Documentation"},
+      {"path": "diagrams/", "purpose": "Architecture diagrams"},
+      {"path": "scripts/", "purpose": "Utility scripts"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "PYTHON_PATH", "description": "Python executable path", "default": "C:\\App\\Anaconda\\python.exe"},
+      {"name": "ABAP_STYLE_GUIDE", "description": "ABAP coding style", "default": "clean-abap"}
+    ],
+    "rules": [
+      {"name": "Data Model Grounding", "description": "ALWAYS verify SAP table structures before implementation"},
+      {"name": "Style Guide Selection", "description": "Ask for style guide at project start"},
+      {"name": "MCP Integration", "description": "Auto-fetch Jira/Confluence when mentioned"}
+    ]
+  }
+}

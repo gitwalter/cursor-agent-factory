@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "blueprintId": "python-fastapi",
+    "blueprintName": "Python FastAPI Blueprint",
+    "description": "REST API development with Python and FastAPI",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "api", "rest", "fastapi", "backend"]
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "FastAPI", "version": "0.100+", "purpose": "Web framework"},
+      {"name": "SQLAlchemy", "version": "2.0+", "purpose": "ORM"},
+      {"name": "Pydantic", "version": "2.0+", "purpose": "Validation"},
+      {"name": "Alembic", "version": "1.12+", "purpose": "Migrations"}
+    ],
+    "databases": [
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Primary database"},
+      {"type": "sql", "name": "SQLite", "purpose": "Development/Testing"}
+    ],
+    "tools": [
+      {"name": "pytest", "purpose": "Testing"},
+      {"name": "ruff", "purpose": "Linting"},
+      {"name": "black", "purpose": "Formatting"},
+      {"name": "mypy", "purpose": "Type checking"}
+    ],
+    "styleGuides": [
+      {"name": "pep8", "description": "PEP 8 Style Guide", "reference": "https://pep8.org"},
+      {"name": "google", "description": "Google Python Style", "reference": "https://google.github.io/styleguide/pyguide.html"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "Python naming conventions"},
+    {"filename": "api-patterns.json", "description": "FastAPI patterns and best practices"},
+    {"filename": "test-patterns.json", "description": "Pytest patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "service-class", "directory": "templates/python/service/"},
+      {"category": "repository", "directory": "templates/python/repository/"},
+      {"category": "model", "directory": "templates/python/model/"},
+      {"category": "schema", "directory": "templates/python/schema/"},
+      {"category": "router", "directory": "templates/python/router/"},
+      {"category": "test-class", "directory": "templates/python/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "technical_spec.md", "directory": "templates/docs/"},
+      {"name": "test_plan.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "jira-bugfix", "customizations": {}},
+    {"patternId": "confluence-feature", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/python/", "purpose": "Code templates"},
+      {"path": "templates/docs/", "purpose": "Document templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/", "purpose": "Application source"},
+      {"path": "tests/", "purpose": "Test files"},
+      {"path": "docs/", "purpose": "Documentation"},
+      {"path": "diagrams/", "purpose": "Architecture diagrams"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "pyproject.toml", "purpose": "Python project config"},
+      {"path": "requirements.txt", "purpose": "Dependencies"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "PYTHON_PATH", "description": "Python executable path", "default": "python"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "pep8"}
+    ],
+    "rules": [
+      {"name": "Type Hints", "description": "Always use type hints for function parameters and returns"},
+      {"name": "Docstrings", "description": "Use Google-style docstrings"},
+      {"name": "Testing", "description": "Write pytest tests with fixtures"}
+    ]
+  }
+}

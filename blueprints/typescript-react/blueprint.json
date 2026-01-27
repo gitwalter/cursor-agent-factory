@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "blueprintId": "typescript-react",
+    "blueprintName": "TypeScript React Blueprint",
+    "description": "Web application development with TypeScript and React",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["typescript", "react", "frontend", "web"]
+  },
+  "stack": {
+    "primaryLanguage": "typescript",
+    "frameworks": [
+      {"name": "React", "version": "18+", "purpose": "UI framework"},
+      {"name": "Vite", "version": "5+", "purpose": "Build tool"},
+      {"name": "React Query", "version": "5+", "purpose": "Data fetching"},
+      {"name": "Zustand", "version": "4+", "purpose": "State management"}
+    ],
+    "tools": [
+      {"name": "vitest", "purpose": "Testing"},
+      {"name": "eslint", "purpose": "Linting"},
+      {"name": "prettier", "purpose": "Formatting"},
+      {"name": "typescript", "purpose": "Type checking"}
+    ],
+    "styleGuides": [
+      {"name": "airbnb", "description": "Airbnb JavaScript Style Guide"},
+      {"name": "react", "description": "React Best Practices"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true},
+    {"patternId": "test-generator", "required": true},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "TypeScript/React naming conventions"},
+    {"filename": "component-patterns.json", "description": "React component patterns"},
+    {"filename": "test-patterns.json", "description": "Vitest/RTL patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "component", "directory": "templates/typescript/component/"},
+      {"category": "hook", "directory": "templates/typescript/hook/"},
+      {"category": "service", "directory": "templates/typescript/service/"},
+      {"category": "test", "directory": "templates/typescript/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "component_spec.md", "directory": "templates/docs/"}
+    ]
+  },
+  "mcpServers": [
+    {"name": "atlassian", "purpose": "Jira/Confluence", "required": false},
+    {"name": "deepwiki", "purpose": "GitHub analysis", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/", "purpose": "Code templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/components/", "purpose": "React components"},
+      {"path": "src/hooks/", "purpose": "Custom hooks"},
+      {"path": "src/services/", "purpose": "API services"},
+      {"path": "src/types/", "purpose": "TypeScript types"},
+      {"path": "tests/", "purpose": "Test files"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "package.json", "purpose": "NPM config"},
+      {"path": "tsconfig.json", "purpose": "TypeScript config"}
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Servers Catalog",
+  "description": "Available MCP servers for Cursor agent system integration",
+  "version": "1.0.0",
+  "servers": {
+    "atlassian": {
+      "name": "Atlassian",
+      "description": "Jira and Confluence integration",
+      "url": "https://mcp.atlassian.com/v1/sse",
+      "authentication": "oauth",
+      "authenticationNote": "Requires OAuth login via browser popup",
+      "capabilities": ["jira", "confluence"],
+      "tools": {
+        "jira": [
+          {"name": "getJiraIssue", "description": "Read Jira ticket by ID"},
+          {"name": "searchJiraIssuesUsingJql", "description": "Search Jira with JQL"},
+          {"name": "addCommentToJiraIssue", "description": "Add comment to ticket"},
+          {"name": "transitionJiraIssue", "description": "Change ticket status"},
+          {"name": "createJiraIssue", "description": "Create new ticket"},
+          {"name": "editJiraIssue", "description": "Edit ticket fields"}
+        ],
+        "confluence": [
+          {"name": "getConfluencePage", "description": "Read Confluence page"},
+          {"name": "createConfluencePage", "description": "Create new page"},
+          {"name": "updateConfluencePage", "description": "Update existing page"},
+          {"name": "searchConfluenceUsingCql", "description": "Search with CQL"}
+        ]
+      },
+      "suggestedFor": ["bugfix-workflow", "feature-workflow"],
+      "configExample": {
+        "atlassian": {
+          "url": "https://mcp.atlassian.com/v1/sse",
+          "headers": {}
+        }
+      }
+    },
+    "sap-documentation": {
+      "name": "SAP Documentation MCP Server",
+      "description": "SAP Help Portal and Community search",
+      "url": "https://mcp-sap-docs.marianzeis.de/mcp",
+      "authentication": "none",
+      "capabilities": ["documentation", "search"],
+      "tools": [
+        {"name": "search", "description": "Search SAP documentation"},
+        {"name": "fetch", "description": "Fetch specific document"},
+        {"name": "sap_help_search", "description": "Search SAP Help Portal"},
+        {"name": "sap_community_search", "description": "Search SAP Community"}
+      ],
+      "suggestedFor": ["sap-grounding", "sap-bugfix", "sap-feature"],
+      "configExample": {
+        "SAP Documentation MCP Server": {
+          "url": "https://mcp-sap-docs.marianzeis.de/mcp",
+          "headers": {}
+        }
+      }
+    },
+    "deepwiki": {
+      "name": "DeepWiki",
+      "description": "GitHub repository analysis and documentation",
+      "url": "https://mcp.deepwiki.com/mcp",
+      "authentication": "none",
+      "capabilities": ["github", "documentation"],
+      "tools": [
+        {"name": "read_wiki_structure", "description": "Get repository documentation topics"},
+        {"name": "read_wiki_contents", "description": "View repository documentation"},
+        {"name": "ask_question", "description": "Ask questions about a repository"}
+      ],
+      "suggestedFor": ["exploration", "documentation"],
+      "configExample": {
+        "deepwiki": {
+          "url": "https://mcp.deepwiki.com/mcp",
+          "headers": {}
+        }
+      }
+    },
+    "sequentialthinking": {
+      "name": "Sequential Thinking",
+      "description": "Structured problem-solving through sequential reasoning",
+      "url": "https://remote.mcpservers.org/sequentialthinking/mcp",
+      "authentication": "none",
+      "capabilities": ["reasoning", "planning"],
+      "tools": [
+        {"name": "sequentialthinking", "description": "Dynamic reflective problem-solving"}
+      ],
+      "suggestedFor": ["complex-analysis", "architecture-design"],
+      "configExample": {
+        "sequentialthinking": {
+          "url": "https://remote.mcpservers.org/sequentialthinking/mcp",
+          "headers": {}
+        }
+      }
+    },
+    "fetch": {
+      "name": "Fetch",
+      "description": "Fetch and parse web content",
+      "url": "builtin",
+      "authentication": "none",
+      "capabilities": ["web", "http"],
+      "tools": [
+        {"name": "fetch", "description": "Fetch URL content"}
+      ],
+      "suggestedFor": ["documentation", "api-integration"]
+    },
+    "langsmith": {
+      "name": "LangSmith API MCP Server",
+      "description": "LangSmith prompt management and tracing",
+      "authentication": "api-key",
+      "capabilities": ["prompts", "tracing", "datasets"],
+      "tools": [
+        {"name": "list_prompts", "description": "Fetch prompts from LangSmith"},
+        {"name": "get_prompt_by_name", "description": "Get specific prompt"},
+        {"name": "fetch_runs", "description": "Fetch LangSmith runs"}
+      ],
+      "suggestedFor": ["llm-development", "prompt-engineering"]
+    },
+    "langchain-docs": {
+      "name": "LangChain Documentation",
+      "description": "Search LangChain documentation",
+      "authentication": "none",
+      "capabilities": ["documentation", "search"],
+      "tools": [
+        {"name": "SearchDocsByLangChain", "description": "Search LangChain docs"}
+      ],
+      "suggestedFor": ["llm-development"]
+    }
+  },
+  "serversByCapability": {
+    "jira": ["atlassian"],
+    "confluence": ["atlassian"],
+    "github": ["deepwiki"],
+    "documentation": ["sap-documentation", "deepwiki", "langchain-docs"],
+    "reasoning": ["sequentialthinking"],
+    "web": ["fetch"]
+  },
+  "serversByStack": {
+    "sap": ["sap-documentation", "atlassian", "deepwiki"],
+    "python": ["atlassian", "deepwiki", "langsmith", "langchain-docs"],
+    "typescript": ["atlassian", "deepwiki"],
+    "java": ["atlassian", "deepwiki"],
+    "general": ["atlassian", "deepwiki", "sequentialthinking", "fetch"]
+  }
+}

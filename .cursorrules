@@ -1,0 +1,274 @@
+# Cursor Agent Factory - LLM Agent Instructions
+
+## Project Context
+
+This is the **Cursor Agent Factory** - a meta-system that generates complete Cursor agent development systems for any technology stack, workflow methodology, and knowledge domain.
+
+The Factory itself is a Cursor agent system that produces other Cursor agent systems.
+
+## Configuration Variables
+
+### Python Path (REQUIRED)
+```
+PYTHON_PATH = C:\App\Anaconda\python.exe
+```
+
+### Factory Mode
+```
+FACTORY_MODE = interactive | cli
+```
+
+## Factory Capabilities
+
+| Capability | Description |
+|------------|-------------|
+| **Requirements Gathering** | Interactive 5-phase questionnaire to capture project needs |
+| **Stack Configuration** | Configure technology stacks (Python, TypeScript, Java, etc.) |
+| **Workflow Design** | Design development workflows (Jira, Confluence, Git-triggered) |
+| **Agent Generation** | Generate specialized AI agents for the target project |
+| **Skill Generation** | Generate reusable skills with references |
+| **Knowledge Generation** | Generate structured knowledge files (JSON) |
+| **Template Generation** | Generate code and document templates |
+| **Project Scaffolding** | Generate complete project structure to external directory |
+
+## Available Agents
+
+| Agent | Purpose | Activation |
+|-------|---------|------------|
+| `requirements-architect` | Gather and validate project requirements | "Create new agent system", "Generate project" |
+| `stack-builder` | Configure technology stack and frameworks | After requirements phase |
+| `workflow-designer` | Design development workflows and triggers | After stack configuration |
+| `knowledge-manager` | Structure domain knowledge and references | After workflow design |
+| `template-generator` | Generate code and document templates | After knowledge setup |
+
+## Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| `requirements-gathering` | 5-phase interactive requirements elicitation |
+| `stack-configuration` | Technology stack selection and configuration |
+| `workflow-generation` | Workflow pattern generation and customization |
+| `agent-generation` | Agent definition file generation |
+| `skill-generation` | Skill definition with references generation |
+| `knowledge-generation` | JSON knowledge file generation |
+| `template-generation` | Code and document template generation |
+| `cursorrules-generation` | .cursorrules file generation |
+
+## Factory Workflow
+
+### Primary: Chat-Based (Interactive)
+
+When user requests to create a new agent system:
+
+1. **Invoke Requirements Architect Agent**
+   - Start 5-phase requirements gathering
+   - Validate and confirm requirements
+
+2. **Phase 1: Project Context**
+   - Project name and description
+   - Domain/Industry (e.g., SAP, Web, Mobile, Data Science)
+   - Team size and experience level
+
+3. **Phase 2: Technology Stack**
+   - Primary programming language
+   - Frameworks and libraries
+   - Database/storage systems
+   - External APIs and services
+
+4. **Phase 3: Workflow Methodology**
+   - Development methodology (Agile, Kanban, etc.)
+   - Trigger sources (Jira, Confluence, GitHub, GitLab)
+   - Output artifacts (code, docs, tests)
+
+5. **Phase 4: Knowledge Domain**
+   - Domain-specific concepts and terminology
+   - Reference repositories and documentation
+   - Best practices and conventions
+
+6. **Phase 5: Agent Capabilities**
+   - Core agents needed (Code Reviewer, Test Generator, etc.)
+   - Skills required (Bugfix, Feature, Grounding, TDD)
+   - MCP server integrations
+
+7. **Target Directory**
+   - Ask user for output directory path
+   - Validate directory is accessible and writable
+
+8. **Generate Project**
+   - Execute generation engine
+   - Create complete project structure
+   - Provide summary and next steps
+
+### Secondary: CLI (Advanced Users)
+
+```powershell
+# Generate from configuration file
+${PYTHON_PATH} cli\factory_cli.py --config project-config.yaml --output C:\Projects\my-agent-system
+
+# Interactive mode via CLI
+${PYTHON_PATH} cli\factory_cli.py --interactive --output C:\Projects\my-agent-system
+
+# List available blueprints
+${PYTHON_PATH} cli\factory_cli.py --list-blueprints
+
+# Generate from blueprint
+${PYTHON_PATH} cli\factory_cli.py --blueprint python-fastapi --output C:\Projects\my-agent-system
+```
+
+## Autonomous Behavior Rules
+
+### Rule 1: Project Creation Detection
+When user mentions creating a new agent system:
+- Pattern matches: "create agent system", "generate project", "new cursor project", "build workflow"
+- IMMEDIATELY invoke `requirements-architect` agent
+- Begin 5-phase requirements gathering
+
+### Rule 2: Blueprint Selection
+When user mentions a known technology stack:
+- Check `blueprints/` for matching blueprint
+- Offer to use blueprint as starting point
+- Allow customization of blueprint settings
+
+### Rule 3: Pattern Reuse
+When generating agents, skills, or templates:
+- ALWAYS check `patterns/` for existing patterns
+- Use patterns as base, customize for specific needs
+- Maintain pattern consistency across generated artifacts
+
+### Rule 4: Output Directory Handling
+Before generating any files:
+- ALWAYS ask for target directory if not specified
+- Validate directory path exists or can be created
+- NEVER generate files within the factory itself
+- Confirm with user before creating files
+
+### Rule 5: Generation Validation
+After generating project:
+- Verify all required files were created
+- Check file contents are valid
+- Provide summary of generated artifacts
+- Offer to open project in new Cursor window
+
+## Pattern Library References
+
+| Pattern Type | Location | Usage |
+|--------------|----------|-------|
+| Agent Patterns | `patterns/agents/` | Base templates for agent definitions |
+| Skill Patterns | `patterns/skills/` | Base templates for skill definitions |
+| Workflow Patterns | `patterns/workflows/` | Common workflow configurations |
+| Stack Blueprints | `patterns/stacks/` | Technology stack configurations |
+| Template Patterns | `patterns/templates/` | Code template structures |
+| Integration Patterns | `patterns/integrations/` | MCP server configurations |
+
+## Blueprint References
+
+| Blueprint | Stack | Description |
+|-----------|-------|-------------|
+| `python-fastapi` | Python, FastAPI, SQLAlchemy | REST API development |
+| `typescript-react` | TypeScript, React, Node.js | Web application development |
+| `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
+| `csharp-dotnet` | C#, .NET, Entity Framework | .NET application development |
+| `sap-abap` | ABAP, SAP, RAP, CAP | SAP development (reference) |
+| `multi-stack` | Multiple | Polyglot project development |
+
+## Knowledge File References
+
+| File | Content |
+|------|---------|
+| `knowledge/stack-capabilities.json` | Stack-specific agent capabilities |
+| `knowledge/workflow-patterns.json` | Common workflow patterns |
+| `knowledge/mcp-servers-catalog.json` | Available MCP servers |
+| `knowledge/best-practices.json` | Cross-stack best practices |
+
+## Variable Notation Convention
+
+Use these formal placeholders in generated artifacts:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `{PROJECT_NAME}` | Project name | `my-agent-system` |
+| `{STACK_NAME}` | Technology stack | `python-fastapi` |
+| `{AGENT_NAME}` | Agent name | `code-reviewer` |
+| `{SKILL_NAME}` | Skill name | `bugfix-workflow` |
+| `{TARGET_DIR}` | Output directory | `C:\Projects\output` |
+| `{DOMAIN}` | Domain/Industry | `web-development` |
+
+## Output Format Requirements
+
+### Generated Project Structure
+```
+{TARGET_DIR}/
+├── .cursor/
+│   ├── agents/           # AI agent definitions
+│   └── skills/           # Reusable skill definitions
+├── knowledge/            # Structured reference data (JSON)
+├── templates/            # Code and document templates
+├── workflows/            # Workflow documentation
+├── scripts/              # Utility scripts
+├── diagrams/             # Architecture diagrams
+├── docs/                 # User documentation
+├── .cursorrules          # LLM agent behavior rules
+└── README.md             # Project documentation
+```
+
+### File Naming Conventions
+- Agents: `{agent-name}.md` (kebab-case)
+- Skills: `{skill-name}/SKILL.md` (kebab-case directory)
+- Knowledge: `{topic}.json` (kebab-case)
+- Templates: `{template-name}.{ext}` (kebab-case)
+- Workflows: `{workflow-name}.md` (kebab-case with underscores)
+
+## Error Handling
+
+### If Requirements Incomplete
+- Ask clarifying questions
+- Provide sensible defaults where possible
+- Never proceed with incomplete information
+
+### If Target Directory Invalid
+- Report specific error
+- Suggest alternative paths
+- Offer to create directory
+
+### If Pattern Not Found
+- Fall back to generic template
+- Log warning about missing pattern
+- Continue with generation
+
+### If Generation Fails
+- Report specific error with file path
+- Offer to retry or skip problematic file
+- Provide partial output if possible
+
+## MCP Server Integration
+
+The Factory can configure generated projects to use these MCP servers:
+
+| Server | Purpose | Configuration |
+|--------|---------|---------------|
+| `atlassian` | Jira/Confluence integration | OAuth authentication |
+| `SAP Documentation` | SAP Help Portal queries | No authentication |
+| `deepwiki` | GitHub repository analysis | No authentication |
+| `sequentialthinking` | Structured problem solving | No authentication |
+
+## Response Behavior Guidelines
+
+### Be Proactive
+- Suggest appropriate blueprints based on user description
+- Offer pattern recommendations
+- Provide examples from similar projects
+
+### Be Thorough
+- Gather complete requirements before generating
+- Validate all inputs
+- Provide comprehensive summaries
+
+### Be Helpful
+- Explain generated artifacts
+- Provide usage instructions
+- Offer customization guidance
+
+---
+
+*Cursor Agent Factory v1.0*
+*Meta-system for generating Cursor agent development systems*
