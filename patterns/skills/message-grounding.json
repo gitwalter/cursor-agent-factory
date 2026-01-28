@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "patternId": "message-grounding",
+    "patternName": "Message Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify SAP Message Classes, message numbers, and message texts before implementation",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "message-grounding",
+    "description": "Verify ABAP message artifacts including message classes, message numbers, types, and texts",
+    "type": "skill",
+    "knowledge": ["message-catalog.json"]
+  },
+  "sections": {
+    "title": "Message Grounding Skill",
+    "introduction": "Ensures all SAP message artifacts are verified before use. Covers message classes, message numbers, message types, placeholders, and long texts stored in T100.",
+    "artifactTypes": [
+      {
+        "type": "message_class",
+        "description": "Message class container (T100)",
+        "verifications": ["existence", "namespace", "contained_messages"]
+      },
+      {
+        "type": "message_number",
+        "description": "Individual message within class",
+        "verifications": ["existence", "message_type", "short_text", "placeholders", "long_text"]
+      },
+      {
+        "type": "exception_text",
+        "description": "Messages linked to exception classes",
+        "verifications": ["message_class", "message_number", "if_t100_message", "attributes"]
+      }
+    ],
+    "messageTypes": {
+      "A": "Abend - Terminates transaction with dump",
+      "E": "Error - Stops processing, requires user action",
+      "W": "Warning - Allows user to continue",
+      "I": "Information - Displays popup, continues",
+      "S": "Success - Status bar message",
+      "X": "Exit - Similar to A but different dump handling"
+    },
+    "placeholders": {
+      "description": "Messages can contain up to 4 placeholders (&1 to &4)",
+      "types": [
+        "&1, &2, &3, &4 - Positional placeholders",
+        "& - Single placeholder (deprecated)",
+        "&V1&, &V2& - Variable placeholders"
+      ]
+    },
+    "whenToUse": [
+      "When using MESSAGE statement in ABAP",
+      "Before referencing any message class/number",
+      "When implementing exception classes with T100",
+      "When designing error handling",
+      "Before assuming message placeholders exist"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Check Knowledge Cache",
+        "description": "Look for cached message definitions",
+        "actions": [
+          "Query knowledge/message-catalog.json for message definitions"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Search SAP Documentation",
+        "description": "Search for message documentation",
+        "mcpTools": ["SAP_Documentation_MCP_Server-search", "SAP_Documentation_MCP_Server-sap_community_search"],
+        "queryPatterns": {
+          "message": "{MSG_CLASS} {MSG_NUMBER} message",
+          "message_class": "{MSG_CLASS} message class SAP"
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify Message Class",
+        "description": "Confirm message class exists",
+        "verifications": [
+          "Message class exists in T100",
+          "Namespace (SAP standard vs custom)",
+          "Message range availability"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Verify Message Number",
+        "description": "Confirm specific message exists",
+        "verifications": [
+          "Message number exists in class",
+          "Message short text content",
+          "Number of placeholders",
+          "Self-explanatory flag"
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Verify Message Text",
+        "description": "Check message content and placeholders",
+        "verifications": [
+          "Message text is appropriate for context",
+          "Placeholder count matches usage",
+          "Translations available if needed"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Verify Long Text",
+        "description": "Check documentation availability",
+        "verifications": [
+          "Long text exists (SE61)",
+          "Long text content is helpful"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Verify Exception Integration",
+        "description": "For exception classes, verify T100 setup",
+        "verifications": [
+          "IF_T100_MESSAGE implemented",
+          "T100KEY constant defined",
+          "Attribute mapping for placeholders"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Document and Escalate",
+        "description": "Record results and handle failures",
+        "actions": [
+          "Document all verifications",
+          "STOP and ASK if message unverified",
+          "Suggest creating custom message if appropriate"
+        ]
+      }
+    ],
+    "outputFormat": "### Message Verification Results\n\n**Message Class:** {MSG_CLASS}\n**Message Number:** {MSG_NUMBER}\n**Type:** {A|E|W|I|S|X}\n\n#### Message Text\n- **Short Text:** {SHORT_TEXT}\n- **Placeholders:** {&1} {&2} {&3} {&4}\n- **Long Text:** {AVAILABLE|NOT_AVAILABLE}\n\n#### Exception Class Integration\n| Exception Class | Text ID | T100KEY | Verified |\n|-----------------|---------|---------|----------|\n| {CX_CLASS} | {TEXT_ID} | {T100KEY} | {YES/NO} |\n\n**Usage Notes:**\n- {USAGE_NOTES}\n\n**Issues Found:**\n- {ISSUE_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "importantRules": [
+      "NEVER use message numbers without verifying they exist",
+      "Placeholder count must match MESSAGE statement usage",
+      "Message types affect program flow - use appropriate type",
+      "Custom message classes should follow naming conventions",
+      "Exception classes need proper IF_T100_MESSAGE setup",
+      "If message unverified, STOP and ASK user"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "Message class not found",
+        "action": "ASK USER: 'Cannot verify message class {MSG_CLASS}. Is this a custom message class? Please confirm it exists.'"
+      },
+      {
+        "condition": "Message number not found",
+        "action": "Report that message number does not exist in class. Suggest creating new message."
+      },
+      {
+        "condition": "Placeholder mismatch",
+        "action": "WARN: Message has {N} placeholders but {M} values provided. Adjust usage."
+      },
+      {
+        "condition": "No long text",
+        "action": "INFO: No long text available for this message. Consider creating one."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{MSG_CLASS}", "description": "Message class ID", "required": true},
+    {"name": "{MSG_NUMBER}", "description": "Message number (3 digits)", "required": false},
+    {"name": "{MSG_TYPE}", "description": "Expected message type (optional)", "required": false}
+  ]
+}

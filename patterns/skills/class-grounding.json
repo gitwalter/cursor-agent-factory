@@ -1,0 +1,181 @@
+{
+  "metadata": {
+    "patternId": "class-grounding",
+    "patternName": "Class Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify ABAP classes, interfaces, exception classes, and method signatures before implementation",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "class-grounding",
+    "description": "Verify ABAP object-oriented artifacts including classes, interfaces, exception classes, and methods",
+    "type": "skill",
+    "knowledge": ["class-catalog.json", "released-apis.json"]
+  },
+  "sections": {
+    "title": "Class Grounding Skill",
+    "introduction": "Ensures all ABAP object-oriented artifacts are verified before use. Covers classes (abstract, final, local, global), interfaces, exception classes with T100 messages, method signatures, and release contracts.",
+    "artifactTypes": [
+      {
+        "type": "class",
+        "description": "Global and local ABAP classes",
+        "verifications": ["existence", "visibility", "abstract", "final", "superclass", "interfaces", "friends"]
+      },
+      {
+        "type": "interface",
+        "description": "ABAP interfaces",
+        "verifications": ["existence", "methods", "constants", "types", "aliases", "composed_interfaces"]
+      },
+      {
+        "type": "exception_class",
+        "description": "Exception classes (CX_*)",
+        "verifications": ["existence", "exception_texts", "t100_message", "previous_chain", "category"]
+      },
+      {
+        "type": "method",
+        "description": "Class and interface methods",
+        "verifications": ["existence", "importing", "exporting", "changing", "returning", "raising", "visibility", "static"]
+      }
+    ],
+    "releaseContracts": {
+      "C0": "Extend - Class can be inherited or interface implemented",
+      "C1": "System-Internal Use - Can be used within same system",
+      "C2": "Remote API - Can be accessed remotely"
+    },
+    "whenToUse": [
+      "When instantiating or inheriting from SAP classes",
+      "When implementing SAP interfaces",
+      "Before calling any class method",
+      "When handling SAP exception classes",
+      "When designing class hierarchies based on SAP patterns",
+      "Before assuming method signatures or parameters"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Check Knowledge Cache",
+        "description": "Look for cached class definitions",
+        "actions": [
+          "Query knowledge/class-catalog.json for class/interface definitions",
+          "Check released-apis.json for C0/C1/C2 status"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Search SAP Documentation",
+        "description": "Search for class documentation",
+        "mcpTools": ["SAP_Documentation_MCP_Server-search", "SAP_Documentation_MCP_Server-sap_help_search"],
+        "queryPatterns": {
+          "class": "{CLASS_NAME} class ABAP methods",
+          "interface": "{INTERFACE_NAME} interface ABAP methods",
+          "exception": "{EXCEPTION_CLASS} exception class T100"
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify Class Existence",
+        "description": "Confirm the class/interface exists",
+        "verifications": [
+          "Repository object exists",
+          "Class is active",
+          "Class visibility (public)",
+          "Abstract/final status"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Verify Inheritance",
+        "description": "Check inheritance hierarchy",
+        "verifications": [
+          "Superclass exists",
+          "Superclass is not final (if inheriting)",
+          "Implemented interfaces exist",
+          "C0 release (if extending)"
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Verify Method Signatures",
+        "description": "Confirm method parameters and types",
+        "verifications": [
+          "Method exists in class/interface",
+          "Parameter names match",
+          "Parameter types exist and match",
+          "RAISING exceptions exist",
+          "Return type exists (for RETURNING)"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Verify Exception Classes",
+        "description": "For exception classes, verify message setup",
+        "verifications": [
+          "IF_T100_MESSAGE implementation",
+          "Message class and number",
+          "Exception text IDs",
+          "PREVIOUS parameter availability"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Check Release Status",
+        "description": "Verify release contract for ABAP Cloud",
+        "verifications": [
+          "C0 (Extend) - For inheritance",
+          "C1 (Use) - For instantiation/method calls",
+          "Deprecation status",
+          "Successor class if deprecated"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Document and Escalate",
+        "description": "Record results and handle failures",
+        "actions": [
+          "Document all verifications",
+          "STOP and ASK if class unverified",
+          "Suggest released alternatives if not released"
+        ]
+      }
+    ],
+    "outputFormat": "### Class/Interface Verification Results\n\n**Object:** {CLASS_OR_INTERFACE}\n**Type:** {CLASS|INTERFACE|EXCEPTION_CLASS}\n**Release Status:** {C0|C1|C2|Not Released}\n**Abstract:** {YES|NO}\n**Final:** {YES|NO}\n\n#### Inheritance\n- **Superclass:** {SUPERCLASS}\n- **Interfaces:** {INTERFACE_LIST}\n\n#### Methods Verified\n| Method | Visibility | Static | Importing | Exporting | Returning | Verified |\n|--------|------------|--------|-----------|-----------|-----------|----------|\n| {METHOD} | {VIS} | {Y/N} | {PARAMS} | {PARAMS} | {TYPE} | {YES/NO} |\n\n#### Exception Texts (for CX_ classes)\n| Text ID | Message Class | Message Number | Verified |\n|---------|---------------|----------------|----------|\n| {TEXT_ID} | {MSGCLASS} | {MSGNO} | {YES/NO} |\n\n**Issues Found:**\n- {ISSUE_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "importantRules": [
+      "NEVER call methods without verifying the signature",
+      "Parameter types must be verified - wrong types cause runtime errors",
+      "Check C0 before inheriting - not all classes allow extension",
+      "Check C1 before using - some classes are internal only",
+      "Exception classes need IF_T100_MESSAGE for proper messages",
+      "Method visibility affects accessibility - verify scope",
+      "If class/method unverified, STOP and ASK user"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "Class not found",
+        "action": "ASK USER: 'Cannot verify class {CLASS}. Is this a custom class? Please provide its definition.'"
+      },
+      {
+        "condition": "Method not found",
+        "action": "Report that method does not exist. List available methods if known."
+      },
+      {
+        "condition": "Parameter type mismatch",
+        "action": "WARN: Parameter {PARAM} type differs from expected. Verify correct type."
+      },
+      {
+        "condition": "Class not released (ABAP Cloud)",
+        "action": "WARN: Class is not released for ABAP Cloud. Suggest released alternatives if available."
+      },
+      {
+        "condition": "Class is final",
+        "action": "ERROR: Cannot inherit from final class. Use composition instead."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{CLASS_NAME}", "description": "Name of class or interface", "required": true},
+    {"name": "{METHOD_NAME}", "description": "Method to verify (optional)", "required": false},
+    {"name": "{PARAMETER_NAME}", "description": "Parameter to verify (optional)", "required": false}
+  ]
+}

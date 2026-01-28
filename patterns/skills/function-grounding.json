@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "patternId": "function-grounding",
+    "patternName": "Function Module Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify Function Modules, Function Groups, and BAPIs including parameters and exceptions",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "function-grounding",
+    "description": "Verify ABAP function modules, function groups, and BAPI interfaces",
+    "type": "skill",
+    "knowledge": ["function-catalog.json", "api-catalog.json", "released-apis.json"]
+  },
+  "sections": {
+    "title": "Function Module Grounding Skill",
+    "introduction": "Ensures all ABAP function module artifacts are verified before use. Covers standard function modules, RFC-enabled function modules, BAPIs, and function groups.",
+    "artifactTypes": [
+      {
+        "type": "function_module",
+        "description": "Standard ABAP function modules",
+        "verifications": ["existence", "importing", "exporting", "changing", "tables", "exceptions", "processing_type"]
+      },
+      {
+        "type": "rfc_function_module",
+        "description": "Remote-enabled function modules",
+        "verifications": ["existence", "parameters", "rfc_enabled", "destination_compatibility"]
+      },
+      {
+        "type": "bapi",
+        "description": "Business Application Programming Interface",
+        "verifications": ["existence", "parameters", "return_structure", "commit_handling", "bapi_interface"]
+      },
+      {
+        "type": "function_group",
+        "description": "Container for function modules",
+        "verifications": ["existence", "contained_modules", "global_data"]
+      }
+    ],
+    "processingTypes": {
+      "normal": "Standard function module - local call only",
+      "rfc": "Remote-enabled - can be called from external systems",
+      "update": "Update function module - runs in update task",
+      "remote_update": "Remote update function module"
+    },
+    "whenToUse": [
+      "When calling any SAP function module",
+      "Before implementing RFC interfaces",
+      "When working with BAPIs",
+      "Before assuming function module parameters",
+      "When designing integration with external systems"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Check Knowledge Cache",
+        "description": "Look for cached function module definitions",
+        "actions": [
+          "Query knowledge/function-catalog.json for FM definitions",
+          "Query knowledge/api-catalog.json for BAPI definitions",
+          "Check released-apis.json for C2 release status"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Search SAP Documentation",
+        "description": "Search for function module documentation",
+        "mcpTools": ["SAP_Documentation_MCP_Server-search", "SAP_Documentation_MCP_Server-sap_help_search"],
+        "queryPatterns": {
+          "fm": "{FM_NAME} function module parameters",
+          "bapi": "{BAPI_NAME} BAPI interface structure",
+          "rfc": "{RFC_FM} RFC function module parameters"
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify FM Existence",
+        "description": "Confirm function module exists",
+        "verifications": [
+          "Function module is active",
+          "Function group exists and is active",
+          "Processing type (normal, RFC, update)"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Verify Parameters",
+        "description": "Check all parameter definitions",
+        "verifications": [
+          "IMPORTING parameters (name, type, optional/required)",
+          "EXPORTING parameters (name, type)",
+          "CHANGING parameters (name, type)",
+          "TABLES parameters (name, structure type)"
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Verify Exceptions",
+        "description": "Check exception definitions",
+        "verifications": [
+          "Exception names",
+          "Exception documentation",
+          "Numeric exception values (for CALL FUNCTION)"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Verify BAPI Specifics",
+        "description": "For BAPIs, verify interface conventions",
+        "verifications": [
+          "RETURN parameter structure (BAPIRET2 or similar)",
+          "Commit handling (BAPI_TRANSACTION_COMMIT)",
+          "Rollback handling (BAPI_TRANSACTION_ROLLBACK)",
+          "BAPI business object assignment"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Check RFC Compatibility",
+        "description": "For RFC FMs, verify remote enablement",
+        "verifications": [
+          "RFC-enabled flag is set",
+          "Parameter types are serializable",
+          "No internal tables with deep structures (for older systems)"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Check Release Status",
+        "description": "Verify release contract",
+        "verifications": [
+          "C2 (Remote API) for external access",
+          "Deprecation status",
+          "Successor function module if deprecated"
+        ]
+      },
+      {
+        "step": 9,
+        "name": "Document and Escalate",
+        "description": "Record results and handle failures",
+        "actions": [
+          "Document all verifications",
+          "STOP and ASK if FM unverified",
+          "Suggest alternatives for deprecated FMs"
+        ]
+      }
+    ],
+    "outputFormat": "### Function Module Verification Results\n\n**Function Module:** {FM_NAME}\n**Function Group:** {FUGR}\n**Type:** {NORMAL|RFC|UPDATE|BAPI}\n**Release Status:** {C2|Not Released}\n\n#### Parameters Verified\n| Direction | Parameter | Type | Optional | Verified |\n|-----------|-----------|------|----------|----------|\n| IMPORTING | {PARAM} | {TYPE} | {Y/N} | {YES/NO} |\n| EXPORTING | {PARAM} | {TYPE} | - | {YES/NO} |\n| CHANGING | {PARAM} | {TYPE} | {Y/N} | {YES/NO} |\n| TABLES | {PARAM} | {TYPE} | {Y/N} | {YES/NO} |\n\n#### Exceptions Verified\n| Exception | Value | Verified |\n|-----------|-------|----------|\n| {EXCEPTION} | {NUM} | {YES/NO} |\n\n#### BAPI Specifics (if BAPI)\n- **Return Structure:** {RETURN_TYPE}\n- **Commit Required:** {YES|NO}\n- **Business Object:** {BOR_OBJECT}\n\n**Issues Found:**\n- {ISSUE_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "importantRules": [
+      "NEVER call function modules without verifying parameter types",
+      "BAPI calls require explicit commit - verify commit handling",
+      "RFC-enabled FMs have specific parameter type restrictions",
+      "TABLES parameters use flat structures - verify structure type",
+      "Check exception handling - missed exceptions cause dumps",
+      "If FM unverified, STOP and ASK user"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "Function module not found",
+        "action": "ASK USER: 'Cannot verify function module {FM}. Is this a custom FM? Please provide its interface.'"
+      },
+      {
+        "condition": "Parameter not found",
+        "action": "Report that parameter does not exist. List available parameters."
+      },
+      {
+        "condition": "FM not RFC-enabled",
+        "action": "WARN: Function module is not RFC-enabled. Cannot be called remotely."
+      },
+      {
+        "condition": "FM deprecated",
+        "action": "WARN: Function module is deprecated. Suggest successor: {SUCCESSOR}"
+      },
+      {
+        "condition": "BAPI without RETURN",
+        "action": "WARN: BAPI does not have standard RETURN parameter. Check error handling."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{FM_NAME}", "description": "Name of function module", "required": true},
+    {"name": "{PARAMETER_NAME}", "description": "Parameter to verify (optional)", "required": false},
+    {"name": "{IS_RFC}", "description": "Whether RFC enablement is required", "required": false}
+  ]
+}

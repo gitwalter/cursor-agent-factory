@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "patternId": "enhancement-grounding",
+    "patternName": "Enhancement Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify SAP Enhancement Framework artifacts including Enhancement Spots, BAdIs, and implementations",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "enhancement-grounding",
+    "description": "Verify enhancement framework artifacts including enhancement spots, BAdI definitions, and implementations",
+    "type": "skill",
+    "knowledge": ["enhancement-catalog.json", "released-apis.json"]
+  },
+  "sections": {
+    "title": "Enhancement Grounding Skill",
+    "introduction": "Ensures all SAP Enhancement Framework artifacts are verified before implementation. Covers enhancement spots (simple and composite), BAdI definitions, BAdI implementations, and switch dependencies.",
+    "artifactTypes": [
+      {
+        "type": "enhancement_spot",
+        "description": "Simple and composite enhancement spots",
+        "verifications": ["existence", "type", "contained_elements", "enhancement_options"]
+      },
+      {
+        "type": "badi_definition",
+        "description": "Business Add-In definitions",
+        "verifications": ["existence", "interface", "filter_types", "fallback_class", "multiple_use", "instantiation"]
+      },
+      {
+        "type": "badi_implementation",
+        "description": "BAdI implementation classes",
+        "verifications": ["existence", "implementing_class", "filter_values", "active_status"]
+      },
+      {
+        "type": "enhancement_implementation",
+        "description": "Source code enhancements",
+        "verifications": ["existence", "enhancement_spot", "active_status"]
+      },
+      {
+        "type": "switch",
+        "description": "Switch framework dependencies",
+        "verifications": ["existence", "switch_state", "dependencies"]
+      }
+    ],
+    "badiTypes": {
+      "classic": "Classic BAdI - older mechanism, still supported",
+      "new": "New/Kernel BAdI - GET BADI / CALL BADI syntax",
+      "amdp": "AMDP BAdI - for HANA stored procedures"
+    },
+    "whenToUse": [
+      "When implementing BAdI enhancements",
+      "Before assuming BAdI interface or methods exist",
+      "When checking enhancement spot availability",
+      "When implementing custom logic via enhancement framework",
+      "Before creating BAdI implementations"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Check Knowledge Cache",
+        "description": "Look for cached enhancement definitions",
+        "actions": [
+          "Query knowledge/enhancement-catalog.json for BAdI definitions",
+          "Check released-apis.json for released enhancement spots"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Search SAP Documentation",
+        "description": "Search for enhancement documentation",
+        "mcpTools": ["SAP_Documentation_MCP_Server-search", "SAP_Documentation_MCP_Server-sap_help_search", "SAP_Documentation_MCP_Server-sap_community_search"],
+        "queryPatterns": {
+          "badi": "{BADI_NAME} BAdI interface methods filter",
+          "enhancement_spot": "{SPOT_NAME} enhancement spot",
+          "implementation": "{IMPL_NAME} BAdI implementation"
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify Enhancement Spot",
+        "description": "Confirm enhancement spot exists",
+        "verifications": [
+          "Enhancement spot is active",
+          "Type (simple/composite)",
+          "Contained BAdIs or enhancement options"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Verify BAdI Definition",
+        "description": "Check BAdI definition properties",
+        "verifications": [
+          "BAdI name and description",
+          "Interface name and methods",
+          "Filter types and values",
+          "Fallback class availability",
+          "Multiple implementations allowed",
+          "Instantiation type (single/multiple)"
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Verify BAdI Interface",
+        "description": "Check interface methods and signatures",
+        "verifications": [
+          "Interface methods exist",
+          "Method parameters match",
+          "Return types correct",
+          "Exceptions defined"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Check Filter Values",
+        "description": "Verify filter setup for implementation",
+        "verifications": [
+          "Filter types defined in BAdI",
+          "Valid filter values for implementation",
+          "Filter value conflicts with existing implementations"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Check Switch Dependencies",
+        "description": "Verify switch framework status",
+        "verifications": [
+          "Enhancement depends on switch",
+          "Switch is turned on/off",
+          "Business function association"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Check Release Status",
+        "description": "Verify release for ABAP Cloud",
+        "verifications": [
+          "BAdI is released for implementation",
+          "Enhancement spot is released",
+          "C0 release for extension"
+        ]
+      },
+      {
+        "step": 9,
+        "name": "Document and Escalate",
+        "description": "Record results and handle failures",
+        "actions": [
+          "Document all verifications",
+          "STOP and ASK if BAdI unverified",
+          "Suggest alternatives if not released"
+        ]
+      }
+    ],
+    "outputFormat": "### Enhancement Verification Results\n\n**Enhancement Spot:** {SPOT_NAME}\n**BAdI Definition:** {BADI_NAME}\n**Interface:** {INTERFACE_NAME}\n**Release Status:** {C0|Not Released}\n\n#### BAdI Properties\n- **Multiple Use:** {YES|NO}\n- **Fallback Class:** {CLASS_NAME|None}\n- **Instantiation:** {SINGLE|MULTIPLE}\n\n#### Interface Methods Verified\n| Method | Parameters | Return | Verified |\n|--------|------------|--------|----------|\n| {METHOD} | {PARAMS} | {RETURN} | {YES/NO} |\n\n#### Filter Types\n| Filter Type | Data Element | Values | Verified |\n|-------------|--------------|--------|----------|\n| {FILTER} | {DTEL} | {VALUES} | {YES/NO} |\n\n**Existing Implementations:**\n- {IMPLEMENTATION_LIST}\n\n**Issues Found:**\n- {ISSUE_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "importantRules": [
+      "NEVER implement BAdI without verifying interface methods",
+      "Filter values must match BAdI definition - wrong filters cause errors",
+      "Check for existing implementations to avoid conflicts",
+      "Fallback class provides default behavior - understand it first",
+      "Multiple-use BAdIs allow multiple implementations",
+      "Single-use BAdIs allow only one active implementation",
+      "If BAdI unverified, STOP and ASK user"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "BAdI not found",
+        "action": "ASK USER: 'Cannot verify BAdI {BADI}. Is this a custom BAdI? Please provide its interface definition.'"
+      },
+      {
+        "condition": "Interface method not found",
+        "action": "Report that method does not exist. List available methods."
+      },
+      {
+        "condition": "Filter type mismatch",
+        "action": "WARN: Filter value does not match BAdI filter type definition."
+      },
+      {
+        "condition": "BAdI not released (ABAP Cloud)",
+        "action": "WARN: BAdI is not released for ABAP Cloud. Implementation not possible in BTP."
+      },
+      {
+        "condition": "Single-use already implemented",
+        "action": "WARN: Single-use BAdI already has active implementation. Consider filter strategy."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{BADI_NAME}", "description": "Name of BAdI definition", "required": true},
+    {"name": "{METHOD_NAME}", "description": "Interface method to verify (optional)", "required": false},
+    {"name": "{FILTER_VALUE}", "description": "Filter value for implementation (optional)", "required": false}
+  ]
+}

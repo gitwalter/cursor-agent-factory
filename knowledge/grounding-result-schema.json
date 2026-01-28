@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "schemaId": "grounding-result-schema",
+    "schemaName": "Grounding Result Schema",
+    "description": "Standard schema for grounding verification results across all grounding skills",
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-28"
+  },
+  "resultStructure": {
+    "header": {
+      "skillId": "string - ID of the grounding skill used",
+      "artifactType": "string - Type of artifact verified",
+      "artifactName": "string - Name of artifact verified",
+      "timestamp": "datetime - When verification was performed",
+      "overallStatus": "enum - VERIFIED | PARTIALLY_VERIFIED | UNVERIFIED | ERROR",
+      "confidence": "enum - HIGH | MEDIUM | LOW",
+      "recommendation": "enum - PROCEED | PROCEED_WITH_WARNINGS | STOP | ASK_USER"
+    },
+    "verification": {
+      "properties": [
+        {
+          "property": "string - Property name verified",
+          "expected": "any - Expected value",
+          "actual": "any - Actual verified value",
+          "verified": "boolean - Whether verification passed",
+          "source": "string - Source of verification",
+          "sourceUrl": "string - URL to source documentation (optional)",
+          "notes": "string - Additional notes (optional)"
+        }
+      ],
+      "summary": {
+        "totalProperties": "number - Total properties checked",
+        "verifiedCount": "number - Properties verified",
+        "unverifiedCount": "number - Properties not verified",
+        "warningCount": "number - Properties with warnings"
+      }
+    },
+    "releaseStatus": {
+      "c0Extend": "boolean | null - C0 release status",
+      "c1Use": "boolean | null - C1 release status",
+      "c2Remote": "boolean | null - C2 release status",
+      "abapCloudCompatible": "boolean - Compatible with ABAP Cloud",
+      "deprecated": "boolean - Whether object is deprecated",
+      "successor": "string | null - Successor object if deprecated"
+    },
+    "issues": [
+      {
+        "severity": "enum - ERROR | WARNING | INFO",
+        "code": "string - Issue code for categorization",
+        "message": "string - Human-readable issue description",
+        "property": "string - Affected property (optional)",
+        "suggestion": "string - Suggested resolution (optional)"
+      }
+    ],
+    "evidence": {
+      "spans": [
+        {
+          "id": "string - Span identifier (S0, S1, etc.)",
+          "text": "string - Evidence text",
+          "source": "string - Source name",
+          "url": "string - Source URL (optional)"
+        }
+      ]
+    },
+    "strawberryVerification": {
+      "performed": "boolean - Whether Strawberry verification was done",
+      "claims": [
+        {
+          "claim": "string - Claim text",
+          "citations": ["string - Span citations"],
+          "budgetGap": "number - Budget gap value",
+          "status": "enum - OK | WARNING | FAIL"
+        }
+      ],
+      "overallStatus": "enum - PASSED | WARNING | FAILED | SKIPPED"
+    }
+  },
+  "statusDefinitions": {
+    "VERIFIED": "All critical properties verified with HIGH confidence",
+    "PARTIALLY_VERIFIED": "Some properties verified, others unverified or with warnings",
+    "UNVERIFIED": "Critical properties could not be verified",
+    "ERROR": "Verification process encountered an error"
+  },
+  "confidenceDefinitions": {
+    "HIGH": "Found in SAP official documentation with exact match",
+    "MEDIUM": "Found in community resources or partial match",
+    "LOW": "Inferred from patterns or limited sources"
+  },
+  "recommendationDefinitions": {
+    "PROCEED": "All verifications passed - safe to proceed",
+    "PROCEED_WITH_WARNINGS": "Verified with warnings - proceed with caution",
+    "STOP": "Critical verification failed - do not proceed",
+    "ASK_USER": "Verification uncertain - ask user for confirmation"
+  },
+  "issueCodes": {
+    "OBJECT_NOT_FOUND": "Repository object could not be found",
+    "FIELD_NOT_FOUND": "Specified field not found in structure",
+    "TYPE_MISMATCH": "Data type mismatch detected",
+    "NOT_RELEASED": "Object not released for target environment",
+    "DEPRECATED": "Object is deprecated",
+    "HALLUCINATION_RISK": "High risk of hallucinated content",
+    "SPEC_MISMATCH": "Implementation does not match specification",
+    "MISSING_MAPPING": "Required field mapping is missing"
+  },
+  "exampleResult": {
+    "header": {
+      "skillId": "ddic-grounding",
+      "artifactType": "TABLE",
+      "artifactName": "MARA",
+      "timestamp": "2025-01-28T10:30:00Z",
+      "overallStatus": "VERIFIED",
+      "confidence": "HIGH",
+      "recommendation": "PROCEED"
+    },
+    "verification": {
+      "properties": [
+        {
+          "property": "existence",
+          "expected": true,
+          "actual": true,
+          "verified": true,
+          "source": "SAP Help Portal",
+          "sourceUrl": "https://help.sap.com/..."
+        },
+        {
+          "property": "field.MATNR.type",
+          "expected": "CHAR(40)",
+          "actual": "CHAR(40)",
+          "verified": true,
+          "source": "knowledge/ddic-catalog.json"
+        }
+      ],
+      "summary": {
+        "totalProperties": 12,
+        "verifiedCount": 12,
+        "unverifiedCount": 0,
+        "warningCount": 0
+      }
+    },
+    "releaseStatus": {
+      "c0Extend": false,
+      "c1Use": true,
+      "c2Remote": false,
+      "abapCloudCompatible": true,
+      "deprecated": false,
+      "successor": null
+    },
+    "issues": [],
+    "evidence": {
+      "spans": [
+        {
+          "id": "S0",
+          "text": "Table MARA contains general material data...",
+          "source": "SAP Help Portal",
+          "url": "https://help.sap.com/..."
+        }
+      ]
+    },
+    "strawberryVerification": {
+      "performed": true,
+      "claims": [
+        {
+          "claim": "Table MARA has field MATNR of type CHAR(40)",
+          "citations": ["S0"],
+          "budgetGap": -2.5,
+          "status": "OK"
+        }
+      ],
+      "overallStatus": "PASSED"
+    }
+  }
+}

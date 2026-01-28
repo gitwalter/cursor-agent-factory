@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "patternId": "mapping-grounding",
+    "patternName": "Mapping Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify field and structure mappings against specifications from Excel, Confluence, or other documentation sources",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "mapping-grounding",
+    "description": "Verify field and structure mappings against project specifications and documentation",
+    "type": "skill",
+    "knowledge": ["mapping-spec-schema.json"]
+  },
+  "sections": {
+    "title": "Mapping Grounding Skill",
+    "introduction": "Ensures all field and structure mappings are verified against authoritative specifications. Validates source-to-target mappings, type compatibility, transformation rules, and specification compliance from Excel files, Confluence documentation, or other project documentation.",
+    "artifactTypes": [
+      {
+        "type": "field_mapping",
+        "description": "Individual field-to-field mappings",
+        "verifications": ["source_field_exists", "target_field_exists", "type_compatibility", "transformation_rule"]
+      },
+      {
+        "type": "structure_mapping",
+        "description": "Complete structure-to-structure mappings",
+        "verifications": ["all_required_fields_mapped", "unmapped_source_fields", "unmapped_target_fields"]
+      },
+      {
+        "type": "transformation_rule",
+        "description": "Value transformation logic",
+        "verifications": ["conversion_routine", "value_mapping", "default_values", "conditional_logic"]
+      },
+      {
+        "type": "specification_document",
+        "description": "External specification source",
+        "verifications": ["document_exists", "version", "approval_status", "last_updated"]
+      }
+    ],
+    "specificationSources": {
+      "excel": "Excel mapping files with source/target columns",
+      "confluence": "Confluence pages with mapping tables",
+      "jira": "JIRA tickets with mapping requirements",
+      "functional_spec": "Functional specification documents"
+    },
+    "whenToUse": [
+      "When implementing data transformations between structures",
+      "Before coding field mappings from specifications",
+      "When validating implementation against documentation",
+      "When migrating data between systems",
+      "When implementing interface mappings (IDocs, APIs)"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Locate Specification",
+        "description": "Find the authoritative mapping specification",
+        "actions": [
+          "Check for referenced Excel files in project",
+          "Search Confluence for mapping documentation",
+          "Query JIRA for specification tickets"
+        ],
+        "mcpTools": ["atlassian-getConfluencePage", "atlassian-searchConfluenceUsingCql", "atlassian-getJiraIssue"]
+      },
+      {
+        "step": 2,
+        "name": "Parse Specification",
+        "description": "Extract mapping definitions from specification",
+        "expectedFormat": {
+          "columns": ["Source Structure", "Source Field", "Target Structure", "Target Field", "Transformation", "Notes"],
+          "alternativeColumns": ["From", "To", "Mapping Rule", "Comment"]
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify Source Fields",
+        "description": "Confirm all source fields exist",
+        "actions": [
+          "Use ddic-grounding to verify source structure fields",
+          "Use cds-grounding to verify CDS entity elements",
+          "Document any missing source fields"
+        ],
+        "crossReference": ["ddic-grounding", "cds-grounding"]
+      },
+      {
+        "step": 4,
+        "name": "Verify Target Fields",
+        "description": "Confirm all target fields exist",
+        "actions": [
+          "Use ddic-grounding to verify target structure fields",
+          "Use cds-grounding to verify CDS entity elements",
+          "Document any missing target fields"
+        ],
+        "crossReference": ["ddic-grounding", "cds-grounding"]
+      },
+      {
+        "step": 5,
+        "name": "Check Type Compatibility",
+        "description": "Verify source and target types are compatible",
+        "verifications": [
+          "Data type match or conversion possible",
+          "Length compatibility (target >= source for strings)",
+          "Decimal compatibility",
+          "Character set compatibility"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Verify Transformation Rules",
+        "description": "Confirm transformation logic is valid",
+        "verifications": [
+          "Conversion routines exist (if referenced)",
+          "Value mapping tables are complete",
+          "Default values are valid for target type",
+          "Conditional logic is implementable"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Check Mapping Coverage",
+        "description": "Verify all required fields are mapped",
+        "verifications": [
+          "All mandatory target fields have mappings",
+          "No unmapped source fields (that should be mapped)",
+          "Key fields are properly mapped"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Compare with Implementation",
+        "description": "If implementation exists, verify compliance",
+        "verifications": [
+          "Implementation matches specification",
+          "No extra/missing mappings",
+          "Transformation logic matches"
+        ]
+      },
+      {
+        "step": 9,
+        "name": "Document and Escalate",
+        "description": "Record results and handle discrepancies",
+        "actions": [
+          "Document all verified mappings",
+          "Flag specification gaps or errors",
+          "STOP and ASK if critical mappings unverified",
+          "Suggest specification updates if needed"
+        ]
+      }
+    ],
+    "outputFormat": "### Mapping Verification Results\n\n**Specification Source:** {SOURCE_TYPE}: {SOURCE_REFERENCE}\n**Version:** {VERSION}\n**Last Updated:** {DATE}\n\n#### Source Structure: {SOURCE_STRUCTURE}\n#### Target Structure: {TARGET_STRUCTURE}\n\n#### Field Mappings Verified\n| Source Field | Target Field | Type Match | Transformation | Verified | Issues |\n|--------------|--------------|------------|----------------|----------|--------|\n| {SRC_FIELD} | {TGT_FIELD} | {YES/NO} | {RULE} | {YES/NO} | {ISSUES} |\n\n#### Coverage Analysis\n- **Mapped Fields:** {COUNT}\n- **Unmapped Source Fields:** {LIST}\n- **Unmapped Target Fields:** {LIST}\n- **Missing Required Fields:** {LIST}\n\n#### Type Compatibility Issues\n| Source | Source Type | Target | Target Type | Issue |\n|--------|-------------|--------|-------------|-------|\n| {SRC} | {TYPE} | {TGT} | {TYPE} | {ISSUE} |\n\n**Specification Gaps Found:**\n- {GAP_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER|UPDATE_SPEC}",
+    "importantRules": [
+      "ALWAYS verify mappings against the authoritative specification",
+      "Never assume mapping logic - check the specification",
+      "Type mismatches can cause data loss or runtime errors",
+      "Key field mappings are critical - verify carefully",
+      "Transformation rules must be exactly as specified",
+      "If specification is unclear, STOP and ASK before implementing",
+      "Document any discrepancies between spec and implementation"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "Specification not found",
+        "action": "ASK USER: 'Cannot find mapping specification. Please provide the Excel file or Confluence page reference.'"
+      },
+      {
+        "condition": "Source field not in specification",
+        "action": "WARN: Implementation uses field not in specification. Verify if intentional."
+      },
+      {
+        "condition": "Type incompatibility",
+        "action": "WARN: Type mismatch between {SOURCE} and {TARGET}. Conversion may cause data loss."
+      },
+      {
+        "condition": "Missing transformation rule",
+        "action": "ASK USER: 'Transformation rule unclear for {FIELD}. Please clarify the mapping logic.'"
+      },
+      {
+        "condition": "Specification outdated",
+        "action": "WARN: Specification version {VERSION} may be outdated. Verify with latest approved version."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{SOURCE_STRUCTURE}", "description": "Source structure/entity name", "required": true},
+    {"name": "{TARGET_STRUCTURE}", "description": "Target structure/entity name", "required": true},
+    {"name": "{SPEC_REFERENCE}", "description": "Reference to specification (Confluence page, Excel file)", "required": false},
+    {"name": "{FIELD_NAME}", "description": "Specific field to verify (optional)", "required": false}
+  ]
+}

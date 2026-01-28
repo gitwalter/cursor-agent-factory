@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "catalogId": "api-catalog",
+    "catalogName": "SAP API Catalog",
+    "description": "Pre-verified SAP APIs including OData services, BAPIs, and service bindings",
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-28",
+    "sources": ["SAP Business Accelerator Hub", "SAP Help Portal"]
+  },
+  "protocolVersions": {
+    "odata_v2": {
+      "description": "OData Version 2",
+      "features": ["Function Imports", "Deep Insert", "Batch Requests"],
+      "createdWith": ["SEGW", "CDS with @OData.publish"]
+    },
+    "odata_v4": {
+      "description": "OData Version 4",
+      "features": ["Actions", "Functions", "Deep Operations", "Draft"],
+      "createdWith": ["RAP Service Binding"]
+    },
+    "ina": {
+      "description": "InA Protocol for Analytics",
+      "features": ["Analytical Queries", "Aggregations"],
+      "createdWith": ["RAP Service Binding with InA protocol"]
+    }
+  },
+  "commonBapis": {
+    "BAPI_TRANSACTION_COMMIT": {
+      "description": "Commit BAPI Transaction",
+      "functionGroup": "BAPT",
+      "parameters": {
+        "importing": [
+          {"name": "WAIT", "type": "BAPITA-WAIT", "optional": true, "description": "Wait for update task"}
+        ],
+        "exporting": [
+          {"name": "RETURN", "type": "BAPIRET2", "description": "Return messages"}
+        ]
+      },
+      "usage": "Call after successful BAPI execution to commit changes",
+      "released": {"C2": true}
+    },
+    "BAPI_TRANSACTION_ROLLBACK": {
+      "description": "Rollback BAPI Transaction",
+      "functionGroup": "BAPT",
+      "parameters": {
+        "exporting": [
+          {"name": "RETURN", "type": "BAPIRET2", "description": "Return messages"}
+        ]
+      },
+      "usage": "Call after failed BAPI execution to rollback changes",
+      "released": {"C2": true}
+    },
+    "BAPI_MATERIAL_GETLIST": {
+      "description": "Get List of Materials",
+      "functionGroup": "MASN",
+      "parameters": {
+        "importing": [
+          {"name": "MAXROWS", "type": "BAPIMATIND-DEL_ROWS", "optional": true}
+        ],
+        "tables": [
+          {"name": "MATNRSELECTION", "type": "BAPI_MATSEL"},
+          {"name": "MATNRLIST", "type": "BAPI_MATKEY"}
+        ],
+        "exporting": [
+          {"name": "RETURN", "type": "BAPIRETURN"}
+        ]
+      },
+      "usage": "Retrieve list of materials matching selection criteria",
+      "released": {"C2": true}
+    }
+  },
+  "serviceBindingPatterns": {
+    "odata_v4_ui": {
+      "description": "OData V4 for UI consumption",
+      "bindingType": "ODATA V4 - UI",
+      "protocol": "OData V4",
+      "usage": "Fiori Elements applications"
+    },
+    "odata_v4_web_api": {
+      "description": "OData V4 for Web API",
+      "bindingType": "ODATA V4 - Web API",
+      "protocol": "OData V4",
+      "usage": "External API consumption"
+    },
+    "odata_v2_ui": {
+      "description": "OData V2 for UI consumption",
+      "bindingType": "ODATA V2 - UI",
+      "protocol": "OData V2",
+      "usage": "Legacy Fiori applications"
+    },
+    "ina_ui": {
+      "description": "InA for Analytical UI",
+      "bindingType": "InA - UI",
+      "protocol": "InA",
+      "usage": "SAP Analytics Cloud, Analytical applications"
+    }
+  },
+  "apiHub": {
+    "description": "SAP Business Accelerator Hub provides API specifications",
+    "url": "https://api.sap.com/",
+    "contents": [
+      "API specifications (OpenAPI/OData)",
+      "Try-out functionality",
+      "Sample code",
+      "Release information"
+    ],
+    "usage": "Search for official SAP API documentation and specifications"
+  },
+  "s4hanaApis": {
+    "description": "Common S/4HANA Cloud APIs",
+    "categories": {
+      "masterData": [
+        "Business Partner",
+        "Product",
+        "Cost Center",
+        "Profit Center"
+      ],
+      "transactional": [
+        "Sales Order",
+        "Purchase Order",
+        "Journal Entry",
+        "Outbound Delivery"
+      ],
+      "analytical": [
+        "Financial Statement",
+        "Cost Analysis",
+        "Sales Analytics"
+      ]
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "patternId": "authorization-grounding",
+    "patternName": "Authorization Grounding Skill",
+    "category": "sap-grounding",
+    "stackAgnostic": false,
+    "description": "Verify SAP Authorization Objects, authorization fields, and PFCG role assignments",
+    "composable": true,
+    "version": "1.0.0"
+  },
+  "frontmatter": {
+    "name": "authorization-grounding",
+    "description": "Verify ABAP authorization artifacts including authorization objects, fields, check indicators, and PFCG mappings",
+    "type": "skill",
+    "knowledge": ["authorization-catalog.json"]
+  },
+  "sections": {
+    "title": "Authorization Grounding Skill",
+    "introduction": "Ensures all SAP authorization artifacts are verified before implementation. Covers authorization objects, authorization fields, check indicators (SU22/SU24), and PFCG role configurations.",
+    "artifactTypes": [
+      {
+        "type": "authorization_object",
+        "description": "Authorization object definition",
+        "verifications": ["existence", "authorization_class", "fields", "documentation"]
+      },
+      {
+        "type": "authorization_field",
+        "description": "Fields within authorization objects",
+        "verifications": ["existence", "data_element", "check_table", "allowed_values"]
+      },
+      {
+        "type": "check_indicator",
+        "description": "SU22/SU24 check configurations",
+        "verifications": ["program_assignment", "check_status", "proposal_values"]
+      },
+      {
+        "type": "pfcg_role",
+        "description": "Role-based authorization assignments",
+        "verifications": ["role_existence", "authorization_values", "user_assignment"]
+      },
+      {
+        "type": "dcl_access_control",
+        "description": "CDS access control with authorization",
+        "verifications": ["pfcg_mapping", "authorization_object", "field_mapping"]
+      }
+    ],
+    "commonAuthObjects": {
+      "S_TCODE": "Transaction code authorization",
+      "S_PROGRAM": "Program authorization",
+      "S_DEVELOP": "Development authorization (ABAP Workbench)",
+      "S_TABU_DIS": "Table display via SE16",
+      "S_RFC": "RFC function module authorization",
+      "S_SERVICE": "Service authorization"
+    },
+    "whenToUse": [
+      "When implementing AUTHORITY-CHECK statements",
+      "Before referencing authorization objects in code",
+      "When designing CDS access control",
+      "When documenting authorization requirements",
+      "Before assuming authorization fields or values exist"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Check Knowledge Cache",
+        "description": "Look for cached authorization definitions",
+        "actions": [
+          "Query knowledge/authorization-catalog.json for auth object definitions"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Search SAP Documentation",
+        "description": "Search for authorization documentation",
+        "mcpTools": ["SAP_Documentation_MCP_Server-search", "SAP_Documentation_MCP_Server-sap_help_search"],
+        "queryPatterns": {
+          "auth_object": "{AUTH_OBJECT} authorization object fields",
+          "auth_field": "{AUTH_FIELD} authorization field values",
+          "auth_check": "AUTHORITY-CHECK {AUTH_OBJECT}"
+        }
+      },
+      {
+        "step": 3,
+        "name": "Verify Authorization Object",
+        "description": "Confirm authorization object exists",
+        "verifications": [
+          "Authorization object exists",
+          "Authorization class assignment",
+          "Object documentation"
+        ]
+      },
+      {
+        "step": 4,
+        "name": "Verify Authorization Fields",
+        "description": "Check fields within object",
+        "verifications": [
+          "Field exists in auth object",
+          "Field data element",
+          "Allowed field values",
+          "Check table if applicable"
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Verify Check Indicator",
+        "description": "Check SU22/SU24 configuration",
+        "verifications": [
+          "Check indicator for program/transaction",
+          "Proposal values configured",
+          "Check status (check/do not check)"
+        ]
+      },
+      {
+        "step": 6,
+        "name": "Verify PFCG Mapping",
+        "description": "For CDS, verify PFCG mapping",
+        "verifications": [
+          "PFCG mapping defined for auth object",
+          "CDS element to auth field mapping",
+          "Bypass conditions if any"
+        ]
+      },
+      {
+        "step": 7,
+        "name": "Verify AUTHORITY-CHECK Syntax",
+        "description": "Validate authorization check usage",
+        "verifications": [
+          "All required fields specified",
+          "DUMMY used correctly for not-checked fields",
+          "Return code handling (sy-subrc)"
+        ]
+      },
+      {
+        "step": 8,
+        "name": "Document and Escalate",
+        "description": "Record results and handle failures",
+        "actions": [
+          "Document all verifications",
+          "STOP and ASK if auth object unverified",
+          "Suggest authorization requirements for roles"
+        ]
+      }
+    ],
+    "outputFormat": "### Authorization Verification Results\n\n**Authorization Object:** {AUTH_OBJECT}\n**Authorization Class:** {AUTH_CLASS}\n**Description:** {DESCRIPTION}\n\n#### Fields Verified\n| Field | Data Element | Check Table | Required | Verified |\n|-------|--------------|-------------|----------|----------|\n| {FIELD} | {DTEL} | {CHTAB} | {Y/N} | {YES/NO} |\n\n#### Check Indicator (SU22/SU24)\n| Program/TCode | Status | Proposal | Verified |\n|---------------|--------|----------|----------|\n| {PROGRAM} | {CHECK|NOCHECK} | {VALUES} | {YES/NO} |\n\n#### AUTHORITY-CHECK Template\n```abap\nAUTHORITY-CHECK OBJECT '{AUTH_OBJECT}'\n  ID '{FIELD1}' FIELD {value1}\n  ID '{FIELD2}' FIELD {value2}.\nIF sy-subrc <> 0.\n  \" Handle no authorization\nENDIF.\n```\n\n**Issues Found:**\n- {ISSUE_LIST}\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "importantRules": [
+      "NEVER use authorization objects without verifying field names",
+      "All fields must be specified or marked DUMMY in AUTHORITY-CHECK",
+      "Check return code (sy-subrc) after AUTHORITY-CHECK",
+      "SU24 proposals affect role generation - document requirements",
+      "PFCG mappings must use valid authorization objects and fields",
+      "If authorization object unverified, STOP and ASK user"
+    ],
+    "fallbackProcedures": [
+      {
+        "condition": "Authorization object not found",
+        "action": "ASK USER: 'Cannot verify authorization object {AUTH_OBJECT}. Is this a custom object? Please confirm it exists.'"
+      },
+      {
+        "condition": "Field not found in object",
+        "action": "Report that field does not exist in authorization object. List available fields."
+      },
+      {
+        "condition": "No check indicator",
+        "action": "INFO: No SU22/SU24 entry found for this program/transaction. Consider configuring."
+      },
+      {
+        "condition": "Invalid field value",
+        "action": "WARN: Field value may not be valid. Check allowed values from check table."
+      }
+    ]
+  },
+  "variables": [
+    {"name": "{AUTH_OBJECT}", "description": "Authorization object name", "required": true},
+    {"name": "{AUTH_FIELD}", "description": "Authorization field to verify (optional)", "required": false},
+    {"name": "{PROGRAM}", "description": "Program for check indicator lookup (optional)", "required": false}
+  ]
+}

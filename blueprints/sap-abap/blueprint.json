@@ -37,7 +37,21 @@
     {"patternId": "grounding", "required": true, "customizations": {"name": "sap-grounding"}},
     {"patternId": "tdd", "required": true, "customizations": {"name": "tdd-abap"}},
     {"patternId": "code-templates", "required": true},
-    {"patternId": "cap-development", "required": false}
+    {"patternId": "cap-development", "required": false},
+    {"patternId": "sap-grounding", "required": true, "description": "SAP grounding coordinator skill"},
+    {"patternId": "ddic-grounding", "required": true, "description": "DDIC objects grounding"},
+    {"patternId": "cds-grounding", "required": true, "description": "CDS entities grounding"},
+    {"patternId": "rap-grounding", "required": true, "description": "RAP behavior grounding"},
+    {"patternId": "class-grounding", "required": true, "description": "Class/interface grounding"},
+    {"patternId": "function-grounding", "required": true, "description": "Function module grounding"},
+    {"patternId": "api-grounding", "required": true, "description": "API/service grounding"},
+    {"patternId": "enhancement-grounding", "required": true, "description": "Enhancement/BAdI grounding"},
+    {"patternId": "message-grounding", "required": true, "description": "Message class grounding"},
+    {"patternId": "authorization-grounding", "required": true, "description": "Authorization grounding"},
+    {"patternId": "mapping-grounding", "required": true, "description": "Mapping specification grounding"},
+    {"patternId": "existence-grounding", "required": true, "description": "Repository object existence grounding"},
+    {"patternId": "fiori-grounding", "required": true, "description": "Fiori/UI5 grounding"},
+    {"patternId": "strawberry-verification", "required": true, "description": "Mathematical hallucination verification"}
   ],
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "ABAP naming conventions (Clean/Hungarian)"},
@@ -45,7 +59,15 @@
     {"filename": "common-table-patterns.json", "description": "SAP table patterns"},
     {"filename": "tadir-object-types.json", "description": "ABAP object types"},
     {"filename": "service-class-catalog.json", "description": "Service class patterns"},
-    {"filename": "sap-reference-repos.json", "description": "SAP sample repositories"}
+    {"filename": "sap-reference-repos.json", "description": "SAP sample repositories"},
+    {"filename": "ddic-catalog.json", "description": "DDIC objects catalog for grounding"},
+    {"filename": "cds-catalog.json", "description": "CDS entities catalog for grounding"},
+    {"filename": "class-catalog.json", "description": "ABAP classes catalog for grounding"},
+    {"filename": "rap-catalog.json", "description": "RAP behavior catalog for grounding"},
+    {"filename": "api-catalog.json", "description": "API/service catalog for grounding"},
+    {"filename": "released-apis.json", "description": "Released APIs with C0/C1/C2 contracts"},
+    {"filename": "mapping-spec-schema.json", "description": "Mapping specification schema"},
+    {"filename": "grounding-result-schema.json", "description": "Standard grounding result format"}
   ],
   "templates": {
     "codeTemplates": [
@@ -70,8 +92,8 @@
     ]
   },
   "mcpServers": [
-    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": true},
-    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal", "required": true},
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence for specifications", "required": true},
+    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal for grounding", "required": true},
     {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "SAP sample repos", "required": true},
     {"name": "sequentialthinking", "url": "https://remote.mcpservers.org/sequentialthinking/mcp", "purpose": "Complex analysis", "required": false}
   ],

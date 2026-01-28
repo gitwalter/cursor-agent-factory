@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "catalogId": "released-apis",
+    "catalogName": "Released APIs Reference",
+    "description": "SAP released APIs with C0/C1/C2 contracts for ABAP Cloud compatibility",
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-28",
+    "sources": ["SAP Help Portal", "Released Objects Documentation"],
+    "note": "For ABAP Cloud development, only C1-released APIs can be used"
+  },
+  "releaseContractDefinitions": {
+    "C0": {
+      "name": "Extend",
+      "description": "Can be extended (inherited, implemented, enhanced)",
+      "usage": "Subclassing, interface implementation, BAdI implementation",
+      "requiredFor": ["Inheritance", "Interface implementation", "Enhancement"]
+    },
+    "C1": {
+      "name": "System-Internal Use",
+      "description": "Can be used within the same system",
+      "usage": "Instantiation, method calls, type references",
+      "requiredFor": ["ABAP Cloud development", "BTP ABAP Environment"]
+    },
+    "C2": {
+      "name": "Remote API",
+      "description": "Can be accessed from external systems",
+      "usage": "RFC calls, OData consumption, external integration",
+      "requiredFor": ["External API access", "RFC integration"]
+    }
+  },
+  "releasedClasses": {
+    "RTTI": [
+      {"name": "CL_ABAP_TYPEDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_DATADESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_ELEMDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_STRUCTDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_TABLEDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_REFDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_CLASSDESCR", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_ABAP_INTFDESCR", "C0": false, "C1": true, "C2": false}
+    ],
+    "ALV": [
+      {"name": "CL_SALV_TABLE", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_SALV_COLUMNS_TABLE", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_SALV_COLUMN_TABLE", "C0": false, "C1": true, "C2": false}
+    ],
+    "RAP": [
+      {"name": "CL_ABAP_BEHV", "C0": true, "C1": true, "C2": false},
+      {"name": "CL_ABAP_BEHV_MSG", "C0": false, "C1": true, "C2": false}
+    ],
+    "JSON_XML": [
+      {"name": "CL_SXML_STRING_WRITER", "C0": false, "C1": true, "C2": false},
+      {"name": "CL_SXML_STRING_READER", "C0": false, "C1": true, "C2": false}
+    ]
+  },
+  "releasedInterfaces": {
+    "RAP": [
+      {"name": "IF_ABAP_BEHV", "C0": true, "C1": true},
+      {"name": "IF_ABAP_BEHV_MESSAGE", "C0": true, "C1": true}
+    ],
+    "Messaging": [
+      {"name": "IF_T100_MESSAGE", "C0": true, "C1": true},
+      {"name": "IF_T100_DYN_MSG", "C0": true, "C1": true}
+    ]
+  },
+  "releasedCDSEntities": {
+    "VDM_Interface": [
+      {"name": "I_Country", "C1": true, "description": "Country master data"},
+      {"name": "I_Currency", "C1": true, "description": "Currency master data"},
+      {"name": "I_Language", "C1": true, "description": "Language master data"},
+      {"name": "I_UnitOfMeasure", "C1": true, "description": "Unit of measure master data"},
+      {"name": "I_BusinessPartner", "C1": true, "description": "Business partner master data"},
+      {"name": "I_Product", "C1": true, "description": "Product master data"},
+      {"name": "I_SalesOrder", "C1": true, "description": "Sales order transaction data"},
+      {"name": "I_PurchaseOrder", "C1": true, "description": "Purchase order transaction data"}
+    ]
+  },
+  "releasedFunctionModules": {
+    "BAPI": [
+      {"name": "BAPI_TRANSACTION_COMMIT", "C2": true, "description": "Commit BAPI transaction"},
+      {"name": "BAPI_TRANSACTION_ROLLBACK", "C2": true, "description": "Rollback BAPI transaction"}
+    ],
+    "Conversion": [
+      {"name": "CONVERSION_EXIT_ALPHA_INPUT", "C1": true, "description": "Alpha conversion input"},
+      {"name": "CONVERSION_EXIT_ALPHA_OUTPUT", "C1": true, "description": "Alpha conversion output"}
+    ]
+  },
+  "notReleasedWarnings": {
+    "description": "Common objects that are NOT released for ABAP Cloud",
+    "examples": [
+      {"name": "CL_GUI_ALV_GRID", "reason": "Use CL_SALV_TABLE instead"},
+      {"name": "REUSE_ALV_GRID_DISPLAY", "reason": "Use CL_SALV_TABLE instead"},
+      {"name": "SELECT-OPTIONS", "reason": "Use CDS parameters or range parameters"}
+    ]
+  },
+  "checkingReleaseStatus": {
+    "description": "How to verify release status in ADT",
+    "steps": [
+      "Open the object in ADT",
+      "Check the 'API State' property",
+      "Look for C0/C1/C2 indicators",
+      "Check 'Use in Cloud Development' flag"
+    ],
+    "documentation": "https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/ABENRELEASED_APIS.html"
+  }
+}
