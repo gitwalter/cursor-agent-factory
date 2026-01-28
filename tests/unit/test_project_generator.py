@@ -9,17 +9,13 @@ Tests cover:
 - File writing and tracking
 """
 
-import json
 import sys
 from pathlib import Path
-from unittest.mock import patch
-
-import pytest
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from scripts.generate_project import ProjectConfig, ProjectGenerator
+from scripts.generate_project import ProjectGenerator  # noqa: E402
 
 
 class TestProjectGeneratorInit:

@@ -79,7 +79,6 @@ def list_patterns() -> None:
                 with open(pattern_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     metadata = data.get('metadata', {})
-                    name = metadata.get('patternName', pattern_file.stem)
                     desc = metadata.get('description', '')
                     print(f"    - {pattern_file.stem}: {desc}")
     

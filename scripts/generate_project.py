@@ -16,7 +16,6 @@ Version: 1.0.0
 """
 
 import json
-import os
 import shutil
 from dataclasses import dataclass, field
 from datetime import datetime
