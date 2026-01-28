@@ -185,10 +185,13 @@ def sample_json_config(tmp_path: Path, sample_config_dict: Dict[str, Any]) -> Pa
 def python_executable() -> str:
     """Get the Python executable path for CLI tests.
     
+    Uses sys.executable to ensure the correct Python interpreter is used
+    regardless of the environment (local, CI, etc.).
+    
     Returns:
         Path to Python executable.
     """
-    return r"C:\App\Anaconda\python.exe"
+    return sys.executable
 
 
 @pytest.fixture
