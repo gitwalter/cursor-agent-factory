@@ -9,51 +9,93 @@ This document captures the comprehensive SAP grounding system design created in 
 
 ## Architecture
 
+For complete visual diagrams, see [../diagrams/sap-grounding-architecture.md](../diagrams/sap-grounding-architecture.md).
+
 ### 5-Layer Grounding Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Layer 1: Knowledge Cache                      │
-│         Pre-verified definitions from knowledge/*.json           │
-│              (Instant lookup, HIGH confidence)                   │
-├─────────────────────────────────────────────────────────────────┤
-│                  Layer 2: SAP Documentation                      │
-│          SAP Help Portal via MCP (sap-documentation)             │
-│               (Fast lookup, HIGH confidence)                     │
-├─────────────────────────────────────────────────────────────────┤
-│                Layer 3: Reference Repositories                   │
-│         abap-cheat-sheets, code samples via DeepWiki             │
-│              (Fast lookup, MEDIUM confidence)                    │
-├─────────────────────────────────────────────────────────────────┤
-│               Layer 4: Project Specifications                    │
-│           Confluence, Excel mappings via Atlassian MCP           │
-│            (Medium lookup, HIGH project-specific)                │
-├─────────────────────────────────────────────────────────────────┤
-│              Layer 5: Strawberry Verification                    │
-│       Mathematical claim verification (hallucination check)      │
-│                  (Final verification layer)                      │
-└─────────────────────────────────────────────────────────────────┘
+The grounding system uses a tiered approach, starting with fast cached lookups and escalating to more thorough verification:
+
+```mermaid
+flowchart TB
+    subgraph Query["Grounding Query"]
+        Q["Verify: Does table BSEG have field DMBTR?"]
+    end
+
+    subgraph L1["Layer 1: Knowledge Cache"]
+        L1D["knowledge/*.json"]
+        L1R["Instant lookup, HIGH confidence"]
+    end
+
+    subgraph L2["Layer 2: SAP Documentation"]
+        L2D["SAP Help Portal via MCP"]
+        L2R["Fast lookup, HIGH confidence"]
+    end
+
+    subgraph L3["Layer 3: Reference Repositories"]
+        L3D["abap-cheat-sheets via DeepWiki"]
+        L3R["Fast lookup, MEDIUM confidence"]
+    end
+
+    subgraph L4["Layer 4: Project Specifications"]
+        L4D["Confluence/Excel via Atlassian MCP"]
+        L4R["Medium lookup, HIGH project-specific"]
+    end
+
+    subgraph L5["Layer 5: Strawberry Verification"]
+        L5D["Two-pass hallucination detection"]
+        L5R["Final verification layer"]
+    end
+
+    Q --> L1 -->|"Not found"| L2 -->|"Not found"| L3 -->|"Not found"| L4 --> L5
+
+    style L1 fill:#c8e6c9
+    style L2 fill:#a5d6a7
+    style L3 fill:#fff9c4
+    style L4 fill:#ffcc80
+    style L5 fill:#ce93d8
 ```
 
 ### Skill Hierarchy
 
-```
-sap-grounding (Coordinator)
-    │
-    ├── ddic-grounding       → Tables, structures, data elements, domains
-    ├── cds-grounding        → CDS views, annotations, access control
-    ├── rap-grounding        → Behavior definitions, actions, validations
-    ├── class-grounding      → Classes, interfaces, exception classes
-    ├── function-grounding   → Function modules, BAPIs, RFCs
-    ├── api-grounding        → OData services, service bindings
-    ├── enhancement-grounding → Enhancement spots, BAdIs
-    ├── message-grounding    → Message classes, message numbers
-    ├── authorization-grounding → Authorization objects and fields
-    ├── mapping-grounding    → Field mappings from specifications
-    ├── existence-grounding  → Repository object existence, release contracts
-    └── fiori-grounding      → Fiori apps, semantic objects, UI5
+The SAP grounding coordinator routes verification requests to specialized skills:
+
+```mermaid
+flowchart TB
+    subgraph Coordinator["sap-grounding (Coordinator)"]
+        C["Routes based on artifact type"]
+    end
+
+    subgraph Technical["Technical Skills"]
+        DDIC["ddic-grounding<br/>Tables, structures, data elements"]
+        CDS["cds-grounding<br/>CDS views, annotations, DCL"]
+        RAP["rap-grounding<br/>Behavior definitions, actions"]
+        CLASS["class-grounding<br/>Classes, interfaces, exceptions"]
+        FUNC["function-grounding<br/>Function modules, BAPIs, RFCs"]
+        API["api-grounding<br/>OData services, bindings"]
+    end
+
+    subgraph Support["Support Skills"]
+        ENH["enhancement-grounding<br/>BAdIs, enhancement spots"]
+        MSG["message-grounding<br/>Message classes, numbers"]
+        AUTH["authorization-grounding<br/>Auth objects, fields"]
+        MAP["mapping-grounding<br/>Field mappings"]
+        EXIST["existence-grounding<br/>TADIR, release contracts"]
+        FIORI["fiori-grounding<br/>Apps, semantic objects"]
+    end
+
+    subgraph Verify["Verification"]
+        STRAW["strawberry-verification<br/>Hallucination detection"]
+    end
+
+    C --> DDIC & CDS & RAP & CLASS & FUNC & API
+    C --> ENH & MSG & AUTH & MAP & EXIST & FIORI
     
-strawberry-verification      → Cross-cutting hallucination detection
+    DDIC & CDS & RAP & CLASS & FUNC & API --> STRAW
+
+    style Coordinator fill:#e3f2fd
+    style Technical fill:#e8f5e9
+    style Support fill:#fff3e0
+    style Verify fill:#f3e5f5
 ```
 
 ## Specialized Skills
@@ -232,14 +274,56 @@ strawberry-verification      → Cross-cutting hallucination detection
 
 ## Strawberry Verification
 
+For detailed verification flow diagrams, see [../diagrams/verification-flow.md](../diagrams/verification-flow.md).
+
 ### Concept
 Detects "procedural hallucinations" where the LLM generates correct information but ignores it in the final output.
 
-### Method
-1. **Collect evidence spans** from grounding skills
-2. **Scrubbed test:** Replace identifiers with placeholders, ask if claim holds
-3. **Full test:** Use complete evidence, ask if claim holds
-4. **Compare results:** If scrubbed test passes too easily, evidence wasn't actually used
+### Two-Pass Verification Method
+
+```mermaid
+flowchart LR
+    subgraph Evidence["Evidence Collection"]
+        E["S0, S1, S2..."]
+    end
+
+    subgraph Pass1["Pass 1: Scrubbed"]
+        P1["Replace identifiers<br/>with placeholders"]
+        Q1["Evaluate claim"]
+        R1{{"Confidence p0"}}
+    end
+
+    subgraph Pass2["Pass 2: Full"]
+        P2["Use complete<br/>evidence"]
+        Q2["Evaluate claim"]
+        R2{{"Confidence p1"}}
+    end
+
+    subgraph Result["Analysis"]
+        CMP["Compare p0 vs p1"]
+    end
+
+    E --> P1 --> Q1 --> R1 --> CMP
+    E --> P2 --> Q2 --> R2 --> CMP
+
+    style Pass1 fill:#fff3e0
+    style Pass2 fill:#e8f5e9
+```
+
+### Decision Matrix
+
+```mermaid
+flowchart TD
+    subgraph Matrix["Verification Outcomes"]
+        A["Scrubbed FAIL + Full PASS"] --> V["✓ VERIFIED<br/>Evidence essential"]
+        B["Scrubbed PASS + Full PASS"] --> S["⚠ SUSPICIOUS<br/>May be confabulating"]
+        C["Both FAIL"] --> U["✗ UNSUPPORTED<br/>Gather more evidence"]
+    end
+
+    style V fill:#c8e6c9
+    style S fill:#ffcc80
+    style U fill:#ef9a9a
+```
 
 ### Interpretation
 | Scrubbed | Full | Status | Action |
@@ -266,6 +350,29 @@ Detects "procedural hallucinations" where the LLM generates correct information 
 | `mapping-spec-schema.json` | Mapping specification format |
 
 ## MCP Server Integration
+
+```mermaid
+flowchart LR
+    subgraph Skills["Grounding Skills"]
+        S1["ddic/cds/rap-grounding"]
+        S2["class/function-grounding"]
+        S3["mapping-grounding"]
+    end
+
+    subgraph MCP["MCP Servers"]
+        SAP["sap-documentation<br/>search, fetch, sap_help_search"]
+        ATL["atlassian<br/>getConfluencePage, searchCql"]
+        DW["deepwiki<br/>ask_question, read_wiki"]
+    end
+
+    S1 --> SAP
+    S2 --> SAP
+    S2 --> DW
+    S3 --> ATL
+
+    style Skills fill:#e3f2fd
+    style MCP fill:#e8f5e9
+```
 
 | Server | Purpose | Tools |
 |--------|---------|-------|

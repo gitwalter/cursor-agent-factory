@@ -1,5 +1,7 @@
 # Cursor Agent Factory
 
+[![CI](https://github.com/YOUR_USERNAME/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/cursor-agent-factory/actions/workflows/ci.yml)
+
 A meta-system that generates complete Cursor AI agent development systems for any technology stack, workflow methodology, and knowledge domain.
 
 ## Overview
@@ -12,6 +14,31 @@ The Cursor Agent Factory is itself a Cursor agent system that produces other Cur
 - Code and document templates (`templates/`)
 - Workflow documentation (`workflows/`)
 - LLM behavior rules (`.cursorrules`)
+
+## Architecture Diagrams
+
+For visual documentation of the factory architecture, see the [diagrams/](diagrams/) folder:
+
+| Diagram | Description |
+|---------|-------------|
+| [Factory Workflow](diagrams/factory-workflow.md) | Complete generation workflow, 5-phase requirements, CLI vs Chat |
+| [Verification Flow](diagrams/verification-flow.md) | Strawberry verification, hallucination detection, grounding pipeline |
+| [Agent/Skill Architecture](diagrams/agent-skill-architecture.md) | Agent hierarchy, skill composition, pattern library |
+| [SAP Grounding](diagrams/sap-grounding-architecture.md) | 5-layer grounding, SAP-specific skills, MCP integration |
+
+### Factory Generation Flow
+
+```mermaid
+flowchart LR
+    A["User Request"] --> B["Requirements<br/>5 Phases"]
+    B --> C["Blueprint<br/>Selection"]
+    C --> D["Pattern<br/>Matching"]
+    D --> E["Artifact<br/>Generation"]
+    E --> F["Complete<br/>Project"]
+    
+    style A fill:#e3f2fd
+    style F fill:#c8e6c9
+```
 
 ## Quick Start
 
@@ -122,6 +149,40 @@ cursor-agent-factory/
 | `template-generation` | Code and document template generation |
 | `cursorrules-generation` | .cursorrules file generation |
 
+### Agent vs Skill Relationship
+
+```mermaid
+flowchart TB
+    subgraph Agents["Agents (Orchestrators)"]
+        A1["requirements-architect"]
+        A2["stack-builder"]
+        A3["template-generator"]
+    end
+    
+    subgraph Skills["Skills (Procedures)"]
+        S1["requirements-gathering"]
+        S2["stack-configuration"]
+        S3["agent-generation"]
+        S4["skill-generation"]
+    end
+    
+    subgraph Knowledge["Knowledge (Data)"]
+        K1["patterns/*.json"]
+        K2["blueprints/*.json"]
+    end
+    
+    A1 --> S1
+    A2 --> S2
+    A3 --> S3
+    A3 --> S4
+    S1 --> K1
+    S2 --> K2
+    
+    style Agents fill:#e3f2fd
+    style Skills fill:#e8f5e9
+    style Knowledge fill:#fff3e0
+```
+
 ## Requirements Gathering Phases
 
 ### Phase 1: Project Context
@@ -168,6 +229,26 @@ Generated projects follow this structure:
 ├── src/                  # Source code
 ├── .cursorrules          # LLM agent behavior rules
 └── README.md             # Project documentation
+```
+
+```mermaid
+flowchart TB
+    subgraph Project["Generated Project"]
+        subgraph Cursor[".cursor/"]
+            A["agents/*.md"]
+            S["skills/*/SKILL.md"]
+        end
+        K["knowledge/*.json"]
+        T["templates/*"]
+        CR[".cursorrules"]
+    end
+    
+    A -->|"uses"| S
+    S -->|"queries"| K
+    CR -->|"configures"| A
+    
+    style Cursor fill:#e3f2fd
+    style K fill:#fff3e0
 ```
 
 ## MCP Server Integration
@@ -241,7 +322,61 @@ mcp_servers:
 - Cursor IDE
 - PyYAML (for YAML config support)
 
+### Installing Development Dependencies
+
+```powershell
+# Install test dependencies
+C:\App\Anaconda\Scripts\pip.exe install -r requirements-dev.txt
+```
+
 ### Running Tests
+
+The project includes a comprehensive pytest-based test suite with unit tests, integration tests, and validation tests.
+
+```powershell
+# Run all tests
+C:\App\Anaconda\python.exe -m pytest tests/ -v
+
+# Run with coverage report
+C:\App\Anaconda\python.exe -m pytest tests/ --cov=scripts --cov=cli --cov-report=html
+
+# Run specific test categories
+C:\App\Anaconda\python.exe -m pytest tests/unit/ -v           # Unit tests
+C:\App\Anaconda\python.exe -m pytest tests/integration/ -v    # Integration tests
+C:\App\Anaconda\python.exe -m pytest tests/validation/ -v     # Schema validation tests
+
+# Run specific test file
+C:\App\Anaconda\python.exe -m pytest tests/unit/test_project_config.py -v
+
+# Run tests matching a pattern
+C:\App\Anaconda\python.exe -m pytest tests/ -k "blueprint" -v
+```
+
+For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md).
+
+### Test Suite Structure
+
+```
+tests/
+├── conftest.py                 # Shared pytest fixtures
+├── unit/                       # Unit tests (60 tests)
+│   ├── test_project_config.py  # ProjectConfig dataclass tests
+│   ├── test_project_generator.py # ProjectGenerator class tests
+│   └── test_pattern_loading.py # Pattern/blueprint loading tests
+├── integration/                # Integration tests (38 tests)
+│   ├── test_cli.py             # CLI command tests
+│   └── test_generation.py      # End-to-end generation tests
+├── validation/                 # Schema validation tests (33 tests)
+│   ├── test_blueprint_schema.py
+│   ├── test_pattern_schema.py
+│   └── test_knowledge_schema.py
+└── fixtures/                   # Test fixture files
+    ├── sample_config.yaml
+    ├── sample_config.json
+    └── minimal_blueprint.json
+```
+
+### Manual CLI Testing
 
 ```powershell
 # Run the CLI help
@@ -257,9 +392,26 @@ C:\App\Anaconda\python.exe cli\factory_cli.py --list-patterns
 ### Testing Generation
 
 ```powershell
-# Generate test project
+# Generate test project from blueprint
 C:\App\Anaconda\python.exe cli\factory_cli.py --blueprint python-fastapi --output C:\Temp\test-project
+
+# Generate from config file
+C:\App\Anaconda\python.exe cli\factory_cli.py --config tests\fixtures\sample_config.yaml --output C:\Temp\yaml-project
 ```
+
+### Continuous Integration
+
+The project uses GitHub Actions for CI/CD. Tests run automatically on:
+- Push to `main` or `develop` branches
+- Pull requests to `main` or `develop` branches
+
+The CI pipeline includes:
+- **Test Matrix**: Python 3.10, 3.11, 3.12 on Ubuntu and Windows
+- **Code Quality**: Ruff linter checks
+- **JSON Validation**: Syntax validation for all JSON files
+- **Generation Test**: End-to-end project generation verification
+
+See `.github/workflows/ci.yml` for the full configuration.
 
 ## Contributing
 

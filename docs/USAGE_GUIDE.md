@@ -11,6 +11,37 @@ This guide explains how to use the Cursor Agent Factory to generate complete Cur
 5. [Customizing Generated Projects](#customizing-generated-projects)
 6. [Understanding Generated Structure](#understanding-generated-structure)
 
+## Visual Overview
+
+For detailed architecture diagrams, see the [diagrams/](../diagrams/) folder.
+
+### Generation Workflow
+
+```mermaid
+flowchart LR
+    subgraph Input["Your Input"]
+        A["Chat or CLI"]
+    end
+    
+    subgraph Process["Factory Process"]
+        B["Requirements<br/>Gathering"]
+        C["Blueprint<br/>Selection"]
+        D["Artifact<br/>Generation"]
+    end
+    
+    subgraph Output["Your Project"]
+        E[".cursor/agents/"]
+        F[".cursor/skills/"]
+        G[".cursorrules"]
+    end
+    
+    A --> B --> C --> D --> E & F & G
+    
+    style Input fill:#e3f2fd
+    style Process fill:#fff3e0
+    style Output fill:#c8e6c9
+```
+
 ## Getting Started
 
 ### Prerequisites
@@ -40,6 +71,23 @@ Simply say one of these phrases:
 ### The 5-Phase Questionnaire
 
 The factory will guide you through these phases:
+
+```mermaid
+flowchart LR
+    P1["Phase 1<br/>Project Context"]
+    P2["Phase 2<br/>Technology Stack"]
+    P3["Phase 3<br/>Workflow"]
+    P4["Phase 4<br/>Knowledge"]
+    P5["Phase 5<br/>Capabilities"]
+    
+    P1 --> P2 --> P3 --> P4 --> P5
+    
+    style P1 fill:#bbdefb
+    style P2 fill:#c8e6c9
+    style P3 fill:#fff9c4
+    style P4 fill:#ffccbc
+    style P5 fill:#e1bee7
+```
 
 #### Phase 1: Project Context
 
@@ -255,6 +303,8 @@ type: skill
 
 ## Understanding Generated Structure
 
+For detailed architecture diagrams, see [../diagrams/agent-skill-architecture.md](../diagrams/agent-skill-architecture.md).
+
 ### Directory Layout
 
 ```
@@ -269,6 +319,43 @@ my-project/
 └── .cursorrules          # Main AI behavior configuration
 ```
 
+### Component Relationships
+
+```mermaid
+flowchart TB
+    subgraph Config[".cursorrules"]
+        RULES["Behavior rules<br/>Agent registry"]
+    end
+    
+    subgraph Cursor[".cursor/"]
+        subgraph Agents["agents/"]
+            A1["code-reviewer.md"]
+            A2["test-generator.md"]
+        end
+        
+        subgraph Skills["skills/"]
+            S1["bugfix-workflow/"]
+            S2["tdd/"]
+        end
+    end
+    
+    subgraph Data["knowledge/"]
+        K1["patterns.json"]
+        K2["conventions.json"]
+    end
+    
+    RULES -->|"activates"| A1
+    RULES -->|"activates"| A2
+    A1 -->|"uses"| S1
+    A2 -->|"uses"| S2
+    S1 -->|"queries"| K1
+    S2 -->|"queries"| K2
+    
+    style Config fill:#f3e5f5
+    style Cursor fill:#e3f2fd
+    style Data fill:#fff3e0
+```
+
 ### .cursorrules File
 
 This is the main configuration file that tells the AI:
@@ -278,6 +365,26 @@ This is the main configuration file that tells the AI:
 - Behavior rules to follow
 
 ### Agents vs Skills
+
+```mermaid
+flowchart LR
+    subgraph Agent["Agent (Orchestrator)"]
+        AT["Activation triggers"]
+        AW["Workflow steps"]
+        AO["Structured output"]
+    end
+    
+    subgraph Skill["Skill (Procedure)"]
+        SF["Single focus"]
+        SP["Step-by-step process"]
+        SK["Knowledge queries"]
+    end
+    
+    Agent -->|"invokes"| Skill
+    
+    style Agent fill:#e3f2fd
+    style Skill fill:#e8f5e9
+```
 
 **Agents** orchestrate work:
 - Have specific activation triggers
@@ -300,6 +407,20 @@ JSON files containing reference data:
 Skills and agents query these files for accurate information.
 
 ## Best Practices
+
+```mermaid
+flowchart TD
+    BP1["Start with blueprint"]
+    BP2["Customize for your needs"]
+    BP3["Keep skills focused"]
+    BP4["Document in knowledge files"]
+    BP5["Test workflows"]
+    
+    BP1 --> BP2 --> BP3 --> BP4 --> BP5
+    
+    style BP1 fill:#c8e6c9
+    style BP5 fill:#c8e6c9
+```
 
 1. **Start with a blueprint** - Customize rather than build from scratch
 2. **Use consistent naming** - Follow the project's style guide

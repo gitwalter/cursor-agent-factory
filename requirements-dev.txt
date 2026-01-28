@@ -1,0 +1,15 @@
+# Development dependencies for Cursor Agent Factory
+# Install with: C:\App\Anaconda\Scripts\pip.exe install -r requirements-dev.txt
+
+# Testing framework
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Schema validation for JSON files
+jsonschema>=4.17.0
+
+# YAML support (also needed by main project)
+pyyaml>=6.0.0
+
+# Optional: for better test output
+pytest-sugar>=0.9.6
