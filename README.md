@@ -451,6 +451,15 @@ The CI pipeline includes:
 
 See `.github/workflows/ci.yml` for the full configuration.
 
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |
+| [Extension Guide](docs/EXTENSION_GUIDE.md) | How to extend the factory with new blueprints, patterns, and skills |
+| [Testing Guide](docs/TESTING.md) | Test suite documentation and testing practices |
+| [SAP Grounding Design](docs/SAP_GROUNDING_DESIGN.md) | SAP-specific grounding architecture and MCP integration |
+
 ## Contributing
 
 1. Fork the repository
