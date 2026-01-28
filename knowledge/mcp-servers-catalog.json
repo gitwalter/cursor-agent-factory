@@ -123,27 +123,15 @@
         {"name": "SearchDocsByLangChain", "description": "Search LangChain docs"}
       ],
       "suggestedFor": ["llm-development"]
-    },
-    "fastmcp": {
-      "name": "FastMCP",
-      "description": "FastMCP documentation and knowledge base",
-      "url": "builtin",
-      "authentication": "none",
-      "capabilities": ["documentation", "mcp-development"],
-      "tools": [
-        {"name": "SearchFastMcp", "description": "Search FastMCP documentation"}
-      ],
-      "suggestedFor": ["mcp-development", "agent-development"]
     }
   },
   "serversByCapability": {
     "jira": ["atlassian"],
     "confluence": ["atlassian"],
     "github": ["deepwiki"],
-    "documentation": ["sap-documentation", "deepwiki", "langchain-docs", "fastmcp"],
+    "documentation": ["sap-documentation", "deepwiki", "langchain-docs"],
     "reasoning": ["sequentialthinking"],
-    "web": ["fetch"],
-    "mcp-development": ["fastmcp"]
+    "web": ["fetch"]
   },
   "serversByStack": {
     "sap": ["sap-documentation", "atlassian", "deepwiki"],
@@ -151,10 +139,5 @@
     "typescript": ["atlassian", "deepwiki"],
     "java": ["atlassian", "deepwiki"],
     "general": ["atlassian", "deepwiki", "sequentialthinking", "fetch"]
-  },
-  "serversByUseCase": {
-    "sap-grounding": ["sap-documentation", "atlassian"],
-    "specification-validation": ["atlassian"],
-    "code-review": ["sap-documentation", "deepwiki"]
   }
 }

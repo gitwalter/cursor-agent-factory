@@ -4,48 +4,23 @@
     "patternName": "Grounding Skill",
     "category": "core",
     "stackAgnostic": true,
-    "description": "Base grounding skill for verifying data structures and assumptions. For SAP-specific grounding, use specialized skills via sap-grounding coordinator.",
-    "composable": true,
-    "version": "2.0.0"
+    "description": "Verify data structures and assumptions before implementation",
+    "composable": true
   },
   "frontmatter": {
     "name": "grounding",
-    "description": "Verify data structures, field existence, and assumptions before implementation. For SAP projects, use sap-grounding coordinator which orchestrates 12 specialized grounding skills.",
+    "description": "Verify data structures, field existence, and assumptions before implementation",
     "type": "skill",
-    "knowledge": ["data-patterns.json"],
-    "relatedSkills": {
-      "sap": "sap-grounding (coordinator for all SAP artifact types)",
-      "verification": "strawberry-verification (mathematical hallucination detection)"
-    }
+    "knowledge": ["data-patterns.json"]
   },
   "sections": {
     "title": "Grounding Skill",
-    "introduction": "Ensures all data structures, field existence, and assumptions are verified before implementation. This is the base grounding skill. For SAP development, a comprehensive grounding system is available with 14 specialized skills covering all SAP artifact types.",
-    "sapGroundingSystem": {
-      "description": "For SAP projects, use the comprehensive SAP grounding system",
-      "coordinator": "sap-grounding - Routes to appropriate specialized skill",
-      "specializedSkills": [
-        "ddic-grounding - Tables, structures, data elements, domains, search helps",
-        "cds-grounding - CDS views, annotations, access control",
-        "rap-grounding - Behavior definitions, actions, determinations, validations",
-        "class-grounding - Classes, interfaces, exception classes, methods",
-        "function-grounding - Function modules, function groups, BAPIs",
-        "api-grounding - OData services, service bindings, SOAP",
-        "enhancement-grounding - Enhancement spots, BAdIs",
-        "message-grounding - Message classes and numbers",
-        "authorization-grounding - Authorization objects and fields",
-        "mapping-grounding - Field/structure mapping specifications",
-        "existence-grounding - Repository object existence, release contracts",
-        "fiori-grounding - Fiori apps, semantic objects, UI5 components"
-      ],
-      "verificationLayer": "strawberry-verification - Mathematical hallucination detection using Pythea/Strawberry"
-    },
+    "introduction": "Ensures all data structures, field existence, and assumptions are verified before implementation.",
     "whenToUse": [
       "When working with database tables or data structures",
       "Before implementing data access logic",
       "When designing data models",
-      "Before assuming any field or structure exists",
-      "For SAP projects: Invoke sap-grounding for comprehensive verification"
+      "Before assuming any field or structure exists"
     ],
     "process": [
       {
@@ -75,54 +50,24 @@
       },
       {
         "step": 5,
-        "name": "Mathematical Verification (Optional)",
-        "description": "For critical claims, invoke Strawberry verification",
-        "actions": ["Collect evidence spans", "Format claims with citations", "Check budget_gap results"]
-      },
-      {
-        "step": 6,
         "name": "Handle Unverified",
         "description": "If verification fails, ask user",
         "actions": ["STOP if cannot verify", "ASK USER for confirmation", "Do NOT proceed with assumptions"]
       }
     ],
-    "verificationProtocol": {
-      "description": "Standard verification protocol for all grounding operations",
-      "principles": [
-        "Never assume without verification",
-        "Fail-safe behavior - If unverified, STOP and ASK",
-        "Source citation - Always document where verification came from",
-        "Confidence tracking - Track HIGH/MEDIUM/LOW confidence",
-        "Cache updates - Store verified results for future use"
-      ],
-      "confidenceLevels": {
-        "HIGH": "Found in official documentation with exact match",
-        "MEDIUM": "Found in community resources or partial match",
-        "LOW": "Inferred from patterns or limited sources"
-      },
-      "strawberryThresholds": {
-        "OK": "budget_gap < 2 - Claim well supported",
-        "WARNING": "budget_gap 2-10 - Marginal support, add warning",
-        "FAIL": "budget_gap > 10 - STOP, do not proceed as proven"
-      }
-    },
-    "outputFormat": "### Data Model Verification\n\n**Confidence:** {HIGH|MEDIUM|LOW}\n\n| Structure | Field | Verified? | Source | Notes |\n|-----------|-------|-----------|--------|-------|\n| {STRUCTURE} | {FIELD} | Yes/No | knowledge/docs | {notes} |\n\n**Recommendation:** {PROCEED|STOP|ASK_USER}",
+    "outputFormat": "### Data Model Verification\n\n| Structure | Field | Verified? | Source | Notes |\n|-----------|-------|-----------|--------|-------|\n| {STRUCTURE} | {FIELD} | Yes/No | knowledge/docs | {notes} |",
     "importantRules": [
       "NEVER assume structures exist without verification",
       "ALWAYS verify before implementation",
       "If verification fails, STOP and ASK user",
-      "Document all verifications in output",
-      "For SAP projects, use sap-grounding for comprehensive verification",
-      "Consider mathematical verification for critical claims"
+      "Document all verifications in output"
     ],
     "fallbackProcedures": [
       {"condition": "If structure cannot be verified", "action": "ASK USER: 'I cannot verify {STRUCTURE}. Please confirm it exists.'"},
-      {"condition": "If field does not exist", "action": "Report finding and suggest alternatives"},
-      {"condition": "If Strawberry flags claim (budget_gap > 10)", "action": "Do NOT proceed as proven. Gather more evidence or ask user."}
+      {"condition": "If field does not exist", "action": "Report finding and suggest alternatives"}
     ]
   },
   "variables": [
-    {"name": "{STRUCTURE_NAME}", "description": "Name of structure to verify", "required": true},
-    {"name": "{INVOKE_STRAWBERRY}", "description": "Whether to invoke mathematical verification", "required": false, "default": false}
+    {"name": "{STRUCTURE_NAME}", "description": "Name of structure to verify", "required": true}
   ]
 }

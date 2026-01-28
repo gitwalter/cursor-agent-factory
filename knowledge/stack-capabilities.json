@@ -101,7 +101,7 @@
         {"name": "clean-abap", "description": "SAP Clean ABAP", "reference": "https://github.com/SAP/styleguides"},
         {"name": "hungarian", "description": "Traditional Hungarian Notation"}
       ],
-      "suggestedAgents": ["code-reviewer", "test-generator", "grounding-verifier", "explorer-sap"],
+      "suggestedAgents": ["code-reviewer", "test-generator", "explorer-sap"],
       "suggestedSkills": ["sap-bugfix", "sap-feature", "sap-grounding", "tdd-abap", "code-templates"],
       "namingConventions": {
         "clean-abap": {

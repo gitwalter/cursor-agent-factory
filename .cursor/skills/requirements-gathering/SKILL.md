@@ -189,7 +189,6 @@ knowledgeDomain:
 | `test-generator` | Creates test cases | When tests in artifacts |
 | `documentation-agent` | Generates documentation | When docs in artifacts |
 | `explorer` | Searches external docs | When external APIs used |
-| `grounding-verifier` | Verifies data models | Data-heavy projects |
 
 ### Skill Options
 
