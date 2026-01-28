@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "blueprintId": "nextjs-fullstack",
+    "blueprintName": "Next.js Full-Stack Blueprint",
+    "description": "Full-stack TypeScript development with Next.js 14+ App Router",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["typescript", "nextjs", "react", "fullstack", "frontend", "backend"]
+  },
+  "stack": {
+    "primaryLanguage": "typescript",
+    "frameworks": [
+      {"name": "Next.js", "version": "14+", "purpose": "Full-stack framework"},
+      {"name": "React", "version": "18+", "purpose": "UI library"},
+      {"name": "Tailwind CSS", "version": "3+", "purpose": "Styling"},
+      {"name": "Prisma", "version": "5+", "purpose": "ORM"},
+      {"name": "tRPC", "version": "11+", "purpose": "Type-safe APIs", "optional": true},
+      {"name": "Zod", "version": "3+", "purpose": "Validation"}
+    ],
+    "databases": [
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Primary database"},
+      {"type": "sql", "name": "SQLite", "purpose": "Development/Testing"}
+    ],
+    "tools": [
+      {"name": "TypeScript", "version": "5+", "purpose": "Type system"},
+      {"name": "ESLint", "purpose": "Linting"},
+      {"name": "Prettier", "purpose": "Formatting"},
+      {"name": "Vitest", "purpose": "Unit testing"},
+      {"name": "Playwright", "purpose": "E2E testing"}
+    ],
+    "styleGuides": [
+      {"name": "airbnb", "description": "Airbnb JavaScript/TypeScript Style", "reference": "https://github.com/airbnb/javascript"},
+      {"name": "nextjs", "description": "Next.js Best Practices", "reference": "https://nextjs.org/docs"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "documentation-agent", "required": false, "customizations": {}},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true},
+    {"patternId": "security-audit", "required": false},
+    {"patternId": "code-review", "required": false}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "TypeScript naming conventions"},
+    {"filename": "component-patterns.json", "description": "React component patterns"},
+    {"filename": "nextjs-patterns.json", "description": "Next.js App Router patterns"},
+    {"filename": "test-patterns.json", "description": "Vitest and Playwright patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "server-component", "directory": "templates/nextjs/components/server/"},
+      {"category": "client-component", "directory": "templates/nextjs/components/client/"},
+      {"category": "api-route", "directory": "templates/nextjs/api/"},
+      {"category": "server-action", "directory": "templates/nextjs/actions/"},
+      {"category": "prisma-model", "directory": "templates/nextjs/prisma/"},
+      {"category": "hook", "directory": "templates/nextjs/hooks/"},
+      {"category": "test", "directory": "templates/nextjs/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "technical_spec.md", "directory": "templates/docs/"},
+      {"name": "test_plan.md", "directory": "templates/docs/"},
+      {"name": "component_spec.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "jira-bugfix", "customizations": {}},
+    {"patternId": "confluence-feature", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": false},
+    {"name": "notion", "url": "https://mcp.notion.so/mcp", "purpose": "Notion docs", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/nextjs/", "purpose": "Code templates"},
+      {"path": "templates/docs/", "purpose": "Document templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/app/", "purpose": "Next.js App Router pages"},
+      {"path": "src/components/", "purpose": "React components"},
+      {"path": "src/lib/", "purpose": "Shared utilities"},
+      {"path": "src/server/", "purpose": "Server-side code"},
+      {"path": "prisma/", "purpose": "Prisma schema and migrations"},
+      {"path": "tests/", "purpose": "Test files"},
+      {"path": "docs/", "purpose": "Documentation"},
+      {"path": "public/", "purpose": "Static assets"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "package.json", "purpose": "Node.js project config"},
+      {"path": "tsconfig.json", "purpose": "TypeScript config"},
+      {"path": "next.config.js", "purpose": "Next.js config"},
+      {"path": "tailwind.config.ts", "purpose": "Tailwind config"},
+      {"path": "prisma/schema.prisma", "purpose": "Database schema"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "NODE_VERSION", "description": "Node.js version", "default": "20"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "airbnb"}
+    ],
+    "rules": [
+      {"name": "TypeScript Strict", "description": "Use strict TypeScript mode with no any types"},
+      {"name": "Server Components", "description": "Prefer React Server Components, use 'use client' only when needed"},
+      {"name": "Server Actions", "description": "Use Server Actions for mutations instead of API routes"},
+      {"name": "Zod Validation", "description": "Validate all inputs with Zod schemas"},
+      {"name": "Testing", "description": "Write Vitest unit tests and Playwright E2E tests"}
+    ]
+  }
+}

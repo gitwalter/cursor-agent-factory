@@ -230,8 +230,9 @@ C:\App\Anaconda\python.exe cli\factory_cli.py ^
 |-----------|----------|
 | `python-fastapi` | REST APIs with Python |
 | `typescript-react` | React web applications |
+| `nextjs-fullstack` | Full-stack Next.js 14+ with TypeScript |
 | `java-spring` | Enterprise Java applications |
-| `csharp-dotnet` | .NET applications |
+| `csharp-dotnet` | Enterprise .NET 8+ applications |
 | `sap-abap` | SAP ABAP development |
 
 ### Viewing Blueprint Details

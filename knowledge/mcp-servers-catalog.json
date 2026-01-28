@@ -123,21 +123,93 @@
         {"name": "SearchDocsByLangChain", "description": "Search LangChain docs"}
       ],
       "suggestedFor": ["llm-development"]
+    },
+    "notion": {
+      "name": "Notion",
+      "description": "Notion workspace integration for docs, databases, and wikis",
+      "url": "https://mcp.notion.so/mcp",
+      "authentication": "oauth",
+      "authenticationNote": "Requires Notion OAuth integration setup",
+      "capabilities": ["documentation", "databases", "wikis"],
+      "tools": [
+        {"name": "search", "description": "Search Notion workspace"},
+        {"name": "getPage", "description": "Get Notion page content"},
+        {"name": "createPage", "description": "Create new Notion page"},
+        {"name": "updatePage", "description": "Update existing page"},
+        {"name": "queryDatabase", "description": "Query Notion database"}
+      ],
+      "suggestedFor": ["documentation", "feature-workflow", "project-management"],
+      "configExample": {
+        "notion": {
+          "url": "https://mcp.notion.so/mcp",
+          "headers": {}
+        }
+      }
+    },
+    "linear": {
+      "name": "Linear",
+      "description": "Linear issue tracking and project management",
+      "url": "https://mcp.linear.app/mcp",
+      "authentication": "oauth",
+      "authenticationNote": "Requires Linear OAuth integration",
+      "capabilities": ["issues", "projects", "cycles"],
+      "tools": [
+        {"name": "getIssue", "description": "Get Linear issue by ID"},
+        {"name": "searchIssues", "description": "Search Linear issues"},
+        {"name": "createIssue", "description": "Create new issue"},
+        {"name": "updateIssue", "description": "Update issue status/fields"},
+        {"name": "addComment", "description": "Add comment to issue"}
+      ],
+      "suggestedFor": ["bugfix-workflow", "feature-workflow"],
+      "configExample": {
+        "linear": {
+          "url": "https://mcp.linear.app/mcp",
+          "headers": {}
+        }
+      }
+    },
+    "sentry": {
+      "name": "Sentry",
+      "description": "Error tracking and performance monitoring",
+      "authentication": "api-key",
+      "authenticationNote": "Requires Sentry API token",
+      "capabilities": ["errors", "performance", "monitoring"],
+      "tools": [
+        {"name": "getIssue", "description": "Get Sentry issue details"},
+        {"name": "listIssues", "description": "List issues for project"},
+        {"name": "getEvent", "description": "Get error event details"},
+        {"name": "resolveIssue", "description": "Resolve an issue"}
+      ],
+      "suggestedFor": ["bugfix-workflow", "debugging", "monitoring"],
+      "configExample": {
+        "sentry": {
+          "command": "npx",
+          "args": ["-y", "@sentry/mcp-server"],
+          "env": {
+            "SENTRY_AUTH_TOKEN": "${SENTRY_AUTH_TOKEN}"
+          }
+        }
+      }
     }
   },
   "serversByCapability": {
     "jira": ["atlassian"],
     "confluence": ["atlassian"],
     "github": ["deepwiki"],
-    "documentation": ["sap-documentation", "deepwiki", "langchain-docs"],
+    "documentation": ["sap-documentation", "deepwiki", "langchain-docs", "notion"],
     "reasoning": ["sequentialthinking"],
-    "web": ["fetch"]
+    "web": ["fetch"],
+    "issues": ["atlassian", "linear"],
+    "errors": ["sentry"],
+    "wikis": ["atlassian", "notion"]
   },
   "serversByStack": {
     "sap": ["sap-documentation", "atlassian", "deepwiki"],
-    "python": ["atlassian", "deepwiki", "langsmith", "langchain-docs"],
-    "typescript": ["atlassian", "deepwiki"],
-    "java": ["atlassian", "deepwiki"],
-    "general": ["atlassian", "deepwiki", "sequentialthinking", "fetch"]
+    "python": ["atlassian", "deepwiki", "langsmith", "langchain-docs", "sentry"],
+    "typescript": ["atlassian", "deepwiki", "notion", "sentry"],
+    "nextjs": ["atlassian", "deepwiki", "notion", "linear", "sentry"],
+    "java": ["atlassian", "deepwiki", "sentry"],
+    "csharp": ["atlassian", "deepwiki", "sentry"],
+    "general": ["atlassian", "deepwiki", "sequentialthinking", "fetch", "notion", "linear"]
   }
 }

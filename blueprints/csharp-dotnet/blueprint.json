@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "blueprintId": "csharp-dotnet",
+    "blueprintName": "C# .NET Blueprint",
+    "description": "Enterprise API and web development with .NET 8+ and ASP.NET Core",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["csharp", "dotnet", "aspnet", "api", "enterprise", "backend"]
+  },
+  "stack": {
+    "primaryLanguage": "csharp",
+    "frameworks": [
+      {"name": "ASP.NET Core", "version": "8+", "purpose": "Web framework"},
+      {"name": "Entity Framework Core", "version": "8+", "purpose": "ORM"},
+      {"name": "FluentValidation", "version": "11+", "purpose": "Validation"},
+      {"name": "MediatR", "version": "12+", "purpose": "CQRS/Mediator", "optional": true},
+      {"name": "AutoMapper", "version": "12+", "purpose": "Object mapping", "optional": true}
+    ],
+    "databases": [
+      {"type": "sql", "name": "SQL Server", "purpose": "Primary database"},
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Alternative primary"},
+      {"type": "sql", "name": "SQLite", "purpose": "Development/Testing"}
+    ],
+    "tools": [
+      {"name": "xUnit", "purpose": "Unit testing"},
+      {"name": "NSubstitute", "purpose": "Mocking"},
+      {"name": "FluentAssertions", "purpose": "Test assertions"},
+      {"name": "dotnet-format", "purpose": "Formatting"},
+      {"name": "SonarAnalyzer", "purpose": "Static analysis"}
+    ],
+    "styleGuides": [
+      {"name": "microsoft", "description": "Microsoft C# Coding Conventions", "reference": "https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions"},
+      {"name": "cleanArchitecture", "description": "Clean Architecture patterns", "reference": "https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "documentation-agent", "required": false, "customizations": {}},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true},
+    {"patternId": "security-audit", "required": false},
+    {"patternId": "code-review", "required": false}
+  ],
+  "knowledge": [
+    {"filename": "naming-conventions.json", "description": "C# naming conventions"},
+    {"filename": "aspnet-patterns.json", "description": "ASP.NET Core patterns"},
+    {"filename": "ef-patterns.json", "description": "Entity Framework patterns"},
+    {"filename": "test-patterns.json", "description": "xUnit testing patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "controller", "directory": "templates/dotnet/Controllers/"},
+      {"category": "service", "directory": "templates/dotnet/Services/"},
+      {"category": "repository", "directory": "templates/dotnet/Repositories/"},
+      {"category": "entity", "directory": "templates/dotnet/Entities/"},
+      {"category": "dto", "directory": "templates/dotnet/DTOs/"},
+      {"category": "validator", "directory": "templates/dotnet/Validators/"},
+      {"category": "test", "directory": "templates/dotnet/Tests/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "technical_spec.md", "directory": "templates/docs/"},
+      {"name": "test_plan.md", "directory": "templates/docs/"},
+      {"name": "api_spec.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "jira-bugfix", "customizations": {}},
+    {"patternId": "confluence-feature", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/dotnet/", "purpose": "Code templates"},
+      {"path": "templates/docs/", "purpose": "Document templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/Api/", "purpose": "API layer (Controllers, Middleware)"},
+      {"path": "src/Application/", "purpose": "Application layer (Services, DTOs)"},
+      {"path": "src/Domain/", "purpose": "Domain layer (Entities, Interfaces)"},
+      {"path": "src/Infrastructure/", "purpose": "Infrastructure layer (Data, External)"},
+      {"path": "tests/Unit/", "purpose": "Unit tests"},
+      {"path": "tests/Integration/", "purpose": "Integration tests"},
+      {"path": "docs/", "purpose": "Documentation"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "Solution.sln", "purpose": ".NET solution file"},
+      {"path": "src/Api/Api.csproj", "purpose": "API project file"},
+      {"path": "src/Api/Program.cs", "purpose": "Application entry point"},
+      {"path": "src/Api/appsettings.json", "purpose": "Configuration"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "DOTNET_VERSION", "description": ".NET version", "default": "8.0"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "microsoft"}
+    ],
+    "rules": [
+      {"name": "Nullable Reference Types", "description": "Enable nullable reference types, no null warnings"},
+      {"name": "Clean Architecture", "description": "Follow Clean Architecture layers: Domain, Application, Infrastructure, Api"},
+      {"name": "Dependency Injection", "description": "Use constructor injection, register services in Program.cs"},
+      {"name": "FluentValidation", "description": "Validate all DTOs with FluentValidation validators"},
+      {"name": "Repository Pattern", "description": "Use repository pattern for data access"},
+      {"name": "Testing", "description": "Write xUnit tests with NSubstitute mocks and FluentAssertions"}
+    ]
+  }
+}

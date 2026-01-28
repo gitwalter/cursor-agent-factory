@@ -5,6 +5,37 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-28
+
+### Added
+
+- **New Knowledge Files**
+  - `knowledge/design-patterns.json` - Gang of Four and modern design patterns with stack-specific examples
+  - `knowledge/security-checklist.json` - OWASP Top 10, authentication patterns, and security best practices
+  - `knowledge/architecture-patterns.json` - Microservices, monolith, serverless, and deployment patterns
+
+- **New Blueprints**
+  - `nextjs-fullstack` - Full-stack TypeScript development with Next.js 14+, Prisma, and Tailwind CSS
+  - `csharp-dotnet` - Enterprise .NET 8+ development with ASP.NET Core, Entity Framework, and Clean Architecture
+
+- **New Agent Pattern**
+  - `documentation-agent` - Auto-generate and maintain READMEs, API docs, ADRs, and changelogs
+
+- **New Skill Patterns**
+  - `security-audit` - OWASP-based security vulnerability detection and remediation guidance
+  - `code-review` - Structured code review covering correctness, style, performance, security, and maintainability
+
+- **New MCP Server Integrations**
+  - `notion` - Notion workspace integration for docs and databases
+  - `linear` - Linear issue tracking and project management
+  - `sentry` - Error tracking and performance monitoring
+
+### Changed
+
+- Updated `mcp-servers-catalog.json` with new servers and stack mappings
+- Updated `README.md` with new blueprints, agents, skills, and MCP servers
+- Updated `docs/USAGE_GUIDE.md` with new blueprint options
+
 ## [1.1.0] - 2026-01-28
 
 ### Added

@@ -101,6 +101,34 @@
         "For consistent code structure"
       ]
     },
+    "security-audit": {
+      "id": "security-audit",
+      "name": "Security Audit",
+      "category": "verification",
+      "stackAgnostic": true,
+      "description": "OWASP-based security vulnerability detection and remediation guidance",
+      "factoryPattern": "patterns/skills/security-audit.json",
+      "whenToUse": [
+        "Before deploying to production",
+        "After implementing authentication/authorization",
+        "When handling sensitive data",
+        "For compliance requirements"
+      ]
+    },
+    "code-review": {
+      "id": "code-review",
+      "name": "Code Review",
+      "category": "workflow",
+      "stackAgnostic": true,
+      "description": "Structured code review covering correctness, style, performance, security, and maintainability",
+      "factoryPattern": "patterns/skills/code-review.json",
+      "whenToUse": [
+        "Before merging pull requests",
+        "After feature implementation",
+        "When refactoring code",
+        "During code audit"
+      ]
+    },
     "sap-grounding": {
       "id": "sap-grounding",
       "name": "SAP Grounding Coordinator",
@@ -334,7 +362,9 @@
       "bugfix-workflow",
       "feature-workflow",
       "tdd",
-      "code-templates"
+      "code-templates",
+      "security-audit",
+      "code-review"
     ],
     "sap-abap": [
       "sap-grounding",

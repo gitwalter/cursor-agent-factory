@@ -103,7 +103,10 @@ cursor-agent-factory/
 │   ├── stack-capabilities.json
 │   ├── workflow-patterns.json
 │   ├── mcp-servers-catalog.json
-│   └── best-practices.json
+│   ├── best-practices.json
+│   ├── design-patterns.json     # GoF and modern patterns
+│   ├── security-checklist.json  # OWASP and auth patterns
+│   └── architecture-patterns.json # Microservices, monolith, serverless
 ├── templates/
 │   └── factory/                # Factory templates
 │       └── cursorrules-template.md
@@ -121,10 +124,10 @@ cursor-agent-factory/
 |-----------|-------|-------------|
 | `python-fastapi` | Python, FastAPI, SQLAlchemy | REST API development |
 | `typescript-react` | TypeScript, React, Vite | Web application development |
+| `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
-| `csharp-dotnet` | C#, .NET, Entity Framework | .NET application development |
+| `csharp-dotnet` | C#, .NET 8+, Entity Framework | Enterprise .NET development |
 | `sap-abap` | ABAP, RAP, CAP | SAP development |
-| `multi-stack` | Multiple | Polyglot project development |
 
 ## Factory Agents
 
@@ -135,6 +138,17 @@ cursor-agent-factory/
 | `workflow-designer` | Design development workflows and trigger integrations |
 | `knowledge-manager` | Structure domain knowledge and generate knowledge files |
 | `template-generator` | Generate code and document templates |
+
+## Available Pattern Agents
+
+These agents can be included in generated projects:
+
+| Agent | Purpose |
+|-------|---------|
+| `code-reviewer` | Review code against best practices, style guides, and quality standards |
+| `test-generator` | Generate unit tests, integration tests, and test plans |
+| `explorer` | Explore and understand codebases |
+| `documentation-agent` | Generate and maintain README, API docs, and ADRs |
 
 ## Factory Skills
 
@@ -148,6 +162,21 @@ cursor-agent-factory/
 | `knowledge-generation` | JSON knowledge file generation |
 | `template-generation` | Code and document template generation |
 | `cursorrules-generation` | .cursorrules file generation |
+
+## Available Pattern Skills
+
+These skills can be included in generated projects:
+
+| Skill | Category | Description |
+|-------|----------|-------------|
+| `bugfix-workflow` | workflow | Ticket-based bug fix workflow with Jira integration |
+| `feature-workflow` | workflow | Specification-based feature implementation |
+| `tdd` | testing | Test-driven development workflow |
+| `grounding` | verification | Verify data structures before implementation |
+| `strawberry-verification` | verification | Hallucination detection using information theory |
+| `code-templates` | core | Stack-specific code generation |
+| `security-audit` | verification | OWASP-based security vulnerability detection |
+| `code-review` | workflow | Structured code review process |
 
 ### Agent vs Skill Relationship
 
@@ -261,6 +290,9 @@ The factory can configure generated projects to use these MCP servers:
 | `sap-documentation` | SAP Help Portal queries | None |
 | `deepwiki` | GitHub repository analysis | None |
 | `sequentialthinking` | Structured problem solving | None |
+| `notion` | Notion docs and databases | OAuth |
+| `linear` | Linear issue tracking | OAuth |
+| `sentry` | Error tracking and monitoring | API Key |
 
 ## Configuration File Format
 
@@ -421,6 +453,16 @@ See `.github/workflows/ci.yml` for the full configuration.
 4. Test generation
 5. Submit pull request
 
+## Keywords
+
+`cursor-ide` `ai-agents` `llm-automation` `code-generation` `agent-orchestration` `meta-programming` `project-scaffolding` `development-workflow` `mcp-servers` `ai-assisted-development` `cursor-rules` `agent-factory` `skill-composition` `knowledge-management` `prompt-engineering`
+
+**Categories:**
+- **AI Development Tools**: Cursor IDE agent system generator, LLM behavior configuration
+- **Code Generation**: Project scaffolding, template-based generation, multi-stack support
+- **Agent Architecture**: Agent/skill composition patterns, knowledge-grounded workflows
+- **Enterprise Integration**: SAP, Jira, Confluence, GitHub via MCP servers
+
 ## License
 
 MIT License
@@ -428,4 +470,4 @@ MIT License
 ---
 
 *Cursor Agent Factory v1.0.0*
-*Meta-system for generating Cursor agent development systems*
+*Meta-system for generating Cursor AI agent development systems*
