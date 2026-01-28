@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml)
 
+`cursor-ide` `ai-agents` `mcp-servers` `code-generation` `developer-tools` `workflow-automation`
+
 A meta-system that generates complete Cursor AI agent development systems for any technology stack, workflow methodology, and knowledge domain.
 
 ## Overview
