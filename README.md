@@ -1,8 +1,12 @@
 # Cursor Agent Factory
 
 [![CI](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml)
-
-`cursor-ide` `ai-agents` `mcp-servers` `code-generation` `developer-tools` `workflow-automation`
+![cursor-ide](https://img.shields.io/badge/cursor--ide-blue)
+![ai-agents](https://img.shields.io/badge/ai--agents-purple)
+![mcp-servers](https://img.shields.io/badge/mcp--servers-green)
+![code-generation](https://img.shields.io/badge/code--generation-orange)
+![developer-tools](https://img.shields.io/badge/developer--tools-red)
+![workflow-automation](https://img.shields.io/badge/workflow--automation-yellow)
 
 A meta-system that generates complete Cursor AI agent development systems for any technology stack, workflow methodology, and knowledge domain.
 
