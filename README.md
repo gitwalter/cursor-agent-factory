@@ -1,6 +1,6 @@
 # Cursor Agent Factory
 
-[![CI](https://github.com/YOUR_USERNAME/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/cursor-agent-factory/actions/workflows/ci.yml)
+[![CI](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml)
 
 A meta-system that generates complete Cursor AI agent development systems for any technology stack, workflow methodology, and knowledge domain.
 
