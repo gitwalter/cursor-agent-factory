@@ -1,0 +1,360 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skill Catalog",
+  "description": "Registry of skill types available for agent building. Contains metadata and descriptions - implementations are stack-specific.",
+  "version": "1.0.0",
+  "categories": {
+    "core": {
+      "description": "Generic skills applicable across all stacks",
+      "implementedInFactory": true
+    },
+    "workflow": {
+      "description": "Process and workflow skills",
+      "implementedInFactory": true
+    },
+    "grounding": {
+      "description": "Data verification and validation skills",
+      "implementedInFactory": false,
+      "note": "Stack-specific implementations live in respective agent workflow repositories"
+    },
+    "testing": {
+      "description": "Test generation and TDD skills",
+      "implementedInFactory": true
+    },
+    "verification": {
+      "description": "Claim and hallucination verification skills",
+      "implementedInFactory": true
+    }
+  },
+  "skills": {
+    "grounding": {
+      "id": "grounding",
+      "name": "Grounding",
+      "category": "core",
+      "stackAgnostic": true,
+      "description": "Base skill for verifying data structures and assumptions before implementation",
+      "factoryPattern": "patterns/skills/grounding.json",
+      "whenToUse": [
+        "Before implementing data access logic",
+        "When working with database tables or structures",
+        "Before assuming any field or structure exists"
+      ]
+    },
+    "strawberry-verification": {
+      "id": "strawberry-verification",
+      "name": "Strawberry Verification",
+      "category": "verification",
+      "stackAgnostic": true,
+      "description": "Mathematical hallucination detection using information-theoretic principles",
+      "factoryPattern": "patterns/skills/strawberry-verification.json",
+      "whenToUse": [
+        "After collecting evidence from grounding skills",
+        "For critical claims that could cause implementation failures",
+        "When grounding confidence is MEDIUM"
+      ]
+    },
+    "bugfix-workflow": {
+      "id": "bugfix-workflow",
+      "name": "Bugfix Workflow",
+      "category": "workflow",
+      "stackAgnostic": true,
+      "description": "Ticket-based bug fix workflow with Jira integration",
+      "factoryPattern": "patterns/skills/bugfix-workflow.json",
+      "whenToUse": [
+        "When fixing bugs from Jira tickets",
+        "For systematic debugging processes"
+      ]
+    },
+    "feature-workflow": {
+      "id": "feature-workflow",
+      "name": "Feature Workflow",
+      "category": "workflow",
+      "stackAgnostic": true,
+      "description": "Specification-based feature implementation workflow",
+      "factoryPattern": "patterns/skills/feature-workflow.json",
+      "whenToUse": [
+        "When implementing features from Confluence specs",
+        "For new feature development"
+      ]
+    },
+    "tdd": {
+      "id": "tdd",
+      "name": "Test-Driven Development",
+      "category": "testing",
+      "stackAgnostic": true,
+      "description": "Test-first development approach",
+      "factoryPattern": "patterns/skills/tdd.json",
+      "whenToUse": [
+        "When quality is critical",
+        "For complex business logic"
+      ]
+    },
+    "code-templates": {
+      "id": "code-templates",
+      "name": "Code Templates",
+      "category": "core",
+      "stackAgnostic": true,
+      "description": "Stack-specific code generation from templates",
+      "factoryPattern": "patterns/skills/code-templates.json",
+      "whenToUse": [
+        "When generating boilerplate code",
+        "For consistent code structure"
+      ]
+    },
+    "sap-grounding": {
+      "id": "sap-grounding",
+      "name": "SAP Grounding Coordinator",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Coordinator skill that routes to specialized SAP grounding skills based on artifact type",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "orchestrates": [
+        "ddic-grounding",
+        "cds-grounding",
+        "rap-grounding",
+        "class-grounding",
+        "function-grounding",
+        "api-grounding",
+        "enhancement-grounding",
+        "message-grounding",
+        "authorization-grounding",
+        "mapping-grounding",
+        "existence-grounding",
+        "fiori-grounding"
+      ],
+      "whenToUse": [
+        "Before any SAP implementation",
+        "When working with SAP artifacts"
+      ]
+    },
+    "ddic-grounding": {
+      "id": "ddic-grounding",
+      "name": "DDIC Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies SAP Data Dictionary objects: tables, structures, data elements, domains, search helps",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["tables", "structures", "data elements", "domains", "search helps", "table types"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before accessing SAP tables",
+        "When defining data structures"
+      ]
+    },
+    "cds-grounding": {
+      "id": "cds-grounding",
+      "name": "CDS Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies CDS views, entities, annotations, and access control definitions",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["CDS views", "CDS entities", "annotations", "access control"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before creating CDS views",
+        "When working with RAP data models"
+      ]
+    },
+    "rap-grounding": {
+      "id": "rap-grounding",
+      "name": "RAP Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies RAP behavior definitions, actions, determinations, and validations",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["behavior definitions", "actions", "determinations", "validations", "draft handling"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before implementing RAP behaviors",
+        "When defining business logic in RAP"
+      ]
+    },
+    "class-grounding": {
+      "id": "class-grounding",
+      "name": "Class Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies ABAP classes, interfaces, methods, and exception classes",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["global classes", "interfaces", "exception classes", "methods", "attributes"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before using SAP standard classes",
+        "When inheriting from base classes"
+      ]
+    },
+    "function-grounding": {
+      "id": "function-grounding",
+      "name": "Function Module Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies function modules, function groups, and BAPIs",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["function modules", "function groups", "BAPIs", "RFCs"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before calling SAP function modules",
+        "When using BAPIs"
+      ]
+    },
+    "api-grounding": {
+      "id": "api-grounding",
+      "name": "API Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies OData services, service bindings, and SOAP services",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["OData services", "service definitions", "service bindings", "SOAP services"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before consuming SAP APIs",
+        "When exposing services"
+      ]
+    },
+    "enhancement-grounding": {
+      "id": "enhancement-grounding",
+      "name": "Enhancement Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies enhancement spots, BAdIs, and enhancement implementations",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["enhancement spots", "BAdIs", "enhancement implementations", "implicit enhancements"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before implementing enhancements",
+        "When extending SAP standard"
+      ]
+    },
+    "message-grounding": {
+      "id": "message-grounding",
+      "name": "Message Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies message classes and message numbers",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["message classes", "message numbers", "message texts"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before using message classes",
+        "When defining error messages"
+      ]
+    },
+    "authorization-grounding": {
+      "id": "authorization-grounding",
+      "name": "Authorization Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies authorization objects and authorization fields",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["authorization objects", "authorization fields", "authorization checks"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before implementing authorization checks",
+        "When defining security requirements"
+      ]
+    },
+    "mapping-grounding": {
+      "id": "mapping-grounding",
+      "name": "Mapping Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Validates field and structure mappings against specifications from Confluence/Excel",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["field mappings", "structure mappings", "transformation rules"],
+      "mcpServers": ["atlassian", "sap-documentation"],
+      "whenToUse": [
+        "When implementing from mapping specifications",
+        "Before data transformation logic"
+      ]
+    },
+    "existence-grounding": {
+      "id": "existence-grounding",
+      "name": "Existence Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies repository object existence and release contracts (C0/C1/C2)",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["repository objects", "release contracts", "deprecation status"],
+      "releaseContracts": {
+        "C0": "Extend - Can inherit/implement",
+        "C1": "Use - Can call/use",
+        "C2": "Remote - Can call remotely"
+      },
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "For ABAP Cloud compatibility checks",
+        "Before using any SAP object"
+      ]
+    },
+    "fiori-grounding": {
+      "id": "fiori-grounding",
+      "name": "Fiori Grounding",
+      "category": "grounding",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Verifies Fiori apps, semantic objects, UI5 components, and launchpad configuration",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["Fiori apps", "semantic objects", "UI5 components", "launchpad tiles"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "Before Fiori development",
+        "When configuring launchpad"
+      ]
+    }
+  },
+  "skillsByStack": {
+    "generic": [
+      "grounding",
+      "strawberry-verification",
+      "bugfix-workflow",
+      "feature-workflow",
+      "tdd",
+      "code-templates"
+    ],
+    "sap-abap": [
+      "sap-grounding",
+      "ddic-grounding",
+      "cds-grounding",
+      "rap-grounding",
+      "class-grounding",
+      "function-grounding",
+      "api-grounding",
+      "enhancement-grounding",
+      "message-grounding",
+      "authorization-grounding",
+      "mapping-grounding",
+      "existence-grounding",
+      "fiori-grounding"
+    ]
+  },
+  "usage": {
+    "forFactory": "Use factoryPattern path to find the implementation template",
+    "forStackSpecific": "Skills with factoryPattern: null are implemented in the respective implementationRepo",
+    "blueprintReference": "Blueprints can reference any skill by id - factory generates from pattern or documents as requirement"
+  }
+}
