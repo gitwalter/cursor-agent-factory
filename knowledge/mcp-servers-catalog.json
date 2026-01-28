@@ -47,7 +47,7 @@
         {"name": "sap_help_search", "description": "Search SAP Help Portal"},
         {"name": "sap_community_search", "description": "Search SAP Community"}
       ],
-      "suggestedFor": ["sap-grounding", "sap-bugfix", "sap-feature"],
+      "suggestedFor": ["grounding", "bugfix-workflow", "feature-workflow"],
       "configExample": {
         "SAP Documentation MCP Server": {
           "url": "https://mcp-sap-docs.marianzeis.de/mcp",

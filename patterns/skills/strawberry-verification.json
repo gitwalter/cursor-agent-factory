@@ -62,8 +62,8 @@
           "Format: S0, S1, S2, etc."
         ],
         "example": {
-          "S0": {"text": "Table MARA has field MATNR of type CHAR(40)", "source": "SAP Help Portal"},
-          "S1": {"text": "MATNR is the material number field", "source": "knowledge/ddic-catalog.json"}
+          "S0": {"text": "Table users has field email of type VARCHAR(255)", "source": "Database documentation"},
+          "S1": {"text": "email field stores user email addresses", "source": "knowledge/schema-catalog.json"}
         }
       },
       {
@@ -76,7 +76,7 @@
           "Link claims to evidence spans with citations"
         ],
         "example": {
-          "claim": "Table MARA contains field MATNR with data type CHAR and length 40",
+          "claim": "Table users contains field email with data type VARCHAR and length 255",
           "citations": "[S0][S1]"
         }
       },
@@ -85,7 +85,7 @@
         "name": "Scrubbed Evidence Test",
         "description": "Test if claim holds with anonymized evidence",
         "actions": [
-          "Create scrubbed version: replace 'MARA' with '{TABLE}', 'MATNR' with '{FIELD}', '40' with '{N}'",
+          "Create scrubbed version: replace 'users' with '{TABLE}', 'email' with '{FIELD}', '255' with '{N}'",
           "Ask: 'Given that {TABLE} has field {FIELD} of type CHAR({N}), is the original claim supported?'",
           "Rate confidence: HIGH (0.9+), MEDIUM (0.6-0.9), LOW (<0.6)"
         ],
@@ -103,7 +103,7 @@
         "description": "Test claim with complete evidence",
         "actions": [
           "Use original evidence with all identifiers",
-          "Ask: 'Given that MARA has field MATNR of type CHAR(40), is the claim verified?'",
+          "Ask: 'Given that users has field email of type VARCHAR(255), is the claim verified?'",
           "Rate confidence: HIGH (0.9+), MEDIUM (0.6-0.9), LOW (<0.6)"
         ]
       },
@@ -164,23 +164,23 @@
       "This is a self-check mechanism - be honest about uncertainty"
     ],
     "exampleVerification": {
-      "claim": "Table MARA has field MATNR of type CHAR(40)",
+      "claim": "Table users has field email of type VARCHAR(255)",
       "evidence": {
-        "S0": "From SAP Help: MARA-MATNR is the material number, CHAR(40)",
-        "S1": "From ddic-catalog: MATNR data element, domain MATNR, CHAR 40"
+        "S0": "From database docs: users.email stores user email addresses, VARCHAR(255)",
+        "S1": "From schema catalog: email column, type VARCHAR, max length 255"
       },
       "scrubbedEvidence": {
-        "S0": "From documentation: {TABLE}-{FIELD} is the {DESCRIPTION}, CHAR({N})",
-        "S1": "From catalog: {FIELD} data element, domain {DOMAIN}, CHAR {N}"
+        "S0": "From documentation: {TABLE}.{FIELD} stores {DESCRIPTION}, VARCHAR({N})",
+        "S1": "From catalog: {FIELD} column, type VARCHAR, max length {N}"
       },
       "scrubbedTest": {
-        "question": "Is '{TABLE} has field {FIELD} of type CHAR({N})' supported?",
+        "question": "Is '{TABLE} has field {FIELD} of type VARCHAR({N})' supported?",
         "result": "FAIL - Without knowing the specific table/field, cannot verify",
         "confidence": "LOW"
       },
       "fullTest": {
-        "question": "Is 'MARA has field MATNR of type CHAR(40)' supported?",
-        "result": "PASS - Both sources confirm MARA.MATNR is CHAR(40)",
+        "question": "Is 'users has field email of type VARCHAR(255)' supported?",
+        "result": "PASS - Both sources confirm users.email is VARCHAR(255)",
         "confidence": "HIGH"
       },
       "analysis": "Scrubbed test fails, full test passes → Evidence is essential → VERIFIED",

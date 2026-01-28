@@ -101,20 +101,11 @@
         {"name": "clean-abap", "description": "SAP Clean ABAP", "reference": "https://github.com/SAP/styleguides"},
         {"name": "hungarian", "description": "Traditional Hungarian Notation"}
       ],
-      "suggestedAgents": ["code-reviewer", "test-generator", "explorer-sap"],
-      "suggestedSkills": ["sap-bugfix", "sap-feature", "sap-grounding", "tdd-abap", "code-templates"],
+      "suggestedAgents": ["code-reviewer", "test-generator", "explorer"],
+      "suggestedSkills": ["bugfix-workflow", "feature-workflow", "grounding", "tdd", "code-templates"],
       "namingConventions": {
-        "clean-abap": {
-          "variables": "snake_case",
-          "methods": "snake_case",
-          "classes": "ZCL_snake_case"
-        },
-        "hungarian": {
-          "localVariables": "lv_name",
-          "localStructures": "ls_name",
-          "localTables": "lt_name",
-          "parameters": "iv_name, ev_name, rv_name"
-        }
+        "note": "See blueprint or generated project for detailed conventions",
+        "styleOptions": ["clean-abap", "hungarian"]
       }
     },
     "go": {
