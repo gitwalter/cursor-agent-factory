@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LangChain Patterns",
+  "description": "Best practices and patterns for LangChain-based agent development",
+  "version": "1.0.0",
+  "axiomAlignment": {
+    "A1_verifiability": "Patterns include testing strategies for verification",
+    "A3_transparency": "All patterns emphasize explainable agent behavior"
+  },
+  "patterns": {
+    "agent_architecture": {
+      "react_agent": {
+        "description": "Reasoning and Acting agent pattern",
+        "use_when": "Agent needs to reason about actions step-by-step",
+        "implementation": {
+          "framework": "langchain.agents.create_react_agent",
+          "components": ["ChatModel", "Tools", "Prompt"],
+          "key_features": ["thought_action_observation_loop", "tool_calling"]
+        },
+        "best_practices": [
+          "Keep tool descriptions clear and specific",
+          "Use structured outputs for consistent parsing",
+          "Implement proper error handling for tool failures",
+          "Add observability with LangSmith tracing"
+        ],
+        "code_example": "from langchain.agents import create_react_agent, AgentExecutor\nfrom langchain_openai import ChatOpenAI\n\nllm = ChatOpenAI(model='gpt-4', temperature=0)\nagent = create_react_agent(llm, tools, prompt)\nexecutor = AgentExecutor(agent=agent, tools=tools, verbose=True)"
+      },
+      "tool_calling_agent": {
+        "description": "Modern tool-calling agent using native LLM tool use",
+        "use_when": "Using models with native tool calling (GPT-4, Claude)",
+        "implementation": {
+          "framework": "langchain.agents.create_tool_calling_agent",
+          "components": ["ChatModel with tool support", "Tools", "Prompt"]
+        },
+        "best_practices": [
+          "Prefer this over ReAct for models with native tool calling",
+          "Use Pydantic models for tool arguments",
+          "Implement retry logic for transient failures"
+        ]
+      },
+      "structured_output_agent": {
+        "description": "Agent that always produces structured output",
+        "use_when": "Need guaranteed output format for downstream processing",
+        "implementation": {
+          "framework": "llm.with_structured_output(OutputModel)",
+          "components": ["ChatModel", "Pydantic output model"]
+        },
+        "best_practices": [
+          "Define clear Pydantic models with field descriptions",
+          "Use Literal types for enum-like fields",
+          "Add validation in the Pydantic model"
+        ]
+      }
+    },
+    "chain_patterns": {
+      "sequential_chain": {
+        "description": "Chain of operations executed in sequence",
+        "use_when": "Processing needs multiple sequential steps",
+        "implementation": "chain = step1 | step2 | step3",
+        "best_practices": [
+          "Use LCEL (LangChain Expression Language) pipe syntax",
+          "Keep each step focused on single responsibility",
+          "Add intermediate logging for debugging"
+        ]
+      },
+      "parallel_chain": {
+        "description": "Multiple operations executed in parallel",
+        "use_when": "Independent operations can run concurrently",
+        "implementation": "from langchain_core.runnables import RunnableParallel\nchain = RunnableParallel(branch1=step1, branch2=step2)",
+        "best_practices": [
+          "Only parallelize truly independent operations",
+          "Consider rate limits when parallelizing API calls",
+          "Aggregate results appropriately"
+        ]
+      },
+      "branching_chain": {
+        "description": "Conditional routing based on input",
+        "use_when": "Different processing paths based on input type",
+        "implementation": "from langchain_core.runnables import RunnableBranch",
+        "best_practices": [
+          "Define clear conditions for each branch",
+          "Always include a default branch",
+          "Test all branches independently"
+        ]
+      }
+    },
+    "memory_patterns": {
+      "conversation_buffer": {
+        "description": "Store full conversation history",
+        "use_when": "Need complete context, short conversations",
+        "implementation": "ConversationBufferMemory",
+        "limitations": "Token limit for long conversations"
+      },
+      "conversation_summary": {
+        "description": "Summarize conversation to save tokens",
+        "use_when": "Long conversations, need to stay within token limits",
+        "implementation": "ConversationSummaryMemory",
+        "best_practices": [
+          "Use smaller model for summarization if cost-sensitive",
+          "Periodically verify summary quality"
+        ]
+      },
+      "conversation_window": {
+        "description": "Keep only last N messages",
+        "use_when": "Recent context is most important",
+        "implementation": "ConversationBufferWindowMemory(k=5)"
+      },
+      "vector_store_memory": {
+        "description": "Store and retrieve relevant past interactions",
+        "use_when": "Long-term memory with semantic retrieval",
+        "implementation": "VectorStoreRetrieverMemory",
+        "best_practices": [
+          "Choose appropriate embedding model",
+          "Set retrieval k based on context window",
+          "Consider memory decay strategies"
+        ]
+      }
+    },
+    "rag_patterns": {
+      "basic_rag": {
+        "description": "Retrieve relevant documents, augment prompt",
+        "use_when": "Need to ground responses in source documents",
+        "components": ["Document loader", "Text splitter", "Embeddings", "Vector store", "Retriever"],
+        "best_practices": [
+          "Chunk documents appropriately (500-1000 tokens)",
+          "Use overlap for context preservation",
+          "Experiment with different retrieval strategies"
+        ]
+      },
+      "self_query_rag": {
+        "description": "LLM generates query filters automatically",
+        "use_when": "Documents have structured metadata",
+        "implementation": "SelfQueryRetriever",
+        "best_practices": [
+          "Define clear metadata schema",
+          "Provide examples in the prompt"
+        ]
+      },
+      "multi_query_rag": {
+        "description": "Generate multiple queries for better retrieval",
+        "use_when": "User queries are ambiguous or complex",
+        "implementation": "MultiQueryRetriever",
+        "best_practices": [
+          "Limit to 3-5 generated queries",
+          "Deduplicate retrieved documents"
+        ]
+      },
+      "parent_document_rag": {
+        "description": "Retrieve small chunks, return parent documents",
+        "use_when": "Need context around matched content",
+        "implementation": "ParentDocumentRetriever",
+        "best_practices": [
+          "Balance chunk size for retrieval vs context"
+        ]
+      }
+    },
+    "tool_patterns": {
+      "structured_tool": {
+        "description": "Tool with Pydantic input schema",
+        "use_when": "Tool needs validated, structured inputs",
+        "implementation": "@tool decorator with Pydantic model",
+        "code_example": "from langchain_core.tools import tool\nfrom pydantic import BaseModel, Field\n\nclass SearchInput(BaseModel):\n    query: str = Field(description='Search query')\n    max_results: int = Field(default=5, ge=1, le=20)\n\n@tool(args_schema=SearchInput)\ndef search(query: str, max_results: int) -> str:\n    '''Search for information.'''\n    return do_search(query, max_results)"
+      },
+      "tool_with_error_handling": {
+        "description": "Tool that handles errors gracefully",
+        "use_when": "Tool can fail and agent should recover",
+        "best_practices": [
+          "Return error messages, don't raise exceptions",
+          "Provide actionable error information",
+          "Consider retry logic for transient failures"
+        ]
+      },
+      "async_tool": {
+        "description": "Asynchronous tool for I/O operations",
+        "use_when": "Tool performs network/disk I/O",
+        "implementation": "async def implementation with @tool decorator",
+        "best_practices": [
+          "Use async for I/O-bound operations",
+          "Implement proper timeout handling",
+          "Consider rate limiting"
+        ]
+      }
+    }
+  },
+  "anti_patterns": {
+    "god_agent": {
+      "description": "Single agent trying to do everything",
+      "problem": "Hard to debug, maintain, and improve",
+      "solution": "Decompose into specialized agents with clear responsibilities"
+    },
+    "prompt_injection_vulnerability": {
+      "description": "Allowing untrusted input directly in prompts",
+      "problem": "Security vulnerability, unexpected behavior",
+      "solution": "Sanitize inputs, use separate user/system message sections"
+    },
+    "unbounded_loops": {
+      "description": "Agent without iteration limits",
+      "problem": "Infinite loops, runaway costs",
+      "solution": "Set max_iterations, implement timeout, add recursion limits"
+    },
+    "silent_failures": {
+      "description": "Swallowing errors without logging",
+      "problem": "Violates A3 (Transparency), hard to debug",
+      "solution": "Log all errors, return informative error messages"
+    }
+  },
+  "testing_strategies": {
+    "unit_testing": {
+      "description": "Test individual components in isolation",
+      "tools": ["pytest", "unittest.mock"],
+      "best_practices": [
+        "Mock LLM calls for deterministic tests",
+        "Test tool implementations independently",
+        "Verify prompt templates render correctly"
+      ]
+    },
+    "integration_testing": {
+      "description": "Test agent end-to-end with real LLM",
+      "tools": ["pytest", "LangSmith"],
+      "best_practices": [
+        "Use low-temperature for reproducibility",
+        "Test with representative input scenarios",
+        "Verify tool calling works correctly"
+      ]
+    },
+    "evaluation": {
+      "description": "Measure agent quality systematically",
+      "tools": ["LangSmith Evaluators", "Custom metrics"],
+      "metrics": [
+        "Task completion rate",
+        "Factual accuracy",
+        "Tool usage efficiency",
+        "Response quality"
+      ]
+    }
+  },
+  "observability": {
+    "langsmith": {
+      "description": "LangChain's observability platform",
+      "features": ["Tracing", "Debugging", "Evaluation", "Monitoring"],
+      "setup": "export LANGCHAIN_TRACING_V2=true\nexport LANGCHAIN_API_KEY=your_key",
+      "best_practices": [
+        "Enable tracing in all environments",
+        "Add metadata to traces for filtering",
+        "Set up alerts for anomalies"
+      ]
+    },
+    "logging": {
+      "description": "Structured logging for agents",
+      "best_practices": [
+        "Log at appropriate levels (DEBUG for traces, INFO for actions)",
+        "Include correlation IDs for request tracking",
+        "Avoid logging sensitive information"
+      ]
+    }
+  }
+}

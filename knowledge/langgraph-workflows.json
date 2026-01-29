@@ -1,0 +1,186 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LangGraph Workflow Patterns",
+  "description": "Patterns for building stateful agent workflows with LangGraph",
+  "version": "1.0.0",
+  "axiomAlignment": {
+    "A1_verifiability": "State machines enable traceable, reproducible agent behavior",
+    "A3_transparency": "Graph structure makes agent logic explicit and inspectable"
+  },
+  "core_concepts": {
+    "graph": {
+      "description": "Directed graph defining agent workflow",
+      "components": ["Nodes (functions)", "Edges (transitions)", "State (shared data)"]
+    },
+    "state": {
+      "description": "TypedDict or Pydantic model holding workflow state",
+      "best_practices": [
+        "Use immutable updates (return new state)",
+        "Define clear state schema with types",
+        "Include metadata for observability"
+      ]
+    },
+    "node": {
+      "description": "Function that transforms state",
+      "signature": "def node(state: State) -> State | dict",
+      "best_practices": [
+        "Single responsibility per node",
+        "Return only changed state keys",
+        "Handle errors gracefully"
+      ]
+    },
+    "edge": {
+      "description": "Connection between nodes, can be conditional",
+      "types": ["Normal edge", "Conditional edge", "Entry/exit points"]
+    }
+  },
+  "patterns": {
+    "supervisor_pattern": {
+      "description": "Supervisor agent coordinates worker agents",
+      "use_when": "Complex tasks requiring multiple specialized agents",
+      "structure": {
+        "supervisor_node": "Routes tasks to appropriate workers",
+        "worker_nodes": "Specialized agents for specific tasks",
+        "aggregator_node": "Combines worker outputs"
+      },
+      "code_example": "from langgraph.graph import StateGraph, MessagesState, START, END\n\ndef supervisor(state: State) -> State:\n    # Decide which worker to invoke\n    next_worker = decide_next_worker(state)\n    return {'next': next_worker}\n\ndef worker_a(state: State) -> State:\n    # Perform specialized task A\n    result = do_task_a(state['input'])\n    return {'results': state['results'] + [result]}\n\ngraph = StateGraph(State)\ngraph.add_node('supervisor', supervisor)\ngraph.add_node('worker_a', worker_a)\ngraph.add_node('worker_b', worker_b)\ngraph.add_conditional_edges('supervisor', route_to_worker)\ngraph.add_edge(START, 'supervisor')",
+      "best_practices": [
+        "Keep supervisor logic simple and focused on routing",
+        "Define clear handoff protocols between workers",
+        "Implement timeout handling for workers"
+      ],
+      "axiom_alignment": "A2 (User Primacy) - Supervisor ensures user intent is properly delegated"
+    },
+    "sequential_workflow": {
+      "description": "Linear sequence of processing steps",
+      "use_when": "Ordered pipeline of transformations",
+      "structure": "step1 -> step2 -> step3 -> END",
+      "code_example": "graph = StateGraph(State)\ngraph.add_node('extract', extract_info)\ngraph.add_node('transform', transform_data)\ngraph.add_node('validate', validate_output)\ngraph.add_edge(START, 'extract')\ngraph.add_edge('extract', 'transform')\ngraph.add_edge('transform', 'validate')\ngraph.add_edge('validate', END)",
+      "best_practices": [
+        "Each step should be independently testable",
+        "Add validation between steps",
+        "Log state at each transition"
+      ]
+    },
+    "branching_workflow": {
+      "description": "Conditional routing based on state",
+      "use_when": "Different processing paths based on input or intermediate results",
+      "code_example": "def route_by_type(state: State) -> str:\n    if state['input_type'] == 'code':\n        return 'process_code'\n    elif state['input_type'] == 'text':\n        return 'process_text'\n    return 'default_process'\n\ngraph.add_conditional_edges(\n    'classifier',\n    route_by_type,\n    {'process_code': 'code_node', 'process_text': 'text_node', 'default_process': 'default_node'}\n)",
+      "best_practices": [
+        "Define exhaustive routing conditions",
+        "Always include default/fallback route",
+        "Test all branches"
+      ]
+    },
+    "parallel_workflow": {
+      "description": "Multiple nodes execute concurrently",
+      "use_when": "Independent tasks that can run in parallel",
+      "implementation": "Use fanout edges to multiple nodes, fanin to aggregator",
+      "best_practices": [
+        "Ensure tasks are truly independent",
+        "Handle partial failures gracefully",
+        "Implement proper aggregation logic"
+      ]
+    },
+    "human_in_the_loop": {
+      "description": "Pause workflow for human input/approval",
+      "use_when": "Critical decisions requiring human oversight",
+      "implementation": "Use interrupt_before or interrupt_after with checkpointing",
+      "code_example": "from langgraph.checkpoint.sqlite import SqliteSaver\n\nmemory = SqliteSaver.from_conn_string(':memory:')\ngraph = builder.compile(\n    checkpointer=memory,\n    interrupt_before=['human_review']\n)\n\n# Resume after human input\ngraph.invoke(None, config={'configurable': {'thread_id': thread_id}})",
+      "best_practices": [
+        "Persist state for resumption",
+        "Provide clear context for human decision",
+        "Set timeouts for human responses"
+      ],
+      "axiom_alignment": "A2 (User Primacy) - Human oversight for critical decisions"
+    },
+    "reflection_pattern": {
+      "description": "Agent reviews and improves its own output",
+      "use_when": "Quality improvement through self-critique",
+      "structure": "generate -> reflect -> revise (loop until satisfactory)",
+      "code_example": "def should_continue(state: State) -> str:\n    if state['iteration'] >= 3:\n        return 'end'\n    if state['quality_score'] >= 0.9:\n        return 'end'\n    return 'reflect'\n\ngraph.add_conditional_edges(\n    'revise',\n    should_continue,\n    {'end': END, 'reflect': 'reflect'}\n)",
+      "best_practices": [
+        "Set maximum iteration limits",
+        "Define clear quality criteria",
+        "Track improvement across iterations"
+      ]
+    },
+    "tool_executor_pattern": {
+      "description": "Node that executes tools and returns results",
+      "use_when": "Agent needs to use external tools",
+      "implementation": "ToolNode from langgraph.prebuilt",
+      "code_example": "from langgraph.prebuilt import ToolNode\n\ntools = [search_tool, calculator_tool]\ntool_node = ToolNode(tools)\n\ngraph.add_node('tools', tool_node)\ngraph.add_edge('agent', 'tools')\ngraph.add_edge('tools', 'agent')",
+      "best_practices": [
+        "Validate tool outputs",
+        "Handle tool failures gracefully",
+        "Log tool invocations for debugging"
+      ]
+    }
+  },
+  "state_management": {
+    "typed_state": {
+      "description": "Define state with TypedDict for type safety",
+      "code_example": "from typing import TypedDict, Annotated\nfrom langgraph.graph import add_messages\n\nclass State(TypedDict):\n    messages: Annotated[list, add_messages]\n    context: str\n    iteration: int"
+    },
+    "reducers": {
+      "description": "Functions that combine state updates",
+      "use_case": "When multiple nodes update the same key",
+      "built_in": ["add_messages (for chat)", "operator.add (for lists)"],
+      "code_example": "from operator import add\n\nclass State(TypedDict):\n    results: Annotated[list, add]  # Results from all nodes are concatenated"
+    },
+    "checkpointing": {
+      "description": "Persist state for resumption and debugging",
+      "implementations": ["MemorySaver", "SqliteSaver", "PostgresSaver"],
+      "use_when": ["Human-in-the-loop", "Long-running workflows", "Fault tolerance"],
+      "best_practices": [
+        "Use persistent storage for production",
+        "Include thread_id for conversation tracking",
+        "Implement cleanup for old checkpoints"
+      ]
+    }
+  },
+  "prebuilt_components": {
+    "create_react_agent": {
+      "description": "Pre-built ReAct agent graph",
+      "use_when": "Standard agent with tools",
+      "code": "from langgraph.prebuilt import create_react_agent\n\nagent = create_react_agent(model, tools, checkpointer=memory)"
+    },
+    "ToolNode": {
+      "description": "Pre-built node for tool execution",
+      "use_when": "Need to execute tools in a graph"
+    }
+  },
+  "testing_langgraph": {
+    "unit_testing": {
+      "description": "Test individual nodes",
+      "approach": "Test node functions with mock state",
+      "code_example": "def test_extract_node():\n    input_state = {'input': 'test data', 'results': []}\n    output_state = extract_node(input_state)\n    assert 'extracted' in output_state"
+    },
+    "integration_testing": {
+      "description": "Test complete graph execution",
+      "approach": "Compile graph and run with test inputs",
+      "code_example": "def test_workflow():\n    graph = create_workflow()\n    result = graph.invoke({'input': 'test'})\n    assert result['status'] == 'complete'"
+    },
+    "visualization": {
+      "description": "Visualize graph structure for debugging",
+      "code": "graph.get_graph().draw_mermaid_png()"
+    }
+  },
+  "anti_patterns": {
+    "god_state": {
+      "description": "State with too many fields",
+      "problem": "Hard to track, prone to bugs",
+      "solution": "Keep state minimal, use nested structures for organization"
+    },
+    "side_effects_in_nodes": {
+      "description": "Nodes that modify external state",
+      "problem": "Hard to test, unpredictable",
+      "solution": "Make nodes pure when possible, isolate side effects"
+    },
+    "missing_error_handling": {
+      "description": "No handling for node failures",
+      "problem": "Silent failures, stuck workflows",
+      "solution": "Add error nodes, implement fallback paths"
+    }
+  }
+}

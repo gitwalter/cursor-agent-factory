@@ -8,18 +8,33 @@
 ![developer-tools](https://img.shields.io/badge/developer--tools-red)
 ![workflow-automation](https://img.shields.io/badge/workflow--automation-yellow)
 
-A meta-system that generates complete Cursor AI agent development systems for any technology stack, workflow methodology, and knowledge domain.
+A meta-system that generates complete Cursor AI agent development systems grounded in purpose, principles, and methodology.
 
 ## Overview
 
-The Cursor Agent Factory is itself a Cursor agent system that produces other Cursor agent systems. It follows a systematic requirements gathering process and generates production-ready projects with:
+The Cursor Agent Factory uses a **5-layer deductive-inductive architecture** to generate agent systems that are not just technically capable, but also grounded in clear values and purpose.
 
-- AI agent definitions (`.cursor/agents/`)
-- Reusable skill definitions (`.cursor/skills/`)
-- Structured knowledge files (`knowledge/`)
-- Code and document templates (`templates/`)
-- Workflow documentation (`workflows/`)
-- LLM behavior rules (`.cursorrules`)
+### The 5 Layers
+
+| Layer | Name | Purpose | Artifact |
+|-------|------|---------|----------|
+| **0** | Integrity & Logic | Foundational axioms | `.cursorrules` L0 section |
+| **1** | Purpose | Mission, stakeholders, success | `PURPOSE.md` |
+| **2** | Principles | Ethical boundaries, quality standards | `.cursorrules` principles |
+| **3** | Methodology | Agile/Kanban/R&D, enforcement, practices | `methodology.yaml` |
+| **4** | Technical | Stack, agents, skills, templates | `.cursor/`, `knowledge/` |
+
+### Generated Projects Include
+
+- **Purpose documentation** (`PURPOSE.md`)
+- **5-layer .cursorrules** with axioms, principles, and methodology
+- **AI agent definitions** (`.cursor/agents/`)
+- **Reusable skill definitions** (`.cursor/skills/`)
+- **Enforcement patterns** (`enforcement.yaml`)
+- **Practice patterns** (`practices.yaml`)
+- **Structured knowledge files** (`knowledge/`)
+- **Code and document templates** (`templates/`)
+- **Methodology configuration** (`workflows/methodology.yaml`)
 
 ## Architecture Diagrams
 
@@ -78,50 +93,73 @@ C:\App\Anaconda\python.exe cli\factory_cli.py --interactive --output C:\Projects
 cursor-agent-factory/
 ├── .cursor/
 │   ├── agents/                  # Factory's own agents
-│   │   ├── requirements-architect.md
-│   │   ├── stack-builder.md
-│   │   ├── workflow-designer.md
-│   │   ├── knowledge-manager.md
-│   │   └── template-generator.md
-│   └── skills/                  # Factory's own skills
-│       ├── requirements-gathering/
-│       ├── stack-configuration/
-│       ├── workflow-generation/
-│       ├── agent-generation/
-│       ├── skill-generation/
-│       ├── knowledge-generation/
-│       ├── template-generation/
-│       └── cursorrules-generation/
+│   │   └── *.md                 # requirements-architect, stack-builder, etc.
+│   └── skills/                  # Factory's own skills (14 skills)
+│       ├── requirements-gathering/   # 5-layer requirements elicitation
+│       ├── axiom-selection/          # Layer 0 axiom configuration
+│       ├── purpose-definition/       # Layer 1 purpose definition
+│       ├── methodology-selection/    # Layer 3 methodology selection
+│       ├── enforcement-selection/    # Enforcement pattern selection
+│       ├── practice-selection/       # Practice pattern selection
+│       ├── pattern-feedback/         # Inductive learning skill
+│       └── ...                       # agent/skill/knowledge/template generation
 ├── patterns/                    # Reusable patterns
+│   ├── axioms/                 # Layer 0 axiom definitions
+│   │   ├── core-axioms.json    # A1-A5 immutable axioms
+│   │   └── optional-axioms.json # A6-A10 optional axioms
+│   ├── principles/             # Layer 2 principle patterns
+│   │   ├── ethical-boundaries.json
+│   │   ├── quality-standards.json
+│   │   └── failure-handling.json
+│   ├── methodologies/          # Layer 3 methodology templates
+│   │   ├── agile-scrum.json
+│   │   ├── kanban.json
+│   │   ├── research-development.json
+│   │   └── enterprise-integration.json
+│   ├── enforcement/            # Enforcement patterns
+│   │   ├── quality-enforcement.json
+│   │   ├── safety-enforcement.json
+│   │   └── integrity-enforcement.json
+│   ├── practices/              # Practice patterns
+│   │   ├── daily-practices.json
+│   │   ├── craft-practices.json
+│   │   └── alignment-practices.json
 │   ├── agents/                 # Agent pattern definitions
 │   ├── skills/                 # Skill pattern definitions
-│   ├── workflows/              # Workflow patterns
-│   ├── stacks/                 # Stack configurations
-│   └── templates/              # Template patterns
-├── blueprints/                  # Technology stack blueprints
+│   └── workflows/              # Workflow patterns
+├── blueprints/                  # Technology stack blueprints (7 blueprints)
 │   ├── python-fastapi/
+│   ├── ai-agent-development/   # NEW: LangChain/LangGraph
 │   ├── typescript-react/
+│   ├── nextjs-fullstack/
 │   ├── java-spring/
 │   ├── csharp-dotnet/
-│   ├── sap-abap/
-│   └── multi-stack/
-├── knowledge/                   # Reference data
-│   ├── stack-capabilities.json
-│   ├── workflow-patterns.json
-│   ├── mcp-servers-catalog.json
-│   ├── best-practices.json
-│   ├── design-patterns.json     # GoF and modern patterns
-│   ├── security-checklist.json  # OWASP and auth patterns
-│   └── architecture-patterns.json # Microservices, monolith, serverless
+│   └── sap-abap/
+├── knowledge/                   # Reference data (12+ files)
+│   ├── langchain-patterns.json     # NEW: LangChain best practices
+│   ├── langgraph-workflows.json    # NEW: LangGraph patterns
+│   ├── agent-coordination.json     # NEW: Multi-agent patterns
+│   ├── prompt-engineering.json     # NEW: Prompt optimization
+│   └── ...                         # Stack, workflow, MCP, security
 ├── templates/
-│   └── factory/                # Factory templates
-│       └── cursorrules-template.md
+│   ├── factory/                # Factory templates
+│   │   ├── cursorrules-template.md  # 5-layer template
+│   │   ├── PURPOSE.md.tmpl
+│   │   ├── enforcement.yaml.tmpl
+│   │   └── practices.yaml.tmpl
+│   ├── ai/                     # AI agent templates
+│   │   ├── agent/base-agent.py.tmpl
+│   │   ├── prompt/system-prompt.md.tmpl
+│   │   └── workflow/langgraph-graph.py.tmpl
+│   └── methodology/            # Methodology templates
+├── docs/                        # Documentation
+│   ├── USAGE_GUIDE.md
+│   ├── LAYERED_ARCHITECTURE.md     # NEW: 5-layer architecture guide
+│   ├── LAYERED_ONBOARDING_CONCEPT.md # Implementation blueprint
+│   └── ...
 ├── cli/
 │   └── factory_cli.py          # CLI interface
-├── scripts/
-│   └── generate_project.py     # Generation engine
-├── .cursorrules                 # Factory behavior rules
-└── README.md                    # This file
+└── .cursorrules                 # Factory behavior rules
 ```
 
 ## Available Blueprints
@@ -129,11 +167,21 @@ cursor-agent-factory/
 | Blueprint | Stack | Description |
 |-----------|-------|-------------|
 | `python-fastapi` | Python, FastAPI, SQLAlchemy | REST API development |
+| `ai-agent-development` | Python, LangChain, LangGraph | **NEW**: AI agent systems |
 | `typescript-react` | TypeScript, React, Vite | Web application development |
 | `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
 | `csharp-dotnet` | C#, .NET 8+, Entity Framework | Enterprise .NET development |
 | `sap-abap` | ABAP, RAP, CAP | SAP development |
+
+### AI Agent Development Blueprint
+
+The new `ai-agent-development` blueprint includes:
+- LangChain and LangGraph frameworks
+- Streamlit and FastAPI for UI/API
+- ChromaDB for vector storage
+- Templates for agents, prompts, and workflows
+- Default: Research & Development methodology with A10 (Learning) axiom
 
 ## Factory Agents
 
@@ -218,53 +266,74 @@ flowchart TB
     style Knowledge fill:#fff3e0
 ```
 
-## Requirements Gathering Phases
+## Layered Requirements Gathering
 
-### Phase 1: Project Context
-- Project name and description
-- Domain/Industry (Web, Mobile, SAP, etc.)
-- Team size and experience level
+### Depth Options
 
-### Phase 2: Technology Stack
-- Primary programming language
-- Frameworks and libraries
-- Database/storage systems
-- External APIs and services
+| Option | Phases | Best For |
+|--------|--------|----------|
+| **Quick Start** | Pre-Phase + Phase 0 + Phases 1-5 | Rapid prototyping |
+| **Standard** | All phases with templates | Most projects |
+| **Comprehensive** | All phases + enforcement/practices | Enterprise, critical |
 
-### Phase 3: Workflow Methodology
-- Development methodology (Agile, Kanban, etc.)
-- Trigger sources (Jira, Confluence, GitHub, GitLab)
-- Output artifacts (code, docs, tests)
+### Pre-Phase: Layer 0 - Axiom Configuration
+- Select core axioms (A1-A5 always included)
+- Choose optional axioms (A6-A10)
+- Configure derivation rules
 
-### Phase 4: Knowledge Domain
-- Domain-specific concepts and terminology
-- Reference repositories and documentation
-- Naming conventions and best practices
+### Phase 0: Layer 1 - Purpose Definition
+- Mission statement (verifiable)
+- Primary stakeholders (specific)
+- Success criteria (measurable)
 
-### Phase 5: Agent Capabilities
-- Core agents needed (Code Reviewer, Test Generator, etc.)
-- Skills required (Bugfix, Feature, TDD, Grounding)
-- MCP server integrations
+### Phases 0.6-0.7: Layers 2-3 (Standard+)
+- Ethical boundaries and quality standards
+- Methodology selection (Agile/Kanban/R&D/Enterprise)
+- Team size and coordination patterns
+
+### Phases 0.8-0.9: Enforcement & Practices (Comprehensive)
+- Quality, safety, integrity enforcement
+- Daily, craft, alignment practices
+
+### Phases 1-5: Layer 4 - Technical
+- Project context and domain
+- Technology stack and frameworks
+- Workflow triggers and artifacts
+- Knowledge domain and conventions
+- Agent and skill capabilities
 
 ## Generated Project Structure
 
-Generated projects follow this structure:
+Generated projects include all 5-layer artifacts:
 
 ```
 {PROJECT_NAME}/
 ├── .cursor/
-│   ├── agents/           # AI agent definitions
-│   └── skills/           # Reusable skill definitions
-├── knowledge/            # Structured reference data (JSON)
-├── templates/            # Code and document templates
-├── workflows/            # Workflow documentation
-├── scripts/              # Utility scripts
-├── diagrams/             # Architecture diagrams
-├── docs/                 # User documentation
-├── src/                  # Source code
-├── .cursorrules          # LLM agent behavior rules
-└── README.md             # Project documentation
+│   ├── agents/               # AI agent definitions
+│   └── skills/               # Reusable skill definitions
+├── knowledge/                # Structured reference data (JSON)
+├── templates/                # Code and document templates
+├── workflows/
+│   └── methodology.yaml      # Layer 3: Methodology config
+├── src/                      # Source code
+├── tests/                    # Test files
+├── docs/                     # User documentation
+├── .cursorrules              # 5-layer agent rules (L0-L4)
+├── PURPOSE.md                # Layer 1: Mission & purpose
+├── enforcement.yaml          # Enforcement patterns (Comprehensive)
+├── practices.yaml            # Team practices (Comprehensive)
+└── README.md                 # Project documentation
 ```
+
+### Key Generated Files
+
+| File | Layer | Description |
+|------|-------|-------------|
+| `.cursorrules` | 0-4 | Complete 5-layer agent behavior rules |
+| `PURPOSE.md` | 1 | Mission, stakeholders, success criteria |
+| `enforcement.yaml` | 2+ | Quality, safety, integrity enforcement |
+| `practices.yaml` | 3+ | Daily, craft, alignment practices |
+| `methodology.yaml` | 3 | Methodology ceremonies and coordination |
 
 ```mermaid
 flowchart TB
@@ -456,6 +525,8 @@ See `.github/workflows/ci.yml` for the full configuration.
 | Document | Description |
 |----------|-------------|
 | [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |
+| [Layered Architecture](docs/LAYERED_ARCHITECTURE.md) | **NEW**: 5-layer architecture guide |
+| [Onboarding Concept](docs/LAYERED_ONBOARDING_CONCEPT.md) | **NEW**: Full implementation blueprint |
 | [Extension Guide](docs/EXTENSION_GUIDE.md) | How to extend the factory with new blueprints, patterns, and skills |
 | [Testing Guide](docs/TESTING.md) | Test suite documentation and testing practices |
 | [SAP Grounding Design](docs/SAP_GROUNDING_DESIGN.md) | SAP-specific grounding architecture and MCP integration |
@@ -478,11 +549,22 @@ See `.github/workflows/ci.yml` for the full configuration.
 - **Agent Architecture**: Agent/skill composition patterns, knowledge-grounded workflows
 - **Enterprise Integration**: SAP, Jira, Confluence, GitHub via MCP servers
 
+## Acknowledgements & Inspirations
+
+This project incorporates ideas and patterns from several valuable sources:
+
+| Source | Contribution |
+|--------|--------------|
+| **[Augmented Coding Patterns](https://lexler.github.io/augmented-coding-patterns/)** | Active Partner, Check Alignment, Chain of Small Steps, and other AI collaboration patterns. Created by Lada Kesseler, Nitsan Avni, Ivett Ördög, Llewellyn Falco, and contributors. |
+| **[Leon Chlon](https://github.com/lchlon)** | Inspiration for the Strawberry Verification skill - information-theoretic approach to hallucination detection in AI outputs. |
+| **[ai-dev-agent](https://github.com/gitwalter/ai-dev-agent)** | Pedagogical toolkit for AI agent systems that inspired the layered architecture and methodology integration concepts. |
+
 ## License
 
 MIT License
 
 ---
 
-*Cursor Agent Factory v1.0.0*
-*Meta-system for generating Cursor AI agent development systems*
+*Cursor Agent Factory v2.0.0*  
+*Meta-system for generating Cursor AI agent development systems*  
+*Now with 5-layer architecture: Integrity → Purpose → Principles → Methodology → Technical*

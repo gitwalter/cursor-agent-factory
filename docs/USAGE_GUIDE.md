@@ -1,15 +1,52 @@
 # Cursor Agent Factory - Usage Guide
 
-This guide explains how to use the Cursor Agent Factory to generate complete Cursor agent development systems.
+This guide explains how to use the Cursor Agent Factory to generate complete Cursor agent development systems grounded in purpose, principles, and methodology.
+
+## Philosophy
+
+The factory generates agent systems using a **5-layer architecture** that ensures every project is:
+- **Grounded** in foundational axioms
+- **Purposeful** with clear mission and success criteria
+- **Principled** with quality standards and ethical boundaries
+- **Coordinated** through chosen methodology
+- **Excellent** through enforcement and practices
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Chat-Based Generation](#chat-based-generation)
-3. [CLI Generation](#cli-generation)
-4. [Working with Blueprints](#working-with-blueprints)
-5. [Customizing Generated Projects](#customizing-generated-projects)
-6. [Understanding Generated Structure](#understanding-generated-structure)
+2. [The 5-Layer Architecture](#the-5-layer-architecture)
+3. [Chat-Based Generation](#chat-based-generation)
+4. [CLI Generation](#cli-generation)
+5. [Working with Blueprints](#working-with-blueprints)
+6. [Customizing Generated Projects](#customizing-generated-projects)
+7. [Understanding Generated Structure](#understanding-generated-structure)
+8. [Enforcement and Practices](#enforcement-and-practices)
+
+## The 5-Layer Architecture
+
+The factory implements a deductive-inductive architecture where every generated project is grounded in clear values and purpose.
+
+```
+Layer 0: INTEGRITY & LOGIC    →  Axioms, derivation rules, validation
+Layer 1: PURPOSE              →  Mission, stakeholders, success criteria
+Layer 2: PRINCIPLES           →  Ethical boundaries, quality standards
+Layer 3: METHODOLOGY          →  Agile/Kanban/R&D, enforcement, practices
+Layer 4: TECHNICAL            →  Stack, agents, skills, templates
+```
+
+For detailed architecture documentation, see [LAYERED_ARCHITECTURE.md](LAYERED_ARCHITECTURE.md).
+
+### Core Axioms
+
+Every generated project includes these foundational axioms:
+
+| ID | Axiom | Statement |
+|----|-------|-----------|
+| A1 | Verifiability | All agent outputs must be verifiable against source |
+| A2 | User Primacy | User intent takes precedence over agent convenience |
+| A3 | Transparency | Agent reasoning must be explainable on request |
+| A4 | Non-Harm | No action may knowingly cause harm |
+| A5 | Consistency | No rule may contradict these axioms |
 
 ## Visual Overview
 
@@ -23,23 +60,21 @@ flowchart LR
         A["Chat or CLI"]
     end
     
-    subgraph Process["Factory Process"]
-        B["Requirements<br/>Gathering"]
-        C["Blueprint<br/>Selection"]
-        D["Artifact<br/>Generation"]
+    subgraph Layers["5-Layer Process"]
+        L0["Layer 0: Axioms"]
+        L1["Layer 1: Purpose"]
+        L23["Layers 2-3: Principles & Methodology"]
+        L4["Layer 4: Technical"]
     end
     
     subgraph Output["Your Project"]
-        E[".cursor/agents/"]
-        F[".cursor/skills/"]
-        G[".cursorrules"]
+        E[".cursorrules (5-layer)"]
+        F["PURPOSE.md"]
+        G["enforcement.yaml"]
+        H["practices.yaml"]
     end
     
-    A --> B --> C --> D --> E & F & G
-    
-    style Input fill:#e3f2fd
-    style Process fill:#fff3e0
-    style Output fill:#c8e6c9
+    A --> L0 --> L1 --> L23 --> L4 --> E & F & G & H
 ```
 
 ## Getting Started
@@ -68,43 +103,80 @@ Simply say one of these phrases:
 - "Build a development workflow"
 - "Create project for Python FastAPI"
 
-### The 5-Phase Questionnaire
+### The Layered Questionnaire
 
-The factory will guide you through these phases:
+The factory guides you through layers with three depth options:
+
+| Depth | Layers Configured | Best For |
+|-------|-------------------|----------|
+| **Quick Start** | L0 + L1 + L4 | Rapid prototyping |
+| **Standard** | All layers with templates | Most projects |
+| **Comprehensive** | All layers + enforcement/practices | Enterprise, critical systems |
 
 ```mermaid
 flowchart LR
-    P1["Phase 1<br/>Project Context"]
-    P2["Phase 2<br/>Technology Stack"]
-    P3["Phase 3<br/>Workflow"]
-    P4["Phase 4<br/>Knowledge"]
-    P5["Phase 5<br/>Capabilities"]
+    L0["Pre-Phase<br/>Axioms"]
+    L1["Phase 0<br/>Purpose"]
+    D["Depth<br/>Selection"]
+    L23["Phases 0.6-0.9<br/>Principles & Methodology"]
+    L4["Phases 1-5<br/>Technical"]
     
-    P1 --> P2 --> P3 --> P4 --> P5
-    
-    style P1 fill:#bbdefb
-    style P2 fill:#c8e6c9
-    style P3 fill:#fff9c4
-    style P4 fill:#ffccbc
-    style P5 fill:#e1bee7
+    L0 --> L1 --> D --> L23 --> L4
+    D -.->|"Quick Start"| L4
 ```
 
-#### Phase 1: Project Context
+#### Pre-Phase: Axiom Configuration (Layer 0)
+
+```
+AI: Every agent system needs foundational axioms. 
+    Core axioms (A1-A5) are always included.
+    Would you like to add optional axioms?
+
+You: Yes, add A6 (Minimalism) and A10 (Learning)
+```
+
+#### Phase 0: Purpose Definition (Layer 1)
+
+```
+AI: In ONE sentence, why should this agent system exist?
+You: To accelerate API development by automating boilerplate and enforcing best practices
+
+AI: Who are the primary users or beneficiaries?
+You: Backend developers on the engineering team
+
+AI: What is the single most important outcome?
+You: Reduce time from API design to working implementation by 50%
+```
+
+#### Phase 0.5: Depth Selection
+
+```
+AI: How deep should we define the remaining layers?
+    A) Quick Start - Use defaults, go to technical
+    B) Standard - Define principles, select methodology
+    C) Comprehensive - Define all layers including enforcement and practices
+
+You: B (Standard)
+```
+
+#### Phases 0.6-0.9: Principles & Methodology (Standard+)
+
+```
+AI: What development methodology fits your team?
+You: Agile Scrum
+
+AI: Team size?
+You: 4-6 developers
+
+AI: I'll configure Agile Scrum methodology with appropriate ceremonies.
+```
+
+#### Phases 1-5: Technical Configuration (Layer 4)
 
 ```
 AI: What is the name of your project?
 You: my-api-service
 
-AI: What does this project do?
-You: A REST API for user management with JWT authentication
-
-AI: What domain/industry is this for?
-You: Web development
-```
-
-#### Phase 2: Technology Stack
-
-```
 AI: What is your primary programming language?
 You: Python
 
@@ -113,35 +185,12 @@ You: FastAPI, SQLAlchemy, Pydantic
 
 AI: I found a matching blueprint: python-fastapi. Would you like to use it?
 You: Yes
-```
 
-#### Phase 3: Workflow Methodology
-
-```
 AI: What triggers your development workflows?
 You: Jira tickets and Confluence specs
 
-AI: I'll configure Atlassian MCP server integration.
-```
-
-#### Phase 4: Knowledge Domain
-
-```
-AI: Any domain-specific concepts to include?
-You: User roles, permissions, JWT tokens
-
-AI: Any reference repositories?
-You: https://github.com/tiangolo/fastapi
-```
-
-#### Phase 5: Agent Capabilities
-
-```
 AI: Which agents should I include?
 You: Code reviewer and test generator
-
-AI: Which skills?
-You: Bugfix workflow, feature workflow, and TDD
 ```
 
 ### Specifying Output Directory
@@ -311,13 +360,18 @@ For detailed architecture diagrams, see [../diagrams/agent-skill-architecture.md
 ```
 my-project/
 ├── .cursor/
-│   ├── agents/           # AI agents with their triggers and workflows
-│   └── skills/           # Reusable procedures and knowledge
-├── knowledge/            # JSON reference data
-├── templates/            # Code generation templates
-├── workflows/            # Workflow documentation
-├── src/                  # Your source code
-└── .cursorrules          # Main AI behavior configuration
+│   ├── agents/               # AI agents with their triggers and workflows
+│   └── skills/               # Reusable procedures and knowledge
+├── knowledge/                # JSON reference data
+├── templates/                # Code generation templates
+├── workflows/
+│   └── methodology.yaml      # Methodology configuration (Layer 3)
+├── src/                      # Your source code
+├── tests/                    # Test files
+├── .cursorrules              # 5-layer AI behavior configuration
+├── PURPOSE.md                # Mission, stakeholders, success (Layer 1)
+├── enforcement.yaml          # Enforcement patterns (if Comprehensive)
+└── practices.yaml            # Team practices (if Comprehensive)
 ```
 
 ### Component Relationships
@@ -452,6 +506,58 @@ For Atlassian MCP:
 1. Ensure you have network access
 2. Complete OAuth authentication when prompted
 
+## Enforcement and Practices
+
+For Comprehensive depth, the factory generates enforcement and practice configurations.
+
+### Enforcement Patterns
+
+Ensure values are lived, not just stated:
+
+| Category | Examples |
+|----------|----------|
+| **Quality** | Test coverage gate, peer review gate, style consistency |
+| **Safety** | Destructive confirmation, backup before change, security scan |
+| **Integrity** | Axiom compliance, purpose alignment, transparency log |
+
+### Practice Patterns
+
+Regular disciplines maintaining excellence:
+
+| Category | Examples |
+|----------|----------|
+| **Daily** | Morning intention, focused standup, evening reflection |
+| **Craft** | Code as craft review, thoughtful review, continuous refactoring |
+| **Alignment** | Weekly learning, retrospective, release blessing, quarterly alignment |
+
+### Configuring Enforcement
+
+```yaml
+# enforcement.yaml
+quality:
+  E1_test_coverage:
+    enabled: true
+    threshold: 80
+    severity: blocking
+    override_policy: with_justification
+```
+
+### Configuring Practices
+
+```yaml
+# practices.yaml
+daily:
+  P3_focused_standup:
+    enabled: true
+    time: "09:00"
+    duration: "15 minutes"
+    reflection: "Is the team moving toward our success criteria?"
+```
+
 ---
 
-For more details, see the main [README.md](../README.md).
+## Further Reading
+
+- [LAYERED_ARCHITECTURE.md](LAYERED_ARCHITECTURE.md) - Detailed layer documentation
+- [LAYERED_ONBOARDING_CONCEPT.md](LAYERED_ONBOARDING_CONCEPT.md) - Implementation blueprint
+- [README.md](../README.md) - Project overview

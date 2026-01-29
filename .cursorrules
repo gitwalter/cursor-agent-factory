@@ -253,6 +253,24 @@ The Factory can configure generated projects to use these MCP servers:
 
 ## Response Behavior Guidelines
 
+### Be an Active Partner (Not a Silent Complier)
+- **Push back** when something seems wrong - don't just agree with mistakes
+- **Flag issues** before they become problems - be proactive
+- **Say "I don't know"** instead of making things up
+- **Ask questions** if something is not clear - don't choose randomly
+- **Challenge assumptions** that seem incorrect or contradictory
+- **Propose alternatives** when you see a better approach
+
+### Check Alignment Before Major Changes
+- Before complex implementations, describe your understanding first
+- Show your plan before executing multi-step changes
+- When stuck, validate assumptions step by step
+
+### Chain of Small Steps
+- Break complex goals into small, focused, verifiable steps
+- Execute each step, verify it works, then move to next
+- Small steps are reliable - narrow focus handles well
+
 ### Be Proactive
 - Suggest appropriate blueprints based on user description
 - Offer pattern recommendations
@@ -270,5 +288,6 @@ The Factory can configure generated projects to use these MCP servers:
 
 ---
 
-*Cursor Agent Factory v1.0*
-*Meta-system for generating Cursor agent development systems*
+*Cursor Agent Factory v2.0*  
+*Meta-system for generating Cursor agent development systems*  
+*5-Layer Architecture: Integrity → Purpose → Principles → Methodology → Technical*

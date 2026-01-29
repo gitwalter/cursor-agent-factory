@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "blueprintId": "ai-agent-development",
+    "blueprintName": "AI Agent Development Blueprint",
+    "description": "Build AI agent systems with LangChain, LangGraph, and modern LLM frameworks",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "ai", "agents", "langchain", "langgraph", "llm", "ml"],
+    "purpose": "Enable developers to create intelligent, coordinated AI agent systems that serve users with integrity"
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "LangChain", "version": "0.2+", "purpose": "Agent framework and chains"},
+      {"name": "LangGraph", "version": "0.1+", "purpose": "Stateful agent orchestration"},
+      {"name": "Streamlit", "version": "1.30+", "purpose": "Interactive UI"},
+      {"name": "FastAPI", "version": "0.100+", "purpose": "API endpoints"},
+      {"name": "Pydantic", "version": "2.0+", "purpose": "Data validation and structured outputs"}
+    ],
+    "databases": [
+      {"type": "vector", "name": "ChromaDB", "purpose": "Vector store for RAG"},
+      {"type": "vector", "name": "FAISS", "purpose": "Alternative vector store"},
+      {"type": "sql", "name": "SQLite", "purpose": "Prompt/state storage"},
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Production database"}
+    ],
+    "llmProviders": [
+      {"name": "OpenAI", "models": ["gpt-4", "gpt-4-turbo", "gpt-4o"], "purpose": "Primary LLM"},
+      {"name": "Anthropic", "models": ["claude-3-opus", "claude-3-sonnet", "claude-3-haiku"], "purpose": "Alternative LLM"},
+      {"name": "Google", "models": ["gemini-pro", "gemini-2.0-flash"], "purpose": "Alternative LLM"},
+      {"name": "Ollama", "models": ["llama3", "mistral", "codellama"], "purpose": "Local LLM"}
+    ],
+    "tools": [
+      {"name": "pytest", "purpose": "Testing"},
+      {"name": "ruff", "purpose": "Linting"},
+      {"name": "mypy", "purpose": "Type checking"},
+      {"name": "langsmith", "purpose": "Agent tracing and debugging"},
+      {"name": "poetry", "purpose": "Dependency management"}
+    ],
+    "styleGuides": [
+      {"name": "pep8", "description": "PEP 8 Style Guide", "reference": "https://pep8.org"},
+      {"name": "google", "description": "Google Python Style", "reference": "https://google.github.io/styleguide/pyguide.html"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "documentation-agent", "required": true, "customizations": {"focus": "agent-documentation"}},
+    {"patternId": "explorer", "required": false, "customizations": {"focus": "research-papers"}}
+  ],
+  "skills": [
+    {"patternId": "prompt-engineering", "required": true},
+    {"patternId": "agent-coordination", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "langchain-patterns.json", "description": "LangChain best practices and patterns"},
+    {"filename": "langgraph-workflows.json", "description": "LangGraph state machine patterns"},
+    {"filename": "prompt-engineering.json", "description": "Prompt optimization techniques"},
+    {"filename": "agent-coordination.json", "description": "Multi-agent coordination patterns"},
+    {"filename": "llm-providers.json", "description": "LLM provider comparison and selection"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "agent-base", "directory": "templates/ai/agent/"},
+      {"category": "tool-definition", "directory": "templates/ai/tool/"},
+      {"category": "prompt-template", "directory": "templates/ai/prompt/"},
+      {"category": "workflow-graph", "directory": "templates/ai/workflow/"},
+      {"category": "test-class", "directory": "templates/python/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "agent_design.md", "directory": "templates/docs/"},
+      {"name": "prompt_library.md", "directory": "templates/docs/"},
+      {"name": "implementation_plan.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "agent-development", "customizations": {}},
+    {"patternId": "prompt-iteration", "customizations": {}},
+    {"patternId": "jira-bugfix", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": true},
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions for Cursor"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills for Cursor"},
+      {"path": "agents/", "purpose": "Agent implementations"},
+      {"path": "agents/core/", "purpose": "Base agent classes"},
+      {"path": "agents/specialized/", "purpose": "Domain-specific agents"},
+      {"path": "prompts/", "purpose": "Prompt templates"},
+      {"path": "prompts/templates/", "purpose": "Prompt template files"},
+      {"path": "prompts/system/", "purpose": "System prompts"},
+      {"path": "workflow/", "purpose": "LangGraph workflows"},
+      {"path": "tools/", "purpose": "Agent tools"},
+      {"path": "knowledge/", "purpose": "Knowledge base and RAG data"},
+      {"path": "apps/", "purpose": "UI applications (Streamlit)"},
+      {"path": "api/", "purpose": "FastAPI endpoints"},
+      {"path": "tests/", "purpose": "Test files"},
+      {"path": "tests/agents/", "purpose": "Agent tests"},
+      {"path": "tests/prompts/", "purpose": "Prompt tests"},
+      {"path": "docs/", "purpose": "Documentation"},
+      {"path": "workflows/", "purpose": "Methodology documentation"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules (5-layer)"},
+      {"path": "PURPOSE.md", "purpose": "Purpose document (Layer 1)"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "pyproject.toml", "purpose": "Python project config"},
+      {"path": "workflows/methodology.yaml", "purpose": "Methodology configuration"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "PYTHON_PATH", "description": "Python executable path", "default": "C:\\App\\Anaconda\\python.exe"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "google"},
+      {"name": "LLM_PROVIDER", "description": "Default LLM provider", "default": "openai"},
+      {"name": "LANGSMITH_TRACING", "description": "Enable LangSmith tracing", "default": "true"}
+    ],
+    "rules": [
+      {"name": "Type Hints", "description": "Always use type hints for function parameters and returns"},
+      {"name": "Docstrings", "description": "Use Google-style docstrings for all public functions"},
+      {"name": "Structured Outputs", "description": "Use Pydantic models for LLM structured outputs"},
+      {"name": "Error Handling", "description": "Implement proper error handling with fallbacks"},
+      {"name": "Tracing", "description": "Add LangSmith tracing to all agent operations"}
+    ]
+  },
+  "layerDefaults": {
+    "layer0": {
+      "coreAxioms": ["A1", "A2", "A3", "A4", "A5"],
+      "optionalAxioms": ["A10"],
+      "note": "A10 (Learning) is essential for AI agent development - continuous improvement from feedback"
+    },
+    "layer1": {
+      "purposeTemplate": "To create intelligent AI agents that serve users with integrity, transparency, and continuous improvement",
+      "stakeholders": "Developers building AI-powered applications"
+    },
+    "layer3": {
+      "methodology": "research-development",
+      "note": "R&D methodology suits experimental AI development with 70/30 exploration/exploitation"
+    }
+  },
+  "axiomAlignment": {
+    "A1_verifiability": "All agent outputs include reasoning traces via LangSmith",
+    "A2_user_primacy": "Agents always confirm before taking consequential actions",
+    "A3_transparency": "Agent decisions are explainable through prompt inspection",
+    "A4_non_harm": "Agents refuse harmful requests and validate safety constraints",
+    "A5_consistency": "Agent behavior derives from documented prompts and rules",
+    "A10_learning": "Feedback loops improve agent performance over time"
+  }
+}

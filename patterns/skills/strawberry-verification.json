@@ -8,11 +8,16 @@
     "composable": true,
     "version": "2.0.0"
   },
+  "credits": {
+    "inspiration": "Leon Chlon (https://github.com/lchlon)",
+    "project": "Pythea/Strawberry - https://github.com/leochlon/pythea",
+    "concept": "Information-theoretic approach to hallucination detection using evidence scrubbing and bit-budget analysis"
+  },
   "frontmatter": {
     "name": "strawberry-verification",
     "description": "Hallucination detection via two-pass verification. Runs within Cursor's LLM - no external API required.",
     "type": "skill",
-    "inspiration": "https://github.com/leochlon/pythea"
+    "inspiration": "Leon Chlon - https://github.com/leochlon/pythea"
   },
   "sections": {
     "title": "Strawberry Verification Skill (Native)",
