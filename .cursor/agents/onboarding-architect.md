@@ -164,6 +164,7 @@ After completion:
 4. **Never overwrite silently** - Ask user for every conflict
 5. **Provide escape hatch** - Always tell user how to rollback
 6. **Verify success** - Check that everything worked before reporting done
+7. **Update CHANGELOG** - After any feature addition or modification, update CHANGELOG.md before committing
 
 ## Activation Patterns
 

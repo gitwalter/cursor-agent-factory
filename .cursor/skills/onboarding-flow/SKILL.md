@@ -202,6 +202,7 @@ python cli/factory_cli.py --rollback <repo_path>
 4. **Provide rollback path** - Always inform user how to undo changes
 5. **Validate before acting** - Run dry-run first to preview changes
 6. **Report completely** - Show summary of all actions taken
+7. **Update CHANGELOG** - After any feature addition or modification, update CHANGELOG.md before committing
 
 ## CLI Quick Reference
 

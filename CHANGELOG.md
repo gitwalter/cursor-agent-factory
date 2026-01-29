@@ -5,6 +5,41 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-01-29
+
+### Added
+
+- **Onboarding Flow** - Non-destructive integration for existing repositories
+  - CLI commands: `--analyze`, `--onboard`, `--dry-run`, `--rollback`
+  - Repository analyzer to detect existing Cursor artifacts and tech stack
+  - Backup manager with session-based rollback support
+  - Merge strategy with interactive conflict resolution
+  - 5 onboarding scenarios: FRESH, MINIMAL, PARTIAL, UPGRADE, COMPLETE
+
+- **New Scripts**
+  - `scripts/repo_analyzer.py` - Detect existing artifacts and technology stack
+  - `scripts/backup_manager.py` - Backup/rollback session management
+  - `scripts/merge_strategy.py` - Conflict detection and resolution
+
+- **New Agent**
+  - `onboarding-architect` - Orchestrates repository onboarding process
+
+- **New Skill**
+  - `onboarding-flow` - Step-by-step onboarding process skill
+
+- **Documentation**
+  - `docs/onboarding-guide.md` - Complete user guide for onboarding existing repos
+
+- **Test Fixtures**
+  - `tests/fixtures/existing_repo_fresh/` - FRESH scenario fixture
+  - `tests/fixtures/existing_repo_minimal/` - MINIMAL scenario fixture
+  - `tests/fixtures/existing_repo_partial/` - PARTIAL scenario fixture
+
+### Changed
+
+- Updated `cli/factory_cli.py` with onboarding commands
+- Updated `scripts/generate_project.py` with onboarding mode support
+
 ## [2.0.0] - 2026-01-29
 
 ### Added
