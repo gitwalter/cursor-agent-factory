@@ -1,0 +1,62 @@
+# Inventory Service - Methodology Configuration
+# Layer 3: Kanban Methodology for Kotlin Development
+
+methodology:
+  name: Kanban
+  description: Pull-based continuous flow for microservice development
+
+team:
+  size: 2-4
+  roles:
+    - Kotlin Developer
+    - Senior Developer
+
+flow:
+  wip_limits:
+    in_progress: 3
+    review: 4
+  
+  columns:
+    - Backlog
+    - Ready
+    - In Progress
+    - Review
+    - Done
+
+cycle_time_targets:
+  endpoint: 4 hours
+  feature: 1 day
+  complex: 2 days
+
+deployment:
+  strategy: continuous
+  stages:
+    - dev: every commit
+    - staging: every merge
+    - prod: on approval
+
+code_review:
+  required: true
+  checklist:
+    - Kotlin idioms followed
+    - Reactive patterns correct
+    - Tests with Kotest
+    - Coverage maintained
+
+quality_gates:
+  pull_request:
+    - ktlint: pass
+    - detekt: no critical
+    - kotest: all pass
+    - coverage: >= 85%
+
+kotlin_standards:
+  null_safety: enforced
+  data_classes: required for DTOs
+  coroutines: for all async
+  blocking_calls: forbidden in reactive
+
+agent_guidelines:
+  follow_kotlin_idioms: true
+  enforce_reactive: true
+  generate_kotest: true

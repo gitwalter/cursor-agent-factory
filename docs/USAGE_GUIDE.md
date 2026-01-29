@@ -14,13 +14,33 @@ The factory generates agent systems using a **5-layer architecture** that ensure
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [The 5-Layer Architecture](#the-5-layer-architecture)
-3. [Chat-Based Generation](#chat-based-generation)
-4. [CLI Generation](#cli-generation)
-5. [Working with Blueprints](#working-with-blueprints)
-6. [Customizing Generated Projects](#customizing-generated-projects)
-7. [Understanding Generated Structure](#understanding-generated-structure)
-8. [Enforcement and Practices](#enforcement-and-practices)
+2. [Example Walkthroughs](#example-walkthroughs)
+3. [The 5-Layer Architecture](#the-5-layer-architecture)
+4. [Chat-Based Generation](#chat-based-generation)
+5. [CLI Generation](#cli-generation)
+6. [Working with Blueprints](#working-with-blueprints)
+7. [Customizing Generated Projects](#customizing-generated-projects)
+8. [Understanding Generated Structure](#understanding-generated-structure)
+9. [Enforcement and Practices](#enforcement-and-practices)
+
+## Example Walkthroughs
+
+For complete, step-by-step examples with real technology stacks, see the [examples directory](examples/).
+
+| Example | Blueprint | Description |
+|---------|-----------|-------------|
+| [REST API Service](examples/01-rest-api-service/) | python-fastapi | Python FastAPI with Jira integration |
+| [Full-Stack Next.js](examples/02-fullstack-nextjs-app/) | nextjs-fullstack | Next.js 14 with Prisma and auth |
+| [RAG Chatbot](examples/03-rag-chatbot-agent/) | ai-agent-development | LangChain RAG with Streamlit |
+| [Multi-Agent System](examples/04-multi-agent-research-system/) | multi-agent-systems | LangGraph supervisor/worker pattern |
+| [SAP Fiori](examples/05-sap-fiori-integration/) | sap-abap | RAP application with MCP grounding |
+| [.NET Enterprise](examples/06-dotnet-enterprise-api/) | csharp-dotnet | Clean Architecture with EF Core |
+| [Kotlin Microservice](examples/07-kotlin-spring-microservice/) | kotlin-spring | Reactive Spring Boot with coroutines |
+
+Each example includes:
+- **README.md** - Scenario overview
+- **WALKTHROUGH.md** - Complete phase-by-phase process
+- **expected-output/** - Reference generated files for verification
 
 ## The 5-Layer Architecture
 

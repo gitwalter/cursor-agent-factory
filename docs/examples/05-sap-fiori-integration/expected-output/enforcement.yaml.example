@@ -1,0 +1,119 @@
+# Travel Booking RAP - Enforcement Patterns
+# Comprehensive enforcement for enterprise SAP development
+
+quality:
+  E1_test_coverage:
+    enabled: true
+    description: ABAP Unit test coverage gate
+    threshold: 80
+    scope: behavior implementations
+    severity: blocking
+    override_policy: with_justification
+    check: "Coverage report from ABAP Unit"
+
+  E2_atc_check:
+    enabled: true
+    description: ABAP Test Cockpit validation
+    threshold: 0  # zero errors
+    scope: all custom objects
+    severity: blocking
+    override_policy: never
+    check: "ATC run with project check variant"
+
+  E3_peer_review:
+    enabled: true
+    description: Code review before transport
+    min_approvers: 1
+    scope: all changes
+    severity: blocking
+    override_policy: with_justification
+    checklist:
+      - RAP patterns followed
+      - CDS annotations complete
+      - ABAP Clean Code principles
+      - SAP documentation referenced
+
+  E4_documentation:
+    enabled: true
+    description: CDS annotations and comments
+    scope: all CDS views
+    severity: warning
+    requirements:
+      - "@EndUserText.label on all entities"
+      - "@Semantics annotations for amounts/quantities"
+      - "Header comments with purpose"
+
+safety:
+  E5_destructive_confirmation:
+    enabled: true
+    description: Confirm before destructive operations
+    scope: DELETE operations, data migrations
+    severity: blocking
+    message: "This operation will delete data. Type 'CONFIRM' to proceed."
+
+  E6_transport_validation:
+    enabled: true
+    description: Transport syntax and dependency check
+    scope: all transports
+    severity: blocking
+    checks:
+      - syntax_check: mandatory
+      - dependency_check: mandatory
+      - table_conversion: review_required
+
+  E7_backup_before_change:
+    enabled: true
+    description: Backup reminder for data changes
+    scope: data migrations, table changes
+    severity: warning
+    action: prompt_backup
+
+  E8_environment_protection:
+    enabled: true
+    description: No direct production changes
+    scope: production system
+    severity: blocking
+    message: "Changes must go through transport system"
+
+integrity:
+  E9_axiom_compliance:
+    enabled: true
+    description: Verify code aligns with axioms
+    scope: all implementations
+    severity: warning
+    checks:
+      - A1_verifiability: "Code grounded in SAP docs?"
+      - A6_minimalism: "Simplest solution used?"
+      - A7_reversibility: "Change is reversible?"
+
+  E10_purpose_alignment:
+    enabled: true
+    description: Feature justification required
+    scope: new features
+    severity: warning
+    question: "How does this feature align with the mission?"
+
+  E11_grounding_verification:
+    enabled: true
+    description: SAP documentation citation
+    scope: RAP patterns, CDS syntax
+    severity: warning
+    action: "Query SAP Documentation MCP before implementation"
+
+transport:
+  E12_transport_description:
+    enabled: true
+    description: Meaningful transport descriptions
+    scope: all transports
+    severity: warning
+    format: "CR-XXXXX: Brief description of change"
+
+  E13_cab_approval:
+    enabled: true
+    description: CAB approval for production transports
+    scope: production releases
+    severity: blocking
+    process:
+      - Submit transport list
+      - Await CAB meeting
+      - Document approval

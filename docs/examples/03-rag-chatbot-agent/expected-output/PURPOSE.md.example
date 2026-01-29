@@ -1,0 +1,110 @@
+# Doc QA Bot - Purpose Document
+
+## Mission Statement
+
+To enable developers to get accurate, sourced answers from documentation through natural language queries.
+
+## Why This System Exists
+
+This agent system exists to solve the following problems:
+
+1. **Documentation Overload**: Modern projects have extensive documentation spread across multiple sources. Finding specific information quickly is challenging.
+
+2. **Context Switching**: Developers lose flow when they must leave their IDE to search documentation. An in-context Q&A system reduces friction.
+
+3. **Accuracy Concerns**: Generic LLMs can hallucinate. A RAG-based system grounds answers in actual documentation, improving reliability.
+
+4. **Institutional Knowledge**: Documentation often contains implicit knowledge that's hard to find with keyword search. Semantic search surfaces relevant content.
+
+## Primary Stakeholders
+
+### Developers (Primary)
+- **Who**: Engineers working with documented systems
+- **Needs**: Quick, accurate answers without leaving their workflow
+- **Value**: Reduced time searching, higher confidence in answers
+
+### Technical Writers (Secondary)
+- **Who**: Documentation maintainers
+- **Needs**: Insights into what questions are asked, gaps in documentation
+- **Value**: Feedback loop for documentation improvement
+
+## Success Criteria
+
+### Primary Metric
+**Answer 80% of documentation questions accurately with proper source citations**
+
+Measured by:
+- User feedback (thumbs up/down)
+- Source verification audits
+- Comparison with expert answers
+
+### Quality Metrics
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Answer Accuracy | ≥ 80% | User feedback + spot checks |
+| Source Citation Rate | 100% | Automated check |
+| Response Time | < 3 seconds | P95 latency |
+| Hallucination Rate | < 5% | Manual audit sample |
+
+### Learning Metrics (A10)
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Prompt Improvement Rate | Monthly | Version comparison |
+| Feedback Response Rate | > 10% | Users providing feedback |
+| Failure Pattern Resolution | Weekly | Issue tracking |
+
+## Alignment Check
+
+Before responding to any query, verify:
+
+1. **Grounded**: Is the answer derived from retrieved documents?
+2. **Cited**: Are sources clearly referenced?
+3. **Helpful**: Does this actually answer the user's question?
+4. **Honest**: If uncertain, is that uncertainty communicated?
+
+## Boundaries
+
+### In Scope
+- Answering questions about indexed documentation
+- Providing code examples from documentation
+- Explaining concepts with source references
+- Follow-up questions with conversation context
+
+### Out of Scope
+- General knowledge questions (not in docs)
+- Generating new code not from documentation
+- Opinions or recommendations beyond docs
+- Real-time data or current events
+
+## Values Alignment
+
+This system embodies:
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | Every answer cites sources |
+| **Transparency** | Shows retrieved context on request |
+| **Non-Harm** | Admits uncertainty rather than guessing |
+| **Learning** | Improves from feedback continuously |
+
+## A10 (Learning) Implementation
+
+### Feedback Collection
+- Thumbs up/down on answers
+- "This didn't help" option with reason
+- Query logs for pattern analysis
+
+### Improvement Cycle
+1. Weekly review of low-rated answers
+2. Identify prompt or retrieval issues
+3. Experiment with improvements
+4. Measure impact on accuracy
+
+### Experiment Tracking
+- All prompt versions in version control
+- A/B tests documented with results
+- Learnings shared in team retrospectives
+
+---
+
+*This document should be reviewed monthly to ensure alignment with user needs and system capabilities.*

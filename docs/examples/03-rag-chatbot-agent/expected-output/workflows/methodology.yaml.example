@@ -1,0 +1,153 @@
+# Doc QA Bot - Methodology Configuration
+# Layer 3: Research & Development Methodology
+
+methodology:
+  name: Research & Development
+  description: Experimental development with hypothesis-driven iterations
+
+team:
+  size: 1-3
+  roles:
+    - AI Engineer
+    - ML Engineer (optional)
+  collaboration_pattern: pair programming on experiments
+
+exploration_exploitation:
+  exploration: 70%  # Prompt experiments, retrieval tuning, new techniques
+  exploitation: 30%  # Production improvements, bug fixes
+
+experiment_cycle:
+  duration: 1 week
+  phases:
+    - name: Hypothesis
+      description: Define what we're testing and expected outcome
+      outputs:
+        - hypothesis statement
+        - success metrics
+        - evaluation dataset
+    
+    - name: Experiment
+      description: Implement and run the experiment
+      outputs:
+        - implementation
+        - test results
+        - metrics comparison
+    
+    - name: Analysis
+      description: Analyze results and document learnings
+      outputs:
+        - findings document
+        - decision (adopt/reject/iterate)
+        - next steps
+
+spike_reviews:
+  frequency: end of each experiment cycle
+  participants: team members
+  format:
+    - Present hypothesis
+    - Show results
+    - Discuss learnings
+    - Plan next experiment
+
+prompt_versioning:
+  enabled: true
+  strategy: git-based
+  tracking:
+    - version number
+    - changes made
+    - performance metrics
+    - decision rationale
+
+evaluation:
+  datasets:
+    - name: golden_set
+      description: Curated Q&A pairs with verified answers
+      size: 50-100 pairs
+      update_frequency: monthly
+    
+    - name: failure_set
+      description: Questions that previously failed
+      size: growing
+      update_frequency: continuous
+
+  metrics:
+    - name: accuracy
+      description: Percentage of correct answers
+      target: 80%
+    
+    - name: groundedness
+      description: Answers grounded in retrieved context
+      target: 95%
+    
+    - name: citation_rate
+      description: Answers with proper citations
+      target: 100%
+    
+    - name: latency_p95
+      description: 95th percentile response time
+      target: 3 seconds
+
+feedback_integration:
+  collection:
+    - thumbs up/down
+    - detailed feedback option
+    - implicit signals (follow-up questions)
+  
+  analysis:
+    frequency: weekly
+    outputs:
+      - failure patterns
+      - improvement opportunities
+      - prompt iteration candidates
+  
+  action:
+    - Update prompts based on patterns
+    - Expand evaluation dataset
+    - Document learnings
+
+workflow:
+  development:
+    - Write evaluation test first
+    - Implement prompt/retrieval change
+    - Measure against golden set
+    - Compare with baseline
+    - Document results
+  
+  deployment:
+    - A/B test in production (if applicable)
+    - Monitor metrics
+    - Roll back if degradation
+    - Collect feedback
+
+quality_gates:
+  experiment:
+    - hypothesis documented
+    - evaluation dataset prepared
+    - baseline metrics captured
+  
+  production:
+    - accuracy >= 80%
+    - groundedness >= 95%
+    - latency_p95 < 3s
+    - no regressions on golden set
+
+tools:
+  experiment_tracking:
+    - LangSmith for traces
+    - Spreadsheet for metrics
+    - Git for prompt versions
+  
+  evaluation:
+    - pytest for automated tests
+    - LangSmith evaluators
+    - Manual spot checks
+
+learning_log:
+  enabled: true
+  format: markdown
+  contents:
+    - experiment summary
+    - what worked
+    - what didn't
+    - next actions
+  review: weekly team sync

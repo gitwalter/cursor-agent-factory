@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "blueprintId": "kotlin-spring",
+    "blueprintName": "Kotlin Spring Boot Blueprint",
+    "description": "Modern microservice development with Kotlin, Spring Boot 3, and reactive programming",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["kotlin", "spring", "spring-boot", "reactive", "microservice", "jvm", "coroutines"]
+  },
+  "stack": {
+    "primaryLanguage": "kotlin",
+    "frameworks": [
+      {"name": "Spring Boot", "version": "3.2+", "purpose": "Application framework"},
+      {"name": "Spring WebFlux", "version": "6.1+", "purpose": "Reactive web framework"},
+      {"name": "Spring Data R2DBC", "version": "3.2+", "purpose": "Reactive data access"},
+      {"name": "Kotlin Coroutines", "version": "1.8+", "purpose": "Async programming"},
+      {"name": "Arrow", "version": "1.2+", "purpose": "Functional programming (optional)"}
+    ],
+    "databases": [
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Primary database (R2DBC)"},
+      {"type": "sql", "name": "H2", "purpose": "Testing (R2DBC)"}
+    ],
+    "tools": [
+      {"name": "JUnit 5", "purpose": "Testing framework"},
+      {"name": "Kotest", "purpose": "Kotlin-native testing"},
+      {"name": "MockK", "purpose": "Kotlin mocking"},
+      {"name": "ktlint", "purpose": "Kotlin linting"},
+      {"name": "Gradle", "purpose": "Build tool (Kotlin DSL)"},
+      {"name": "Detekt", "purpose": "Static analysis"}
+    ],
+    "styleGuides": [
+      {"name": "kotlin-official", "description": "Kotlin Official Style Guide", "reference": "https://kotlinlang.org/docs/coding-conventions.html"},
+      {"name": "spring-kotlin", "description": "Spring Kotlin Best Practices", "reference": "https://docs.spring.io/spring-framework/docs/current/reference/html/languages.html#kotlin"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["kotlin-idioms", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "kotest"]}},
+    {"patternId": "documentation-agent", "required": false, "customizations": {}},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "kotlin-idioms.json", "description": "Kotlin idiomatic patterns"},
+    {"filename": "spring-kotlin-patterns.json", "description": "Spring Boot with Kotlin patterns"},
+    {"filename": "coroutines-patterns.json", "description": "Kotlin coroutines patterns"},
+    {"filename": "reactive-patterns.json", "description": "Reactive programming patterns"},
+    {"filename": "kotest-patterns.json", "description": "Kotest testing patterns"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "controller", "directory": "templates/kotlin/controller/"},
+      {"category": "service", "directory": "templates/kotlin/service/"},
+      {"category": "repository", "directory": "templates/kotlin/repository/"},
+      {"category": "entity", "directory": "templates/kotlin/entity/"},
+      {"category": "dto", "directory": "templates/kotlin/dto/"},
+      {"category": "test", "directory": "templates/kotlin/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "technical_spec.md", "directory": "templates/docs/"},
+      {"name": "api_spec.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "jira-bugfix", "customizations": {}},
+    {"patternId": "confluence-feature", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": false},
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "knowledge/", "purpose": "Reference data"},
+      {"path": "templates/kotlin/", "purpose": "Code templates"},
+      {"path": "templates/docs/", "purpose": "Document templates"},
+      {"path": "workflows/", "purpose": "Workflow documentation"},
+      {"path": "src/main/kotlin/", "purpose": "Kotlin source"},
+      {"path": "src/main/kotlin/controller/", "purpose": "REST controllers"},
+      {"path": "src/main/kotlin/service/", "purpose": "Business logic"},
+      {"path": "src/main/kotlin/repository/", "purpose": "Data access"},
+      {"path": "src/main/kotlin/model/", "purpose": "Domain models"},
+      {"path": "src/main/kotlin/dto/", "purpose": "Data transfer objects"},
+      {"path": "src/main/kotlin/config/", "purpose": "Configuration"},
+      {"path": "src/main/resources/", "purpose": "Resources"},
+      {"path": "src/test/kotlin/", "purpose": "Test files"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "build.gradle.kts", "purpose": "Gradle build (Kotlin DSL)"},
+      {"path": "settings.gradle.kts", "purpose": "Gradle settings"},
+      {"path": "src/main/resources/application.yml", "purpose": "Spring configuration"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "KOTLIN_VERSION", "description": "Kotlin version", "default": "1.9"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "kotlin-official"},
+      {"name": "JAVA_VERSION", "description": "JDK version", "default": "21"}
+    ],
+    "rules": [
+      {"name": "Null Safety", "description": "Leverage Kotlin null safety, avoid platform types"},
+      {"name": "Data Classes", "description": "Use data classes for DTOs and value objects"},
+      {"name": "Extension Functions", "description": "Use extension functions for utility methods"},
+      {"name": "Coroutines", "description": "Use suspend functions and coroutines for async operations"},
+      {"name": "Immutability", "description": "Prefer val over var, immutable collections"},
+      {"name": "Expression Bodies", "description": "Use expression bodies for simple functions"},
+      {"name": "When Expressions", "description": "Use when for multi-branch conditionals"},
+      {"name": "Testing", "description": "Write Kotest tests with descriptive specs"}
+    ]
+  },
+  "kotlinPatterns": {
+    "suspendService": {
+      "description": "Service layer using suspend functions",
+      "example": "suspend fun findById(id: Long): Entity?"
+    },
+    "flowController": {
+      "description": "Controller returning Flow for streaming",
+      "example": "fun getAll(): Flow<Entity>"
+    },
+    "nullSafety": {
+      "description": "Kotlin null-safe patterns",
+      "example": "entity?.let { process(it) } ?: handleNull()"
+    },
+    "sealedClass": {
+      "description": "Sealed classes for result types",
+      "example": "sealed class Result<T> { data class Success<T>(val data: T) : Result<T>() }"
+    }
+  }
+}

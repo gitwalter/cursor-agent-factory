@@ -1,0 +1,97 @@
+# User API Service - Purpose Document
+
+## Mission Statement
+
+To accelerate REST API development by automating boilerplate, enforcing best practices, and integrating with team workflows.
+
+## Why This System Exists
+
+This agent system exists to solve the following problems:
+
+1. **Repetitive Boilerplate**: Creating new API endpoints involves significant boilerplate code that can be automated while maintaining consistency.
+
+2. **Quality Enforcement**: Without active enforcement, code quality standards drift over time. This system ensures standards are checked continuously.
+
+3. **Workflow Fragmentation**: Bug tracking in Jira, specs in Confluence, and code in the repository can become disconnected. This system bridges these tools.
+
+## Primary Stakeholders
+
+### Backend Developers (Primary)
+- **Who**: 4-6 developers on the engineering team
+- **Needs**: Fast, consistent API development with minimal friction
+- **Value**: Reduced development time, consistent patterns, automated testing
+
+### DevOps Engineers (Secondary)
+- **Who**: Team members responsible for deployment and monitoring
+- **Needs**: Well-documented, testable, observable code
+- **Value**: Easier deployment, better error tracking, consistent structure
+
+### API Consumers (Tertiary)
+- **Who**: Frontend developers and external integrators
+- **Needs**: Reliable, well-documented API endpoints
+- **Value**: Consistent error responses, OpenAPI documentation
+
+## Success Criteria
+
+### Primary Metric
+**Reduce time from API design to working implementation by 50%**
+
+Measured by:
+- Time from Jira ticket creation to PR merge
+- Lines of boilerplate code generated vs. written manually
+- Number of review cycles before approval
+
+### Quality Metrics
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Test Coverage | ≥ 80% | pytest-cov report |
+| Linting Errors | 0 | ruff check output |
+| Security Vulnerabilities | 0 critical | OWASP scan |
+| API Documentation | 100% endpoints | OpenAPI spec completeness |
+
+### Process Metrics
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| First Review Approval Rate | ≥ 70% | PRs approved on first review |
+| Jira-to-Code Traceability | 100% | All commits reference tickets |
+| Sprint Velocity Variance | ≤ 20% | Story points planned vs. completed |
+
+## Alignment Check
+
+Before taking any significant action, verify:
+
+1. **Efficiency**: Does this reduce development time?
+2. **Quality**: Does this maintain or improve code quality?
+3. **Collaboration**: Does this integrate with team workflows?
+
+If an action conflicts with these criteria, pause and discuss with the team.
+
+## Boundaries
+
+### In Scope
+- REST API endpoint development
+- User management and authentication
+- Integration with Jira and Confluence
+- Automated testing and code review
+
+### Out of Scope
+- Frontend development
+- Mobile applications
+- Third-party API integrations (beyond auth)
+- Infrastructure and deployment (handled by DevOps)
+
+## Values Alignment
+
+This system embodies:
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | All generated code is testable and traceable |
+| **User Primacy** | Developer experience is prioritized |
+| **Transparency** | All patterns and decisions are documented |
+| **Non-Harm** | Security best practices are enforced |
+| **Minimalism** | Simplest solution that meets requirements |
+
+---
+
+*This document should be reviewed quarterly to ensure alignment with evolving team needs.*

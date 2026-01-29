@@ -1,0 +1,68 @@
+# Research Agent Team - Purpose Document
+
+## Mission Statement
+
+To automate complex research tasks through coordinated specialist agents working under intelligent supervision.
+
+## Why This System Exists
+
+1. **Research Complexity**: Multi-step research requires different skills (gathering, analysis, writing, review). Specialized agents handle each stage.
+
+2. **Quality Assurance**: A critic agent ensures all outputs meet quality standards before delivery.
+
+3. **Scalability**: The supervisor pattern allows adding new specialist agents without redesigning the system.
+
+## Primary Stakeholders
+
+### AI Engineers (Primary)
+- **Who**: Developers building multi-agent systems
+- **Needs**: Clear patterns, reliable coordination
+- **Value**: Reference implementation for multi-agent orchestration
+
+### Researchers (Secondary)
+- **Who**: Users needing automated research
+- **Needs**: Quality outputs, source verification
+- **Value**: Accelerated research process
+
+## Success Criteria
+
+### Primary Metric
+**Complete multi-step research tasks with quality-reviewed outputs**
+
+### Quality Metrics
+| Metric | Target |
+|--------|--------|
+| Task Completion Rate | >= 90% |
+| Source Citation Rate | 100% |
+| Revision Cycles | <= 3 |
+| User Satisfaction | >= 4/5 |
+
+### Coordination Metrics
+| Metric | Target |
+|--------|--------|
+| Handoff Success Rate | 100% |
+| State Preservation | 100% |
+| Avg Coordination Time | < 30s |
+
+## Values Alignment
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | All research cites sources |
+| **Transparency** | Coordination decisions logged |
+| **Collaboration** | Agents work together effectively |
+| **Learning** | System improves from feedback |
+
+## Agent Team Responsibilities
+
+| Agent | Responsibility | A8 Contribution |
+|-------|---------------|-----------------|
+| Supervisor | Task routing | Orchestrates collaboration |
+| Researcher | Information gathering | Provides raw material |
+| Analyst | Data synthesis | Transforms data |
+| Writer | Report generation | Creates deliverable |
+| Critic | Quality review | Ensures standards |
+
+---
+
+*Review monthly to ensure coordination patterns remain effective.*

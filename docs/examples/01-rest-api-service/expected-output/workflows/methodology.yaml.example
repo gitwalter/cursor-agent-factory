@@ -1,0 +1,151 @@
+# User API Service - Methodology Configuration
+# Layer 3: Development Methodology
+
+methodology:
+  name: Agile Scrum
+  description: Iterative development with fixed-length sprints and regular ceremonies
+
+team:
+  size: 4-6
+  roles:
+    - Product Owner
+    - Scrum Master
+    - Developers
+  collaboration_pattern: cross-functional
+
+sprint:
+  length: 2 weeks
+  planning_capacity: 80%  # Account for meetings, unexpected work
+  story_point_scale: fibonacci  # 1, 2, 3, 5, 8, 13
+
+ceremonies:
+  sprint_planning:
+    frequency: start of sprint
+    duration: 2 hours
+    participants: all team members
+    outputs:
+      - sprint goal
+      - sprint backlog
+      - capacity commitment
+    agent_support:
+      - Review technical complexity of stories
+      - Identify potential blockers
+      - Suggest task breakdowns
+
+  daily_standup:
+    frequency: daily
+    duration: 15 minutes
+    format: async-first  # Written updates, sync only for blockers
+    questions:
+      - What did I complete yesterday?
+      - What will I work on today?
+      - Are there any blockers?
+    agent_support:
+      - Summarize PR status
+      - Flag stale tickets
+      - Identify cross-team dependencies
+
+  sprint_review:
+    frequency: end of sprint
+    duration: 1 hour
+    participants: team + stakeholders
+    format:
+      - Demo completed features
+      - Gather feedback
+      - Discuss next priorities
+    agent_support:
+      - Generate demo checklist
+      - Prepare feature documentation
+      - Collect metrics summary
+
+  retrospective:
+    frequency: end of sprint
+    duration: 1 hour
+    format: what went well / what to improve / action items
+    agent_support:
+      - Analyze sprint metrics
+      - Identify patterns in blockers
+      - Track action item completion
+
+workflow:
+  ticket_flow:
+    - status: Backlog
+      next: Ready for Development
+      gate: Acceptance criteria defined
+
+    - status: Ready for Development
+      next: In Progress
+      gate: Developer assigned
+
+    - status: In Progress
+      next: In Review
+      gate: Code complete, tests passing
+
+    - status: In Review
+      next: Done
+      gate: Peer review approved
+
+  branch_strategy:
+    main: production-ready code
+    develop: integration branch
+    feature: feature/PROJ-123-description
+    bugfix: bugfix/PROJ-123-description
+    hotfix: hotfix/PROJ-123-description
+
+code_review:
+  required: true
+  min_approvers: 1
+  checklist:
+    - Code follows project style guide
+    - Tests included and passing
+    - No security vulnerabilities
+    - Documentation updated
+    - Jira ticket referenced in commit
+  agent_support:
+    - Pre-review with code-reviewer agent
+    - Generate review checklist
+    - Check coverage thresholds
+
+quality_gates:
+  pull_request:
+    - linting: ruff check passes
+    - tests: all tests pass
+    - coverage: >= 80%
+    - security: no critical vulnerabilities
+  
+  merge_to_main:
+    - peer_review: approved
+    - ci_pipeline: green
+    - documentation: updated
+
+metrics:
+  tracked:
+    - velocity: story points per sprint
+    - lead_time: ticket creation to deployment
+    - cycle_time: in progress to done
+    - defect_rate: bugs per feature
+  
+  review_frequency: each retrospective
+
+integration:
+  jira:
+    enabled: true
+    project_key: PROJ
+    sync_on:
+      - ticket status changes
+      - sprint updates
+      - story point changes
+  
+  confluence:
+    enabled: true
+    space_key: PROJ
+    templates:
+      - technical_spec
+      - implementation_plan
+      - test_plan
+
+agent_guidelines:
+  respect_ceremonies: true
+  update_tickets: true
+  follow_branching: true
+  enforce_reviews: true

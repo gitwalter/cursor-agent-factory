@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "blueprintId": "multi-agent-systems",
+    "blueprintName": "Multi-Agent Systems Blueprint",
+    "description": "Build orchestrated multi-agent systems with LangGraph, supervisor patterns, and agent coordination",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "ai", "agents", "multi-agent", "langgraph", "orchestration", "coordination"],
+    "purpose": "Enable developers to create coordinated multi-agent systems that collaborate effectively with integrity"
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "LangGraph", "version": "0.1+", "purpose": "Multi-agent orchestration and state machines"},
+      {"name": "LangChain", "version": "0.2+", "purpose": "Agent framework and tools"},
+      {"name": "Streamlit", "version": "1.30+", "purpose": "Interactive UI and debugging"},
+      {"name": "FastAPI", "version": "0.100+", "purpose": "API endpoints for agent access"},
+      {"name": "Pydantic", "version": "2.0+", "purpose": "Structured state and messages"}
+    ],
+    "databases": [
+      {"type": "vector", "name": "ChromaDB", "purpose": "Shared knowledge base"},
+      {"type": "sql", "name": "SQLite", "purpose": "Agent state persistence"},
+      {"type": "sql", "name": "PostgreSQL", "purpose": "Production state storage"}
+    ],
+    "llmProviders": [
+      {"name": "OpenAI", "models": ["gpt-4", "gpt-4-turbo", "gpt-4o"], "purpose": "Supervisor and complex reasoning"},
+      {"name": "Anthropic", "models": ["claude-3-opus", "claude-3-sonnet"], "purpose": "Long-context tasks"},
+      {"name": "OpenAI", "models": ["gpt-3.5-turbo"], "purpose": "Worker agents (cost optimization)"}
+    ],
+    "tools": [
+      {"name": "pytest", "purpose": "Testing"},
+      {"name": "ruff", "purpose": "Linting"},
+      {"name": "mypy", "purpose": "Type checking"},
+      {"name": "langsmith", "purpose": "Multi-agent tracing and debugging"},
+      {"name": "poetry", "purpose": "Dependency management"}
+    ],
+    "styleGuides": [
+      {"name": "pep8", "description": "PEP 8 Style Guide", "reference": "https://pep8.org"},
+      {"name": "google", "description": "Google Python Style", "reference": "https://google.github.io/styleguide/pyguide.html"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["agent-coordination", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "documentation-agent", "required": true, "customizations": {"focus": "multi-agent-architecture"}},
+    {"patternId": "explorer", "required": true, "customizations": {"focus": "multi-agent-patterns"}}
+  ],
+  "skills": [
+    {"patternId": "agent-coordination", "required": true},
+    {"patternId": "task-decomposition", "required": true},
+    {"patternId": "consensus-building", "required": true},
+    {"patternId": "prompt-engineering", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "bugfix-workflow", "required": false},
+    {"patternId": "feature-workflow", "required": false}
+  ],
+  "knowledge": [
+    {"filename": "multi-agent-patterns.json", "description": "Supervisor/worker, hierarchical, swarm patterns"},
+    {"filename": "agent-handoffs.json", "description": "Handoff protocols and state transfer"},
+    {"filename": "coordination-strategies.json", "description": "Task decomposition, consensus, voting"},
+    {"filename": "langgraph-workflows.json", "description": "LangGraph state machine patterns"},
+    {"filename": "langchain-patterns.json", "description": "LangChain best practices"},
+    {"filename": "prompt-engineering.json", "description": "Prompt optimization for agents"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "supervisor-agent", "directory": "templates/ai/multi-agent/supervisor/"},
+      {"category": "worker-agent", "directory": "templates/ai/multi-agent/worker/"},
+      {"category": "multi-agent-graph", "directory": "templates/ai/multi-agent/graph/"},
+      {"category": "agent-state", "directory": "templates/ai/multi-agent/state/"},
+      {"category": "handoff", "directory": "templates/ai/multi-agent/handoff/"},
+      {"category": "tool-definition", "directory": "templates/ai/tool/"},
+      {"category": "test-class", "directory": "templates/python/test/"}
+    ],
+    "documentTemplates": [
+      {"name": "agent_architecture.md", "directory": "templates/docs/"},
+      {"name": "coordination_protocol.md", "directory": "templates/docs/"},
+      {"name": "agent_communication.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "multi-agent-development", "customizations": {}},
+    {"patternId": "agent-testing", "customizations": {}},
+    {"patternId": "coordination-testing", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "Research multi-agent patterns", "required": true},
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions for Cursor"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills for Cursor"},
+      {"path": "agents/", "purpose": "Agent implementations"},
+      {"path": "agents/supervisor/", "purpose": "Supervisor/coordinator agents"},
+      {"path": "agents/workers/", "purpose": "Specialized worker agents"},
+      {"path": "agents/shared/", "purpose": "Shared agent utilities"},
+      {"path": "graphs/", "purpose": "LangGraph multi-agent graphs"},
+      {"path": "state/", "purpose": "State definitions and management"},
+      {"path": "prompts/", "purpose": "Agent prompts"},
+      {"path": "prompts/supervisor/", "purpose": "Supervisor prompts"},
+      {"path": "prompts/workers/", "purpose": "Worker prompts"},
+      {"path": "tools/", "purpose": "Agent tools"},
+      {"path": "coordination/", "purpose": "Handoff and coordination logic"},
+      {"path": "knowledge/", "purpose": "Shared knowledge base"},
+      {"path": "apps/", "purpose": "UI applications (Streamlit)"},
+      {"path": "api/", "purpose": "FastAPI endpoints"},
+      {"path": "tests/", "purpose": "Test files"},
+      {"path": "tests/agents/", "purpose": "Individual agent tests"},
+      {"path": "tests/graphs/", "purpose": "Graph integration tests"},
+      {"path": "tests/coordination/", "purpose": "Coordination tests"},
+      {"path": "docs/", "purpose": "Documentation"},
+      {"path": "workflows/", "purpose": "Methodology documentation"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules (5-layer)"},
+      {"path": "PURPOSE.md", "purpose": "Purpose document (Layer 1)"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "pyproject.toml", "purpose": "Python project config"},
+      {"path": "workflows/methodology.yaml", "purpose": "Methodology configuration"},
+      {"path": "enforcement.yaml", "purpose": "Enforcement patterns (Comprehensive)"},
+      {"path": "practices.yaml", "purpose": "Team practices (Comprehensive)"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "PYTHON_PATH", "description": "Python executable path", "default": "C:\\App\\Anaconda\\python.exe"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "google"},
+      {"name": "LLM_PROVIDER", "description": "Default LLM provider", "default": "openai"},
+      {"name": "LANGSMITH_TRACING", "description": "Enable LangSmith tracing", "default": "true"}
+    ],
+    "rules": [
+      {"name": "Type Hints", "description": "Always use type hints for function parameters and returns"},
+      {"name": "Docstrings", "description": "Use Google-style docstrings for all agents and handlers"},
+      {"name": "State Typing", "description": "All agent state must use Pydantic models"},
+      {"name": "Error Handling", "description": "Implement proper error handling with fallbacks"},
+      {"name": "Tracing", "description": "Add LangSmith tracing to all agent operations"},
+      {"name": "Handoff Protocol", "description": "All handoffs must include state and context"}
+    ]
+  },
+  "layerDefaults": {
+    "layer0": {
+      "coreAxioms": ["A1", "A2", "A3", "A4", "A5"],
+      "optionalAxioms": ["A8", "A10"],
+      "note": "A8 (Collaboration) is essential for multi-agent coordination. A10 (Learning) enables system improvement."
+    },
+    "layer1": {
+      "purposeTemplate": "To create coordinated multi-agent systems that collaborate effectively with integrity and transparency",
+      "stakeholders": "Developers building complex AI systems requiring multiple specialized agents"
+    },
+    "layer3": {
+      "methodology": "research-development",
+      "note": "R&D methodology suits experimental multi-agent development with 70/30 exploration/exploitation"
+    }
+  },
+  "axiomAlignment": {
+    "A1_verifiability": "All agent outputs include reasoning traces and can be verified via LangSmith",
+    "A2_user_primacy": "Supervisor confirms before consequential actions",
+    "A3_transparency": "Agent coordination decisions are explainable",
+    "A4_non_harm": "Agents refuse harmful requests and validate safety constraints",
+    "A5_consistency": "All agents follow documented prompts and coordination protocols",
+    "A8_collaboration": "Agents work together effectively with clear handoff protocols",
+    "A10_learning": "System improves through feedback and coordination refinement"
+  },
+  "multiAgentPatterns": {
+    "supervisorWorker": {
+      "description": "Central supervisor delegates tasks to specialized workers",
+      "components": ["Supervisor agent", "Worker agents", "State management", "Handoff protocol"],
+      "useCase": "Tasks requiring multiple specialized capabilities with central coordination"
+    },
+    "hierarchical": {
+      "description": "Multi-level coordination with team leads and specialists",
+      "components": ["Top-level coordinator", "Team leads", "Specialists", "Escalation paths"],
+      "useCase": "Complex organizations with multiple teams and specializations"
+    },
+    "collaborative": {
+      "description": "Peer agents collaborate through consensus",
+      "components": ["Peer agents", "Voting mechanism", "Conflict resolution"],
+      "useCase": "Tasks benefiting from multiple perspectives and consensus"
+    },
+    "sequential": {
+      "description": "Agents process in sequence, each building on previous output",
+      "components": ["Chain of agents", "State passing", "Quality gates"],
+      "useCase": "Pipeline processing like research → analysis → writing"
+    }
+  }
+}

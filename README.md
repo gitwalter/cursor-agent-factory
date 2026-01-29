@@ -167,21 +167,41 @@ cursor-agent-factory/
 | Blueprint | Stack | Description |
 |-----------|-------|-------------|
 | `python-fastapi` | Python, FastAPI, SQLAlchemy | REST API development |
-| `ai-agent-development` | Python, LangChain, LangGraph | **NEW**: AI agent systems |
+| `ai-agent-development` | Python, LangChain, LangGraph | AI agent systems (single agents) |
+| `multi-agent-systems` | Python, LangGraph, LangChain | **NEW**: Orchestrated multi-agent systems |
 | `typescript-react` | TypeScript, React, Vite | Web application development |
 | `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
+| `kotlin-spring` | Kotlin, Spring Boot 3, WebFlux | **NEW**: Reactive Kotlin microservices |
 | `csharp-dotnet` | C#, .NET 8+, Entity Framework | Enterprise .NET development |
 | `sap-abap` | ABAP, RAP, CAP | SAP development |
 
 ### AI Agent Development Blueprint
 
-The new `ai-agent-development` blueprint includes:
+The `ai-agent-development` blueprint includes:
 - LangChain and LangGraph frameworks
 - Streamlit and FastAPI for UI/API
 - ChromaDB for vector storage
 - Templates for agents, prompts, and workflows
 - Default: Research & Development methodology with A10 (Learning) axiom
+
+### Multi-Agent Systems Blueprint (NEW)
+
+The `multi-agent-systems` blueprint includes:
+- LangGraph for multi-agent orchestration
+- Supervisor/worker patterns
+- Agent handoff protocols
+- Coordination strategies (task decomposition, consensus)
+- Default: A8 (Collaboration) + A10 (Learning) axioms
+
+### Kotlin Spring Blueprint (NEW)
+
+The `kotlin-spring` blueprint includes:
+- Spring Boot 3 with WebFlux
+- Kotlin Coroutines for async
+- R2DBC for reactive database access
+- Kotest and MockK for testing
+- Kotlin-idiomatic patterns (data classes, sealed classes, extension functions)
 
 ## Factory Agents
 
@@ -520,11 +540,28 @@ The CI pipeline includes:
 
 See `.github/workflows/ci.yml` for the full configuration.
 
+## Example Walkthroughs
+
+Complete, step-by-step examples showing the factory in action with real technology stacks:
+
+| Example | Blueprint | Description |
+|---------|-----------|-------------|
+| [REST API Service](docs/examples/01-rest-api-service/) | python-fastapi | Python FastAPI with Jira integration |
+| [Full-Stack Next.js](docs/examples/02-fullstack-nextjs-app/) | nextjs-fullstack | Next.js 14 with Prisma and auth |
+| [RAG Chatbot](docs/examples/03-rag-chatbot-agent/) | ai-agent-development | LangChain RAG with Streamlit |
+| [Multi-Agent System](docs/examples/04-multi-agent-research-system/) | multi-agent-systems | LangGraph supervisor/worker pattern |
+| [SAP Fiori](docs/examples/05-sap-fiori-integration/) | sap-abap | RAP application with MCP grounding |
+| [.NET Enterprise](docs/examples/06-dotnet-enterprise-api/) | csharp-dotnet | Clean Architecture with EF Core |
+| [Kotlin Microservice](docs/examples/07-kotlin-spring-microservice/) | kotlin-spring | Reactive Spring Boot with coroutines |
+
+Each example includes a complete walkthrough, sample answers, and expected output files for verification.
+
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
 | [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |
+| [Example Walkthroughs](docs/examples/) | Complete end-to-end examples with real stacks |
 | [Layered Architecture](docs/LAYERED_ARCHITECTURE.md) | 5-layer architecture guide |
 | [Onboarding Concept](docs/LAYERED_ONBOARDING_CONCEPT.md) | Full implementation blueprint |
 | [Extension Guide](docs/EXTENSION_GUIDE.md) | How to extend the factory with new blueprints, patterns, and skills |

@@ -1,0 +1,187 @@
+---
+name: bugfix-workflow
+description: Jira-driven bug fix workflow with verification and ticket updates
+type: skill
+triggers:
+  - jira ticket reference
+  - "fix bug"
+  - "PROJ-###"
+---
+
+# Bug Fix Workflow Skill
+
+## Purpose
+
+Execute a structured bug fix workflow driven by Jira ticket information, ensuring proper analysis, fix implementation, testing, and ticket status updates.
+
+## When to Use
+
+- User references a Jira ticket (e.g., "Fix PROJ-123")
+- User says "fix bug" with ticket context
+- Bugfix-related Jira ticket is mentioned
+
+## Prerequisites
+
+- Atlassian MCP server configured
+- Access to the Jira project
+- Understanding of the codebase structure
+
+## Process
+
+### Step 1: Fetch Ticket Details
+
+Use Atlassian MCP to retrieve:
+- Ticket summary and description
+- Acceptance criteria
+- Related tickets or dependencies
+- Reporter and priority
+
+```
+MCP Call: getJiraIssue
+Parameters:
+  - issueIdOrKey: "PROJ-123"
+  - fields: ["summary", "description", "priority", "reporter", "labels"]
+```
+
+### Step 2: Analyze the Bug
+
+1. **Understand the symptom**
+   - What is the expected behavior?
+   - What is the actual behavior?
+   - What are the reproduction steps?
+
+2. **Locate the issue**
+   - Search codebase for relevant files
+   - Identify the component affected
+   - Check recent changes to the area
+
+3. **Root cause analysis**
+   - Why is this happening?
+   - Is this a regression?
+   - Are there related issues?
+
+### Step 3: Ground the Fix
+
+Before implementing, verify understanding:
+
+1. Read related knowledge files:
+   - `knowledge/api-patterns.json` for API-related bugs
+   - `knowledge/test-patterns.json` for test-related bugs
+
+2. Check existing tests:
+   - Does a test cover this scenario?
+   - If not, note that a test is needed
+
+3. Verify the fix approach:
+   - Does the proposed fix align with A6 (Minimalism)?
+   - Is it the simplest solution that works?
+
+### Step 4: Implement the Fix
+
+1. **Write a failing test first**
+   ```python
+   def test_bug_proj_123_scenario():
+       """Regression test for PROJ-123: [summary]."""
+       # Reproduce the bug scenario
+       # This should fail before the fix
+       pass
+   ```
+
+2. **Implement the minimal fix**
+   - Change only what's necessary
+   - Follow existing patterns
+   - Add comments referencing the ticket
+
+3. **Verify the test passes**
+   - Run the new test
+   - Run related tests
+   - Check for regressions
+
+### Step 5: Code Review Preparation
+
+Prepare for review by ensuring:
+- [ ] Type hints are complete
+- [ ] Docstrings are updated
+- [ ] No linting errors
+- [ ] Test coverage maintained
+
+### Step 6: Update Jira Ticket
+
+Use Atlassian MCP to update:
+
+```
+MCP Call: addCommentToJiraIssue
+Parameters:
+  - issueIdOrKey: "PROJ-123"
+  - commentBody: |
+      ## Fix Implemented
+      
+      **Root Cause**: [explanation]
+      
+      **Changes Made**:
+      - [file1]: [change description]
+      - [file2]: [change description]
+      
+      **Testing**:
+      - Added regression test: test_bug_proj_123_scenario
+      - All existing tests pass
+      
+      **Ready for Review**: PR #[number]
+```
+
+Transition ticket status:
+```
+MCP Call: transitionJiraIssue
+Parameters:
+  - issueIdOrKey: "PROJ-123"
+  - transition: { id: "31" }  # In Review
+```
+
+## Output Format
+
+```markdown
+## Bug Fix: PROJ-123
+
+### Ticket Summary
+[Ticket title and description]
+
+### Root Cause Analysis
+[Explanation of why the bug occurred]
+
+### Fix Implementation
+- **File**: [path]
+- **Change**: [description]
+
+### Testing
+- [x] Regression test added
+- [x] Existing tests pass
+- [x] Coverage maintained
+
+### Jira Updated
+- Comment added with fix details
+- Status: In Review
+```
+
+## Verification Checklist
+
+Before completing:
+- [ ] Bug is reproducible in a test
+- [ ] Fix addresses root cause, not just symptom
+- [ ] No new issues introduced
+- [ ] Code follows project patterns
+- [ ] Jira ticket updated with details
+
+## Axiom Alignment
+
+| Axiom | How This Skill Complies |
+|-------|------------------------|
+| A1 (Verifiability) | Fix is verified by a test |
+| A2 (User Primacy) | Follows ticket requirements |
+| A3 (Transparency) | Documents root cause |
+| A6 (Minimalism) | Minimal change to fix |
+
+## Error Handling
+
+- **Ticket not found**: Ask user to verify ticket ID
+- **MCP unavailable**: Work with available information, update manually later
+- **Unclear requirements**: Comment on ticket asking for clarification

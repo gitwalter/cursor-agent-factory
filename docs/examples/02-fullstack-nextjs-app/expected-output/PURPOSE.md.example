@@ -1,0 +1,44 @@
+# TaskFlow App - Purpose Document
+
+## Mission Statement
+
+To accelerate full-stack React development with type-safe patterns from database to UI.
+
+## Why This System Exists
+
+1. **Full-Stack Complexity**: Building features that span database, API, and UI requires coordinating multiple layers. This system provides patterns that work together.
+
+2. **Type Safety Gaps**: Without careful attention, type safety breaks at layer boundaries. This system enforces end-to-end typing.
+
+3. **Boilerplate Reduction**: Common patterns (CRUD, auth, forms) are repetitive. This system automates the predictable parts.
+
+## Primary Stakeholders
+
+### Full-Stack Developers (Primary)
+- **Who**: 2-4 developers building the application
+- **Needs**: Fast, type-safe feature development
+- **Value**: Reduced implementation time, fewer bugs
+
+## Success Criteria
+
+### Primary Metric
+**Implement complete features from database to UI in under 2 hours**
+
+### Quality Metrics
+| Metric | Target |
+|--------|--------|
+| Type Coverage | 100% (no any) |
+| Lighthouse Score | >= 90 |
+| Test Coverage | >= 80% |
+
+## Values Alignment
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | Type safety proves correctness |
+| **Transparency** | Clear component boundaries |
+| **Consistency** | Standard patterns throughout |
+
+---
+
+*Review quarterly to ensure alignment with team practices.*

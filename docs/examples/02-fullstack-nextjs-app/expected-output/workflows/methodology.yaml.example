@@ -1,0 +1,71 @@
+# TaskFlow App - Methodology Configuration
+# Layer 3: Kanban Methodology
+
+methodology:
+  name: Kanban
+  description: Pull-based continuous flow with WIP limits
+
+team:
+  size: 2-4
+  roles:
+    - Full-Stack Developer
+    - Designer (optional)
+
+flow:
+  wip_limits:
+    in_progress: 3  # per developer
+    review: 4       # total
+  
+  columns:
+    - name: Backlog
+      description: Prioritized work not yet started
+    
+    - name: Ready
+      description: Refined and ready to pull
+      wip_limit: 10
+    
+    - name: In Progress
+      description: Actively being worked on
+      wip_limit: 3  # per developer
+    
+    - name: Review
+      description: Awaiting code review
+      wip_limit: 4
+    
+    - name: Done
+      description: Merged and deployed
+
+cycle_time_targets:
+  small: 1 day      # Single component or fix
+  medium: 3 days    # Full feature slice
+  large: 5 days     # Complex feature
+
+deployment:
+  strategy: continuous
+  preview: true     # PR previews with Vercel
+  production: on_merge
+
+quality_gates:
+  pull_request:
+    - typescript: no errors
+    - lint: pass
+    - tests: pass
+    - preview: deployed
+
+  code_review:
+    - type_safety: verified
+    - patterns: followed
+    - accessibility: checked
+
+metrics:
+  tracked:
+    - cycle_time
+    - throughput
+    - wip_age
+  
+  review: weekly
+
+agent_guidelines:
+  respect_wip: true
+  continuous_deployment: true
+  type_safety_first: true

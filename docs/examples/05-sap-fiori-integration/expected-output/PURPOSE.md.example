@@ -1,0 +1,71 @@
+# Travel Booking RAP - Purpose Document
+
+## Mission Statement
+
+To accelerate SAP RAP development by grounding all code in official documentation and enforcing SAP best practices.
+
+## Why This System Exists
+
+1. **Documentation Gaps**: SAP has extensive documentation, but developers often miss relevant guidelines. MCP grounding ensures compliance.
+
+2. **Pattern Consistency**: RAP has specific patterns that must be followed. This system enforces them automatically.
+
+3. **Enterprise Risk**: SAP systems are business-critical. Proper enforcement reduces risk of system issues.
+
+## Primary Stakeholders
+
+### SAP ABAP Developers (Primary)
+- **Who**: 4-8 developers building RAP applications
+- **Needs**: Accurate patterns, documented code, compliance
+- **Value**: Faster development, fewer errors
+
+### SAP Basis Team (Secondary)
+- **Who**: System administrators
+- **Needs**: Clean transports, no system impact
+- **Value**: Stable system operations
+
+### Business Users (Tertiary)
+- **Who**: End users of Fiori applications
+- **Needs**: Reliable, performant applications
+- **Value**: Productive work tools
+
+## Success Criteria
+
+### Primary Metric
+**100% compliance with SAP RAP guidelines**
+
+### Quality Metrics
+| Metric | Target |
+|--------|--------|
+| ATC Errors | 0 |
+| ABAP Unit Coverage | >= 80% |
+| Documentation Grounding | 100% |
+| Transport Success Rate | 100% |
+
+## Values Alignment
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | All code grounded in SAP docs |
+| **Transparency** | Transport management visible |
+| **Non-Harm** | ATC checks prevent issues |
+| **Minimalism** | Standard Fiori Elements used |
+| **Reversibility** | Transport rollback available |
+
+## Boundaries
+
+### In Scope
+- RAP Business Objects
+- Fiori Elements configuration
+- CDS data modeling
+- ABAP behavior implementation
+
+### Out of Scope
+- Custom Fiori UI development
+- SAP Basis administration
+- Integration middleware
+- Non-SAP systems
+
+---
+
+*Review after each major SAP release to ensure alignment with new guidelines.*

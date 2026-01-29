@@ -1,0 +1,112 @@
+# Travel Booking RAP - Practice Patterns
+# Regular disciplines maintaining SAP development excellence
+
+daily:
+  P1_morning_intention:
+    enabled: true
+    description: Align with sprint goal and transport plan
+    time: "09:00"
+    duration: "5 minutes"
+    reflection: "What transport-ready work will I complete today?"
+
+  P2_transport_review:
+    enabled: true
+    description: Review transport dependencies
+    frequency: before releasing transport
+    checklist:
+      - All dependent objects included
+      - Description is clear
+      - ATC check passed
+      - Tests executed
+
+  P3_documentation_sync:
+    enabled: true
+    description: Update CDS annotations and comments
+    frequency: after code changes
+    action: "Ensure all CDS views have current annotations"
+
+craft:
+  P4_code_review:
+    enabled: true
+    description: ABAP Clean Code focused review
+    focus:
+      - Naming conventions
+      - Method size and complexity
+      - Error handling
+      - Test coverage
+    reference: "SAP ABAP Clean Code guidelines"
+
+  P5_pair_programming:
+    enabled: true
+    description: Pair on complex behavior implementations
+    when: "Complex determinations, validations, or actions"
+    benefit: "Knowledge sharing and quality improvement"
+
+  P6_refactoring:
+    enabled: true
+    description: Continuous code improvement
+    frequency: weekly
+    focus:
+      - Extract methods
+      - Simplify conditionals
+      - Improve naming
+    rule: "Leave code better than you found it"
+
+  P7_grounding_practice:
+    enabled: true
+    description: Query SAP docs before implementing
+    when: "New RAP patterns or CDS syntax"
+    tool: "SAP Documentation MCP"
+    action: "Search → Verify → Implement → Cite"
+
+alignment:
+  P8_weekly_sync:
+    enabled: true
+    description: Team sync on architecture and patterns
+    frequency: weekly
+    duration: "30 minutes"
+    topics:
+      - New SAP features to adopt
+      - Pattern standardization
+      - Technical debt review
+
+  P9_transport_retrospective:
+    enabled: true
+    description: Review transport issues after release
+    frequency: after each release
+    questions:
+      - What transport issues occurred?
+      - How can we prevent them?
+      - Are our checks sufficient?
+
+  P10_quarterly_alignment:
+    enabled: true
+    description: Align with SAP release notes
+    frequency: quarterly
+    actions:
+      - Review new SAP features
+      - Update knowledge files
+      - Train team on changes
+      - Update enforcement rules
+
+enterprise:
+  P11_cab_preparation:
+    enabled: true
+    description: Prepare CAB documentation
+    when: "Before CAB meeting"
+    deliverables:
+      - Transport list
+      - Change description
+      - Risk assessment
+      - Rollback plan
+
+  P12_release_blessing:
+    enabled: true
+    description: Final check before production release
+    participants: Tech lead, Product owner
+    checklist:
+      - All tests pass
+      - ATC clean
+      - Documentation complete
+      - CAB approved
+    ritual: "Verify we're proud of this work"

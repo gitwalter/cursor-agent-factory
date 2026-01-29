@@ -1,0 +1,74 @@
+# Product Catalog API - Methodology Configuration
+# Layer 3: Agile Scrum Methodology
+
+methodology:
+  name: Agile Scrum
+  description: Iterative development with fixed-length sprints
+
+team:
+  size: 4-8
+  roles:
+    - Product Owner
+    - Scrum Master
+    - Senior Developer
+    - Developers
+
+sprint:
+  length: 2 weeks
+  planning_capacity: 80%
+  story_point_scale: fibonacci
+
+ceremonies:
+  sprint_planning:
+    frequency: start of sprint
+    duration: 2 hours
+    outputs:
+      - sprint goal
+      - sprint backlog
+      - architecture review items
+
+  daily_standup:
+    frequency: daily
+    duration: 15 minutes
+    format: async-first
+
+  sprint_review:
+    frequency: end of sprint
+    duration: 1 hour
+    format: demo + stakeholder feedback
+
+  retrospective:
+    frequency: end of sprint
+    duration: 1 hour
+
+code_review:
+  required: true
+  min_approvers: 1
+  checklist:
+    - Clean Architecture compliance
+    - Test coverage maintained
+    - No security vulnerabilities
+    - XML documentation updated
+
+quality_gates:
+  pull_request:
+    - build: success
+    - tests: all pass
+    - coverage: >= 90% (domain/application)
+    - sonar: no critical issues
+
+  merge_to_main:
+    - peer_review: approved
+    - ci_pipeline: green
+
+clean_architecture:
+  enforce: true
+  rules:
+    - domain_no_dependencies: true
+    - application_only_domain: true
+    - infrastructure_implements_interfaces: true
+
+agent_guidelines:
+  enforce_architecture: true
+  update_work_items: true
+  follow_cqrs: true

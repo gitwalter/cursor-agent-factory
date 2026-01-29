@@ -1,0 +1,45 @@
+# Inventory Service - Purpose Document
+
+## Mission Statement
+
+To accelerate Kotlin microservice development with idiomatic patterns and reactive programming.
+
+## Why This System Exists
+
+1. **Kotlin Adoption**: Teams adopting Kotlin need guidance on idiomatic patterns. This system enforces best practices.
+
+2. **Reactive Complexity**: Reactive programming requires specific patterns. This system ensures correct usage.
+
+3. **Consistency**: Without guidance, code quality varies. This system maintains standards.
+
+## Primary Stakeholders
+
+### Kotlin Developers (Primary)
+- **Who**: 2-4 developers building the microservice
+- **Needs**: Idiomatic Kotlin, reactive patterns
+- **Value**: Faster development, consistent quality
+
+## Success Criteria
+
+### Primary Metric
+**Fully reactive, Kotlin-idiomatic code with 85% test coverage**
+
+### Quality Metrics
+| Metric | Target |
+|--------|--------|
+| Test Coverage | >= 85% |
+| ktlint Errors | 0 |
+| Detekt Critical | 0 |
+| Blocking Calls | 0 |
+
+## Values Alignment
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | Kotest specs prove correctness |
+| **Consistency** | Kotlin style guide enforced |
+| **Minimalism** | Concise, expressive code |
+
+---
+
+*Review when Kotlin or Spring versions update.*

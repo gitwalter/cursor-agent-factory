@@ -1,0 +1,63 @@
+# Product Catalog API - Purpose Document
+
+## Mission Statement
+
+To accelerate enterprise API development with Clean Architecture patterns, ensuring maintainability and testability.
+
+## Why This System Exists
+
+1. **Architecture Drift**: Without enforcement, Clean Architecture boundaries erode over time. This system maintains layer separation.
+
+2. **Testing Complexity**: Enterprise APIs require comprehensive testing. This system generates tests following best practices.
+
+3. **Onboarding Friction**: New developers need time to learn architecture patterns. This system codifies and enforces them.
+
+## Primary Stakeholders
+
+### .NET Developers (Primary)
+- **Who**: 4-8 engineers building the API
+- **Needs**: Clear patterns, fast development, high quality
+- **Value**: Consistent codebase, automated testing
+
+### API Consumers (Secondary)
+- **Who**: Frontend developers, integration partners
+- **Needs**: Reliable, well-documented API
+- **Value**: Consistent contracts, clear error messages
+
+## Success Criteria
+
+### Primary Metric
+**90% test coverage on business logic (Application + Domain layers)**
+
+### Quality Metrics
+| Metric | Target |
+|--------|--------|
+| Test Coverage (Domain) | >= 90% |
+| Test Coverage (Application) | >= 90% |
+| Architecture Compliance | 100% |
+| Security Vulnerabilities | 0 critical |
+
+## Values Alignment
+
+| Value | Expression |
+|-------|------------|
+| **Verifiability** | Tests prove correctness |
+| **Transparency** | Clear layer boundaries |
+| **Minimalism** | Essential complexity only |
+
+## Boundaries
+
+### In Scope
+- Product catalog CRUD operations
+- Inventory management
+- Pricing and discounts
+- Search and filtering
+
+### Out of Scope
+- User authentication (external identity provider)
+- Payment processing
+- Frontend applications
+
+---
+
+*Review quarterly to ensure alignment with team needs.*
