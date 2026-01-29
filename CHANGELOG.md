@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `onboarding-flow` - Step-by-step onboarding process skill
 
 - **Documentation**
-  - `docs/onboarding-guide.md` - Complete user guide for onboarding existing repos
+  - `docs/ONBOARDING_GUIDE.md` - Complete user guide for onboarding existing repos
 
 - **Test Fixtures**
   - `tests/fixtures/existing_repo_fresh/` - FRESH scenario fixture
