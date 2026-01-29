@@ -1,6 +1,5 @@
 # Cursor Agent Factory
 
-[![CI](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/gitwalter/cursor-agent-factory/actions/workflows/ci.yml)
 ![cursor-ide](https://img.shields.io/badge/cursor--ide-blue)
 ![ai-agents](https://img.shields.io/badge/ai--agents-purple)
 ![mcp-servers](https://img.shields.io/badge/mcp--servers-green)
