@@ -32,8 +32,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `patterns/enforcement/` - Quality, Safety, Integrity enforcement patterns
   - `patterns/practices/` - Daily, Craft, Alignment practice patterns
 
-- **New Blueprint**
+- **New Blueprints**
   - `ai-agent-development` - LangChain/LangGraph AI agent development stack
+  - `multi-agent-systems` - Orchestrated multi-agent systems with supervisor/worker patterns
+  - `kotlin-spring` - Reactive Kotlin microservices with Spring Boot 3, WebFlux, and coroutines
+
+- **Example Walkthroughs** - Complete end-to-end examples in `docs/examples/`
+  - `01-rest-api-service` - Python FastAPI with Jira integration (Agile Scrum)
+  - `02-fullstack-nextjs-app` - Next.js 14 with Prisma (Kanban)
+  - `03-rag-chatbot-agent` - LangChain RAG with Streamlit (R&D, A10 Learning)
+  - `04-multi-agent-research-system` - LangGraph supervisor/worker (R&D, A8 Collaboration)
+  - `05-sap-fiori-integration` - SAP RAP with MCP grounding (Enterprise, Comprehensive)
+  - `06-dotnet-enterprise-api` - C# Clean Architecture (Agile Scrum)
+  - `07-kotlin-spring-microservice` - Kotlin WebFlux (Kanban)
+  - Each includes README.md, WALKTHROUGH.md, and expected-output/ reference files
+  - Reference files use `.example` extension to prevent factory interference
 
 - **New Knowledge Files**
   - `knowledge/langchain-patterns.json` - LangChain best practices
