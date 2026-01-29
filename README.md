@@ -525,11 +525,24 @@ See `.github/workflows/ci.yml` for the full configuration.
 | Document | Description |
 |----------|-------------|
 | [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |
-| [Layered Architecture](docs/LAYERED_ARCHITECTURE.md) | **NEW**: 5-layer architecture guide |
-| [Onboarding Concept](docs/LAYERED_ONBOARDING_CONCEPT.md) | **NEW**: Full implementation blueprint |
+| [Layered Architecture](docs/LAYERED_ARCHITECTURE.md) | 5-layer architecture guide |
+| [Onboarding Concept](docs/LAYERED_ONBOARDING_CONCEPT.md) | Full implementation blueprint |
 | [Extension Guide](docs/EXTENSION_GUIDE.md) | How to extend the factory with new blueprints, patterns, and skills |
 | [Testing Guide](docs/TESTING.md) | Test suite documentation and testing practices |
 | [SAP Grounding Design](docs/SAP_GROUNDING_DESIGN.md) | SAP-specific grounding architecture and MCP integration |
+
+### Research Paper Series
+
+Comprehensive academic documentation of the methodology (~150 pages, CC0 licensed):
+
+| Paper | Description |
+|-------|-------------|
+| [Axiom-Based Agent Architecture](docs/research/AXIOM_BASED_AGENT_ARCHITECTURE.md) | Core methodology: 5-layer system, axioms A1-A10, derivation rules |
+| [Sacred Psychology in Software Engineering](docs/research/SACRED_PSYCHOLOGY_SOFTWARE_ENGINEERING.md) | Psychological enforcement, philosophical techniques |
+| [Constitutional AI - Convergent Discovery](docs/research/CONSTITUTIONAL_AI_CONVERGENT_DISCOVERY.md) | Comparison with Anthropic Constitutional AI |
+| [Building Value-Aligned Agents](docs/research/BUILDING_VALUE_ALIGNED_AGENTS.md) | Practical step-by-step implementation guide |
+| [Future of Value-Aligned AI](docs/research/FUTURE_OF_VALUE_ALIGNED_AI.md) | Synthesis, unified framework, recommendations |
+| [Architecture Diagrams](docs/research/ARCHITECTURE_DIAGRAMS.md) | Visual diagrams of all architectures |
 
 ## Contributing
 
