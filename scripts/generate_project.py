@@ -5,14 +5,23 @@ Cursor Agent Factory - Project Generation Engine
 This module generates complete Cursor agent development systems based on
 requirements configuration and blueprint templates.
 
+Supports two modes:
+1. Fresh generation: Create new project from scratch
+2. Onboarding: Integrate into existing repository non-destructively
+
 Usage:
     from scripts.generate_project import ProjectGenerator
     
+    # Fresh generation
     generator = ProjectGenerator(config, target_dir)
+    generator.generate()
+    
+    # Onboarding existing repo
+    generator = ProjectGenerator(config, target_dir, onboarding_mode=True)
     generator.generate()
 
 Author: Cursor Agent Factory
-Version: 1.0.0
+Version: 2.0.0
 """
 
 import json
@@ -20,7 +29,18 @@ import shutil
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+# Import onboarding components
+try:
+    from scripts.repo_analyzer import RepoAnalyzer, RepoInventory, OnboardingScenario
+    from scripts.merge_strategy import (
+        MergeEngine, ArtifactType, ConflictResolution, Conflict, ConflictPrompt
+    )
+    from scripts.backup_manager import BackupManager, BackupSession
+    ONBOARDING_AVAILABLE = True
+except ImportError:
+    ONBOARDING_AVAILABLE = False
 
 
 @dataclass
@@ -114,18 +134,36 @@ class ProjectGenerator:
     This class orchestrates the generation of a complete Cursor agent
     development system based on configuration and patterns.
     
+    Supports two modes:
+    1. Fresh generation (default): Create complete project from scratch
+    2. Onboarding mode: Integrate into existing repository non-destructively
+    
     Attributes:
         config: Project configuration.
         target_dir: Target directory for generated project.
         factory_root: Root directory of the factory.
+        onboarding_mode: Whether to use non-destructive onboarding.
+        dry_run: If True, preview changes without making them.
+        conflict_resolver: Callback for resolving conflicts interactively.
     """
     
-    def __init__(self, config: ProjectConfig, target_dir: str):
+    def __init__(
+        self,
+        config: ProjectConfig,
+        target_dir: str,
+        onboarding_mode: bool = False,
+        dry_run: bool = False,
+        conflict_resolver: Optional[Callable[[ConflictPrompt], ConflictResolution]] = None
+    ):
         """Initialize the generator.
         
         Args:
             config: Project configuration.
             target_dir: Target directory for generated project.
+            onboarding_mode: If True, use non-destructive onboarding.
+            dry_run: If True, preview changes without making them.
+            conflict_resolver: Optional callback for resolving conflicts.
+                If not provided, uses default recommendations.
         """
         self.config = config
         self.target_dir = Path(target_dir)
@@ -133,8 +171,27 @@ class ProjectGenerator:
         self.generated_files: List[str] = []
         self.errors: List[str] = []
         
+        # Onboarding settings
+        self.onboarding_mode = onboarding_mode
+        self.dry_run = dry_run
+        self.conflict_resolver = conflict_resolver
+        
+        # Onboarding state (populated during onboarding)
+        self.inventory: Optional[RepoInventory] = None
+        self.merge_engine: Optional[MergeEngine] = None
+        self.backup_session: Optional[BackupSession] = None
+        self.skipped_artifacts: List[str] = []
+        self.merged_artifacts: List[str] = []
+        
     def generate(self) -> Dict[str, Any]:
         """Generate the complete project.
+        
+        In onboarding mode, this method:
+        1. Analyzes existing repository
+        2. Detects conflicts
+        3. Resolves conflicts (interactively or with defaults)
+        4. Creates backup before modifications
+        5. Generates only missing/approved artifacts
         
         Returns:
             Dictionary with generation results including:
@@ -142,9 +199,16 @@ class ProjectGenerator:
             - target_dir: Path to generated project.
             - files_created: List of created files.
             - errors: List of any errors encountered.
+            - scenario: Onboarding scenario (if onboarding mode).
+            - skipped: List of skipped artifacts (if onboarding mode).
+            - merged: List of merged artifacts (if onboarding mode).
         """
         print(f"Generating project: {self.config.project_name}")
         print(f"Target directory: {self.target_dir}")
+        
+        # Handle onboarding mode
+        if self.onboarding_mode:
+            return self._generate_onboarding()
         
         try:
             # Create directory structure
@@ -995,11 +1059,380 @@ To render diagrams to PNG, use a Mermaid CLI tool or the diagram rendering scrip
             path: File path.
             content: File content.
         """
+        if self.dry_run:
+            print(f"[DRY RUN] Would create: {path}")
+            self.generated_files.append(str(path))
+            return
+        
         path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, 'w', encoding='utf-8') as f:
             f.write(content)
         self.generated_files.append(str(path))
         print(f"Created: {path}")
+    
+    # =========================================================================
+    # ONBOARDING MODE METHODS
+    # =========================================================================
+    
+    def _generate_onboarding(self) -> Dict[str, Any]:
+        """Generate project in onboarding mode (non-destructive).
+        
+        This method integrates Cursor Agent Factory into an existing
+        repository without destroying existing artifacts.
+        
+        Returns:
+            Dictionary with generation results.
+        """
+        if not ONBOARDING_AVAILABLE:
+            return {
+                'success': False,
+                'target_dir': str(self.target_dir),
+                'files_created': [],
+                'errors': ['Onboarding modules not available. Ensure repo_analyzer.py, '
+                          'merge_strategy.py, and backup_manager.py exist.'],
+            }
+        
+        print("\n=== ONBOARDING MODE ===")
+        print(f"Analyzing existing repository: {self.target_dir}\n")
+        
+        try:
+            # Step 1: Analyze repository
+            analyzer = RepoAnalyzer(self.target_dir, self.factory_root)
+            self.inventory = analyzer.analyze()
+            
+            print(f"Scenario detected: {self.inventory.scenario.value.upper()}")
+            print(f"Existing agents: {len(self.inventory.existing_agents)}")
+            print(f"Existing skills: {len(self.inventory.existing_skills)}")
+            print(f"Tech stack: {', '.join(self.inventory.tech_stack.languages)}")
+            
+            if self.inventory.tech_stack.suggested_blueprint:
+                print(f"Suggested blueprint: {self.inventory.tech_stack.suggested_blueprint}")
+            
+            # Step 2: Handle different scenarios
+            if self.inventory.scenario == OnboardingScenario.COMPLETE:
+                print("\nRepository is already fully configured.")
+                return {
+                    'success': True,
+                    'target_dir': str(self.target_dir),
+                    'files_created': [],
+                    'errors': [],
+                    'scenario': self.inventory.scenario.value,
+                    'skipped': [],
+                    'merged': [],
+                    'message': 'Repository already fully configured. No changes needed.',
+                }
+            
+            # Step 3: Detect conflicts
+            self.merge_engine = MergeEngine(self.inventory, self.factory_root)
+            conflicts = self.merge_engine.detect_conflicts(
+                desired_agents=self.config.agents,
+                desired_skills=self.config.skills,
+                desired_knowledge=[f"{k}.json" for k in ['best-practices', 'design-patterns']],
+            )
+            
+            # Step 4: Resolve conflicts
+            if conflicts:
+                print(f"\nFound {len(conflicts)} conflict(s) to resolve:")
+                for conflict in conflicts:
+                    self._resolve_conflict(conflict)
+            
+            # Step 5: Create backup (unless dry run)
+            if not self.dry_run:
+                backup_manager = BackupManager(self.target_dir)
+                self.backup_session = backup_manager.create_session(
+                    f"Onboarding with blueprint: {self.config.blueprint_id or 'custom'}"
+                )
+                print(f"\nBackup session created: {self.backup_session.session_id}")
+            
+            # Step 6: Generate artifacts
+            self._onboard_directories()
+            self._onboard_cursorrules()
+            self._onboard_agents()
+            self._onboard_skills()
+            self._onboard_knowledge()
+            self._onboard_templates()
+            self._onboard_workflows()
+            
+            # Only generate README if it doesn't exist
+            if not self.inventory.has_readme:
+                self._generate_readme()
+            
+            # Step 7: Complete backup session
+            if self.backup_session and not self.dry_run:
+                self.backup_session.complete()
+                print(f"\nBackup session completed. Rollback available with session ID: "
+                      f"{self.backup_session.session_id}")
+            
+            return {
+                'success': len(self.errors) == 0,
+                'target_dir': str(self.target_dir),
+                'files_created': self.generated_files,
+                'errors': self.errors,
+                'scenario': self.inventory.scenario.value,
+                'skipped': self.skipped_artifacts,
+                'merged': self.merged_artifacts,
+            }
+            
+        except Exception as e:
+            self.errors.append(f"Onboarding failed: {str(e)}")
+            
+            # Rollback on failure
+            if self.backup_session and not self.dry_run:
+                print("\nRolling back changes due to error...")
+                self.backup_session.rollback()
+            
+            return {
+                'success': False,
+                'target_dir': str(self.target_dir),
+                'files_created': self.generated_files,
+                'errors': self.errors,
+                'scenario': getattr(self.inventory, 'scenario', 'unknown'),
+                'skipped': self.skipped_artifacts,
+                'merged': self.merged_artifacts,
+            }
+    
+    def _resolve_conflict(self, conflict: Conflict) -> None:
+        """Resolve a single conflict.
+        
+        Args:
+            conflict: The conflict to resolve.
+        """
+        prompt = self.merge_engine.get_conflict_prompt(conflict)
+        
+        if self.conflict_resolver:
+            # Use provided resolver callback
+            resolution = self.conflict_resolver(prompt)
+        else:
+            # Use default recommendation
+            print(f"\n  {conflict.artifact_type.value}: {conflict.artifact_name}")
+            print(f"    → Using default: {prompt.recommendation.value} ({prompt.reason})")
+            resolution = prompt.recommendation
+        
+        self.merge_engine.set_resolution(conflict, resolution)
+        
+        if resolution in (ConflictResolution.KEEP_EXISTING, ConflictResolution.SKIP):
+            self.skipped_artifacts.append(
+                f"{conflict.artifact_type.value}:{conflict.artifact_name}"
+            )
+        elif resolution == ConflictResolution.MERGE:
+            self.merged_artifacts.append(
+                f"{conflict.artifact_type.value}:{conflict.artifact_name}"
+            )
+    
+    def _onboard_directories(self) -> None:
+        """Create directory structure for onboarding (only missing dirs)."""
+        directories = [
+            '.cursor/agents',
+            '.cursor/skills',
+            'knowledge',
+            'templates',
+            'workflows',
+            'diagrams',
+            'docs',
+        ]
+        
+        for dir_path in directories:
+            full_path = self.target_dir / dir_path
+            if not full_path.exists():
+                if not self.dry_run:
+                    full_path.mkdir(parents=True, exist_ok=True)
+                print(f"Created directory: {full_path}")
+    
+    def _onboard_cursorrules(self) -> None:
+        """Handle .cursorrules in onboarding mode."""
+        if self.merge_engine.should_skip_artifact(ArtifactType.CURSORRULES, ".cursorrules"):
+            print("Skipping .cursorrules (user choice)")
+            return
+        
+        cursorrules_path = self.target_dir / ".cursorrules"
+        
+        if self.inventory.cursorrules.exists:
+            # Backup existing
+            if self.backup_session:
+                self.backup_session.backup_file(cursorrules_path)
+            
+            # Check if merge was requested
+            resolution = self.merge_engine.get_resolution(
+                Conflict(ArtifactType.CURSORRULES, ".cursorrules", cursorrules_path, "")
+            )
+            
+            if resolution == ConflictResolution.MERGE:
+                # Merge existing with new sections
+                new_content = self._merge_cursorrules()
+                self._write_file(cursorrules_path, new_content)
+                print("Merged .cursorrules with factory sections")
+                return
+            elif resolution == ConflictResolution.KEEP_EXISTING:
+                print("Keeping existing .cursorrules")
+                return
+        
+        # Generate new (for FRESH scenario or REPLACE resolution)
+        blueprint = self._load_blueprint()
+        self._generate_cursorrules(blueprint)
+    
+    def _merge_cursorrules(self) -> str:
+        """Merge existing .cursorrules with factory sections.
+        
+        Returns:
+            Merged content.
+        """
+        existing = self.inventory.cursorrules.content or ""
+        
+        # Factory marker
+        factory_marker = f"""
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CURSOR AGENT FACTORY INTEGRATION
+# Generated: {datetime.now().strftime('%Y-%m-%d')}
+# Blueprint: {self.config.blueprint_id or 'custom'}
+# Factory Version: 2.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+        
+        # Check if factory marker already exists
+        if "CURSOR AGENT FACTORY INTEGRATION" in existing:
+            # Update existing factory section
+            import re
+            pattern = r'# ═+\s*\n# CURSOR AGENT FACTORY INTEGRATION.*?# ═+\s*END FACTORY INTEGRATION\s*═+\s*\n'
+            if re.search(pattern, existing, re.DOTALL):
+                # Remove old factory section
+                existing = re.sub(pattern, '', existing, flags=re.DOTALL)
+        
+        # Add new agents/skills sections
+        agents_section = self._generate_agents_list_section()
+        skills_section = self._generate_skills_list_section()
+        
+        factory_content = f"""{factory_marker}
+## Factory-Injected Agents
+
+{agents_section}
+
+## Factory-Injected Skills
+
+{skills_section}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# END FACTORY INTEGRATION
+# ═══════════════════════════════════════════════════════════════════════════════
+"""
+        
+        return existing.rstrip() + "\n" + factory_content
+    
+    def _onboard_agents(self) -> None:
+        """Generate agents in onboarding mode (skip existing)."""
+        agents_dir = self.target_dir / '.cursor' / 'agents'
+        
+        for agent_id in self.config.agents:
+            # Check if should skip
+            if agent_id in self.inventory.existing_agents:
+                if self.merge_engine.should_skip_artifact(ArtifactType.AGENT, agent_id):
+                    print(f"Skipping agent: {agent_id} (exists)")
+                    continue
+                
+                # Backup existing if replacing
+                agent_path = agents_dir / f"{agent_id}.md"
+                if self.backup_session and agent_path.exists():
+                    self.backup_session.backup_file(agent_path)
+                
+                # Check for rename
+                if self.merge_engine.should_rename_artifact(ArtifactType.AGENT, agent_id):
+                    agent_id = self.merge_engine.get_renamed_name(agent_id)
+            
+            # Generate agent
+            pattern = self._load_pattern('agents', agent_id.replace('-factory', ''))
+            if pattern:
+                content = self._render_agent_from_pattern(pattern)
+                name = pattern.get('frontmatter', {}).get('name', agent_id)
+                if '-factory' in agent_id:
+                    name = f"{name}-factory"
+                output_path = agents_dir / f'{name}.md'
+                
+                if self.backup_session and not output_path.exists():
+                    self.backup_session.backup_file(output_path, mark_as_new=True)
+                
+                self._write_file(output_path, content)
+    
+    def _onboard_skills(self) -> None:
+        """Generate skills in onboarding mode (skip existing)."""
+        for skill_id in self.config.skills:
+            # Check if should skip
+            if skill_id in self.inventory.existing_skills:
+                if self.merge_engine.should_skip_artifact(ArtifactType.SKILL, skill_id):
+                    print(f"Skipping skill: {skill_id} (exists)")
+                    continue
+                
+                # Backup existing if replacing
+                skill_path = self.target_dir / '.cursor' / 'skills' / skill_id / 'SKILL.md'
+                if self.backup_session and skill_path.exists():
+                    self.backup_session.backup_file(skill_path)
+                
+                # Check for rename
+                if self.merge_engine.should_rename_artifact(ArtifactType.SKILL, skill_id):
+                    skill_id = self.merge_engine.get_renamed_name(skill_id)
+            
+            # Generate skill
+            pattern = self._load_pattern('skills', skill_id.replace('-factory', ''))
+            if pattern:
+                content = self._render_skill_from_pattern(pattern)
+                name = pattern.get('frontmatter', {}).get('name', skill_id)
+                if '-factory' in skill_id:
+                    name = f"{name}-factory"
+                skill_dir = self.target_dir / '.cursor' / 'skills' / name
+                
+                if not self.dry_run:
+                    skill_dir.mkdir(parents=True, exist_ok=True)
+                
+                output_path = skill_dir / 'SKILL.md'
+                
+                if self.backup_session and not output_path.exists():
+                    self.backup_session.backup_file(output_path, mark_as_new=True)
+                
+                self._write_file(output_path, content)
+    
+    def _onboard_knowledge(self) -> None:
+        """Generate knowledge files in onboarding mode."""
+        blueprint = self._load_blueprint()
+        
+        # Only copy knowledge files that don't exist
+        source_knowledge = self.factory_root / 'knowledge'
+        target_knowledge = self.target_dir / 'knowledge'
+        
+        if source_knowledge.exists():
+            for file in source_knowledge.glob('*.json'):
+                if file.name not in self.inventory.existing_knowledge:
+                    dest = target_knowledge / file.name
+                    
+                    if self.backup_session:
+                        self.backup_session.backup_file(dest, mark_as_new=True)
+                    
+                    if not self.dry_run:
+                        shutil.copy2(file, dest)
+                    
+                    self.generated_files.append(str(dest))
+                    print(f"Added knowledge: {file.name}")
+                else:
+                    print(f"Skipping knowledge: {file.name} (exists)")
+    
+    def _onboard_templates(self) -> None:
+        """Generate templates in onboarding mode."""
+        blueprint = self._load_blueprint()
+        
+        # Only create templates if templates directory was empty
+        if not self.inventory.existing_templates:
+            self._generate_templates(blueprint)
+        else:
+            print("Skipping templates (directory not empty)")
+    
+    def _onboard_workflows(self) -> None:
+        """Generate workflows in onboarding mode."""
+        blueprint = self._load_blueprint()
+        
+        # Only create workflows that don't exist
+        if not self.inventory.existing_workflows:
+            self._generate_workflows(blueprint)
+        else:
+            print("Skipping workflows (directory not empty)")
 
 
 def generate_from_config(config_path: str, target_dir: str) -> Dict[str, Any]:

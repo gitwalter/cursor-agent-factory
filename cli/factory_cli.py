@@ -320,6 +320,234 @@ def generate_from_config_file(config_path: str, output_dir: str) -> None:
         sys.exit(1)
 
 
+def analyze_repository(repo_path: str) -> None:
+    """Analyze an existing repository for Cursor artifacts.
+    
+    Args:
+        repo_path: Path to repository to analyze.
+    """
+    from scripts.repo_analyzer import RepoAnalyzer
+    
+    print(f"\n[*] Analyzing repository: {repo_path}\n")
+    print("=" * 60)
+    
+    try:
+        analyzer = RepoAnalyzer(repo_path)
+        inventory = analyzer.analyze()
+        print(inventory.get_summary())
+        print("=" * 60)
+    except Exception as e:
+        print(f"[ERROR] Analysis failed: {e}")
+        sys.exit(1)
+
+
+def onboard_repository(
+    repo_path: str,
+    blueprint_id: str = None,
+    dry_run: bool = False
+) -> None:
+    """Onboard an existing repository with Cursor Agent Factory.
+    
+    Args:
+        repo_path: Path to repository to onboard.
+        blueprint_id: Optional blueprint to use.
+        dry_run: If True, preview changes without making them.
+    """
+    from scripts.repo_analyzer import RepoAnalyzer
+    
+    print(f"\n[*] Onboarding repository: {repo_path}")
+    if dry_run:
+        print("    Mode: DRY RUN (no changes will be made)")
+    print("=" * 60 + "\n")
+    
+    try:
+        # First analyze to get tech stack info
+        analyzer = RepoAnalyzer(repo_path)
+        inventory = analyzer.analyze()
+        
+        # Use suggested blueprint if not specified
+        if not blueprint_id and inventory.tech_stack.suggested_blueprint:
+            blueprint_id = inventory.tech_stack.suggested_blueprint
+            print(f"[*] Auto-detected blueprint: {blueprint_id}")
+        
+        # Load blueprint or use defaults
+        if blueprint_id:
+            blueprint_path = get_factory_root() / 'blueprints' / blueprint_id / 'blueprint.json'
+            if blueprint_path.exists():
+                with open(blueprint_path, 'r', encoding='utf-8') as f:
+                    blueprint = json.load(f)
+                
+                stack = blueprint.get('stack', {})
+                config = ProjectConfig(
+                    project_name=Path(repo_path).name,
+                    project_description=blueprint.get('metadata', {}).get('description', ''),
+                    domain=', '.join(blueprint.get('metadata', {}).get('tags', [])),
+                    primary_language=stack.get('primaryLanguage', 'python'),
+                    frameworks=[f['name'] for f in stack.get('frameworks', [])],
+                    triggers=['jira', 'confluence'],
+                    agents=[a['patternId'] for a in blueprint.get('agents', [])],
+                    skills=[s['patternId'] for s in blueprint.get('skills', [])],
+                    mcp_servers=blueprint.get('mcpServers', []),
+                    blueprint_id=blueprint_id
+                )
+            else:
+                print(f"[WARNING] Blueprint not found: {blueprint_id}")
+                config = _create_default_config(repo_path, inventory)
+        else:
+            config = _create_default_config(repo_path, inventory)
+        
+        # Create generator in onboarding mode
+        generator = ProjectGenerator(
+            config,
+            repo_path,
+            onboarding_mode=True,
+            dry_run=dry_run,
+            conflict_resolver=_interactive_conflict_resolver if not dry_run else None
+        )
+        
+        result = generator.generate()
+        
+        print("\n" + "=" * 60)
+        if result['success']:
+            print("[SUCCESS] Onboarding completed!")
+            print(f"   Scenario: {result.get('scenario', 'unknown')}")
+            print(f"   Files created/modified: {len(result['files_created'])}")
+            print(f"   Skipped: {len(result.get('skipped', []))}")
+            print(f"   Merged: {len(result.get('merged', []))}")
+            
+            if result.get('skipped'):
+                print(f"\n   Skipped artifacts:")
+                for item in result['skipped']:
+                    print(f"     - {item}")
+        else:
+            print("[ERROR] Onboarding failed:")
+            for error in result['errors']:
+                print(f"   - {error}")
+            sys.exit(1)
+            
+    except Exception as e:
+        print(f"[ERROR] Onboarding failed: {e}")
+        sys.exit(1)
+
+
+def _create_default_config(repo_path: str, inventory) -> ProjectConfig:
+    """Create default configuration based on inventory.
+    
+    Args:
+        repo_path: Path to repository.
+        inventory: Repository inventory.
+        
+    Returns:
+        ProjectConfig with sensible defaults.
+    """
+    return ProjectConfig(
+        project_name=Path(repo_path).name,
+        project_description=f"Cursor agent system for {Path(repo_path).name}",
+        domain="general",
+        primary_language=inventory.tech_stack.languages[0] if inventory.tech_stack.languages else "python",
+        frameworks=inventory.tech_stack.frameworks,
+        triggers=['jira', 'confluence'],
+        agents=['code-reviewer', 'test-generator', 'explorer'],
+        skills=['bugfix-workflow', 'feature-workflow', 'grounding', 'tdd'],
+        mcp_servers=[],
+        blueprint_id=None
+    )
+
+
+def _interactive_conflict_resolver(prompt) -> 'ConflictResolution':
+    """Interactively resolve a conflict with user input.
+    
+    Args:
+        prompt: ConflictPrompt to display.
+        
+    Returns:
+        User's chosen resolution.
+    """
+    from scripts.merge_strategy import ConflictResolution
+    
+    print("\n" + prompt.format_prompt())
+    
+    while True:
+        try:
+            choice = input("\nEnter choice [1-{}] (or Enter for recommended): ".format(
+                len(prompt.options)
+            )).strip()
+            
+            if not choice:
+                return prompt.recommendation
+            
+            idx = int(choice) - 1
+            if 0 <= idx < len(prompt.options):
+                return prompt.options[idx]
+            
+            print("Invalid choice. Please try again.")
+        except ValueError:
+            print("Please enter a number.")
+        except KeyboardInterrupt:
+            print("\nUsing recommended option.")
+            return prompt.recommendation
+
+
+def rollback_session(repo_path: str, session_id: str = None) -> None:
+    """Rollback an onboarding session.
+    
+    Args:
+        repo_path: Path to repository.
+        session_id: Optional session ID. If not provided, lists available sessions.
+    """
+    from scripts.backup_manager import BackupManager
+    
+    manager = BackupManager(repo_path)
+    
+    if not session_id:
+        # List available sessions
+        sessions = manager.list_sessions()
+        
+        if not sessions:
+            print("No backup sessions found.")
+            return
+        
+        print(f"\n[*] Available backup sessions for: {repo_path}\n")
+        for i, session in enumerate(sessions, 1):
+            status = "rolled back" if session.rolled_back else (
+                "completed" if session.completed else "incomplete"
+            )
+            print(f"  [{i}] {session.session_id}")
+            print(f"      Created: {session.created_at}")
+            print(f"      Status: {status}")
+            print(f"      Files: {len(session.entries)}")
+            if session.description:
+                print(f"      Description: {session.description}")
+            print()
+        
+        try:
+            choice = input("Enter session number to rollback (or 'q' to quit): ").strip()
+            if choice.lower() == 'q':
+                return
+            
+            idx = int(choice) - 1
+            if 0 <= idx < len(sessions):
+                session_id = sessions[idx].session_id
+            else:
+                print("Invalid choice.")
+                return
+        except (ValueError, KeyboardInterrupt):
+            return
+    
+    # Confirm rollback
+    confirm = input(f"\nRollback session {session_id}? This will restore original files. [y/N]: ").strip().lower()
+    if confirm != 'y':
+        print("Cancelled.")
+        return
+    
+    # Perform rollback
+    if manager.rollback_session(session_id):
+        print(f"\n[SUCCESS] Session {session_id} rolled back successfully.")
+    else:
+        print(f"\n[ERROR] Failed to rollback session {session_id}.")
+        sys.exit(1)
+
+
 def main():
     """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
@@ -327,11 +555,21 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
+  # List available options
   %(prog)s --list-blueprints
   %(prog)s --list-patterns
+  
+  # Generate new project from scratch
   %(prog)s --blueprint python-fastapi --output C:\\Projects\\my-api
   %(prog)s --config project.yaml --output C:\\Projects\\my-project
   %(prog)s --interactive --output C:\\Projects\\my-project
+  
+  # Onboard existing repository
+  %(prog)s --analyze C:\\Projects\\existing-repo
+  %(prog)s --onboard C:\\Projects\\existing-repo
+  %(prog)s --onboard C:\\Projects\\existing-repo --blueprint csharp-dotnet
+  %(prog)s --onboard C:\\Projects\\existing-repo --dry-run
+  %(prog)s --rollback C:\\Projects\\existing-repo
         '''
     )
     
@@ -384,7 +622,42 @@ Examples:
     parser.add_argument(
         '--version',
         action='version',
-        version='Cursor Agent Factory 1.0.0'
+        version='Cursor Agent Factory 2.0.0'
+    )
+    
+    # Onboarding commands
+    parser.add_argument(
+        '--analyze',
+        type=str,
+        metavar='REPO',
+        help='Analyze existing repository for Cursor artifacts'
+    )
+    
+    parser.add_argument(
+        '--onboard',
+        type=str,
+        metavar='REPO',
+        help='Onboard existing repository (non-destructive integration)'
+    )
+    
+    parser.add_argument(
+        '--dry-run',
+        action='store_true',
+        help='Preview onboarding changes without making them'
+    )
+    
+    parser.add_argument(
+        '--rollback',
+        type=str,
+        metavar='REPO',
+        help='Rollback an onboarding session'
+    )
+    
+    parser.add_argument(
+        '--session-id',
+        type=str,
+        metavar='ID',
+        help='Specific backup session ID for rollback'
     )
     
     args = parser.parse_args()
@@ -396,6 +669,19 @@ Examples:
     
     if args.list_patterns:
         list_patterns()
+        return
+    
+    # Handle onboarding commands
+    if args.analyze:
+        analyze_repository(args.analyze)
+        return
+    
+    if args.onboard:
+        onboard_repository(args.onboard, args.blueprint, args.dry_run)
+        return
+    
+    if args.rollback:
+        rollback_session(args.rollback, args.session_id)
         return
     
     # Validate output directory for generation commands
