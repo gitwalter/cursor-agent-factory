@@ -56,6 +56,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `docs/LAYERED_ONBOARDING_CONCEPT.md` - Implementation blueprint
   - Acknowledgements section in README for external inspirations
 
+- **Research Paper Series** - Comprehensive documentation of methodology (`docs/research/`)
+  - `AXIOM_BASED_AGENT_ARCHITECTURE.md` - Core methodology: 5-layer system, axioms A1-A10, derivation rules, validation constraints (~30 pages)
+  - `SACRED_PSYCHOLOGY_SOFTWARE_ENGINEERING.md` - Psychological enforcement, three-layer architecture, philosophical software techniques (~25 pages)
+  - `CONSTITUTIONAL_AI_CONVERGENT_DISCOVERY.md` - Comparison with Anthropic Constitutional AI, convergent discovery analysis (~20 pages)
+  - `BUILDING_VALUE_ALIGNED_AGENTS.md` - Practical step-by-step implementation guide (~35 pages)
+  - `FUTURE_OF_VALUE_ALIGNED_AI.md` - Synthesis, unified framework, recommendations for AI companies/developers/researchers/policymakers (~20 pages)
+  - `ARCHITECTURE_DIAGRAMS.md` - 10 Mermaid diagrams visualizing all architectures
+  - `REFERENCES.md` - Complete academic bibliography with citations
+  - All papers released under Creative Commons CC0 1.0
+
 ### Changed
 
 - Updated `.cursorrules` with Active Partner and Check Alignment patterns
