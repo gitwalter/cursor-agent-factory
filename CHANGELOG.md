@@ -5,6 +5,72 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-01-29
+
+### Added
+
+- **5-Layer Architecture** - Deductive-inductive architecture for grounded agent systems
+  - Layer 0: Integrity & Logic - Core axioms (A1-A5), optional axioms (A6-A10), derivation rules
+  - Layer 1: Purpose - Mission, stakeholders, success criteria (`PURPOSE.md`)
+  - Layer 2: Principles - Ethical boundaries, quality standards, failure handling
+  - Layer 3: Methodology - Agile/Kanban/R&D/Enterprise templates, enforcement, practices
+  - Layer 4: Technical - Stack, agents, skills, templates
+
+- **New Skills (7)**
+  - `axiom-selection` - Layer 0 axiom configuration
+  - `purpose-definition` - Layer 1 purpose definition
+  - `methodology-selection` - Layer 3 methodology selection
+  - `enforcement-selection` - Enforcement pattern configuration
+  - `practice-selection` - Practice pattern configuration
+  - `pattern-feedback` - Inductive learning from experience
+  - `alignment-check` - Verify understanding before major changes
+
+- **New Patterns**
+  - `patterns/axioms/` - Core and optional axiom definitions
+  - `patterns/principles/` - Ethical boundaries, quality standards, failure handling
+  - `patterns/methodologies/` - Agile Scrum, Kanban, R&D, Enterprise Integration
+  - `patterns/enforcement/` - Quality, Safety, Integrity enforcement patterns
+  - `patterns/practices/` - Daily, Craft, Alignment practice patterns
+
+- **New Blueprint**
+  - `ai-agent-development` - LangChain/LangGraph AI agent development stack
+
+- **New Knowledge Files**
+  - `knowledge/langchain-patterns.json` - LangChain best practices
+  - `knowledge/langgraph-workflows.json` - LangGraph state machine patterns
+  - `knowledge/agent-coordination.json` - Multi-agent coordination patterns
+  - `knowledge/prompt-engineering.json` - Prompt optimization techniques
+  - `knowledge/augmented-coding-patterns.json` - AI collaboration patterns from lexler.github.io
+
+- **New Templates**
+  - `templates/ai/agent/base-agent.py.tmpl` - Base AI agent template
+  - `templates/ai/prompt/system-prompt.md.tmpl` - System prompt template
+  - `templates/ai/workflow/langgraph-graph.py.tmpl` - LangGraph workflow template
+  - `templates/factory/PURPOSE.md.tmpl` - Purpose document template
+  - `templates/factory/enforcement.yaml.tmpl` - Enforcement configuration template
+  - `templates/factory/practices.yaml.tmpl` - Practices configuration template
+  - `templates/methodology/methodology.yaml.tmpl` - Methodology configuration template
+
+- **Documentation**
+  - `docs/LAYERED_ARCHITECTURE.md` - Complete 5-layer architecture guide
+  - `docs/LAYERED_ONBOARDING_CONCEPT.md` - Implementation blueprint
+  - Acknowledgements section in README for external inspirations
+
+### Changed
+
+- Updated `.cursorrules` with Active Partner and Check Alignment patterns
+- Updated `templates/factory/cursorrules-template.md` with 5-layer structure
+- Updated `.cursor/skills/requirements-gathering/SKILL.md` with layered onboarding flow
+- Updated `README.md` with v2.0 features and Acknowledgements
+- Updated `docs/USAGE_GUIDE.md` with 5-layer architecture guide
+- Updated `patterns/skills/strawberry-verification.json` with Leon Chlon credits
+
+### Credits
+
+- [Augmented Coding Patterns](https://lexler.github.io/augmented-coding-patterns/) - Lada Kesseler, Nitsan Avni, Ivett Ördög, Llewellyn Falco
+- [Leon Chlon](https://github.com/lchlon) - Strawberry Verification inspiration (Pythea)
+- [ai-dev-agent](https://github.com/gitwalter/ai-dev-agent) - Layered architecture concepts
+
 ## [1.2.0] - 2026-01-28
 
 ### Added
