@@ -172,9 +172,10 @@ cursor-agent-factory/
 | `typescript-react` | TypeScript, React, Vite | Web application development |
 | `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
-| `kotlin-spring` | Kotlin, Spring Boot 3, WebFlux | **NEW**: Reactive Kotlin microservices |
+| `kotlin-spring` | Kotlin, Spring Boot 3, WebFlux | Reactive Kotlin microservices |
 | `csharp-dotnet` | C#, .NET 8+, Entity Framework | Enterprise .NET development |
-| `sap-abap` | ABAP, RAP, CAP | SAP development |
+| `sap-abap` | ABAP, RAP, CAP | SAP ABAP/RAP development |
+| `sap-cpi-pi` | Groovy, Java, SAP CPI/PI | **NEW**: SAP integration development |
 
 ### AI Agent Development Blueprint
 
@@ -194,7 +195,7 @@ The `multi-agent-systems` blueprint includes:
 - Coordination strategies (task decomposition, consensus)
 - Default: A8 (Collaboration) + A10 (Learning) axioms
 
-### Kotlin Spring Blueprint (NEW)
+### Kotlin Spring Blueprint
 
 The `kotlin-spring` blueprint includes:
 - Spring Boot 3 with WebFlux
@@ -202,6 +203,15 @@ The `kotlin-spring` blueprint includes:
 - R2DBC for reactive database access
 - Kotest and MockK for testing
 - Kotlin-idiomatic patterns (data classes, sealed classes, extension functions)
+
+### SAP CPI/PI Blueprint (NEW)
+
+The `sap-cpi-pi` blueprint includes:
+- SAP Cloud Platform Integration and PI/PO support
+- Groovy scripting with CPI best practices
+- iFlow design patterns and error handling
+- Spock framework for script testing
+- SAP Documentation MCP integration for grounding
 
 ## Factory Agents
 
@@ -553,6 +563,7 @@ Complete, step-by-step examples showing the factory in action with real technolo
 | [SAP Fiori](docs/examples/05-sap-fiori-integration/) | sap-abap | RAP application with MCP grounding |
 | [.NET Enterprise](docs/examples/06-dotnet-enterprise-api/) | csharp-dotnet | Clean Architecture with EF Core |
 | [Kotlin Microservice](docs/examples/07-kotlin-spring-microservice/) | kotlin-spring | Reactive Spring Boot with coroutines |
+| [SAP CPI Integration](docs/examples/08-sap-cpi-integration/) | sap-cpi-pi | Groovy scripting with iFlow patterns |
 
 Each example includes a complete walkthrough, sample answers, and expected output files for verification.
 

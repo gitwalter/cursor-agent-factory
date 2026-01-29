@@ -155,7 +155,7 @@ class TestBlueprintSchema:
     
     def test_blueprint_has_valid_language(self, blueprints_dir):
         """Test that blueprints have valid primary language."""
-        valid_languages = {"python", "typescript", "javascript", "java", "csharp", "go", "rust", "abap"}
+        valid_languages = {"python", "typescript", "javascript", "java", "csharp", "go", "rust", "abap", "kotlin", "groovy"}
         
         for blueprint_dir in blueprints_dir.iterdir():
             if blueprint_dir.is_dir():

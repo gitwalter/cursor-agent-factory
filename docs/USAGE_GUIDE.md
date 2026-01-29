@@ -36,6 +36,7 @@ For complete, step-by-step examples with real technology stacks, see the [exampl
 | [SAP Fiori](examples/05-sap-fiori-integration/) | sap-abap | RAP application with MCP grounding |
 | [.NET Enterprise](examples/06-dotnet-enterprise-api/) | csharp-dotnet | Clean Architecture with EF Core |
 | [Kotlin Microservice](examples/07-kotlin-spring-microservice/) | kotlin-spring | Reactive Spring Boot with coroutines |
+| [SAP CPI Integration](examples/08-sap-cpi-integration/) | sap-cpi-pi | Groovy scripting with iFlow patterns |
 
 Each example includes:
 - **README.md** - Scenario overview

@@ -13,6 +13,7 @@ This directory contains complete, reproducible examples showing how to use the C
 | 05 | [SAP Fiori Integration](05-sap-fiori-integration/) | sap-abap | Enterprise | Comprehensive | SAP developers |
 | 06 | [.NET Enterprise API](06-dotnet-enterprise-api/) | csharp-dotnet | Enterprise | Standard | .NET/C# developers |
 | 07 | [Kotlin Spring Microservice](07-kotlin-spring-microservice/) | kotlin-spring | JVM | Standard | Kotlin/JVM developers |
+| 08 | [SAP CPI Integration](08-sap-cpi-integration/) | sap-cpi-pi | SAP | Standard | SAP integration developers |
 
 ## How to Use These Examples
 
@@ -73,6 +74,7 @@ All configuration files in `expected-output/` use the `.example` extension to **
 | Develop SAP applications | 05 - SAP Fiori Integration |
 | Build enterprise .NET APIs | 06 - .NET Enterprise API |
 | Create Kotlin microservices | 07 - Kotlin Spring Microservice |
+| Build SAP CPI/PI integrations | 08 - SAP CPI Integration |
 
 ### By Depth Level
 

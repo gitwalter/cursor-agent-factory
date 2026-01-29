@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ai-agent-development` - LangChain/LangGraph AI agent development stack
   - `multi-agent-systems` - Orchestrated multi-agent systems with supervisor/worker patterns
   - `kotlin-spring` - Reactive Kotlin microservices with Spring Boot 3, WebFlux, and coroutines
+  - `sap-cpi-pi` - SAP CPI/PI integration development with Groovy and Java
 
 - **Example Walkthroughs** - Complete end-to-end examples in `docs/examples/`
   - `01-rest-api-service` - Python FastAPI with Jira integration (Agile Scrum)
@@ -45,8 +46,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `05-sap-fiori-integration` - SAP RAP with MCP grounding (Enterprise, Comprehensive)
   - `06-dotnet-enterprise-api` - C# Clean Architecture (Agile Scrum)
   - `07-kotlin-spring-microservice` - Kotlin WebFlux (Kanban)
+  - `08-sap-cpi-integration` - SAP CPI Groovy scripting (Kanban)
   - Each includes README.md, WALKTHROUGH.md, and expected-output/ reference files
   - Reference files use `.example` extension to prevent factory interference
+
+- **New Knowledge Files**
+  - `knowledge/groovy-patterns.json` - Groovy scripting best practices for SAP CPI
+  - `knowledge/iflow-patterns.json` - Integration flow design patterns
+
+- **New Templates**
+  - `templates/integration/groovy/base-script.groovy.tmpl` - Base Groovy script template
+  - `templates/integration/groovy/message-mapping.groovy.tmpl` - Message mapping template
+  - `templates/integration/test/script-test.groovy.tmpl` - Spock test template
 
 - **New Knowledge Files**
   - `knowledge/langchain-patterns.json` - LangChain best practices

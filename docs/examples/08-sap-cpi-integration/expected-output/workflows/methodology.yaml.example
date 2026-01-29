@@ -1,0 +1,77 @@
+# Order Replication CPI - Methodology Configuration
+# Layer 3: Kanban for Integration Support
+
+methodology:
+  name: Kanban
+  description: Pull-based flow for interrupt-driven integration work
+
+team:
+  size: 2-4
+  roles:
+    - Integration Developer
+    - Senior Developer
+
+flow:
+  wip_limits:
+    in_progress: 3
+    review: 4
+  
+  columns:
+    - Backlog
+    - Ready
+    - In Progress
+    - Testing
+    - Review
+    - Done
+
+priority_classes:
+  - name: Critical
+    description: Production issue, data loss risk
+    sla: 4 hours
+  
+  - name: High
+    description: Business impact, workaround needed
+    sla: 1 day
+  
+  - name: Normal
+    description: Enhancement, non-urgent fix
+    sla: 1 week
+
+quality_gates:
+  development:
+    - spock_tests: pass
+    - groovy_patterns: verified
+    - error_handling: implemented
+    - logging: complete
+  
+  review:
+    - code_review: approved
+    - sap_docs_verified: true
+  
+  deployment:
+    - qa_tested: pass
+    - transport_created: true
+
+testing_requirements:
+  scripts:
+    - unit_tests: required
+    - null_handling: tested
+    - error_scenarios: tested
+  
+  iflows:
+    - happy_path: tested
+    - error_handling: tested
+    - timeout: verified
+
+logging_requirements:
+  mandatory:
+    - input_payload: true
+    - output_payload: true
+    - error_details: true
+    - correlation_id: true
+
+agent_guidelines:
+  use_messageLog: true
+  enforce_try_catch: true
+  verify_with_sap_docs: true
+  generate_spock_tests: true
