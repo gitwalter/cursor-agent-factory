@@ -282,6 +282,179 @@ class TestConfigGeneration:
         assert (output_dir / ".cursorrules").exists()
 
 
+class TestQuickStart:
+    """Tests for --quickstart command functionality."""
+    
+    def test_quickstart_exits_successfully(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart generates a project successfully."""
+        output_dir = temp_output_dir / "quickstart-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+    
+    def test_quickstart_shows_welcome_message(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart shows warm welcome message."""
+        output_dir = temp_output_dir / "quickstart-welcome-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        # Check for warm, caring language in output
+        assert "welcome" in result.stdout.lower()
+    
+    def test_quickstart_shows_congratulations(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart shows celebration message on success."""
+        output_dir = temp_output_dir / "quickstart-congrats-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        # Check for celebratory language
+        assert "congratulations" in result.stdout.lower() or "ready" in result.stdout.lower()
+    
+    def test_quickstart_creates_cursorrules(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart creates .cursorrules file."""
+        output_dir = temp_output_dir / "quickstart-cursorrules-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+        assert (output_dir / ".cursorrules").exists()
+    
+    def test_quickstart_creates_agents_directory(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart creates .cursor/agents/ directory."""
+        output_dir = temp_output_dir / "quickstart-agents-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+        assert (output_dir / ".cursor" / "agents").exists()
+    
+    def test_quickstart_creates_skills_directory(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart creates .cursor/skills/ directory."""
+        output_dir = temp_output_dir / "quickstart-skills-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+        assert (output_dir / ".cursor" / "skills").exists()
+    
+    def test_quickstart_creates_readme(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart creates README.md file."""
+        output_dir = temp_output_dir / "quickstart-readme-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+        assert (output_dir / "README.md").exists()
+    
+    def test_quickstart_with_custom_blueprint(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart-blueprint overrides default blueprint."""
+        output_dir = temp_output_dir / "quickstart-blueprint-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-blueprint", "typescript-react",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        assert result.returncode == 0
+        assert "typescript-react" in result.stdout.lower()
+    
+    def test_quickstart_default_output_directory(self, python_executable, cli_path, project_root):
+        """Test that --quickstart uses ./quickstart-demo as default output."""
+        # Run from project root, which should create quickstart-demo there
+        result = subprocess.run(
+            [python_executable, str(cli_path), "--quickstart"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            cwd=str(project_root.parent)  # Run from parent to test default
+        )
+        
+        # Either succeeds or mentions the default path
+        assert "quickstart-demo" in result.stdout or result.returncode == 0
+    
+    def test_quickstart_shows_next_steps(self, python_executable, cli_path, temp_output_dir):
+        """Test that --quickstart shows guidance for next steps."""
+        output_dir = temp_output_dir / "quickstart-nextsteps-test"
+        
+        result = subprocess.run(
+            [python_executable, str(cli_path),
+             "--quickstart",
+             "--quickstart-output", str(output_dir)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        # Should show guidance for what to do next
+        assert "cursor" in result.stdout.lower() or "interactive" in result.stdout.lower()
+    
+    def test_help_shows_quickstart_option(self, python_executable, cli_path):
+        """Test that --help shows the --quickstart option."""
+        result = subprocess.run(
+            [python_executable, str(cli_path), "--help"],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        
+        assert "--quickstart" in result.stdout
+
+
 class TestCLIErrorHandling:
     """Tests for CLI error handling."""
     

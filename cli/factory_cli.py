@@ -23,7 +23,7 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from scripts.generate_project import ProjectConfig, ProjectGenerator
+from scripts.generate_project import ProjectConfig, ProjectGenerator, create_quickstart_config
 
 
 def get_factory_root() -> Path:
@@ -33,6 +33,124 @@ def get_factory_root() -> Path:
         Path to factory root.
     """
     return Path(__file__).parent.parent
+
+
+def display_welcome() -> None:
+    """Display warm welcome message."""
+    print()
+    print("=" * 60)
+    print("  Welcome to Cursor Agent Factory!")
+    print("=" * 60)
+    print()
+    print("We're excited to show you what's possible.")
+    print("Let's create something amazing together...")
+    print()
+
+
+def display_tour(output_dir: str, files_created: int) -> None:
+    """Display post-generation tour with warm, caring guidance.
+    
+    Args:
+        output_dir: Path to generated project.
+        files_created: Number of files created.
+    """
+    print()
+    print("=" * 60)
+    print("  Congratulations! Your project is ready!")
+    print("=" * 60)
+    print()
+    print(f"We created {files_created} files for you in: {output_dir}")
+    print()
+    print("Here's what you got:")
+    print("  .cursorrules    Your AI guidance system (the brain)")
+    print("  PURPOSE.md      Your project's mission (the heart)")
+    print("  .cursor/agents/ Specialized AI assistants (your team)")
+    print("  .cursor/skills/ Reusable capabilities")
+    print("  workflows/      Development methodology")
+    print("  knowledge/      Domain knowledge files")
+    print()
+    print("Ready to try it out?")
+    print(f"  1. Open {output_dir} in Cursor IDE")
+    print('  2. Ask: "Help me understand this project"')
+    print('  3. Ask: "Create a new task endpoint"')
+    print()
+    print("When you're ready to build your own:")
+    print("  python cli/factory_cli.py --interactive")
+    print()
+    print("We can't wait to see what you create!")
+    print()
+
+
+def display_error_with_help(error_msg: str, suggestion: str) -> None:
+    """Display error message with caring, helpful guidance.
+    
+    Args:
+        error_msg: The error that occurred.
+        suggestion: Helpful suggestion for fixing it.
+    """
+    print()
+    print("Oops! Something went wrong, but don't worry - we can fix this.")
+    print()
+    print(f"  What happened: {error_msg}")
+    print(f"  How to fix it: {suggestion}")
+    print()
+    print("Still stuck? Check docs/TROUBLESHOOTING.md or open an issue.")
+    print("Remember: Every expert was once a beginner. You've got this!")
+    print()
+
+
+def run_quickstart(output_dir: str = None, blueprint_id: str = None) -> None:
+    """Run zero-config quick start to generate a demo project.
+    
+    This creates a complete demo project with sensible defaults,
+    allowing users to see the factory's value in under 5 minutes.
+    
+    Args:
+        output_dir: Optional output directory (defaults to ./quickstart-demo).
+        blueprint_id: Optional blueprint override (defaults to python-fastapi).
+    """
+    display_welcome()
+    
+    # Set defaults
+    if output_dir is None:
+        output_dir = "./quickstart-demo"
+    
+    # Create configuration
+    config = create_quickstart_config()
+    
+    # Override blueprint if specified
+    if blueprint_id:
+        config.blueprint_id = blueprint_id
+        print(f"Using blueprint: {blueprint_id}")
+    else:
+        print(f"Using blueprint: {config.blueprint_id} (Python + FastAPI)")
+    
+    print(f"Output directory: {output_dir}")
+    print()
+    
+    # Generate with progress
+    print("Building your demo project with care...")
+    
+    try:
+        generator = ProjectGenerator(config, output_dir)
+        result = generator.generate()
+        
+        if result['success']:
+            display_tour(output_dir, len(result['files_created']))
+        else:
+            error_msg = result['errors'][0] if result['errors'] else "Unknown error"
+            display_error_with_help(
+                error_msg,
+                "Try running from the factory root directory, or check file permissions."
+            )
+            sys.exit(1)
+            
+    except Exception as e:
+        display_error_with_help(
+            str(e),
+            "Make sure you have write permissions to the output directory."
+        )
+        sys.exit(1)
 
 
 def list_blueprints() -> None:
@@ -555,6 +673,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
+  # Quick Start - See it work in 5 minutes!
+  %(prog)s --quickstart
+  %(prog)s --quickstart --quickstart-output C:\\Projects\\my-demo
+  %(prog)s --quickstart --quickstart-blueprint nextjs-fullstack
+  
   # List available options
   %(prog)s --list-blueprints
   %(prog)s --list-patterns
@@ -660,6 +783,27 @@ Examples:
         help='Specific backup session ID for rollback'
     )
     
+    # Quick start commands
+    parser.add_argument(
+        '--quickstart',
+        action='store_true',
+        help='Generate a demo project instantly with zero configuration'
+    )
+    
+    parser.add_argument(
+        '--quickstart-blueprint',
+        type=str,
+        metavar='ID',
+        help='Blueprint to use for quickstart (default: python-fastapi)'
+    )
+    
+    parser.add_argument(
+        '--quickstart-output',
+        type=str,
+        metavar='DIR',
+        help='Output directory for quickstart (default: ./quickstart-demo)'
+    )
+    
     args = parser.parse_args()
     
     # Handle list commands
@@ -682,6 +826,14 @@ Examples:
     
     if args.rollback:
         rollback_session(args.rollback, args.session_id)
+        return
+    
+    # Handle quickstart command
+    if args.quickstart:
+        run_quickstart(
+            output_dir=args.quickstart_output or args.output,
+            blueprint_id=args.quickstart_blueprint
+        )
         return
     
     # Validate output directory for generation commands

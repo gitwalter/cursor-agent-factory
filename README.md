@@ -1,5 +1,7 @@
 # Cursor Agent Factory
 
+**Build AI-powered development systems that truly understand your project.**
+
 ![cursor-ide](https://img.shields.io/badge/cursor--ide-blue)
 ![ai-agents](https://img.shields.io/badge/ai--agents-purple)
 ![mcp-servers](https://img.shields.io/badge/mcp--servers-green)
@@ -7,11 +9,125 @@
 ![developer-tools](https://img.shields.io/badge/developer--tools-red)
 ![workflow-automation](https://img.shields.io/badge/workflow--automation-yellow)
 
-A meta-system that generates complete Cursor AI agent development systems grounded in purpose, principles, and methodology.
+Welcome! Whether you're a solo developer exploring new possibilities or a team building something meaningful together, we're here to help you create an AI development environment grounded in purpose, principles, and care.
+
+---
+
+## Start Here
+
+Not sure where to begin? We've got you covered.
+
+| I want to... | Here's your path |
+|--------------|------------------|
+| **See it work in 5 minutes** | `python cli/factory_cli.py --quickstart` |
+| **Build my own project** | `python cli/factory_cli.py --interactive` |
+| **Enhance an existing repo** | [Onboarding Guide](docs/ONBOARDING_GUIDE.md) |
+| **Align my team** | [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) |
+
+New to all this? Start with `--quickstart` - you'll have a working demo in minutes, and we'll explain everything along the way.
+
+**Need help?** See [Prerequisites](docs/PREREQUISITES.md) for setup or [Troubleshooting](docs/TROUBLESHOOTING.md) if you run into issues.
+
+---
+
+## How It Works
+
+Every project we generate is built on a **5-layer architecture** grounded in love and trust:
+
+```mermaid
+flowchart TB
+    subgraph L0 [Layer 0: Foundation]
+        A0[Love and Trust]
+    end
+    
+    subgraph L1 [Layer 1: Integrity]
+        A1[Reasoning]
+        A2[Curiosity]
+        A3[Humility]
+    end
+    
+    subgraph L2 [Layer 2: Purpose]
+        Mission[Mission]
+        Stakeholders[Stakeholders]
+        Success[Success Criteria]
+    end
+    
+    subgraph L3 [Layer 3: Principles]
+        Ethics[Ethical Boundaries]
+        Quality[Quality Standards]
+    end
+    
+    subgraph L4 [Layer 4: Technical]
+        Agents[AI Agents]
+        Skills[Skills]
+        Knowledge[Knowledge Files]
+    end
+    
+    L0 --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+```
+
+This isn't just about code - it's about building systems that reflect your values.
+
+---
+
+## Quick Start Options
+
+### Option 1: Instant Demo (5 minutes)
+
+See the factory in action with zero configuration:
+
+```powershell
+python cli/factory_cli.py --quickstart
+```
+
+This creates a complete demo project showing what you'll get. Perfect for exploration!
+
+### Option 2: Chat-Based Creation (Recommended)
+
+1. Open this project in Cursor IDE
+2. Say: **"Create a new agent system"**
+3. Follow the guided 5-phase questionnaire
+4. Specify your output directory
+5. Review your generated project
+
+### Option 3: Team Workshop Series
+
+For teams of 2+ people, collaborative workshops help align your team:
+
+| Workshop | Duration | What You'll Do |
+|----------|----------|----------------|
+| **Vision Quest** | 2-3h | Discover shared vision through games |
+| **Ethics Arena** | 2h | Debate values and find priorities |
+| **Stack Safari** | 2-3h | Explore technology together |
+| **Agent Assembly** | 3-4h | Design your AI team |
+| **Integration Celebration** | 1.5-2h | Demo and celebrate! |
+
+Each workshop is grounded in **Axiom 0: Love and Trust**. See the [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) for details.
+
+### Option 4: CLI (Advanced Users)
+
+```powershell
+# List available blueprints
+python cli/factory_cli.py --list-blueprints
+
+# Generate from a blueprint
+python cli/factory_cli.py --blueprint python-fastapi --output C:\Projects\my-api
+
+# Interactive mode with full questionnaire
+python cli/factory_cli.py --interactive --output C:\Projects\my-project
+
+# Onboard an existing repository
+python cli/factory_cli.py --onboard C:\Projects\existing-repo
+```
+
+---
 
 ## Overview
 
-The Cursor Agent Factory uses a **5-layer deductive-inductive architecture** to generate agent systems that are not just technically capable, but also grounded in clear values and purpose.
+The Cursor Agent Factory is a **meta-system** that generates complete AI agent development systems. It uses a 5-layer deductive-inductive architecture to create agent systems that are technically capable and grounded in clear values.
 
 ### The 5 Layers (+ Foundation)
 
@@ -24,85 +140,28 @@ The Cursor Agent Factory uses a **5-layer deductive-inductive architecture** to 
 | **3** | Methodology | Agile/Kanban/R&D, enforcement, practices | `methodology.yaml` |
 | **4** | Technical | Stack, agents, skills, templates | `.cursor/`, `knowledge/` |
 
-### Generated Projects Include
+### What You Get
 
-- **Purpose documentation** (`PURPOSE.md`)
-- **5-layer .cursorrules** with axioms, principles, and methodology
-- **AI agent definitions** (`.cursor/agents/`)
-- **Reusable skill definitions** (`.cursor/skills/`)
-- **Enforcement patterns** (`enforcement.yaml`)
-- **Practice patterns** (`practices.yaml`)
-- **Structured knowledge files** (`knowledge/`)
-- **Code and document templates** (`templates/`)
-- **Methodology configuration** (`workflows/methodology.yaml`)
+Generated projects include:
+
+- **Purpose documentation** (`PURPOSE.md`) - Your mission and success criteria
+- **5-layer .cursorrules** - AI guidance with axioms, principles, and methodology
+- **AI agent definitions** (`.cursor/agents/`) - Specialized assistants for your workflow
+- **Reusable skill definitions** (`.cursor/skills/`) - Procedures your agents can follow
+- **Structured knowledge files** (`knowledge/`) - Domain expertise in JSON format
+- **Code and document templates** (`templates/`) - Consistent starting points
+- **Methodology configuration** (`workflows/methodology.yaml`) - How your team works
 
 ## Architecture Diagrams
 
-For visual documentation of the factory architecture, see the [diagrams/](diagrams/) folder:
+For visual documentation, see the [diagrams/](diagrams/) folder:
 
 | Diagram | Description |
 |---------|-------------|
-| [Factory Workflow](diagrams/factory-workflow.md) | Complete generation workflow, 5-phase requirements, CLI vs Chat |
-| [Verification Flow](diagrams/verification-flow.md) | Strawberry verification, hallucination detection, grounding pipeline |
-| [Agent/Skill Architecture](diagrams/agent-skill-architecture.md) | Agent hierarchy, skill composition, pattern library |
-| [SAP Grounding](diagrams/sap-grounding-architecture.md) | 5-layer grounding, SAP-specific skills, MCP integration |
-
-### Factory Generation Flow
-
-```mermaid
-flowchart LR
-    A["User Request"] --> B["Requirements<br/>5 Phases"]
-    B --> C["Blueprint<br/>Selection"]
-    C --> D["Pattern<br/>Matching"]
-    D --> E["Artifact<br/>Generation"]
-    E --> F["Complete<br/>Project"]
-    
-    style A fill:#e3f2fd
-    style F fill:#c8e6c9
-```
-
-## Quick Start
-
-### Chat-Based (Recommended)
-
-1. Open this project in Cursor IDE
-2. Say: **"Create a new agent system"**
-3. Follow the 5-phase questionnaire
-4. Specify output directory
-5. Review generated project
-
-### Team Workshop Onboarding (Collaborative)
-
-For teams of 2+ people, use the collaborative workshop series:
-
-1. Open this project in Cursor IDE
-2. Say: **"We want to run team workshops for our project"**
-3. Complete 5 workshops with your team:
-   - **Vision Quest** (2-3h): Games to discover shared vision
-   - **Ethics Arena** (2h): Debate and auction to find values
-   - **Stack Safari** (2-3h): Explore technology through play
-   - **Agent Assembly** (3-4h): Design agents as trading cards
-   - **Integration Celebration** (1.5-2h): Demo and celebrate
-
-Each workshop includes games, questionnaires, and discussions grounded in **Axiom 0: Love and Trust**.
-
-See [docs/TEAM_WORKSHOP_GUIDE.md](docs/TEAM_WORKSHOP_GUIDE.md) for the complete facilitator's manual.
-
-### CLI (Advanced Users)
-
-```powershell
-# List available blueprints
-C:\App\Anaconda\python.exe cli\factory_cli.py --list-blueprints
-
-# Generate from a blueprint
-C:\App\Anaconda\python.exe cli\factory_cli.py --blueprint python-fastapi --output C:\Projects\my-api
-
-# Generate from configuration file
-C:\App\Anaconda\python.exe cli\factory_cli.py --config project.yaml --output C:\Projects\my-project
-
-# Interactive CLI mode
-C:\App\Anaconda\python.exe cli\factory_cli.py --interactive --output C:\Projects\my-project
-```
+| [Factory Workflow](diagrams/factory-workflow.md) | Complete generation workflow |
+| [Verification Flow](diagrams/verification-flow.md) | Hallucination detection pipeline |
+| [Agent/Skill Architecture](diagrams/agent-skill-architecture.md) | Agent hierarchy and composition |
+| [SAP Grounding](diagrams/sap-grounding-architecture.md) | SAP-specific integration |
 
 ## Project Structure
 

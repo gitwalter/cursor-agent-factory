@@ -23,7 +23,262 @@ This skill is grounded in **Axiom 0: Love and Trust** - all being and doing flow
 - When multiple stakeholders need to contribute to agent system design
 - When you want to make the onboarding process fun and engaging
 
-## Workshop Series Overview
+## Workshop Format Options
+
+Choose the format that fits your team's needs and schedule:
+
+| Format | Duration | Best For |
+|--------|----------|----------|
+| **Full Series** | 11-15 hours | Teams building critical systems, new teams forming culture, maximum alignment |
+| **Mini Workshop** | 2-3 hours | Teams with limited time, quick evaluations, existing strong culture |
+
+Both formats are grounded in **Axiom 0: Love and Trust**. The Mini Workshop condenses but never compromises on the collaborative spirit.
+
+Not sure which to choose? Start with the Mini Workshop - you can always expand to the full series later as your team grows.
+
+---
+
+## Mini Workshop (2-3 hours)
+
+A single afternoon session that captures the heart of the team workshop experience. Perfect for teams who want meaningful alignment without the full series commitment.
+
+### Mini Workshop Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         FOUNDATION                                       │
+│                    Axiom 0: Love and Trust                              │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PART 1: Vision Express (30 min)                                         │
+│   Activity: Lightning Headlines + Quick Stakeholder Check               │
+│   Output: Mission statement draft                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PART 2: Values Snapshot (30 min)                                        │
+│   Activity: Rapid Value Ranking + One Dilemma Discussion                │
+│   Output: Top 3-5 core values                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PART 3: Stack & Team Assembly (45 min)                                  │
+│   Activity: Blueprint Selection + Agent Quick Picks                      │
+│   Output: Stack configuration, agent selection                           │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PART 4: Generation & Demo (30 min)                                      │
+│   Activity: Generate system, quick walkthrough                           │
+│   Output: Complete Cursor agent system                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PART 5: Next Steps & Gratitude (15 min)                                 │
+│   Activity: Action planning, appreciation circle                         │
+│   Output: First week plan, team connection                               │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Mini Workshop Script
+
+#### Opening (10 min)
+
+```
+"Welcome to our Mini Workshop!
+
+In the next 2-3 hours, we'll co-create a Cursor agent system that
+reflects your team's vision and values.
+
+Let's ground ourselves in Axiom 0:
+
+'All being and doing is grounded in love and trust.'
+
+This means we assume positive intent, create from care rather than fear,
+and trust each other to contribute our best.
+
+Quick round: Your name and one word for what you hope to create today."
+```
+
+#### Part 1: Vision Express (30 min)
+
+**Lightning Headlines (15 min)**
+
+```
+"Imagine it's 3 years from now. Your project succeeded beyond expectations.
+Write ONE bold headline about your success - you have 3 minutes.
+
+[Timer: 3 minutes]
+
+Now let's hear them! After each, snap or thumbs up if it resonates."
+```
+
+**Quick Stakeholder Check (10 min)**
+
+```
+"Who are the 3 most important people or groups you're building for?
+Call them out - I'll capture them.
+
+For your #1 stakeholder: What keeps them up at night that you could solve?"
+```
+
+**Mission Draft (5 min)**
+
+```
+"Based on what we heard, let me draft a mission statement:
+
+'{MISSION_DRAFT}'
+
+Quick thumbs: Does this capture it? Any adjustments?"
+```
+
+#### Part 2: Values Snapshot (30 min)
+
+**Rapid Value Ranking (15 min)**
+
+```
+"I'll list values. For each, hold up fingers 1-5 for how important it is.
+
+- Innovation (1-5?)
+- Reliability (1-5?)
+- Speed (1-5?)
+- Quality (1-5?)
+- User Experience (1-5?)
+- Security (1-5?)
+- Simplicity (1-5?)
+- Collaboration (1-5?)
+
+Your top 3 emerge as: {TOP_VALUES}"
+```
+
+**One Dilemma (15 min)**
+
+```
+"Quick dilemma to test our values:
+
+{RELEVANT_DILEMMA}
+
+Option A: {OPTION_A}
+Option B: {OPTION_B}
+
+Quick vote, then let's hear one voice from each side.
+What value are you protecting?"
+```
+
+#### Part 3: Stack & Team Assembly (45 min)
+
+**Blueprint Selection (20 min)**
+
+```
+"Based on what you've shared, here are matching blueprints:
+
+1. {BLUEPRINT_1} - {MATCH_REASON}
+2. {BLUEPRINT_2} - {MATCH_REASON}
+
+Quick show of hands: Which resonates more?
+
+Any must-have technologies not covered?"
+```
+
+**Agent Quick Picks (25 min)**
+
+```
+"Here are agents that could help you. Vote for your top 4:
+
+- Code Reviewer: Reviews code against best practices
+- Test Generator: Creates test plans and test code
+- Explorer: Navigates and explains codebases
+- Documentation: Keeps docs updated
+- Security Auditor: Checks for vulnerabilities
+
+Your team's agent roster: {SELECTED_AGENTS}
+
+Any custom agent you'd love to have? Describe it briefly."
+```
+
+#### Part 4: Generation & Demo (30 min)
+
+**Generation (10 min)**
+
+```
+"Now for the exciting part! I'm generating your customized system:
+
+- Mission: {MISSION}
+- Values: {VALUES}
+- Blueprint: {BLUEPRINT}
+- Agents: {AGENTS}
+- Grounded in: Axiom 0 (Love & Trust) + {ADDITIONAL_AXIOMS}
+
+Generating...
+
+Done! Your system is ready at {OUTPUT_PATH}"
+```
+
+**Quick Walkthrough (20 min)**
+
+```
+"Let me show you what you got:
+
+1. .cursorrules - This configures how AI agents behave
+2. PURPOSE.md - Your mission and success criteria
+3. .cursor/agents/ - Your agent definitions
+4. .cursor/skills/ - Procedures your agents can follow
+
+Let's open the project in Cursor and try a quick command..."
+```
+
+#### Part 5: Next Steps & Gratitude (15 min)
+
+**First Week Plan (10 min)**
+
+```
+"For your first week with your new AI team:
+
+Day 1: Explore - Ask agents to explain the codebase
+Day 2: Try a workflow - Use the code review agent
+Day 3: Customize - Edit .cursorrules to add team preferences
+Day 4-5: Build - Start your first feature with agent assistance
+
+Who's owning the first day exploration?"
+```
+
+**Appreciation Circle (5 min)**
+
+```
+"Let's close with a quick appreciation.
+
+Think of one person who contributed something valuable today.
+What did they do? Let's go around quickly.
+
+Thank you all! The love and trust you showed today is now
+embedded in your development system.
+
+Go build something beautiful!"
+```
+
+### Mini Workshop Generated Artifacts
+
+| Artifact | Location |
+|----------|----------|
+| Mission Statement | `PURPOSE.md` |
+| Core Values | `.cursorrules` (principles section) |
+| Stack Configuration | Generated project structure |
+| Agent Roster | `.cursor/agents/*.md` |
+| Complete System | All files in output directory |
+
+---
+
+## Full Workshop Series (11-15 hours)
+
+For teams who want comprehensive alignment, the full 5-workshop series provides deep exploration of vision, ethics, technology, and agent design.
+
+### Full Series Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐

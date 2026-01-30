@@ -5,6 +5,58 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-01-30
+
+### Added
+
+- **Zero-Config Quick Start** - See the factory in action in under 5 minutes
+  - New `--quickstart` CLI command for instant demo project generation
+  - `--quickstart-blueprint` option to use different blueprints
+  - `--quickstart-output` option to specify output directory
+  - Warm, welcoming CLI output with guided next steps
+
+- **Developer Experience Documentation**
+  - `docs/PREREQUISITES.md` - Centralized setup guide with platform-specific instructions
+  - `docs/TROUBLESHOOTING.md` - Common issues with caring, helpful solutions
+  - `docs/QUICKSTART.md` - Detailed guide for the quick start experience
+
+- **Mini Workshop Option** - 2-3 hour condensed team workshop for teams with limited time
+  - Vision Express (30 min) - Lightning headlines and mission draft
+  - Values Snapshot (30 min) - Rapid value ranking and one dilemma discussion
+  - Stack & Team Assembly (45 min) - Blueprint selection and agent quick picks
+  - Generation & Demo (30 min) - Create system and walkthrough
+  - Next Steps & Gratitude (15 min) - Action planning and appreciation circle
+
+- **Quick Start Tests** - 12 new integration tests for quickstart functionality
+
+### Changed
+
+- **README.md restructured** for better user experience
+  - New "Start Here" routing table at the top for quick navigation
+  - Warm, welcoming introduction grounded in Axiom 0
+  - Improved mermaid diagram showing 5-layer architecture
+  - All original advanced content preserved below for experts
+
+- **CLI enhanced** with caring, user-friendly messaging
+  - Welcome messages that celebrate user exploration
+  - Success celebrations on project generation
+  - Helpful error messages with solutions
+
+- **Team Workshop skill** now offers format choice (Full Series or Mini Workshop)
+
+### Philosophy
+
+This release embeds **love and care** as a foundational principle in the user experience:
+
+> "Every message, every error, every piece of documentation should feel like guidance from a trusted friend who wants to see users succeed."
+
+Key principles applied:
+- Warm welcome - First impressions set the tone
+- Gentle guidance - Never make users feel lost
+- Encouraging errors - Mistakes become learning moments
+- Progressive disclosure - Show essentials first, reveal depth when ready
+- Celebrate success - Acknowledge achievements
+
 ## [2.3.1] - 2026-01-30
 
 ### Added

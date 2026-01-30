@@ -43,6 +43,45 @@ except ImportError:
     ONBOARDING_AVAILABLE = False
 
 
+# =============================================================================
+# QUICKSTART CONFIGURATION
+# Pre-defined configuration for zero-config quick start experience
+# =============================================================================
+
+QUICKSTART_CONFIG = {
+    "project_name": "TaskMaster Demo",
+    "project_description": "AI-powered task management API - a demo project showcasing Cursor Agent Factory capabilities",
+    "domain": "web, productivity, api",
+    "primary_language": "python",
+    "frameworks": ["fastapi", "sqlalchemy", "pydantic"],
+    "triggers": ["jira", "confluence", "manual"],
+    "agents": ["code-reviewer", "test-generator", "explorer"],
+    "skills": ["bugfix-workflow", "feature-workflow", "tdd", "grounding"],
+    "mcp_servers": [
+        {
+            "name": "atlassian",
+            "url": "https://mcp.atlassian.com/v1/sse",
+            "purpose": "Jira/Confluence integration for tickets and specs"
+        }
+    ],
+    "style_guide": "pep8",
+    "blueprint_id": "python-fastapi",
+    "team_context": "Demo project for learning Cursor Agent Factory"
+}
+
+
+def create_quickstart_config() -> 'ProjectConfig':
+    """Create a ProjectConfig with sensible quickstart defaults.
+    
+    This configuration is designed to demonstrate the full capabilities
+    of Cursor Agent Factory with zero user input required.
+    
+    Returns:
+        ProjectConfig instance with demo project settings.
+    """
+    return ProjectConfig.from_dict(QUICKSTART_CONFIG)
+
+
 @dataclass
 class ProjectConfig:
     """Configuration for project generation.

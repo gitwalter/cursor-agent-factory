@@ -205,3 +205,16 @@ def cli_path(factory_root: Path) -> Path:
         Path to factory_cli.py.
     """
     return factory_root / "cli" / "factory_cli.py"
+
+
+@pytest.fixture
+def project_root(factory_root: Path) -> Path:
+    """Get the project root directory (alias for factory_root).
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to project root.
+    """
+    return factory_root
