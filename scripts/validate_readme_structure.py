@@ -231,6 +231,11 @@ class StructureValidator:
         # Build blueprints list
         blueprints = data["blueprints"]["blueprints"]
         
+        # Use thresholds for sustainable counts that don't break when repo grows
+        patterns_threshold = self._round_to_threshold(data["patterns"]["total_files"])
+        knowledge_threshold = self._round_to_threshold(data["knowledge"]["count"])
+        templates_threshold = self._round_to_threshold(data["templates"]["total_files"])
+        
         structure = f'''```
 cursor-agent-factory/
 ├── .cursor/
@@ -238,7 +243,7 @@ cursor-agent-factory/
 │   │   └── *.md                 # {", ".join(data["agents"]["agents"][:3])}, etc.
 │   └── skills/                  # Factory's own skills ({data["skills"]["count"]} skills)
 {chr(10).join(skills_list)}
-├── patterns/                    # Reusable patterns ({data["patterns"]["total_files"]} files)
+├── patterns/                    # Reusable patterns ({patterns_threshold}+ files)
 │   ├── axioms/                  # Layer 0 axiom definitions
 │   ├── principles/              # Layer 2 principle patterns
 │   ├── methodologies/           # Layer 3 methodology templates
@@ -267,9 +272,9 @@ cursor-agent-factory/
 │   ├── sap-rap/
 │   ├── sap-cap/
 │   └── sap-cpi-pi/
-├── knowledge/                   # Reference data ({data["knowledge"]["count"]} files)
+├── knowledge/                   # Reference data ({knowledge_threshold}+ files)
 │   └── *.json                   # Stack, workflow, MCP, security, AI patterns
-├── templates/                   # Code and document templates ({data["templates"]["total_files"]} files)
+├── templates/                   # Code and document templates ({templates_threshold}+ files)
 │   ├── factory/                 # Factory templates (cursorrules, PURPOSE.md, etc.)
 │   ├── ai/                      # AI agent templates
 │   ├── python/                  # Python templates (FastAPI, Streamlit)
@@ -305,6 +310,25 @@ cursor-agent-factory/
 ```'''
         return structure
     
+    def _round_to_threshold(self, count: int) -> int:
+        """
+        Round count down to nearest threshold for sustainable documentation.
+        
+        Uses thresholds: 5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, etc.
+        This allows the repo to grow without breaking tests.
+        
+        Args:
+            count: Actual count to round.
+            
+        Returns:
+            Threshold value (count rounded down to nearest threshold).
+        """
+        thresholds = [5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 300, 500]
+        for i, threshold in enumerate(thresholds):
+            if count < threshold:
+                return thresholds[i - 1] if i > 0 else 0
+        return thresholds[-1]
+    
     def generate_counts_summary(self) -> dict:
         """
         Generate a summary of component counts for validation.
@@ -326,8 +350,12 @@ cursor-agent-factory/
         """
         Extract component counts from README.md.
         
+        Handles both exact counts (e.g., "14 skills") and threshold counts
+        (e.g., "50+ files"). Threshold counts are marked with is_threshold=True.
+        
         Returns:
             Dictionary with counts as documented in README.
+            Each value is a dict with 'count' and 'is_threshold' keys.
         """
         if not self.readme_path.exists():
             return {}
@@ -335,26 +363,34 @@ cursor-agent-factory/
         content = self.readme_path.read_text(encoding="utf-8")
         counts = {}
         
-        # Extract patterns like "14 skills", "7 blueprints", etc.
+        # Extract patterns - handles both "14 skills" and "50+ files" formats
         patterns = [
             (r"skills/\s*#.*?\((\d+)\s*skills\)", "skills"),
             (r"agents/\s*#.*?\((\d+)\s*agents\)", "agents"),
             (r"blueprints/\s*#.*?\((\d+)\s*blueprints\)", "blueprints"),
-            (r"knowledge/\s*#.*?\((\d+)\s*files\)", "knowledge"),
-            (r"patterns/\s*#.*?\((\d+)\s*files\)", "patterns"),
-            (r"templates/\s*#.*?\((\d+)\s*files\)", "templates"),
+            (r"knowledge/\s*#.*?\((\d+)\+?\s*files\)", "knowledge"),
+            (r"patterns/\s*#.*?\((\d+)\+?\s*files\)", "patterns"),
+            (r"templates/\s*#.*?\((\d+)\+?\s*files\)", "templates"),
         ]
         
         for pattern, key in patterns:
             match = re.search(pattern, content, re.IGNORECASE)
             if match:
-                counts[key] = int(match.group(1))
+                count_str = match.group(0)
+                is_threshold = '+' in count_str
+                counts[key] = {
+                    'count': int(match.group(1)),
+                    'is_threshold': is_threshold
+                }
         
         return counts
     
     def validate(self) -> tuple[bool, list[str]]:
         """
         Validate README structure against actual filesystem.
+        
+        For threshold counts (e.g., "50+ files"), validates actual >= documented.
+        For exact counts (e.g., "14 blueprints"), validates actual == documented.
         
         Returns:
             Tuple of (is_valid, list of discrepancy messages).
@@ -366,11 +402,22 @@ cursor-agent-factory/
         
         for key, actual_count in actual.items():
             if key in documented:
-                doc_count = documented[key]
-                if actual_count != doc_count:
-                    discrepancies.append(
-                        f"{key}: README says {doc_count}, actual is {actual_count}"
-                    )
+                doc_info = documented[key]
+                doc_count = doc_info['count']
+                is_threshold = doc_info['is_threshold']
+                
+                if is_threshold:
+                    # Threshold count: actual must be >= documented minimum
+                    if actual_count < doc_count:
+                        discrepancies.append(
+                            f"{key}: README says {doc_count}+ (minimum), actual is {actual_count} (below minimum!)"
+                        )
+                else:
+                    # Exact count: must match exactly
+                    if actual_count != doc_count:
+                        discrepancies.append(
+                            f"{key}: README says {doc_count}, actual is {actual_count}"
+                        )
             else:
                 discrepancies.append(
                     f"{key}: Not found in README (actual: {actual_count})"

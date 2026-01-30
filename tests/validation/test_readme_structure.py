@@ -83,6 +83,23 @@ class TestReadmeStructureCounts:
             
             pytest.fail("\n".join(msg_lines))
     
+    def _check_count(self, actual: int, doc_info: dict, name: str):
+        """
+        Helper to check count with support for threshold (X+) vs exact counts.
+        
+        For threshold counts (is_threshold=True): actual >= documented
+        For exact counts (is_threshold=False): actual == documented
+        """
+        doc_count = doc_info['count']
+        is_threshold = doc_info['is_threshold']
+        
+        if is_threshold:
+            assert actual >= doc_count, \
+                f"{name} count below minimum: README says {doc_count}+, filesystem has {actual}"
+        else:
+            assert actual == doc_count, \
+                f"{name} count mismatch: README says {doc_count}, filesystem has {actual}"
+    
     def test_readme_agents_count(self, actual_counts, documented_counts):
         """Test that agents count in README matches filesystem."""
         actual = actual_counts.get("agents", 0)
@@ -90,8 +107,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document agent count in Project Structure"
-        assert actual == documented, \
-            f"Agents count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Agents")
     
     def test_readme_skills_count(self, actual_counts, documented_counts):
         """Test that skills count in README matches filesystem."""
@@ -100,8 +116,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document skills count in Project Structure"
-        assert actual == documented, \
-            f"Skills count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Skills")
     
     def test_readme_blueprints_count(self, actual_counts, documented_counts):
         """Test that blueprints count in README matches filesystem."""
@@ -110,8 +125,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document blueprints count in Project Structure"
-        assert actual == documented, \
-            f"Blueprints count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Blueprints")
     
     def test_readme_patterns_count(self, actual_counts, documented_counts):
         """Test that patterns count in README matches filesystem."""
@@ -120,8 +134,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document patterns count in Project Structure"
-        assert actual == documented, \
-            f"Patterns count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Patterns")
     
     def test_readme_knowledge_count(self, actual_counts, documented_counts):
         """Test that knowledge files count in README matches filesystem."""
@@ -130,8 +143,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document knowledge files count in Project Structure"
-        assert actual == documented, \
-            f"Knowledge count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Knowledge")
     
     def test_readme_templates_count(self, actual_counts, documented_counts):
         """Test that templates count in README matches filesystem."""
@@ -140,8 +152,7 @@ class TestReadmeStructureCounts:
         
         assert documented is not None, \
             "README should document templates count in Project Structure"
-        assert actual == documented, \
-            f"Templates count mismatch: README says {documented}, filesystem has {actual}"
+        self._check_count(actual, documented, "Templates")
 
 
 class TestStructureValidatorFunctionality:
@@ -216,6 +227,11 @@ class TestStructureValidatorFunctionality:
         assert isinstance(counts, dict), "extract_readme_counts should return a dict"
         # Should have at least some counts extracted
         assert len(counts) > 0, "Should extract at least some counts from README"
+        # Each entry should have 'count' and 'is_threshold' keys
+        for key, value in counts.items():
+            assert isinstance(value, dict), f"{key} should be a dict with count info"
+            assert 'count' in value, f"{key} should have 'count' key"
+            assert 'is_threshold' in value, f"{key} should have 'is_threshold' key"
     
     def test_validate_returns_tuple(self, validator):
         """Test that validate returns expected tuple structure."""
