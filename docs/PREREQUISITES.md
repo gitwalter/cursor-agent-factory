@@ -153,4 +153,23 @@ Remember: Every expert was once a beginner. You've got this!
 
 ---
 
+## For Contributors: Development Setup
+
+If you're contributing to the Cursor Agent Factory itself, install the Git hooks:
+
+```powershell
+# Windows
+C:\App\Anaconda\python.exe scripts\install-hooks.py
+
+# macOS/Linux
+python3 scripts/install-hooks.py
+```
+
+This installs a pre-commit hook that automatically:
+- Updates README.md structure counts before each commit
+- Keeps documentation synchronized with the codebase
+- Prevents CI failures from outdated counts
+
+---
+
 *[Back to README](../README.md)*
