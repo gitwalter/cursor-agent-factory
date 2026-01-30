@@ -5,6 +5,78 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2026-01-30
+
+### Added
+
+- **Comprehensive MCP Server Catalog** - Expanded from 10 to 50+ servers across 6 categories
+  - Core: filesystem, git, memory, time, fetch, brave-search, exa, sequentialthinking
+  - Code: github, gitlab, sentry, playwright, puppeteer, openapi, context7, deepwiki
+  - Data: postgresql, sqlite, mongodb, prisma, supabase, firebase, bigquery, snowflake, pinecone, qdrant, chromadb
+  - Cloud: docker, terraform, pulumi, datadog
+  - Collab: atlassian, linear, asana, todoist, notion, slack, discord, gmail, google-calendar, figma, canva
+  - AI/ML: huggingface, mlflow, wandb, langsmith, jupyter, langgraph, knowledge-graph, neo4j, ollama
+
+- **MCP Starter Packs** - Pre-configured server bundles for quick setup
+  - Minimal (3 servers): filesystem, git, memory
+  - Web Developer (6 servers): + github, postgresql, playwright
+  - Data Science (6 servers): + jupyter, bigquery, pinecone
+  - AI Agent (6 servers): + langgraph, knowledge-graph, chromadb
+  - Enterprise (7 servers): + atlassian, slack, sentry
+  - DevOps (6 servers): + docker, terraform, github, datadog
+
+- **Role-Based MCP Recommendations** - Smart server suggestions for 8 developer roles
+  - Full-Stack Developer, Frontend Developer, Backend Developer
+  - Data Scientist, ML Engineer, Agent Developer
+  - DevOps Engineer, SAP Developer
+
+- **MCP Selection Skill** - Interactive skill for guided server selection
+  - `.cursor/skills/mcp-selection/SKILL.md`
+  - Role-based recommendations
+  - Category browsing
+  - Custom/local server support
+
+- **MCP Server Templates** - Setup guides and configuration templates
+  - `templates/mcp/filesystem/setup-guide.md`
+  - `templates/mcp/git/setup-guide.md`
+  - `templates/mcp/memory/setup-guide.md`
+  - `templates/mcp/brave-search/setup-guide.md` + env.template
+
+- **MCP Documentation** - Comprehensive guide for all servers
+  - `docs/MCP-SERVERS.md` - Quick start, catalog, and setup instructions
+
+- **AISuite Integration Guide** - Andrew Ng's unified LLM library with MCP support
+  - `knowledge/aisuite-integration.json` - Configuration and usage guide
+  - Multi-provider LLM access (OpenAI, Anthropic, Google, etc.)
+  - Native MCP client support for tool calling
+
+- **MCP Selection Guide Knowledge File** - Decision tree and recommendations
+  - `knowledge/mcp-selection-guide.json`
+  - Role-to-category mappings
+  - Stack recommendations
+  - Authentication summaries
+
+### Changed
+
+- **CLI Phase 6** - Enhanced MCP server selection in interactive mode
+  - Starter pack selection (6 options)
+  - Category browsing for custom selection
+  - Auto-add based on PM backend and triggers
+  - Custom/local server input support
+
+- **MCP Catalog Schema** - Enhanced with new fields
+  - `setupDocs`: Link to official documentation
+  - `setupSteps`: Step-by-step setup instructions
+  - `envVariables`: Required environment variables
+  - `category`: Server category grouping
+  - `transport`: stdio, sse, or http
+
+### Documentation
+
+- Added `docs/MCP-SERVERS.md` - Comprehensive MCP server guide
+- All server entries now include setup documentation links
+- Role-based recommendations table in docs
+
 ## [2.5.0] - 2026-01-30
 
 ### Added

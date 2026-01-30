@@ -293,64 +293,178 @@ def interactive_mode(output_dir: str) -> None:
         print(f"\n   [OK] PM system enabled: {pm_backend} + {pm_methodology}")
     
     # Phase 6: MCP Servers
-    print("\n[PHASE 6] Integrations\n")
+    print("\n[PHASE 6] MCP Server Integration\n")
     
     mcp_servers = []
     
-    # Add PM-related MCP servers
+    # Define starter packs
+    starter_packs = {
+        'minimal': {
+            'name': 'Minimal Starter',
+            'servers': ['filesystem', 'git', 'memory']
+        },
+        'web-developer': {
+            'name': 'Web Developer Starter',
+            'servers': ['filesystem', 'git', 'memory', 'github', 'postgresql', 'playwright']
+        },
+        'data-science': {
+            'name': 'Data Science Starter',
+            'servers': ['filesystem', 'memory', 'time', 'jupyter', 'bigquery', 'pinecone']
+        },
+        'ai-agent': {
+            'name': 'AI Agent Starter',
+            'servers': ['filesystem', 'memory', 'sequentialthinking', 'langgraph', 'knowledge-graph', 'chromadb']
+        },
+        'enterprise': {
+            'name': 'Enterprise Starter',
+            'servers': ['filesystem', 'git', 'memory', 'github', 'atlassian', 'slack', 'sentry']
+        }
+    }
+    
+    # Server configs for quick access
+    server_configs = {
+        'filesystem': {'name': 'filesystem', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-filesystem', '.'], 'purpose': 'File operations'},
+        'git': {'name': 'git', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-git', '--repository', '.'], 'purpose': 'Git operations'},
+        'memory': {'name': 'memory', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-memory'], 'purpose': 'Persistent memory'},
+        'time': {'name': 'time', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-time'], 'purpose': 'Date/time utilities'},
+        'fetch': {'name': 'fetch', 'purpose': 'Web content (built-in)'},
+        'sequentialthinking': {'name': 'sequentialthinking', 'url': 'https://remote.mcpservers.org/sequentialthinking/mcp', 'purpose': 'Problem-solving'},
+        'github': {'name': 'github', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-github'], 'env': {'GITHUB_TOKEN': '${GITHUB_TOKEN}'}, 'purpose': 'GitHub integration'},
+        'atlassian': {'name': 'atlassian', 'url': 'https://mcp.atlassian.com/v1/sse', 'purpose': 'Jira/Confluence'},
+        'linear': {'name': 'linear', 'url': 'https://mcp.linear.app/mcp', 'purpose': 'Linear issues'},
+        'slack': {'name': 'slack', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-slack'], 'env': {'SLACK_BOT_TOKEN': '${SLACK_BOT_TOKEN}'}, 'purpose': 'Slack messaging'},
+        'sentry': {'name': 'sentry', 'command': 'npx', 'args': ['-y', '@sentry/mcp-server'], 'env': {'SENTRY_AUTH_TOKEN': '${SENTRY_AUTH_TOKEN}'}, 'purpose': 'Error tracking'},
+        'playwright': {'name': 'playwright', 'command': 'npx', 'args': ['-y', '@playwright/mcp@latest'], 'purpose': 'Browser automation'},
+        'postgresql': {'name': 'postgresql', 'command': 'npx', 'args': ['-y', '@modelcontextprotocol/server-postgres'], 'env': {'DATABASE_URL': '${DATABASE_URL}'}, 'purpose': 'PostgreSQL database'},
+        'mongodb': {'name': 'mongodb', 'command': 'npx', 'args': ['-y', '@mongodb/mcp-server'], 'env': {'MONGODB_URI': '${MONGODB_URI}'}, 'purpose': 'MongoDB database'},
+        'pinecone': {'name': 'pinecone', 'command': 'npx', 'args': ['-y', '@pinecone/mcp-server'], 'env': {'PINECONE_API_KEY': '${PINECONE_API_KEY}'}, 'purpose': 'Vector database'},
+        'chromadb': {'name': 'chromadb', 'command': 'npx', 'args': ['-y', 'chroma-mcp-server'], 'purpose': 'Local embeddings'},
+        'bigquery': {'name': 'bigquery', 'url': 'https://bigquery.googleapis.com/mcp', 'purpose': 'BigQuery analytics'},
+        'docker': {'name': 'docker', 'command': 'npx', 'args': ['-y', '@docker/mcp-server'], 'purpose': 'Container management'},
+        'deepwiki': {'name': 'deepwiki', 'url': 'https://mcp.deepwiki.com/mcp', 'purpose': 'GitHub repo docs'},
+        'huggingface': {'name': 'huggingface', 'url': 'https://huggingface.co/mcp', 'env': {'HF_TOKEN': '${HF_TOKEN}'}, 'purpose': 'HuggingFace Hub'},
+        'mlflow': {'name': 'mlflow', 'command': 'mlflow-mcp-server', 'env': {'MLFLOW_TRACKING_URI': '${MLFLOW_TRACKING_URI}'}, 'purpose': 'ML experiment tracking'},
+        'langgraph': {'name': 'langgraph', 'purpose': 'Agent orchestration (requires deployment URL)'},
+        'knowledge-graph': {'name': 'knowledge-graph', 'command': 'npx', 'args': ['-y', 'mcp-knowledge-graph'], 'purpose': 'Agent memory'},
+        'jupyter': {'name': 'jupyter', 'command': 'npx', 'args': ['-y', 'jupyter-mcp-server'], 'purpose': 'Notebook execution'},
+        'ollama': {'name': 'ollama', 'command': 'npx', 'args': ['-y', 'ollama-mcp'], 'purpose': 'Local LLM'},
+        'brave-search': {'name': 'brave-search', 'command': 'npx', 'args': ['-y', '@anthropics/mcp-server-brave-search'], 'env': {'BRAVE_API_KEY': '${BRAVE_API_KEY}'}, 'purpose': 'Web search'},
+        'notion': {'name': 'notion', 'url': 'https://mcp.notion.so/mcp', 'purpose': 'Notion docs'},
+        'figma': {'name': 'figma', 'url': 'https://mcp.figma.com', 'purpose': 'Design extraction'},
+        'sap-documentation': {'name': 'sap-documentation', 'url': 'https://mcp-sap-docs.marianzeis.de/mcp', 'purpose': 'SAP Help Portal'}
+    }
+    
+    # Step 1: Ask about starter pack
+    print("   Choose a starter pack or custom selection:\n")
+    print("   1. Minimal (3 servers) - filesystem, git, memory")
+    print("   2. Web Developer (6 servers) - + github, postgresql, playwright")
+    print("   3. Data Science (6 servers) - + jupyter, bigquery, pinecone")
+    print("   4. AI Agent (6 servers) - + langgraph, knowledge-graph, chromadb")
+    print("   5. Enterprise (7 servers) - + atlassian, slack, sentry")
+    print("   6. Custom - Select individual servers")
+    print("   7. Skip - No MCP servers")
+    
+    pack_choice = input("\n   Select option [1]: ").strip() or "1"
+    
+    selected_servers = []
+    
+    if pack_choice == "1":
+        selected_servers = starter_packs['minimal']['servers'].copy()
+        print(f"\n   [OK] Using Minimal Starter: {', '.join(selected_servers)}")
+    elif pack_choice == "2":
+        selected_servers = starter_packs['web-developer']['servers'].copy()
+        print(f"\n   [OK] Using Web Developer Starter: {', '.join(selected_servers)}")
+    elif pack_choice == "3":
+        selected_servers = starter_packs['data-science']['servers'].copy()
+        print(f"\n   [OK] Using Data Science Starter: {', '.join(selected_servers)}")
+    elif pack_choice == "4":
+        selected_servers = starter_packs['ai-agent']['servers'].copy()
+        print(f"\n   [OK] Using AI Agent Starter: {', '.join(selected_servers)}")
+    elif pack_choice == "5":
+        selected_servers = starter_packs['enterprise']['servers'].copy()
+        print(f"\n   [OK] Using Enterprise Starter: {', '.join(selected_servers)}")
+    elif pack_choice == "6":
+        # Custom selection - show categories
+        print("\n   Available servers by category:\n")
+        print("   CORE: filesystem, git, memory, time, fetch, brave-search, sequentialthinking")
+        print("   CODE: github, sentry, playwright, deepwiki, sap-documentation")
+        print("   DATA: postgresql, mongodb, pinecone, chromadb, bigquery")
+        print("   CLOUD: docker")
+        print("   COLLAB: atlassian, linear, slack, notion, figma")
+        print("   AI/ML: huggingface, mlflow, langgraph, knowledge-graph, ollama, jupyter")
+        
+        custom_input = input("\n   Enter servers (comma-separated): ").strip()
+        if custom_input:
+            selected_servers = [s.strip() for s in custom_input.split(',')]
+            print(f"\n   [OK] Selected: {', '.join(selected_servers)}")
+    elif pack_choice == "7":
+        print("\n   [OK] Skipping MCP server configuration")
+    
+    # Auto-add based on PM backend
     if pm_enabled:
-        if pm_backend == 'github':
-            print("   [OK] Adding GitHub MCP server for PM")
-            mcp_servers.append({
-                'name': 'github-pm',
-                'command': 'npx',
-                'args': ['-y', '@modelcontextprotocol/server-github'],
-                'purpose': 'GitHub Issues and Projects'
-            })
-        elif pm_backend == 'jira':
-            print("   [OK] Adding Atlassian MCP server for Jira")
-            mcp_servers.append({
-                'name': 'atlassian',
-                'url': 'https://mcp.atlassian.com/v1/sse',
-                'purpose': 'Jira integration'
-            })
+        if pm_backend == 'github' and 'github' not in selected_servers:
+            selected_servers.append('github')
+            print("   [OK] Auto-added GitHub MCP for PM")
+        elif pm_backend == 'jira' and 'atlassian' not in selected_servers:
+            selected_servers.append('atlassian')
+            print("   [OK] Auto-added Atlassian MCP for Jira")
         elif pm_backend == 'azure-devops':
-            print("   [OK] Adding Azure DevOps MCP server")
             mcp_servers.append({
                 'name': 'azure-devops',
                 'command': 'npx',
                 'args': ['-y', '@mcp-apps/azure-devops-mcp-server'],
                 'purpose': 'Azure DevOps Work Items'
             })
-        elif pm_backend == 'linear':
-            print("   [OK] Adding Linear MCP server")
-            mcp_servers.append({
-                'name': 'linear',
-                'command': 'npx',
-                'args': ['-y', 'mcp-remote', 'https://mcp.linear.app/sse'],
-                'purpose': 'Linear Issues and Projects'
-            })
-        
-        if pm_doc_backend == 'confluence':
-            print("   [OK] Adding Confluence MCP server")
-            # Confluence uses same Atlassian server
+            print("   [OK] Auto-added Azure DevOps MCP")
+        elif pm_backend == 'linear' and 'linear' not in selected_servers:
+            selected_servers.append('linear')
+            print("   [OK] Auto-added Linear MCP for PM")
     
+    # Auto-add based on triggers
     if 'jira' in triggers or 'confluence' in triggers:
-        if not any(s.get('name') == 'atlassian' for s in mcp_servers):
-            print("   [OK] Adding Atlassian MCP server for Jira/Confluence")
-            mcp_servers.append({
-                'name': 'atlassian',
-                'url': 'https://mcp.atlassian.com/v1/sse',
-                'purpose': 'Jira/Confluence integration'
-            })
+        if 'atlassian' not in selected_servers:
+            selected_servers.append('atlassian')
+            print("   [OK] Auto-added Atlassian MCP for Jira/Confluence triggers")
     
-    add_deepwiki = input("Add DeepWiki for GitHub repo analysis? [y/N]: ").strip().lower()
-    if add_deepwiki == 'y':
-        mcp_servers.append({
-            'name': 'deepwiki',
-            'url': 'https://mcp.deepwiki.com/mcp',
-            'purpose': 'GitHub repository analysis'
-        })
+    if 'github' in triggers and 'github' not in selected_servers:
+        selected_servers.append('github')
+        print("   [OK] Auto-added GitHub MCP for GitHub triggers")
+    
+    # Convert selected servers to MCP config
+    for server_id in selected_servers:
+        if server_id in server_configs:
+            mcp_servers.append(server_configs[server_id])
+    
+    # Step 2: Ask about custom/local servers
+    add_custom = input("\n   Add custom/local MCP servers? [y/N]: ").strip().lower()
+    if add_custom == 'y':
+        while True:
+            print("\n   Enter custom server details (or 'done' to finish):")
+            custom_name = input("   Server name: ").strip()
+            if custom_name.lower() == 'done' or not custom_name:
+                break
+            custom_command = input("   Command (e.g., python, npx): ").strip()
+            custom_args = input("   Arguments (comma-separated): ").strip()
+            custom_env = input("   Env vars (VAR1=val1,VAR2=val2): ").strip()
+            custom_purpose = input("   Purpose: ").strip()
+            
+            custom_server = {
+                'name': custom_name,
+                'command': custom_command,
+                'purpose': custom_purpose or 'Custom server'
+            }
+            if custom_args:
+                custom_server['args'] = [a.strip() for a in custom_args.split(',')]
+            if custom_env:
+                env_dict = {}
+                for pair in custom_env.split(','):
+                    if '=' in pair:
+                        k, v = pair.split('=', 1)
+                        env_dict[k.strip()] = v.strip()
+                custom_server['env'] = env_dict
+            
+            mcp_servers.append(custom_server)
+            print(f"   [OK] Added custom server: {custom_name}")
     
     # Summary
     print("\n" + "=" * 60)

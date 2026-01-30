@@ -23,6 +23,7 @@ Not sure where to begin? We've got you covered.
 | **Build my own project** | `python cli/factory_cli.py --interactive` |
 | **Enhance an existing repo** | [Onboarding Guide](docs/ONBOARDING_GUIDE.md) |
 | **Align my team** | [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) |
+| **Configure MCP servers** | [MCP Servers Guide](docs/MCP-SERVERS.md) |
 
 New to all this? Start with `--quickstart` - you'll have a working demo in minutes, and we'll explain everything along the way.
 
@@ -540,17 +541,52 @@ flowchart TB
 
 ## MCP Server Integration
 
-The factory can configure generated projects to use these MCP servers:
+The factory includes **50+ MCP servers** across 6 categories. See the full [MCP Servers Guide](docs/MCP-SERVERS.md) for details.
 
-| Server | Purpose | Authentication |
-|--------|---------|----------------|
-| `atlassian` | Jira/Confluence integration | OAuth |
-| `sap-documentation` | SAP Help Portal queries | None |
-| `deepwiki` | GitHub repository analysis | None |
-| `sequentialthinking` | Structured problem solving | None |
-| `notion` | Notion docs and databases | OAuth |
-| `linear` | Linear issue tracking | OAuth |
-| `sentry` | Error tracking and monitoring | API Key |
+### Starter Packs
+
+| Pack | Servers | Best For |
+|------|---------|----------|
+| **Minimal** | filesystem, git, memory | Any project |
+| **Web Developer** | + github, postgresql, playwright | Web apps |
+| **Data Science** | + jupyter, bigquery, pinecone | Data/ML projects |
+| **AI Agent** | + langgraph, knowledge-graph, chromadb | Agent development |
+| **Enterprise** | + atlassian, slack, sentry | Team projects |
+| **DevOps** | + docker, terraform, datadog | Infrastructure |
+
+### Categories
+
+| Category | Servers |
+|----------|---------|
+| **Core** | filesystem, git, memory, time, fetch, brave-search, sequentialthinking |
+| **Code** | github, gitlab, sentry, playwright, deepwiki, sap-documentation |
+| **Data** | postgresql, mongodb, bigquery, snowflake, pinecone, chromadb |
+| **Cloud** | docker, terraform, pulumi, datadog |
+| **Collab** | atlassian, linear, notion, slack, figma |
+| **AI/ML** | huggingface, mlflow, langgraph, ollama, neo4j |
+
+### Quick Start
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git", "--repository", "."]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    }
+  }
+}
+```
+
+For detailed setup instructions, see [docs/MCP-SERVERS.md](docs/MCP-SERVERS.md).
 
 ## Configuration File Format
 
@@ -796,6 +832,7 @@ MIT License
 
 ---
 
-*Cursor Agent Factory v2.0.0*  
+*Cursor Agent Factory v2.6.0*  
 *Meta-system for generating Cursor AI agent development systems*  
-*Now with 5-layer architecture: Integrity → Purpose → Principles → Methodology → Technical*
+*Now with 5-layer architecture: Integrity → Purpose → Principles → Methodology → Technical*  
+*50+ MCP servers across 6 categories with starter packs and role-based recommendations*
