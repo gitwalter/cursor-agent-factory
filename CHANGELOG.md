@@ -5,6 +5,27 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Comprehensive Factory Reference Documentation**
+  - `docs/FACTORY_REFERENCE.md` - Master entry point with architecture overview and quick start
+  - `docs/reference/BLUEPRINTS.md` - Detailed reference for all 12 technology blueprints (~800 lines)
+  - `docs/reference/PATTERNS.md` - Complete patterns reference: agents, skills, axioms, methodologies (~700 lines)
+  - `docs/reference/KNOWLEDGE_FILES.md` - All 32 knowledge files categorized and explained
+  - `docs/reference/FACTORY_COMPONENTS.md` - Factory's 7 agents and 18 skills documented
+  - `docs/reference/GENERATED_OUTPUT.md` - Project structure, file formats, and examples
+
+### Changed
+
+- Updated `README.md` with comprehensive reference documentation section
+- Updated `docs/USAGE_GUIDE.md` with quick links to reference documentation
+
+### Documentation
+
+This release adds ~2,460 lines of comprehensive reference documentation, enabling users and contributors to fully understand the factory's blueprints, patterns, knowledge files, and generation process.
+
 ## [2.2.0] - 2026-01-30
 
 ### Added

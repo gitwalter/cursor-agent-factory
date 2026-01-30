@@ -642,6 +642,19 @@ Each example includes a complete walkthrough, sample answers, and expected outpu
 
 ## Documentation
 
+### Comprehensive Reference
+
+| Document | Description |
+|----------|-------------|
+| **[Factory Reference](docs/FACTORY_REFERENCE.md)** | **Start here** - Complete overview of the factory with links to detailed references |
+| [Blueprints Reference](docs/reference/BLUEPRINTS.md) | All 12 technology blueprints with detailed specifications |
+| [Patterns Reference](docs/reference/PATTERNS.md) | Agent, skill, axiom, methodology, and other patterns |
+| [Knowledge Files Reference](docs/reference/KNOWLEDGE_FILES.md) | All 32 knowledge files categorized and explained |
+| [Factory Components Reference](docs/reference/FACTORY_COMPONENTS.md) | Factory's own 7 agents and 18 skills |
+| [Generated Output Reference](docs/reference/GENERATED_OUTPUT.md) | What gets generated: structure, formats, examples |
+
+### Guides and Tutorials
+
 | Document | Description |
 |----------|-------------|
 | [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |

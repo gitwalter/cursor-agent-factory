@@ -2,6 +2,16 @@
 
 This guide explains how to use the Cursor Agent Factory to generate complete Cursor agent development systems grounded in purpose, principles, and methodology.
 
+> **Looking for comprehensive reference documentation?**  
+> See [FACTORY_REFERENCE.md](FACTORY_REFERENCE.md) for complete documentation of blueprints, patterns, knowledge files, and factory components.
+>
+> **Quick Links:**
+> - [Blueprints Reference](reference/BLUEPRINTS.md) - All 12 technology blueprints
+> - [Patterns Reference](reference/PATTERNS.md) - Agent, skill, axiom, and methodology patterns
+> - [Knowledge Files Reference](reference/KNOWLEDGE_FILES.md) - All 32 knowledge files
+> - [Factory Components Reference](reference/FACTORY_COMPONENTS.md) - Factory's agents and skills
+> - [Generated Output Reference](reference/GENERATED_OUTPUT.md) - What gets generated
+
 ## Philosophy
 
 The factory generates agent systems using a **5-layer architecture** that ensures every project is:
