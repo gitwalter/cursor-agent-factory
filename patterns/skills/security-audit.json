@@ -5,14 +5,21 @@
     "category": "verification",
     "stackAgnostic": true,
     "description": "Comprehensive security vulnerability detection and remediation guidance",
-    "composable": true
+    "composable": true,
+    "version": "1.1.0"
   },
   "frontmatter": {
     "name": "security-audit",
     "description": "Security vulnerability detection and remediation skill",
     "type": "skill",
     "skills": ["grounding"],
-    "knowledge": ["security-checklist.json"]
+    "knowledge": ["security-checklist.json"],
+    "verification": {
+      "enabled": true,
+      "profile": "security",
+      "trigger": "always",
+      "description": "Uses grounding-verification with security profile - very strict thresholds for all security claims"
+    }
   },
   "sections": {
     "title": "Security Audit Skill",
@@ -132,12 +139,28 @@
       },
       {
         "step": 8,
+        "name": "Verify Security Claims",
+        "description": "Apply two-pass verification to all security-critical claims",
+        "trigger": "always",
+        "profile": "security",
+        "actions": [
+          "For each security finding, run grounding-verification with security profile",
+          "Security profile uses very strict thresholds (delta >= 0.4 for VERIFIED)",
+          "Any UNSUPPORTED claim must not be reported as confirmed",
+          "SUSPICIOUS claims should be flagged for manual review"
+        ],
+        "severity": "critical",
+        "reference": "See grounding-verification.json for full algorithm"
+      },
+      {
+        "step": 9,
         "name": "Generate Security Report",
-        "description": "Compile findings into actionable report",
+        "description": "Compile verified findings into actionable report",
         "outputs": ["docs/security_audit_report.md"],
         "format": {
-          "sections": ["Executive Summary", "Critical Issues", "High Issues", "Medium Issues", "Recommendations", "Remediation Steps"]
-        }
+          "sections": ["Executive Summary", "Critical Issues", "High Issues", "Medium Issues", "Recommendations", "Remediation Steps", "Verification Summary"]
+        },
+        "note": "Include verification status for each finding"
       }
     ],
     "severityLevels": {

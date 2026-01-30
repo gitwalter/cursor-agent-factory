@@ -5,6 +5,62 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2026-01-30
+
+### Added
+
+- **Generalized Grounding Verification System** - Universal two-pass verification for all LLM grounding scenarios
+  - Base pattern `grounding-verification.json` with confidence delta algorithm
+  - 5 verification profiles: strawberry, code, documentation, data, security
+  - Configurable thresholds per profile (standard, relaxed, strict, very strict)
+  - Trigger options: always, on_medium_confidence, on_critical_claim, on_conflict, manual
+
+- **Grounding Verification Skill** - New base skill for unified verification
+  - `.cursor/skills/grounding-verification/SKILL.md` - Comprehensive skill documentation
+  - Profile-based verification with domain-specific scrubbing rules
+  - Error handling with fallbacks for parse failures and conflicting verdicts
+
+- **Profile-Specific Scrubbing Rules**
+  - `strawberry`: Tables, fields, classes, functions, numbers, strings, paths, URLs
+  - `code`: Classes, functions, methods, variables, types, paths, line numbers, modules
+  - `documentation`: Versions, endpoints, config keys, parameters, values, commands
+  - `data`: Tables, columns, data types, constraints, indexes, schemas
+  - `security`: CVEs, vulnerabilities, attack vectors, algorithms, keys, permissions
+
+### Changed
+
+- **Strawberry Verification Pattern** - Refactored to extend base pattern (v3.0.0)
+  - Now references `grounding-verification.json` as base
+  - Profile-specific implementation with strawberry defaults
+  - Reduced duplication by inheriting shared components
+
+- **Grounding Skill** - Now opts into verification with data profile (v1.1.0)
+  - Added `verification.enabled: true, profile: data, trigger: on_medium_confidence`
+  - New Step 5: Run Grounding Verification before handling unverified claims
+
+- **Security Audit Skill** - Now opts into verification with security profile (v1.1.0)
+  - Added `verification.enabled: true, profile: security, trigger: always`
+  - New Step 8: Verify Security Claims with very strict thresholds (delta >= 0.4)
+  - Report now includes verification summary section
+
+### Philosophy
+
+This release generalizes the Pythea/Strawberry verification concept into a **universal grounding verification system**:
+
+> "If removing specific identifiers from evidence doesn't significantly change LLM confidence, the evidence may not have been used - indicating potential confabulation."
+
+Key design principles:
+- **Configurable** - Skills opt-in by selecting a profile matching their domain
+- **DRY** - Core algorithm defined once, reused across all profiles
+- **Extensible** - New profiles can be added without modifying base pattern
+- **Non-breaking** - Existing skills work unchanged; verification is opt-in
+
+### Credits
+
+- [Leon Chlon](https://github.com/lchlon) - Original Pythea/Strawberry concept
+
+---
+
 ## [2.7.0] - 2026-01-30
 
 ### Added

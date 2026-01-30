@@ -5,13 +5,20 @@
     "category": "core",
     "stackAgnostic": true,
     "description": "Verify data structures and assumptions before implementation",
-    "composable": true
+    "composable": true,
+    "version": "1.1.0"
   },
   "frontmatter": {
     "name": "grounding",
     "description": "Verify data structures, field existence, and assumptions before implementation",
     "type": "skill",
-    "knowledge": ["data-patterns.json"]
+    "knowledge": ["data-patterns.json"],
+    "verification": {
+      "enabled": true,
+      "profile": "data",
+      "trigger": "on_medium_confidence",
+      "description": "Uses grounding-verification with data profile for schema/structure claims"
+    }
   },
   "sections": {
     "title": "Grounding Skill",
@@ -50,6 +57,20 @@
       },
       {
         "step": 5,
+        "name": "Run Grounding Verification",
+        "description": "Apply two-pass verification when confidence is MEDIUM",
+        "trigger": "on_medium_confidence",
+        "profile": "data",
+        "actions": [
+          "If grounding confidence is MEDIUM, trigger grounding-verification",
+          "Use data profile for schema/structure verification",
+          "Compare scrubbed vs full evidence confidence",
+          "Mark claims as VERIFIED/PLAUSIBLE/SUSPICIOUS/UNSUPPORTED"
+        ],
+        "reference": "See grounding-verification.json for full algorithm"
+      },
+      {
+        "step": 6,
         "name": "Handle Unverified",
         "description": "If verification fails, ask user",
         "actions": ["STOP if cannot verify", "ASK USER for confirmation", "Do NOT proceed with assumptions"]

@@ -173,14 +173,14 @@ cursor-agent-factory/
 ├── .cursor/
 │   ├── agents/                  # Factory's own agents (7 agents)
 │   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
-│   └── skills/                  # Factory's own skills (23 skills)
+│   └── skills/                  # Factory's own skills (25 skills)
 │       ├── agent-generation/
 │       ├── alignment-check/
 │       ├── axiom-selection/
 │       ├── cursorrules-generation/
 │       ├── enforcement-selection/
+│       ├── grounding-verification/
 │       ├── knowledge-generation/
-│       ├── mcp-selection/
 │       └── ...                       # + more skills
 ├── patterns/                    # Reusable patterns (50+ files)
 │   ├── axioms/                  # Layer 0 axiom definitions

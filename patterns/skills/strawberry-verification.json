@@ -4,170 +4,75 @@
     "patternName": "Strawberry Verification Skill",
     "category": "core",
     "stackAgnostic": true,
-    "description": "Native implementation of information-theoretic claim verification inspired by Pythea/Strawberry - runs within Cursor's LLM flow",
+    "description": "Factual claim verification using the strawberry profile of grounding-verification",
     "composable": true,
-    "version": "2.0.0"
+    "version": "3.0.0",
+    "extends": "grounding-verification",
+    "profile": "strawberry"
   },
   "credits": {
     "inspiration": "Leon Chlon (https://github.com/lchlon)",
     "project": "Pythea/Strawberry - https://github.com/leochlon/pythea",
-    "concept": "Information-theoretic approach to hallucination detection using evidence scrubbing and bit-budget analysis"
+    "concept": "Information-theoretic approach to hallucination detection using evidence scrubbing and bit-budget analysis",
+    "adaptation": "Cursor-native implementation using confidence delta comparison (logprobs not available)"
   },
   "frontmatter": {
     "name": "strawberry-verification",
-    "description": "Hallucination detection via two-pass verification. Runs within Cursor's LLM - no external API required.",
+    "description": "Hallucination detection via two-pass verification. Uses grounding-verification base pattern with strawberry profile.",
     "type": "skill",
+    "extends": "grounding-verification",
+    "profile": "strawberry",
     "inspiration": "Leon Chlon - https://github.com/leochlon/pythea"
   },
+  "profileOverrides": {
+    "description": "Strawberry-specific overrides to base grounding-verification pattern",
+    "note": "This profile is the default/canonical implementation of the original Pythea concept"
+  },
   "sections": {
-    "title": "Strawberry Verification Skill (Native)",
-    "introduction": "Provides mathematical verification of claims against evidence using information-theoretic principles inspired by Pythea/Strawberry. This native implementation runs within Cursor's LLM flow - no external API keys or MCP servers required.",
+    "title": "Strawberry Verification Skill",
+    "introduction": "Strawberry Verification is the canonical profile of the grounding-verification pattern. It detects 'procedural hallucinations' where the AI generates correct information but then ignores it in the final output. Named after the classic 'how many r's in strawberry' problem.",
     "concept": {
       "description": "Detects 'procedural hallucinations' where the AI generates correct information but then ignores it in the final output",
       "example": "Ask to count r's in 'strawberry'. AI writes 's-t-r-a-w-b-e-r-r-y', identifies each r, counts 3. Then outputs '2'.",
       "principle": "If removing specific identifiers from evidence doesn't change confidence, the evidence wasn't actually used - indicating confabulation"
     },
-    "verificationMethod": {
-      "description": "Two-pass verification to detect if evidence is actually being used",
-      "passes": [
-        {
-          "name": "Scrubbed Pass (p0)",
-          "description": "Evaluate claim with anonymized/scrubbed evidence",
-          "action": "Replace specific identifiers (names, numbers, technical terms) with placeholders",
-          "question": "Based on this scrubbed evidence, is the claim likely true?"
-        },
-        {
-          "name": "Full Pass (p1)",
-          "description": "Evaluate claim with complete evidence",
-          "action": "Use full evidence with all identifiers intact",
-          "question": "Based on this complete evidence, is the claim true?"
-        }
+    "relationship": {
+      "basePattern": "grounding-verification.json",
+      "profile": "strawberry",
+      "inheritance": [
+        "algorithm (two-pass confidence delta)",
+        "promptTemplates",
+        "responseSchema",
+        "errorHandling",
+        "samplingPolicy"
       ],
-      "calculation": {
-        "observedBits": "Information gained = how much more confident with full vs scrubbed evidence",
-        "requiredBits": "Information needed for the claim's specificity",
-        "budgetGap": "requiredBits - observedBits (negative = well-supported, positive = poorly-supported)"
-      }
+      "profileSpecific": [
+        "scrubbingRules for general identifiers",
+        "standard thresholds (delta >= 0.3 for VERIFIED)",
+        "trigger: on_medium_confidence"
+      ]
     },
     "whenToUse": [
       "After collecting evidence from grounding skills",
       "Before committing to implementation decisions",
       "When grounding confidence is MEDIUM",
       "For critical claims that could cause implementation failures",
-      "When multiple sources provide conflicting information"
+      "When multiple sources provide conflicting information",
+      "As the default profile when no domain-specific profile applies"
     ],
-    "process": [
-      {
-        "step": 1,
-        "name": "Collect Evidence Spans",
-        "description": "Gather all evidence from grounding skills",
-        "actions": [
-          "List each piece of evidence as a numbered span",
-          "Include source/provenance for each span",
-          "Format: S0, S1, S2, etc."
-        ],
-        "example": {
-          "S0": {"text": "Table users has field email of type VARCHAR(255)", "source": "Database documentation"},
-          "S1": {"text": "email field stores user email addresses", "source": "knowledge/schema-catalog.json"}
-        }
-      },
-      {
-        "step": 2,
-        "name": "Extract Claims",
-        "description": "Identify specific, falsifiable claims to verify",
-        "actions": [
-          "Break down complex statements into atomic claims",
-          "Each claim should be specific and verifiable",
-          "Link claims to evidence spans with citations"
-        ],
-        "example": {
-          "claim": "Table users contains field email with data type VARCHAR and length 255",
-          "citations": "[S0][S1]"
-        }
-      },
-      {
-        "step": 3,
-        "name": "Scrubbed Evidence Test",
-        "description": "Test if claim holds with anonymized evidence",
-        "actions": [
-          "Create scrubbed version: replace 'users' with '{TABLE}', 'email' with '{FIELD}', '255' with '{N}'",
-          "Ask: 'Given that {TABLE} has field {FIELD} of type CHAR({N}), is the original claim supported?'",
-          "Rate confidence: HIGH (0.9+), MEDIUM (0.6-0.9), LOW (<0.6)"
-        ],
-        "scrubbingRules": [
-          "Replace table/structure names with {TABLE}, {STRUCTURE}",
-          "Replace field names with {FIELD1}, {FIELD2}",
-          "Replace class names with {CLASS}",
-          "Replace specific numbers with {N}, {M}",
-          "Replace technical terms with generic placeholders"
-        ]
-      },
-      {
-        "step": 4,
-        "name": "Full Evidence Test",
-        "description": "Test claim with complete evidence",
-        "actions": [
-          "Use original evidence with all identifiers",
-          "Ask: 'Given that users has field email of type VARCHAR(255), is the claim verified?'",
-          "Rate confidence: HIGH (0.9+), MEDIUM (0.6-0.9), LOW (<0.6)"
-        ]
-      },
-      {
-        "step": 5,
-        "name": "Calculate Support Level",
-        "description": "Determine if evidence actually supports the claim",
-        "logic": {
-          "wellSupported": "Full evidence confidence >> Scrubbed evidence confidence",
-          "poorlySupported": "Full evidence confidence ≈ Scrubbed evidence confidence",
-          "confabulated": "High confidence with scrubbed evidence (evidence not actually needed)"
-        },
-        "interpretation": [
-          "If scrubbed test passes easily → Evidence may not be essential → WARNING",
-          "If scrubbed test fails but full test passes → Evidence is being used properly → OK",
-          "If both tests fail → Claim not supported → FAIL"
-        ]
-      },
-      {
-        "step": 6,
-        "name": "Assign Verification Status",
-        "description": "Categorize each claim",
-        "statuses": {
-          "VERIFIED": "Full evidence strongly supports, scrubbed evidence does not → Evidence essential",
-          "PLAUSIBLE": "Both tests show moderate support → Proceed with caution",
-          "SUSPICIOUS": "Scrubbed evidence works almost as well → May be confabulating",
-          "UNSUPPORTED": "Neither test supports claim → Do not proceed"
-        }
-      },
-      {
-        "step": 7,
-        "name": "Generate Verification Report",
-        "description": "Document all verification results",
-        "outputs": [
-          "Per-claim verification status",
-          "Evidence utilization assessment",
-          "Overall recommendation"
-        ]
-      },
-      {
-        "step": 8,
-        "name": "Determine Action",
-        "description": "Decide next steps based on results",
-        "decisionLogic": {
-          "PROCEED": "All claims VERIFIED or PLAUSIBLE",
-          "PROCEED_WITH_WARNINGS": "Some claims SUSPICIOUS but none UNSUPPORTED",
-          "STOP": "Any claim UNSUPPORTED",
-          "GATHER_MORE_EVIDENCE": "Claims SUSPICIOUS and more evidence available"
-        }
-      }
-    ],
-    "outputFormat": "### Strawberry Verification Report\n\n**Verification Method:** Native (Cursor LLM)\n**Claims Analyzed:** {COUNT}\n\n---\n\n#### Evidence Spans\n\n| Span | Content Summary | Source |\n|------|-----------------|--------|\n| S0 | {SUMMARY} | {SOURCE} |\n| S1 | {SUMMARY} | {SOURCE} |\n\n---\n\n#### Claim Verification\n\n| Claim | Scrubbed Test | Full Test | Status | Notes |\n|-------|---------------|-----------|--------|-------|\n| {CLAIM} | {PASS/FAIL} | {PASS/FAIL} | {STATUS} | {NOTES} |\n\n---\n\n#### Verification Analysis\n\n**Well-Supported Claims:** (evidence essential)\n- {CLAIM_LIST}\n\n**Suspicious Claims:** (evidence may not be essential)\n- {CLAIM_LIST}\n\n**Unsupported Claims:** (insufficient evidence)\n- {CLAIM_LIST}\n\n---\n\n### RECOMMENDATION: {PROCEED|PROCEED_WITH_WARNINGS|STOP|GATHER_MORE_EVIDENCE}\n\n**Rationale:** {RATIONALE}",
-    "importantRules": [
-      "ALWAYS perform both scrubbed and full evidence tests",
-      "If scrubbed test passes too easily, be SUSPICIOUS - the claim may be confabulated",
-      "If UNSUPPORTED, do NOT proceed - gather more evidence or ask user",
-      "Document the reasoning for each verification decision",
-      "This is a self-check mechanism - be honest about uncertainty"
-    ],
+    "process": {
+      "summary": "See grounding-verification.json for full algorithm",
+      "steps": [
+        "1. Collect Evidence Spans - gather all evidence with sources",
+        "2. Extract Claims - identify specific, falsifiable claims",
+        "3. Scrubbed Evidence Test - evaluate with anonymized evidence",
+        "4. Full Evidence Test - evaluate with complete evidence",
+        "5. Calculate Support Level - compute confidence delta",
+        "6. Assign Verification Status - VERIFIED/PLAUSIBLE/SUSPICIOUS/UNSUPPORTED",
+        "7. Generate Report - document all results",
+        "8. Determine Action - PROCEED/WARN/STOP/GATHER_MORE"
+      ]
+    },
     "exampleVerification": {
       "claim": "Table users has field email of type VARCHAR(255)",
       "evidence": {
@@ -175,20 +80,24 @@
         "S1": "From schema catalog: email column, type VARCHAR, max length 255"
       },
       "scrubbedEvidence": {
-        "S0": "From documentation: {TABLE}.{FIELD} stores {DESCRIPTION}, VARCHAR({N})",
-        "S1": "From catalog: {FIELD} column, type VARCHAR, max length {N}"
+        "S0": "From documentation: [TABLE_1].[FIELD_1] stores [STR_1], VARCHAR([NUM_1])",
+        "S1": "From catalog: [FIELD_1] column, type VARCHAR, max length [NUM_1]"
       },
       "scrubbedTest": {
-        "question": "Is '{TABLE} has field {FIELD} of type VARCHAR({N})' supported?",
-        "result": "FAIL - Without knowing the specific table/field, cannot verify",
-        "confidence": "LOW"
+        "verdict": "UNSURE",
+        "confidence": 0.3,
+        "reasoning": "Cannot verify specific table/field without identifiers"
       },
       "fullTest": {
-        "question": "Is 'users has field email of type VARCHAR(255)' supported?",
-        "result": "PASS - Both sources confirm users.email is VARCHAR(255)",
-        "confidence": "HIGH"
+        "verdict": "ENTAILED",
+        "confidence": 0.95,
+        "reasoning": "Both sources confirm users.email is VARCHAR(255)"
       },
-      "analysis": "Scrubbed test fails, full test passes → Evidence is essential → VERIFIED",
+      "analysis": {
+        "delta": 0.65,
+        "threshold": 0.3,
+        "result": "delta (0.65) >= threshold (0.3) → Evidence is essential"
+      },
       "status": "VERIFIED"
     },
     "confabulationIndicators": [
@@ -197,20 +106,14 @@
       "Confidence doesn't increase when adding specific identifiers",
       "Claim uses generic patterns that would work for any similar object"
     ],
-    "fallbackProcedures": [
-      {
-        "condition": "Claim is SUSPICIOUS",
-        "action": "Add warning to output. Consider: Is this claim actually derived from evidence, or is it a pattern guess?"
-      },
-      {
-        "condition": "Claim is UNSUPPORTED",
-        "action": "Do NOT proceed. Either gather more evidence or ask user: 'I cannot verify {CLAIM}. Please confirm.'"
-      },
-      {
-        "condition": "Evidence is ambiguous",
-        "action": "Mark as PLAUSIBLE and document the ambiguity"
-      }
-    ]
+    "importantRules": [
+      "ALWAYS perform both scrubbed and full evidence tests",
+      "If scrubbed test passes too easily, be SUSPICIOUS - the claim may be confabulated",
+      "If UNSUPPORTED, do NOT proceed - gather more evidence or ask user",
+      "Document the reasoning for each verification decision",
+      "This is a self-check mechanism - be honest about uncertainty"
+    ],
+    "outputFormat": "### Strawberry Verification Report\n\n**Profile:** strawberry\n**Claims Analyzed:** {COUNT}\n\n---\n\n#### Claim Verification\n\n| Claim | Scrubbed Conf | Full Conf | Delta | Status |\n|-------|---------------|-----------|-------|--------|\n| {CLAIM} | {0.XX} | {0.XX} | {0.XX} | {STATUS} |\n\n---\n\n### RECOMMENDATION: {PROCEED|PROCEED_WITH_WARNINGS|STOP|GATHER_MORE_EVIDENCE}\n\n**Rationale:** {RATIONALE}"
   },
   "variables": [
     {"name": "{CLAIMS}", "description": "List of claims to verify", "required": true},

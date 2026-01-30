@@ -204,7 +204,8 @@ Skill patterns define reusable capabilities that agents can invoke. Skills are c
 
 **Pattern ID**: `grounding`  
 **Category**: Core  
-**Purpose**: Verify data structures and assumptions before implementation
+**Purpose**: Verify data structures and assumptions before implementation  
+**Verification Profile**: `data` (strict thresholds)
 
 **When to Use**:
 - When working with database tables or data structures
@@ -217,7 +218,13 @@ Skill patterns define reusable capabilities that agents can invoke. Skills are c
 2. Search external documentation if not cached
 3. Verify critical fields (key fields, data types, relationships)
 4. Document verification results in table format
-5. Handle unverified: STOP if cannot verify, ASK USER for confirmation
+5. **Run Grounding Verification** (profile: data, trigger: on_medium_confidence)
+6. Handle unverified: STOP if cannot verify, ASK USER for confirmation
+
+**Verification Integration**:
+- Uses `grounding-verification` with `data` profile
+- Strict thresholds: delta >= 0.35 for VERIFIED
+- Triggers on MEDIUM confidence results
 
 **Output Format**: Data Model Verification table with structure, field, verified status, source, and notes.
 
@@ -233,11 +240,73 @@ Skill patterns define reusable capabilities that agents can invoke. Skills are c
 
 ---
 
+#### Grounding Verification Skill (Base Pattern)
+
+**Pattern ID**: `grounding-verification`  
+**Category**: Core  
+**Purpose**: Universal two-pass verification for all LLM grounding scenarios
+
+**Core Principle**:
+> If removing specific identifiers from evidence doesn't significantly change LLM confidence, the evidence may not have been used - indicating potential confabulation.
+
+**Available Profiles**:
+
+| Profile | Domain | Thresholds | Default Trigger |
+|---------|--------|------------|-----------------|
+| `strawberry` | General factual claims | Standard (delta >= 0.3) | on_medium_confidence |
+| `code` | Code structure, APIs | Standard (delta >= 0.3) | on_medium_confidence |
+| `documentation` | External docs, API refs | Relaxed (delta >= 0.25) | on_conflict |
+| `data` | Database schemas, models | Strict (delta >= 0.35) | on_medium_confidence |
+| `security` | Security-critical claims | Very strict (delta >= 0.4) | always |
+
+**Two-Pass Algorithm**:
+1. **Scrubbed Pass**: Replace identifiers with typed placeholders (e.g., `[TABLE_1]`, `[FIELD_1]`)
+2. **Full Pass**: Use complete evidence with all identifiers
+3. **Calculate Delta**: `delta = full_confidence - scrubbed_confidence`
+4. **Determine Status**: Compare delta against profile thresholds
+
+**Verification Statuses**:
+- **VERIFIED**: Evidence essential (high delta) → Proceed with confidence
+- **PLAUSIBLE**: Evidence helpful (medium delta) → Proceed with caution
+- **SUSPICIOUS**: Evidence may not be used (low delta) → Add warning, investigate
+- **UNSUPPORTED**: Insufficient evidence → STOP, gather more or ask user
+
+**Trigger Options**:
+- `always`: Every grounding result (high cost, use for security)
+- `on_medium_confidence`: When initial confidence is MEDIUM (default)
+- `on_critical_claim`: For claims marked critical
+- `on_conflict`: When sources conflict
+- `manual`: Only when explicitly called
+
+**Skill Integration** (opt-in via frontmatter):
+```json
+{
+  "verification": {
+    "enabled": true,
+    "profile": "data",
+    "trigger": "on_medium_confidence"
+  }
+}
+```
+
+**Credits**: Inspired by [Leon Chlon's Pythea/Strawberry](https://github.com/leochlon/pythea)
+
+---
+
 #### Strawberry Verification Skill
 
 **Pattern ID**: `strawberry-verification`  
 **Category**: Core  
-**Purpose**: Native implementation of information-theoretic claim verification inspired by Pythea/Strawberry
+**Extends**: `grounding-verification` (profile: strawberry)  
+**Purpose**: Factual claim verification - the canonical profile of grounding-verification
+
+**Relationship to Base**:
+- Extends `grounding-verification.json` with `strawberry` profile
+- Inherits algorithm, response schema, error handling from base
+- Uses standard thresholds (delta >= 0.3 for VERIFIED)
+
+**The Strawberry Problem**:
+Ask an LLM: "How many r's are in 'strawberry'?" The LLM might write out "s-t-r-a-w-b-e-r-r-y", correctly count 3 r's, then output "2". This is a **procedural hallucination** - correct intermediate steps ignored in final output.
 
 **When to Use**:
 - After collecting evidence from grounding skills
@@ -245,28 +314,27 @@ Skill patterns define reusable capabilities that agents can invoke. Skills are c
 - When grounding confidence is MEDIUM
 - For critical claims that could cause implementation failures
 - When multiple sources provide conflicting information
-
-**Verification Method**: Two-pass verification
-1. **Scrubbed Pass (p0)**: Evaluate claim with anonymized/scrubbed evidence
-2. **Full Pass (p1)**: Evaluate claim with complete evidence
+- As the default profile when no domain-specific profile applies
 
 **Process Steps**:
 1. Collect evidence spans (numbered with sources)
 2. Extract claims (atomic, falsifiable, with citations)
 3. Scrubbed evidence test (replace identifiers with placeholders)
 4. Full evidence test (use original evidence)
-5. Calculate support level (well-supported vs poorly-supported)
+5. Calculate confidence delta
 6. Assign verification status (VERIFIED, PLAUSIBLE, SUSPICIOUS, UNSUPPORTED)
 7. Generate verification report
 8. Determine action (PROCEED, PROCEED_WITH_WARNINGS, STOP, GATHER_MORE_EVIDENCE)
 
-**Output Format**: Verification report with evidence spans, claim verification table, analysis of well-supported/suspicious/unsupported claims, and recommendation.
+**Output Format**: Verification report with evidence spans, claim verification table with confidence delta, and recommendation.
 
 **Important Rules**:
 - ALWAYS perform both scrubbed and full evidence tests
-- If scrubbed test passes too easily, be SUSPICIOUS
+- If scrubbed test passes too easily (low delta), be SUSPICIOUS
 - If UNSUPPORTED, do NOT proceed - gather more evidence or ask user
 - Document reasoning for each verification decision
+
+**Credits**: [Leon Chlon's Pythea/Strawberry](https://github.com/leochlon/pythea)
 
 ---
 
