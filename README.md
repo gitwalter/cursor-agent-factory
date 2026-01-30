@@ -182,7 +182,7 @@ cursor-agent-factory/
 │       ├── knowledge-generation/
 │       ├── mcp-selection/
 │       └── ...                       # + more skills
-├── patterns/                    # Reusable patterns (56 files)
+├── patterns/                    # Reusable patterns (58 files)
 │   ├── axioms/                  # Layer 0 axiom definitions
 │   ├── principles/              # Layer 2 principle patterns
 │   ├── methodologies/           # Layer 3 methodology templates
@@ -211,9 +211,9 @@ cursor-agent-factory/
 │   ├── sap-rap/
 │   ├── sap-cap/
 │   └── sap-cpi-pi/
-├── knowledge/                   # Reference data (45 files)
+├── knowledge/                   # Reference data (47 files)
 │   └── *.json                   # Stack, workflow, MCP, security, AI patterns
-├── templates/                   # Code and document templates (184 files)
+├── templates/                   # Code and document templates (194 files)
 │   ├── factory/                 # Factory templates (cursorrules, PURPOSE.md, etc.)
 │   ├── ai/                      # AI agent templates
 │   ├── python/                  # Python templates (FastAPI, Streamlit)
