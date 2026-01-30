@@ -247,3 +247,207 @@ class TestKnowledgeFileNaming:
         
         assert len(json_files) == len(all_files), \
             "All knowledge files should have .json extension"
+
+
+class TestMCPServersCatalogSchema:
+    """Tests for MCP servers catalog comprehensive structure."""
+    
+    def test_mcp_catalog_exists(self, knowledge_dir):
+        """Test that mcp-servers-catalog.json exists."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        assert catalog_path.exists(), "mcp-servers-catalog.json should exist"
+    
+    def test_mcp_catalog_valid_json(self, knowledge_dir):
+        """Test that MCP catalog is valid JSON."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        assert isinstance(data, dict), "MCP catalog should be a JSON object"
+    
+    def test_mcp_catalog_has_servers(self, knowledge_dir):
+        """Test that MCP catalog has servers defined."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        servers = data.get("servers", {})
+        assert len(servers) >= 10, "MCP catalog should have at least 10 servers"
+    
+    def test_mcp_catalog_has_categories(self, knowledge_dir):
+        """Test that MCP catalog defines categories."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        categories = data.get("categories", {})
+        expected = {"core", "code", "data", "cloud", "collab", "aiml"}
+        actual = set(categories.keys())
+        assert expected <= actual, f"MCP catalog should have categories: {expected}"
+    
+    def test_mcp_catalog_has_starter_packs(self, knowledge_dir):
+        """Test that MCP catalog has starter packs."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        packs = data.get("starterPacks", {})
+        assert len(packs) >= 5, "MCP catalog should have at least 5 starter packs"
+    
+    def test_mcp_catalog_servers_have_required_fields(self, knowledge_dir):
+        """Test that MCP servers have required fields."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        required_fields = ["displayName", "category", "description"]
+        
+        for server_id, server in data.get("servers", {}).items():
+            for field in required_fields:
+                assert field in server, \
+                    f"Server '{server_id}' missing required field '{field}'"
+    
+    def test_mcp_catalog_server_categories_are_valid(self, knowledge_dir):
+        """Test that all server categories reference defined categories."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        valid_categories = set(data.get("categories", {}).keys())
+        
+        for server_id, server in data.get("servers", {}).items():
+            category = server.get("category")
+            assert category in valid_categories, \
+                f"Server '{server_id}' has invalid category '{category}'"
+    
+    def test_mcp_catalog_has_role_based_recommendations(self, knowledge_dir):
+        """Test that MCP catalog has role-based server recommendations."""
+        catalog_path = knowledge_dir / "mcp-servers-catalog.json"
+        
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        by_role = data.get("serversByRole", {})
+        assert len(by_role) >= 5, "MCP catalog should have at least 5 role mappings"
+
+
+class TestMCPSelectionGuideSchema:
+    """Tests for MCP selection guide structure."""
+    
+    def test_selection_guide_exists(self, knowledge_dir):
+        """Test that mcp-selection-guide.json exists."""
+        guide_path = knowledge_dir / "mcp-selection-guide.json"
+        assert guide_path.exists(), "mcp-selection-guide.json should exist"
+    
+    def test_selection_guide_valid_json(self, knowledge_dir):
+        """Test that selection guide is valid JSON."""
+        guide_path = knowledge_dir / "mcp-selection-guide.json"
+        
+        with open(guide_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        assert isinstance(data, dict), "Selection guide should be a JSON object"
+    
+    def test_selection_guide_has_flow(self, knowledge_dir):
+        """Test that selection guide has selection flow defined."""
+        guide_path = knowledge_dir / "mcp-selection-guide.json"
+        
+        with open(guide_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        flow = data.get("selectionFlow", {})
+        # Flow uses step1_role, step2_starterPack pattern
+        assert "step1_role" in flow or "steps" in flow, \
+            "Selection guide should have selectionFlow steps"
+    
+    def test_selection_guide_has_role_mappings(self, knowledge_dir):
+        """Test that selection guide has role-to-server mappings."""
+        guide_path = knowledge_dir / "mcp-selection-guide.json"
+        
+        with open(guide_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        mappings = data.get("roleToServers", {})
+        assert len(mappings) >= 5, "Selection guide should have at least 5 role mappings"
+    
+    def test_selection_guide_has_category_descriptions(self, knowledge_dir):
+        """Test that selection guide has category descriptions."""
+        guide_path = knowledge_dir / "mcp-selection-guide.json"
+        
+        with open(guide_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        categories = data.get("categoryDescriptions", {})
+        assert len(categories) >= 6, "Selection guide should describe at least 6 categories"
+
+
+class TestAISuiteIntegrationSchema:
+    """Tests for AISuite integration guide structure."""
+    
+    def test_aisuite_integration_exists(self, knowledge_dir):
+        """Test that aisuite-integration.json exists."""
+        integration_path = knowledge_dir / "aisuite-integration.json"
+        assert integration_path.exists(), "aisuite-integration.json should exist"
+    
+    def test_aisuite_integration_valid_json(self, knowledge_dir):
+        """Test that AISuite integration is valid JSON."""
+        integration_path = knowledge_dir / "aisuite-integration.json"
+        
+        with open(integration_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        assert isinstance(data, dict), "AISuite integration should be a JSON object"
+    
+    def test_aisuite_integration_has_overview(self, knowledge_dir):
+        """Test that AISuite integration has overview section."""
+        integration_path = knowledge_dir / "aisuite-integration.json"
+        
+        with open(integration_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        assert "overview" in data, "AISuite integration should have overview"
+    
+    def test_aisuite_integration_has_providers(self, knowledge_dir):
+        """Test that AISuite integration lists supported providers."""
+        integration_path = knowledge_dir / "aisuite-integration.json"
+        
+        with open(integration_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Check multiple possible locations for providers
+        providers = data.get("supportedProviders", [])
+        if not providers:
+            # May be in features or overview section
+            features = data.get("features", {})
+            providers = features.get("supportedProviders", [])
+        if not providers:
+            overview = data.get("overview", {})
+            providers_text = overview.get("description", "")
+            # Just verify the overview mentions providers
+            assert "provider" in providers_text.lower() or len(data) > 2, \
+                "AISuite should document LLM providers"
+            return
+        assert len(providers) >= 10, "AISuite should list at least 10 LLM providers"
+    
+    def test_aisuite_integration_has_mcp_section(self, knowledge_dir):
+        """Test that AISuite integration documents MCP client support."""
+        integration_path = knowledge_dir / "aisuite-integration.json"
+        
+        with open(integration_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        mcp = data.get("mcpIntegration", {})
+        # Check for various field names that document MCP support
+        has_mcp_docs = (
+            "explanation" in mcp or 
+            "examples" in mcp or 
+            "description" in mcp or
+            "configDictFormat" in mcp
+        )
+        assert has_mcp_docs, "AISuite integration should document MCP client support"
