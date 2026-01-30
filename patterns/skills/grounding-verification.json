@@ -20,6 +20,64 @@
     "type": "skill",
     "composable": true
   },
+  "sections": {
+    "title": "Grounding Verification Skill (Base Pattern)",
+    "introduction": "Universal two-pass verification for all LLM grounding scenarios. Detects when the LLM may be confabulating by comparing confidence between scrubbed and full evidence passes. Skills opt-in by selecting a verification profile matching their domain.",
+    "concept": {
+      "description": "If removing specific identifiers from evidence doesn't significantly change LLM confidence, the evidence may not have been used - indicating potential confabulation.",
+      "principle": "Confidence delta comparison as a pragmatic approximation of information-theoretic verification (since logprobs are unavailable in Cursor)"
+    },
+    "whenToUse": [
+      "After collecting evidence from any grounding skill",
+      "Before committing to implementation decisions",
+      "When grounding confidence is MEDIUM",
+      "For critical claims that could cause implementation failures",
+      "When multiple sources provide conflicting information"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "name": "Collect Evidence Spans",
+        "description": "Gather all evidence with sources"
+      },
+      {
+        "step": 2,
+        "name": "Extract Claims",
+        "description": "Identify specific, falsifiable claims to verify"
+      },
+      {
+        "step": 3,
+        "name": "Scrubbed Evidence Test",
+        "description": "Evaluate claim with anonymized evidence (identifiers replaced by placeholders)"
+      },
+      {
+        "step": 4,
+        "name": "Full Evidence Test",
+        "description": "Evaluate claim with complete evidence"
+      },
+      {
+        "step": 5,
+        "name": "Calculate Confidence Delta",
+        "description": "delta = full_confidence - scrubbed_confidence"
+      },
+      {
+        "step": 6,
+        "name": "Assign Verification Status",
+        "description": "VERIFIED/PLAUSIBLE/SUSPICIOUS/UNSUPPORTED based on delta thresholds"
+      },
+      {
+        "step": 7,
+        "name": "Generate Report",
+        "description": "Document results and recommendation"
+      }
+    ],
+    "importantRules": [
+      "ALWAYS perform both scrubbed and full evidence tests",
+      "If scrubbed test passes too easily (low delta), be SUSPICIOUS",
+      "If UNSUPPORTED, do NOT proceed - gather more evidence or ask user",
+      "Select the appropriate profile for your domain (strawberry, code, documentation, data, security)"
+    ]
+  },
   "algorithm": {
     "name": "Two-Pass Confidence Delta",
     "method": "confidence_delta",
