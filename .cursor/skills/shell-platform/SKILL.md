@@ -98,6 +98,36 @@ git commit -m "feat: Short title" -m "Longer description of the change." -m "Add
 
 This works on all platforms and produces proper multi-paragraph commit messages.
 
+## Tool Paths (Windows)
+
+Standard tool locations for this development environment:
+
+| Tool | Path | Usage |
+|------|------|-------|
+| **GitHub CLI** | `C:\App\gh\bin\gh.exe` | GitHub operations (issues, PRs, actions) |
+| **Anaconda Python** | `C:\App\Anaconda\python.exe` | Python execution |
+| **Anaconda Conda** | `C:\App\Anaconda\Scripts\conda.exe` | Environment management |
+| **Anaconda Pip** | `C:\App\Anaconda\Scripts\pip.exe` | Package installation |
+
+### GitHub CLI Examples
+
+```powershell
+# List recent workflow runs
+C:\App\gh\bin\gh.exe run list --limit 5
+
+# View specific run details
+C:\App\gh\bin\gh.exe run view <run-id> --json jobs
+
+# Check job status
+C:\App\gh\bin\gh.exe run view <run-id> --json jobs --jq ".jobs[] | {name, conclusion}"
+
+# Create a pull request
+C:\App\gh\bin\gh.exe pr create --title "Title" --body "Description"
+
+# List open issues
+C:\App\gh\bin\gh.exe issue list
+```
+
 ## Important Rules
 
 1. **Always check platform** before using shell-specific syntax
@@ -105,3 +135,4 @@ This works on all platforms and produces proper multi-paragraph commit messages.
 3. **Use multiple -m flags** for multi-line git commits
 4. **Test command syntax** matches the target shell
 5. **Prefer simple commands** that work across platforms
+6. **Use full tool paths** on Windows to avoid PATH issues
