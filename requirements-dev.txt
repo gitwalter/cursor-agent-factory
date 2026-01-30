@@ -4,6 +4,8 @@
 # Testing framework
 pytest>=7.0.0
 pytest-cov>=4.0.0
+pytest-xdist>=3.5.0  # Parallel test execution
+pytest-timeout>=2.2.0  # Test timeout enforcement
 
 # Schema validation for JSON files
 jsonschema>=4.17.0

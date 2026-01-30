@@ -24,6 +24,29 @@
     "verification": {
       "description": "Claim and hallucination verification skills",
       "implementedInFactory": true
+    },
+    "ai-development": {
+      "description": "AI agent development, prompt engineering, and multi-agent coordination skills",
+      "implementedInFactory": true,
+      "note": "Skills for building LLM-powered agents with LangChain, LangGraph, CrewAI, and similar frameworks"
+    },
+    "sap-rap": {
+      "description": "SAP RESTful ABAP Programming (RAP) development skills",
+      "implementedInFactory": false,
+      "targetStack": "sap-abap",
+      "note": "Skills for building RAP business objects with behavior definitions, draft handling, and Fiori integration"
+    },
+    "sap-cap": {
+      "description": "SAP Cloud Application Programming Model (CAP) development skills",
+      "implementedInFactory": false,
+      "targetStack": "sap-cap",
+      "note": "Skills for building CAP applications with CDS, service handlers, and BTP deployment"
+    },
+    "sap-integration": {
+      "description": "SAP integration development skills for CPI/PI",
+      "implementedInFactory": false,
+      "targetStack": "sap-cpi-pi",
+      "note": "Skills for building iFlows, Groovy scripts, and B2B integrations"
     }
   },
   "skills": {
@@ -353,6 +376,287 @@
         "Before Fiori development",
         "When configuring launchpad"
       ]
+    },
+    "prompt-engineering": {
+      "id": "prompt-engineering",
+      "name": "Prompt Engineering",
+      "category": "ai-development",
+      "stackAgnostic": true,
+      "description": "Systematic approach to designing, testing, and optimizing prompts for LLM-powered applications",
+      "factoryPattern": "patterns/skills/prompt-engineering.json",
+      "whenToUse": [
+        "When creating new agent prompts",
+        "When improving agent response quality",
+        "When debugging agent behavior issues",
+        "When optimizing for cost or latency"
+      ],
+      "techniques": ["chain-of-thought", "few-shot-learning", "structured-outputs", "role-prompting", "temperature-tuning"]
+    },
+    "agent-coordination": {
+      "id": "agent-coordination",
+      "name": "Agent Coordination",
+      "category": "ai-development",
+      "stackAgnostic": true,
+      "description": "Patterns for orchestrating multiple AI agents including supervisor-worker, hierarchical, and collaborative topologies",
+      "factoryPattern": "patterns/skills/agent-coordination.json",
+      "whenToUse": [
+        "When building multi-agent systems",
+        "When implementing supervisor-worker patterns",
+        "When designing agent handoffs",
+        "When coordinating parallel agent execution"
+      ],
+      "patterns": ["supervisor-worker", "hierarchical", "collaborative", "sequential", "distributed"],
+      "frameworks": ["LangGraph", "CrewAI", "AutoGen"]
+    },
+    "task-decomposition": {
+      "id": "task-decomposition",
+      "name": "Task Decomposition",
+      "category": "ai-development",
+      "stackAgnostic": true,
+      "description": "Breaking complex tasks into manageable subtasks for distribution across specialized agents",
+      "factoryPattern": "patterns/skills/task-decomposition.json",
+      "whenToUse": [
+        "When a task is too complex for a single agent",
+        "When multiple specializations are needed",
+        "When parallel execution would improve performance",
+        "When building task pipelines"
+      ],
+      "strategies": ["hierarchical-decomposition", "functional-decomposition", "data-parallel", "pipeline"]
+    },
+    "consensus-building": {
+      "id": "consensus-building",
+      "name": "Consensus Building",
+      "category": "ai-development",
+      "stackAgnostic": true,
+      "description": "Protocols for multiple agents to reach agreement through voting, debate, or synthesis",
+      "factoryPattern": "patterns/skills/consensus-building.json",
+      "whenToUse": [
+        "When multiple agents have different perspectives",
+        "When high-confidence decisions are needed",
+        "When implementing review processes",
+        "When aggregating multi-agent outputs"
+      ],
+      "mechanisms": ["majority-voting", "weighted-voting", "debate-synthesis", "iterative-refinement"]
+    },
+    "rap-behavior-design": {
+      "id": "rap-behavior-design",
+      "name": "RAP Behavior Design",
+      "category": "sap-rap",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Design and implementation of RAP behavior definitions including validations, determinations, actions, and numbering",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["behavior definitions", "validations", "determinations", "actions", "numbering"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When creating new RAP business objects",
+        "When implementing business logic in behavior definitions",
+        "When designing entity-level constraints"
+      ],
+      "patterns": ["managed-scenario", "unmanaged-scenario", "projection-scenario", "draft-scenario"]
+    },
+    "rap-draft-handling": {
+      "id": "rap-draft-handling",
+      "name": "RAP Draft Handling",
+      "category": "sap-rap",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "Implementation of draft-enabled business objects with edit, activate, discard, and resume actions",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["draft tables", "draft behavior", "draft actions", "draft determinations"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When building Fiori applications with editing capabilities",
+        "When implementing complex editing scenarios",
+        "When users need to save incomplete work"
+      ],
+      "draftActions": ["Edit", "Activate", "Discard", "Resume", "Prepare"]
+    },
+    "rap-fiori-annotations": {
+      "id": "rap-fiori-annotations",
+      "name": "RAP Fiori Annotations",
+      "category": "sap-rap",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "CDS annotations for Fiori Elements including @UI, @Common, @Capabilities for list reports and object pages",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["@UI annotations", "@Common annotations", "@Capabilities annotations", "metadata extensions"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When building Fiori Elements applications",
+        "When configuring list reports and object pages",
+        "When adding search, filter, and value helps"
+      ],
+      "annotationTypes": ["@UI.lineItem", "@UI.identification", "@UI.facet", "@UI.fieldGroup", "@Common.Text", "@Common.ValueList"]
+    },
+    "rap-testing": {
+      "id": "rap-testing",
+      "name": "RAP Testing",
+      "category": "sap-rap",
+      "stackAgnostic": false,
+      "targetStack": "sap-abap",
+      "description": "ABAP Unit testing for RAP behavior implementations using EML and test doubles",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-sap-development-workflow",
+      "artifacts": ["test classes", "test methods", "test doubles", "EML test operations"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When implementing TDD for RAP",
+        "When testing validations and determinations",
+        "When testing custom actions",
+        "When building regression test suites"
+      ],
+      "testPatterns": ["given-when-then", "eml-testing", "mock-entities", "test-isolation"]
+    },
+    "cap-cds-modeling": {
+      "id": "cap-cds-modeling",
+      "name": "CAP CDS Modeling",
+      "category": "sap-cap",
+      "stackAgnostic": false,
+      "targetStack": "sap-cap",
+      "description": "CDS entity and service modeling patterns for SAP CAP including associations, compositions, and aspects",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cap-development-workflow",
+      "artifacts": ["CDS entities", "associations", "compositions", "aspects", "type definitions", "service definitions"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When designing CAP data models",
+        "When creating service definitions",
+        "When implementing reusable aspects"
+      ],
+      "patterns": ["entity-modeling", "managed-associations", "compositions", "projections", "namespace-organization"]
+    },
+    "cap-service-handlers": {
+      "id": "cap-service-handlers",
+      "name": "CAP Service Handlers",
+      "category": "sap-cap",
+      "stackAgnostic": false,
+      "targetStack": "sap-cap",
+      "description": "Service handler implementation patterns for CAP including before, on, and after handlers for CRUD and custom actions",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cap-development-workflow",
+      "artifacts": ["before handlers", "on handlers", "after handlers", "action handlers", "function handlers"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When implementing business logic in CAP services",
+        "When customizing CRUD operations",
+        "When implementing custom actions and functions"
+      ],
+      "handlerTypes": ["before-create", "before-update", "on-read", "after-create", "on-action", "on-function"]
+    },
+    "cap-fiori-integration": {
+      "id": "cap-fiori-integration",
+      "name": "CAP Fiori Integration",
+      "category": "sap-cap",
+      "stackAgnostic": false,
+      "targetStack": "sap-cap",
+      "description": "Fiori Elements integration with CAP using CDS annotations for list reports, object pages, and value helps",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cap-development-workflow",
+      "artifacts": ["annotation files", "metadata extensions", "Fiori apps", "value lists"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When building Fiori Elements on CAP",
+        "When adding annotations for UI rendering",
+        "When configuring OData capabilities"
+      ],
+      "annotationCategories": ["@UI annotations", "@Common annotations", "@Capabilities annotations"]
+    },
+    "cap-deployment": {
+      "id": "cap-deployment",
+      "name": "CAP Deployment",
+      "category": "sap-cap",
+      "stackAgnostic": false,
+      "targetStack": "sap-cap",
+      "description": "MTA-based deployment of CAP applications to SAP BTP including HANA Cloud, XSUAA, and service bindings",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cap-development-workflow",
+      "artifacts": ["mta.yaml", "xs-security.json", "package.json", "service bindings", "destinations"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When deploying CAP to BTP Cloud Foundry",
+        "When configuring XSUAA authentication",
+        "When setting up HANA Cloud bindings"
+      ],
+      "deploymentSteps": ["mta-build", "cf-deploy", "service-binding", "destination-config"]
+    },
+    "iflow-development": {
+      "id": "iflow-development",
+      "name": "iFlow Development",
+      "category": "sap-integration",
+      "stackAgnostic": false,
+      "targetStack": "sap-cpi-pi",
+      "description": "Complete integration flow development workflow for SAP CPI including design, implementation, testing, and deployment",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cpi-development-workflow",
+      "artifacts": ["iFlow definitions", "sender channels", "receiver channels", "content modifiers", "routers"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When creating new integration flows",
+        "When designing message routing patterns",
+        "When implementing integration scenarios"
+      ],
+      "patterns": ["point-to-point", "content-based-router", "splitter-aggregator", "exception-subprocess"]
+    },
+    "groovy-scripting": {
+      "id": "groovy-scripting",
+      "name": "Groovy Scripting",
+      "category": "sap-integration",
+      "stackAgnostic": false,
+      "targetStack": "sap-cpi-pi",
+      "description": "Groovy script development for SAP CPI including message processing, XML/JSON manipulation, and error handling",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cpi-development-workflow",
+      "artifacts": ["groovy scripts", "message processors", "logging scripts", "validation scripts"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When processing messages in CPI",
+        "When implementing custom transformations",
+        "When adding logging and debugging",
+        "When accessing credentials securely"
+      ],
+      "patterns": ["xml-parsing", "json-parsing", "property-access", "secure-parameter-access", "message-logging"]
+    },
+    "error-handling": {
+      "id": "error-handling",
+      "name": "Error Handling",
+      "category": "sap-integration",
+      "stackAgnostic": false,
+      "targetStack": "sap-cpi-pi",
+      "description": "Exception handling patterns for SAP CPI including exception subprocesses, retry logic, and alerting",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cpi-development-workflow",
+      "artifacts": ["exception subprocesses", "error handlers", "retry configurations", "alert rules"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When implementing fault tolerance",
+        "When designing retry strategies",
+        "When setting up monitoring and alerting",
+        "When handling transient failures"
+      ],
+      "patterns": ["exception-subprocess", "retry-pattern", "circuit-breaker", "dead-letter-queue", "error-notification"]
+    },
+    "b2b-integration": {
+      "id": "b2b-integration",
+      "name": "B2B Integration",
+      "category": "sap-integration",
+      "stackAgnostic": false,
+      "targetStack": "sap-cpi-pi",
+      "description": "Business-to-business integration patterns for EDI, IDoc, AS2, and partner management in SAP CPI",
+      "factoryPattern": null,
+      "implementationRepo": "cursor-cpi-development-workflow",
+      "artifacts": ["partner profiles", "EDI mappings", "IDoc adapters", "AS2 configurations"],
+      "mcpServers": ["sap-documentation"],
+      "whenToUse": [
+        "When implementing EDI integrations",
+        "When processing IDoc messages",
+        "When configuring AS2 trading partners",
+        "When managing partner agreements"
+      ],
+      "standards": ["EDIFACT", "X12", "IDoc", "AS2", "cXML"]
     }
   },
   "skillsByStack": {
@@ -365,6 +669,12 @@
       "code-templates",
       "security-audit",
       "code-review"
+    ],
+    "ai-development": [
+      "prompt-engineering",
+      "agent-coordination",
+      "task-decomposition",
+      "consensus-building"
     ],
     "sap-abap": [
       "sap-grounding",
@@ -380,6 +690,24 @@
       "mapping-grounding",
       "existence-grounding",
       "fiori-grounding"
+    ],
+    "sap-rap": [
+      "rap-behavior-design",
+      "rap-draft-handling",
+      "rap-fiori-annotations",
+      "rap-testing"
+    ],
+    "sap-cap": [
+      "cap-cds-modeling",
+      "cap-service-handlers",
+      "cap-fiori-integration",
+      "cap-deployment"
+    ],
+    "sap-cpi-pi": [
+      "iflow-development",
+      "groovy-scripting",
+      "error-handling",
+      "b2b-integration"
     ]
   },
   "usage": {

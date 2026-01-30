@@ -170,7 +170,7 @@ cursor-agent-factory/
 ├── .cursor/
 │   ├── agents/                  # Factory's own agents (7 agents)
 │   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
-│   └── skills/                  # Factory's own skills (19 skills)
+│   └── skills/                  # Factory's own skills (20 skills)
 │       ├── agent-generation/
 │       ├── alignment-check/
 │       ├── axiom-selection/
@@ -179,7 +179,7 @@ cursor-agent-factory/
 │       ├── knowledge-generation/
 │       ├── methodology-selection/
 │       └── ...                       # + more skills
-├── patterns/                    # Reusable patterns (52 files)
+├── patterns/                    # Reusable patterns (56 files)
 │   ├── axioms/                  # Layer 0 axiom definitions
 │   ├── principles/              # Layer 2 principle patterns
 │   ├── methodologies/           # Layer 3 methodology templates

@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **AI Development Skills** - Four new skill patterns for building LLM-powered agents
+  - `prompt-engineering` - Systematic prompt design, testing, and optimization
+  - `agent-coordination` - Multi-agent orchestration (supervisor-worker, hierarchical, collaborative)
+  - `task-decomposition` - Breaking complex tasks for specialized agents
+  - `consensus-building` - Multi-agent voting, debate, and synthesis protocols
+
+- **SAP Skill Categories** - 12 new SAP-specific skills registered in skill catalog
+  - SAP RAP: behavior-design, draft-handling, fiori-annotations, testing
+  - SAP CAP: cds-modeling, service-handlers, fiori-integration, deployment
+  - SAP CPI/PI: iflow-development, groovy-scripting, error-handling, b2b-integration
+
+- **Intelligent Test Packaging** - Fast error detection in CI pipeline
+  - 3-stage pipeline: fast tests first, then integration, then coverage
+  - Parallel test execution with pytest-xdist
+  - Auto-applied markers (fast/medium/slow) based on test location
+  - `pipeline-error-fix` skill for systematic debugging
+
 - **Zero-Config Quick Start** - See the factory in action in under 5 minutes
   - New `--quickstart` CLI command for instant demo project generation
   - `--quickstart-blueprint` option to use different blueprints

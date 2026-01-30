@@ -3,6 +3,17 @@ Shared pytest fixtures for Cursor Agent Factory tests.
 
 This module provides common fixtures used across unit, integration,
 and validation tests.
+
+Test Markers for Intelligent Packaging:
+- @pytest.mark.fast: Tests < 1 second (unit, validation)
+- @pytest.mark.medium: Tests 1-10 seconds (simple generation)
+- @pytest.mark.slow: Tests > 10 seconds (CLI, quickstart)
+- @pytest.mark.integration: Integration tests
+- @pytest.mark.unit: Unit tests
+- @pytest.mark.validation: Schema validation tests
+- @pytest.mark.cli: CLI subprocess tests
+- @pytest.mark.generation: File generation tests
+- @pytest.mark.quickstart: Full quickstart workflow tests
 """
 
 import json
@@ -11,6 +22,46 @@ from pathlib import Path
 from typing import Any, Dict
 
 import pytest
+
+
+def pytest_collection_modifyitems(config, items):
+    """
+    Automatically apply markers based on test location and name.
+    
+    This enables intelligent test packaging for fast error detection:
+    1. Unit tests run first (fast)
+    2. Validation tests run second (fast)
+    3. Integration tests run last (slow)
+    
+    Within integration, quickstart tests are marked slowest.
+    """
+    for item in items:
+        # Get the test file path relative to tests/
+        test_path = str(item.fspath)
+        
+        # Apply markers based on test location
+        if "unit" in test_path:
+            item.add_marker(pytest.mark.unit)
+            item.add_marker(pytest.mark.fast)
+        elif "validation" in test_path:
+            item.add_marker(pytest.mark.validation)
+            item.add_marker(pytest.mark.fast)
+        elif "integration" in test_path:
+            item.add_marker(pytest.mark.integration)
+            
+            # Further categorize integration tests
+            if "cli" in test_path:
+                item.add_marker(pytest.mark.cli)
+                
+                # QuickStart tests are the slowest
+                if "quickstart" in item.name.lower():
+                    item.add_marker(pytest.mark.slow)
+                    item.add_marker(pytest.mark.quickstart)
+                else:
+                    item.add_marker(pytest.mark.medium)
+            elif "generation" in test_path:
+                item.add_marker(pytest.mark.generation)
+                item.add_marker(pytest.mark.medium)
 
 # Add project root to path for imports
 PROJECT_ROOT = Path(__file__).parent.parent
