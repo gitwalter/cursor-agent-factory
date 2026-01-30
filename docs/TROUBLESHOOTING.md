@@ -2,6 +2,9 @@
 
 Having trouble? Don't worry - we've got you covered. Here are solutions to the most common issues, and we're here to help you succeed.
 
+> **Tool Paths:** Commands in this document use default Windows paths.
+> See [Configuration Guide](CONFIGURATION.md) to customize tool paths for your environment.
+
 ---
 
 ## Python Not Found

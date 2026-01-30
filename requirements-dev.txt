@@ -1,5 +1,7 @@
 # Development dependencies for Cursor Agent Factory
-# Install with: C:\App\Anaconda\Scripts\pip.exe install -r requirements-dev.txt
+# Install with pip (see .cursor/config/tools.json for configured path)
+# Default Windows: C:\App\Anaconda\Scripts\pip.exe install -r requirements-dev.txt
+# Linux/macOS: pip install -r requirements-dev.txt
 
 # Testing framework
 pytest>=7.0.0

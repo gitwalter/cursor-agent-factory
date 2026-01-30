@@ -140,8 +140,13 @@ These standards are REQUIRED and derive from axioms:
 
 ### Configuration Variables
 
+Tool paths are configurable via `.cursor/config/tools.json` or environment variables.
+See [Configuration Guide](docs/CONFIGURATION.md) for details.
+
 ```
-PYTHON_PATH = C:\App\Anaconda\python.exe
+# Default paths (override via environment variables or config file)
+PYTHON_PATH = ${PYTHON_PATH:-python}
+PIP_PATH = ${PIP_PATH:-pip}
 ```
 
 ### Available Agents

@@ -8,8 +8,12 @@ The Factory itself is a Cursor agent system that produces other Cursor agent sys
 
 ## Configuration Variables
 
-### Python Path (REQUIRED)
+Tool paths are configurable via `.cursor/config/tools.json` or environment variables.
+See [Configuration Guide](docs/CONFIGURATION.md) for full documentation.
+
+### Python Path (configurable)
 ```
+# Default (override via $env:PYTHON_PATH or tools.json)
 PYTHON_PATH = C:\App\Anaconda\python.exe
 ```
 

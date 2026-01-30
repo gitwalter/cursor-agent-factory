@@ -1,5 +1,8 @@
 # README Structure Validation Skill
 
+> **Tool Paths:** Commands in this skill use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](../../docs/CONFIGURATION.md) to customize for your environment.
+
 ## Purpose
 
 Validates that the project structure documented in README.md accurately reflects the actual filesystem structure. This skill ensures documentation stays synchronized with the codebase as the project evolves.

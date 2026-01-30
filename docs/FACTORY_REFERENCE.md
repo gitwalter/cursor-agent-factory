@@ -2,6 +2,9 @@
 
 Welcome to the comprehensive reference for the Cursor Agent Factory. This document provides an overview of the factory's architecture, components, and generation process, with links to detailed subdocuments.
 
+> **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
+
 ## Table of Contents
 
 1. [Introduction](#introduction)

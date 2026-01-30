@@ -2,6 +2,9 @@
 
 Let's make sure you have everything you need. This takes just a few minutes, and we'll walk you through each step.
 
+> **Tool Paths:** Commands in this document use default Windows paths.
+> See [Configuration Guide](CONFIGURATION.md) to customize tool paths for your environment.
+
 ---
 
 ## What You'll Need

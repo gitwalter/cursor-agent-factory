@@ -2,6 +2,9 @@
 
 This document describes the test suite for the Cursor Agent Factory project.
 
+> **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
+
 ## Overview
 
 The test suite uses **pytest** and consists of **131 tests** organized into three categories:

@@ -2,6 +2,9 @@
 
 This guide explains how to use the Cursor Agent Factory to generate complete Cursor agent development systems grounded in purpose, principles, and methodology.
 
+> **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
+
 > **Looking for comprehensive reference documentation?**  
 > See [FACTORY_REFERENCE.md](FACTORY_REFERENCE.md) for complete documentation of blueprints, patterns, knowledge files, and factory components.
 >

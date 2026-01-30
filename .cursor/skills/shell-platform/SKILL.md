@@ -98,21 +98,48 @@ git commit -m "feat: Short title" -m "Longer description of the change." -m "Add
 
 This works on all platforms and produces proper multi-paragraph commit messages.
 
-## Tool Paths (Windows)
+## Tool Paths Configuration
 
-Standard tool locations for this development environment:
+Tool paths are **configurable** via `.cursor/config/tools.json` with environment variable fallbacks.
 
-| Tool | Path | Usage |
-|------|------|-------|
-| **GitHub CLI** | `C:\App\gh\bin\gh.exe` | GitHub operations (issues, PRs, actions) |
-| **Anaconda Python** | `C:\App\Anaconda\python.exe` | Python execution |
-| **Anaconda Conda** | `C:\App\Anaconda\Scripts\conda.exe` | Environment management |
-| **Anaconda Pip** | `C:\App\Anaconda\Scripts\pip.exe` | Package installation |
+See [Configuration Guide](../../docs/CONFIGURATION.md) for full details.
+
+### Configuration Priority
+
+1. **Environment Variable** (e.g., `$env:PYTHON_PATH`) - Highest priority
+2. **Config File** (`.cursor/config/tools.json`) - Project defaults
+3. **Hardcoded Fallback** - Ultimate default
+
+### Default Tool Paths (Windows)
+
+| Tool | Default Path | Env Variable |
+|------|--------------|--------------|
+| **Python** | `C:\App\Anaconda\python.exe` | `PYTHON_PATH` |
+| **Pip** | `C:\App\Anaconda\Scripts\pip.exe` | `PIP_PATH` |
+| **Conda** | `C:\App\Anaconda\Scripts\conda.exe` | `CONDA_PATH` |
+| **GitHub CLI** | `C:\App\gh\bin\gh.exe` | `GH_CLI_PATH` |
+| **Pytest** | `C:\App\Anaconda\Scripts\pytest.exe` | `PYTEST_PATH` |
+
+### Resolving Tool Paths
+
+When using tools, resolve the path in this order:
+
+```powershell
+# Example: Resolve Python path
+$pythonPath = if ($env:PYTHON_PATH) { 
+    $env:PYTHON_PATH 
+} else { 
+    "C:\App\Anaconda\python.exe"  # Default from config
+}
+```
 
 ### GitHub CLI Examples
 
 ```powershell
-# List recent workflow runs
+# Using environment variable (recommended)
+& $env:GH_CLI_PATH run list --limit 5
+
+# Or with default path
 C:\App\gh\bin\gh.exe run list --limit 5
 
 # View specific run details
@@ -127,6 +154,16 @@ C:\App\gh\bin\gh.exe pr create --title "Title" --body "Description"
 # List open issues
 C:\App\gh\bin\gh.exe issue list
 ```
+
+### Cross-Platform Paths
+
+For Linux/macOS, paths typically use forward slashes and may be simpler:
+
+| Tool | Linux/macOS Path |
+|------|------------------|
+| **Python** | `python3` or `/usr/bin/python3` |
+| **Pip** | `pip3` or `/usr/bin/pip3` |
+| **GitHub CLI** | `gh` or `/usr/local/bin/gh` |
 
 ## Important Rules
 

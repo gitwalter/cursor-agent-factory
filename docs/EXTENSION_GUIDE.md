@@ -2,6 +2,9 @@
 
 This guide explains how to extend the factory with new patterns, blueprints, and capabilities.
 
+> **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
+
 ## Table of Contents
 
 1. [Adding New Blueprints](#adding-new-blueprints)

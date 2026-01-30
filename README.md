@@ -612,6 +612,9 @@ mcp_servers:
 - Cursor IDE
 - PyYAML (for YAML config support)
 
+> **Tool Paths:** Commands below use default Windows paths from `.cursor/config/tools.json`.
+> See [Configuration Guide](docs/CONFIGURATION.md) to customize for your environment.
+
 ### Installing Development Dependencies
 
 ```powershell

@@ -1,0 +1,70 @@
+{
+  "$schema": "./tools-schema.json",
+  "description": "Tool path configuration for Cursor Agent Factory development environment",
+  "version": "1.0.0",
+  "tools": {
+    "gh": {
+      "path": "C:\\App\\gh\\bin\\gh.exe",
+      "env_var": "GH_CLI_PATH",
+      "description": "GitHub CLI for repository operations (issues, PRs, actions)",
+      "docs": "https://cli.github.com/"
+    },
+    "python": {
+      "path": "C:\\App\\Anaconda\\python.exe",
+      "env_var": "PYTHON_PATH",
+      "description": "Python interpreter (Anaconda distribution)",
+      "docs": "https://docs.python.org/"
+    },
+    "conda": {
+      "path": "C:\\App\\Anaconda\\Scripts\\conda.exe",
+      "env_var": "CONDA_PATH",
+      "description": "Conda environment and package manager",
+      "docs": "https://docs.conda.io/"
+    },
+    "pip": {
+      "path": "C:\\App\\Anaconda\\Scripts\\pip.exe",
+      "env_var": "PIP_PATH",
+      "description": "Python package installer",
+      "docs": "https://pip.pypa.io/"
+    },
+    "pytest": {
+      "path": "C:\\App\\Anaconda\\Scripts\\pytest.exe",
+      "env_var": "PYTEST_PATH",
+      "description": "Python testing framework",
+      "docs": "https://docs.pytest.org/"
+    }
+  },
+  "platforms": {
+    "windows": {
+      "shell": "powershell",
+      "path_separator": "\\",
+      "env_syntax": "%VAR%"
+    },
+    "linux": {
+      "shell": "bash",
+      "path_separator": "/",
+      "env_syntax": "$VAR"
+    },
+    "darwin": {
+      "shell": "zsh",
+      "path_separator": "/",
+      "env_syntax": "$VAR"
+    }
+  },
+  "defaults": {
+    "linux": {
+      "python": "/usr/bin/python3",
+      "pip": "/usr/bin/pip3",
+      "conda": "conda",
+      "gh": "gh",
+      "pytest": "pytest"
+    },
+    "darwin": {
+      "python": "/usr/local/bin/python3",
+      "pip": "/usr/local/bin/pip3",
+      "conda": "conda",
+      "gh": "gh",
+      "pytest": "pytest"
+    }
+  }
+}
