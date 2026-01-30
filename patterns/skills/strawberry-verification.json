@@ -60,19 +60,48 @@
       "When multiple sources provide conflicting information",
       "As the default profile when no domain-specific profile applies"
     ],
-    "process": {
-      "summary": "See grounding-verification.json for full algorithm",
-      "steps": [
-        "1. Collect Evidence Spans - gather all evidence with sources",
-        "2. Extract Claims - identify specific, falsifiable claims",
-        "3. Scrubbed Evidence Test - evaluate with anonymized evidence",
-        "4. Full Evidence Test - evaluate with complete evidence",
-        "5. Calculate Support Level - compute confidence delta",
-        "6. Assign Verification Status - VERIFIED/PLAUSIBLE/SUSPICIOUS/UNSUPPORTED",
-        "7. Generate Report - document all results",
-        "8. Determine Action - PROCEED/WARN/STOP/GATHER_MORE"
-      ]
-    },
+    "process": [
+      {
+        "step": 1,
+        "name": "Collect Evidence Spans",
+        "description": "Gather all evidence with sources (see grounding-verification.json for full algorithm)"
+      },
+      {
+        "step": 2,
+        "name": "Extract Claims",
+        "description": "Identify specific, falsifiable claims to verify"
+      },
+      {
+        "step": 3,
+        "name": "Scrubbed Evidence Test",
+        "description": "Evaluate claim with anonymized evidence (identifiers replaced by placeholders)"
+      },
+      {
+        "step": 4,
+        "name": "Full Evidence Test",
+        "description": "Evaluate claim with complete evidence"
+      },
+      {
+        "step": 5,
+        "name": "Calculate Support Level",
+        "description": "Compute confidence delta: delta = full_confidence - scrubbed_confidence"
+      },
+      {
+        "step": 6,
+        "name": "Assign Verification Status",
+        "description": "VERIFIED (delta >= 0.3), PLAUSIBLE, SUSPICIOUS (delta < 0.15), or UNSUPPORTED"
+      },
+      {
+        "step": 7,
+        "name": "Generate Report",
+        "description": "Document all verification results"
+      },
+      {
+        "step": 8,
+        "name": "Determine Action",
+        "description": "PROCEED, PROCEED_WITH_WARNINGS, STOP, or GATHER_MORE_EVIDENCE"
+      }
+    ],
     "exampleVerification": {
       "claim": "Table users has field email of type VARCHAR(255)",
       "evidence": {
