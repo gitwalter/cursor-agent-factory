@@ -58,7 +58,7 @@ class TestCLIHelp:
         )
         
         assert result.returncode == 0
-        assert "1.0.0" in result.stdout or "1.0.0" in result.stderr
+        assert "2.0.0" in result.stdout or "2.0.0" in result.stderr
 
 
 class TestListBlueprints:
