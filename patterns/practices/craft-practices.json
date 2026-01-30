@@ -168,6 +168,76 @@
         "New developers onboard faster",
         "Bugs decrease in refactored areas"
       ]
+    },
+    {
+      "practiceId": "P11_three_amigos",
+      "name": "Three Amigos Session",
+      "frequency": "per_story",
+      "duration": "30-60 minutes",
+      "purpose": "Collaborative discovery ensuring shared understanding across Business, Development, and Testing perspectives",
+      "axiom_alignment": ["A2_user_primacy", "A3_transparency", "A1_verifiability"],
+      "participants": ["product_owner", "developer", "qa_engineer"],
+      "optional": true,
+      "enabled_when": ["bdd_enabled", "stakeholder_collaboration_required"],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Present the user story",
+          "guidance": "Product Owner explains the story and acceptance criteria"
+        },
+        {
+          "step": 2,
+          "action": "Identify business rules",
+          "guidance": "Extract explicit and implicit rules from the story"
+        },
+        {
+          "step": 3,
+          "action": "Create concrete examples",
+          "guidance": "For each rule, define examples that illustrate it"
+        },
+        {
+          "step": 4,
+          "action": "Explore edge cases",
+          "guidance": "Developer and QA identify boundary conditions and error scenarios"
+        },
+        {
+          "step": 5,
+          "action": "Capture questions",
+          "guidance": "Document unknowns for follow-up with stakeholders"
+        },
+        {
+          "step": 6,
+          "action": "Draft Gherkin scenarios",
+          "guidance": "Convert examples into Given-When-Then format"
+        }
+      ],
+      "example_mapping": {
+        "story_card": "Yellow - The user story being discussed",
+        "rule_cards": "Blue - Business rules extracted from the story",
+        "example_cards": "Green - Concrete examples for each rule",
+        "question_cards": "Red - Questions requiring stakeholder input"
+      },
+      "reflection_prompts": [
+        "Do we all have the same understanding of this story?",
+        "Have we covered the happy path, edge cases, and error scenarios?",
+        "Can we write executable specifications from these examples?"
+      ],
+      "artifacts": [
+        "Example map with rules and examples",
+        "Draft Gherkin scenarios",
+        "Questions for stakeholder follow-up"
+      ],
+      "success_indicators": [
+        "All three perspectives represented",
+        "Shared understanding achieved",
+        "Scenarios ready for automation",
+        "Questions captured for resolution"
+      ],
+      "integration_with_bdd": {
+        "description": "Three Amigos is the Discovery phase of BDD workflow",
+        "output_to": "Gherkin feature files",
+        "timing": "Before sprint or when story is ready for development"
+      }
     }
   ]
 }

@@ -374,6 +374,123 @@ Skill patterns define reusable capabilities that agents can invoke. Skills are c
 
 ---
 
+#### BDD Skill
+
+**Pattern ID**: `bdd`  
+**Category**: Testing  
+**Purpose**: Stakeholder-readable executable specifications using Gherkin syntax
+
+**When to Use**:
+- When stakeholders need to validate requirements
+- When building living documentation
+- When bridging developer-business communication
+- When acceptance criteria need to be executable
+- When collaborative specification is valuable
+
+**Process Steps**:
+1. Discovery (Three Amigos session to understand behavior)
+2. Formulation (write Gherkin scenarios from examples)
+3. Automation (implement step definitions)
+4. Implementation (build feature to pass scenarios)
+5. Living Documentation (generate reports)
+
+**Feature Structure**:
+- **Feature**: High-level business capability description
+- **Background**: Common preconditions for all scenarios
+- **Scenario**: Concrete example with Given-When-Then
+- **Scenario Outline**: Template for data-driven examples
+
+**Gherkin Syntax**:
+- **Given**: Describes the initial context or preconditions
+- **When**: Describes the action or event that triggers behavior
+- **Then**: Describes the expected outcome or result
+- **And/But**: Continues the previous step type
+
+**Scenario Naming Pattern**: `{user_role} can {action} when {condition}`
+
+**Important Rules**:
+- Declarative not imperative - Describe WHAT behavior, not HOW to test
+- One scenario one behavior - Each scenario tests single business rule
+- Business language - Use domain terminology, not technical terms
+- Reusable steps - Build a step library for consistency
+- Independent scenarios - Scenarios should not depend on each other
+
+**Frameworks by Stack**:
+| Stack | Framework |
+|-------|-----------|
+| Python | behave, pytest-bdd |
+| TypeScript | cucumber-js |
+| Java | cucumber-jvm |
+| C# | SpecFlow |
+| Kotlin | cucumber-jvm |
+
+**Integration with TDD**:
+BDD and TDD serve complementary purposes:
+- **BDD**: Acceptance tests (stakeholder-visible behavior, few, high-level)
+- **TDD**: Unit tests (implementation details, many, low-level)
+
+When using both, follow the testing pyramid: many unit tests at the bottom, fewer acceptance tests at the top.
+
+**Knowledge Files**: `bdd-patterns.json`  
+**Templates**: `templates/bdd/`
+
+---
+
+#### Test Translation Skill
+
+**Pattern ID**: `test-translation`  
+**Category**: Testing  
+**Purpose**: Bidirectional translation between BDD scenarios and TDD unit tests with full traceability
+
+**When to Use**:
+- When using bdd-drives-tdd mode (outside-in development)
+- When using tdd-documents-bdd mode (legacy documentation)
+- When using synchronized mode (single source of truth)
+- When traceability between acceptance and unit tests is required
+
+**Testing Modes Supported**:
+
+| Mode | Description | Translation | Traceability |
+|------|-------------|-------------|--------------|
+| `tdd-only` | Unit tests only | None | No |
+| `bdd-only` | Feature files only | None | No |
+| `layered` | Both independent | None | Optional |
+| `bdd-drives-tdd` | Scenarios generate test stubs | BDD→TDD | Yes |
+| `tdd-documents-bdd` | Tests generate feature files | TDD→BDD | Yes |
+| `synchronized` | Bidirectional sync | Both | Yes |
+
+**Translation Directions**:
+
+**BDD → TDD (Outside-In)**:
+1. Parse Gherkin scenarios
+2. Identify implementation units from steps
+3. Generate unit test stubs with Given-When-Then structure
+4. Add traceability metadata (@scenario decorators)
+
+**TDD → BDD (Documentation)**:
+1. Analyze test structure and naming
+2. Extract behaviors from test methods
+3. Generate declarative Gherkin scenarios
+4. Abstract implementation details to business language
+
+**Traceability Features**:
+- `@trace-id`: Unique identifier linking scenario to tests
+- `@implements`: Tags on scenarios listing implementing tests
+- `@scenario`: Decorators on tests referencing source scenario
+- Coverage matrix reports showing test coverage
+- Orphan detection for unlinked artifacts
+
+**Important Rules**:
+- Preserve intent - Translation maintains business meaning
+- Declarative BDD - Generated Gherkin is business-readable
+- Traceable links - All translations include bidirectional references
+- Non-destructive - Never overwrite manual modifications
+
+**Knowledge Files**: `test-traceability.json`  
+**Templates**: `templates/translation/`
+
+---
+
 ### Quality Skills
 
 #### Code Templates Skill
@@ -822,10 +939,11 @@ Practice patterns define daily, craft, and alignment activities for teams.
 - **P2**: Evening Reflection (5 min, daily) - End with gratitude and learning
 - **P3**: Focused Stand-up (15 min, daily) - Align team, identify blockers
 
-**Craft Practices** (P4-P6):
+**Craft Practices** (P4-P6, P11):
 - **P4**: Code as Craft Review (per commit) - Ensure every commit reflects excellence
 - **P5**: Thoughtful Code Review (per task) - Elevate quality through collaborative refinement
 - **P6**: Continuous Refactoring (ongoing) - Leave every file better than found
+- **P11**: Three Amigos Session (per story, optional) - Collaborative BDD discovery with Business, Dev, and Test perspectives
 
 **Alignment Practices** (P7-P10):
 - **P7**: Weekly Learning Session (1 hour, weekly) - Continuous improvement through shared learning

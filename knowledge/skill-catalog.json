@@ -18,7 +18,7 @@
       "note": "Stack-specific implementations live in respective agent workflow repositories"
     },
     "testing": {
-      "description": "Test generation and TDD skills",
+      "description": "Test generation, TDD, and BDD skills",
       "implementedInFactory": true
     },
     "verification": {
@@ -110,6 +110,54 @@
       "whenToUse": [
         "When quality is critical",
         "For complex business logic"
+      ]
+    },
+    "bdd": {
+      "id": "bdd",
+      "name": "Behavior-Driven Development",
+      "category": "testing",
+      "stackAgnostic": true,
+      "description": "Stakeholder-readable executable specifications using Gherkin syntax",
+      "factoryPattern": "patterns/skills/bdd.json",
+      "optional": true,
+      "complementsSkill": "tdd",
+      "frameworks": {
+        "python": "behave, pytest-bdd",
+        "typescript": "cucumber-js",
+        "java": "cucumber-jvm",
+        "csharp": "specflow",
+        "kotlin": "cucumber-jvm"
+      },
+      "whenToUse": [
+        "When stakeholders need to validate requirements",
+        "When building living documentation",
+        "When bridging developer-business communication",
+        "When acceptance criteria need to be executable"
+      ]
+    },
+    "test-translation": {
+      "id": "test-translation",
+      "name": "Test Translation",
+      "category": "testing",
+      "stackAgnostic": true,
+      "description": "Bidirectional translation between BDD scenarios and TDD unit tests with traceability",
+      "factoryPattern": "patterns/skills/test-translation.json",
+      "optional": true,
+      "requiresSkills": ["tdd", "bdd"],
+      "translationDirections": {
+        "bdd-to-tdd": "Generate unit test stubs from Gherkin scenarios",
+        "tdd-to-bdd": "Generate Gherkin documentation from unit tests"
+      },
+      "traceability": {
+        "scenarioToTests": "Link BDD scenarios to implementing unit tests",
+        "testToScenario": "Link unit tests back to their source scenario",
+        "metadata": "Store traceability in test/scenario metadata"
+      },
+      "whenToUse": [
+        "When using bdd-drives-tdd mode (outside-in development)",
+        "When using tdd-documents-bdd mode (legacy documentation)",
+        "When using synchronized mode (single source of truth)",
+        "When traceability between tests is required"
       ]
     },
     "code-templates": {
@@ -666,6 +714,8 @@
       "bugfix-workflow",
       "feature-workflow",
       "tdd",
+      "bdd",
+      "test-translation",
       "code-templates",
       "security-audit",
       "code-review"

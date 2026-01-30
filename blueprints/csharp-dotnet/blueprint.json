@@ -36,7 +36,7 @@
   },
   "agents": [
     {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
-    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
     {"patternId": "documentation-agent", "required": false, "customizations": {}},
     {"patternId": "explorer", "required": false}
   ],
@@ -44,15 +44,31 @@
     {"patternId": "bugfix-workflow", "required": true},
     {"patternId": "feature-workflow", "required": true},
     {"patternId": "grounding", "required": true},
-    {"patternId": "tdd", "required": true},
+    {"patternId": "tdd", "required": true, "default": true},
+    {"patternId": "bdd", "required": false, "default": false, "description": "Optional BDD for stakeholder collaboration"},
+    {"patternId": "test-translation", "required": false, "default": false, "description": "Translation and traceability between BDD/TDD"},
     {"patternId": "code-templates", "required": true},
     {"patternId": "security-audit", "required": false},
     {"patternId": "code-review", "required": false}
   ],
+  "testingApproach": {
+    "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],
+    "default": "tdd-only",
+    "frameworks": {
+      "tdd": "xunit",
+      "bdd": "specflow"
+    },
+    "translation": {
+      "bddToTdd": {"enabled": false},
+      "tddToBdd": {"enabled": false}
+    },
+    "traceability": {"enabled": false}
+  },
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "C# naming conventions"},
     {"filename": "dotnet-patterns.json", "description": ".NET 9, ASP.NET Core, Clean Architecture, CQRS, MediatR, and FluentValidation patterns"},
-    {"filename": "test-patterns.json", "description": "xUnit testing patterns"}
+    {"filename": "test-patterns.json", "description": "xUnit testing patterns"},
+    {"filename": "bdd-patterns.json", "description": "Behavior-driven development patterns", "optional": true}
   ],
   "templates": {
     "codeTemplates": [

@@ -2,6 +2,8 @@
 
 **Build AI-powered development systems that truly understand your project.**
 
+> **Quick Start:** New here? See [docs/QUICKSTART.md](docs/QUICKSTART.md) or run `python cli/factory_cli.py --quickstart` to get running in 5 minutes.
+
 ![cursor-ide](https://img.shields.io/badge/cursor--ide-blue)
 ![ai-agents](https://img.shields.io/badge/ai--agents-purple)
 ![mcp-servers](https://img.shields.io/badge/mcp--servers-green)
@@ -19,13 +21,13 @@ Not sure where to begin? We've got you covered.
 
 | I want to... | Here's your path |
 |--------------|------------------|
-| **See it work in 5 minutes** | `python cli/factory_cli.py --quickstart` |
+| **See it work in 5 minutes** | [Quickstart Guide](docs/QUICKSTART.md) or `python cli/factory_cli.py --quickstart` |
 | **Build my own project** | `python cli/factory_cli.py --interactive` |
 | **Enhance an existing repo** | [Onboarding Guide](docs/ONBOARDING_GUIDE.md) |
 | **Align my team** | [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) |
 | **Configure MCP servers** | [MCP Servers Guide](docs/MCP-SERVERS.md) |
 
-New to all this? Start with `--quickstart` - you'll have a working demo in minutes, and we'll explain everything along the way.
+New to all this? Start with the [Quickstart Guide](docs/QUICKSTART.md) - you'll have a working demo in minutes, and we'll explain everything along the way.
 
 **Need help?** See [Prerequisites](docs/PREREQUISITES.md) for setup or [Troubleshooting](docs/TROUBLESHOOTING.md) if you run into issues.
 

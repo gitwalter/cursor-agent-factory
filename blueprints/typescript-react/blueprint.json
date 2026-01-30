@@ -28,19 +28,35 @@
   },
   "agents": [
     {"patternId": "code-reviewer", "required": true},
-    {"patternId": "test-generator", "required": true},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [
     {"patternId": "bugfix-workflow", "required": true},
     {"patternId": "feature-workflow", "required": true},
-    {"patternId": "tdd", "required": true},
+    {"patternId": "tdd", "required": true, "default": true},
+    {"patternId": "bdd", "required": false, "default": false, "description": "Optional BDD for stakeholder collaboration"},
+    {"patternId": "test-translation", "required": false, "default": false, "description": "Translation and traceability between BDD/TDD"},
     {"patternId": "code-templates", "required": true}
   ],
+  "testingApproach": {
+    "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],
+    "default": "tdd-only",
+    "frameworks": {
+      "tdd": "vitest",
+      "bdd": "cucumber-js"
+    },
+    "translation": {
+      "bddToTdd": {"enabled": false},
+      "tddToBdd": {"enabled": false}
+    },
+    "traceability": {"enabled": false}
+  },
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "TypeScript/React naming conventions"},
     {"filename": "component-patterns.json", "description": "React 19 component patterns and best practices"},
-    {"filename": "test-patterns.json", "description": "Vitest/RTL patterns"}
+    {"filename": "test-patterns.json", "description": "Vitest/RTL patterns"},
+    {"filename": "bdd-patterns.json", "description": "Behavior-driven development patterns", "optional": true}
   ],
   "templates": {
     "codeTemplates": [

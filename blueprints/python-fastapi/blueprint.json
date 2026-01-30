@@ -32,21 +32,55 @@
   },
   "agents": [
     {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
-    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [
     {"patternId": "bugfix-workflow", "required": true},
     {"patternId": "feature-workflow", "required": true},
     {"patternId": "grounding", "required": true},
-    {"patternId": "tdd", "required": true},
+    {"patternId": "tdd", "required": true, "default": true},
+    {"patternId": "bdd", "required": false, "default": false, "description": "Optional BDD for stakeholder collaboration"},
+    {"patternId": "test-translation", "required": false, "default": false, "description": "Translation and traceability between BDD/TDD"},
     {"patternId": "code-templates", "required": true}
   ],
+  "testingApproach": {
+    "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],
+    "default": "tdd-only",
+    "frameworks": {
+      "tdd": "pytest",
+      "bdd": "behave",
+      "bddAlternative": "pytest-bdd"
+    },
+    "modeDescriptions": {
+      "tdd-only": "Unit tests only - developer-focused",
+      "bdd-only": "Feature files only - stakeholder-focused",
+      "layered": "Both TDD and BDD - test pyramid",
+      "bdd-drives-tdd": "Scenarios generate test stubs - outside-in",
+      "tdd-documents-bdd": "Tests generate feature files - legacy docs",
+      "synchronized": "Bidirectional sync - single source of truth"
+    },
+    "translation": {
+      "bddToTdd": {
+        "enabled": false,
+        "template": "templates/translation/generated-test-python.py.tmpl"
+      },
+      "tddToBdd": {
+        "enabled": false,
+        "template": "templates/translation/generated-feature.feature.tmpl"
+      }
+    },
+    "traceability": {
+      "enabled": false,
+      "reportTemplate": "templates/translation/traceability-report.md.tmpl"
+    }
+  },
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "Python naming conventions"},
     {"filename": "fastapi-patterns.json", "description": "FastAPI patterns and best practices"},
     {"filename": "test-patterns.json", "description": "Pytest patterns"},
-    {"filename": "tdd-patterns.json", "description": "Test-driven development patterns"}
+    {"filename": "tdd-patterns.json", "description": "Test-driven development patterns"},
+    {"filename": "bdd-patterns.json", "description": "Behavior-driven development patterns", "optional": true}
   ],
   "templates": {
     "codeTemplates": [
@@ -58,6 +92,11 @@
       {"category": "config", "directory": "templates/python/fastapi/config/"},
       {"category": "main", "directory": "templates/python/fastapi/"},
       {"category": "test-class", "directory": "templates/python/fastapi/domain/"}
+    ],
+    "bddTemplates": [
+      {"category": "feature-file", "directory": "templates/bdd/", "optional": true},
+      {"category": "step-definitions", "directory": "templates/bdd/", "file": "steps-python.py.tmpl", "optional": true},
+      {"category": "conftest", "directory": "templates/bdd/", "file": "conftest-bdd.py.tmpl", "optional": true}
     ],
     "documentTemplates": [
       {"name": "implementation_plan.md", "directory": "templates/docs/"},
@@ -84,6 +123,8 @@
       {"path": "workflows/", "purpose": "Workflow documentation"},
       {"path": "src/", "purpose": "Application source"},
       {"path": "tests/", "purpose": "Test files"},
+      {"path": "features/", "purpose": "BDD feature files", "optional": true, "whenEnabled": "bdd"},
+      {"path": "features/steps/", "purpose": "Step definitions", "optional": true, "whenEnabled": "bdd"},
       {"path": "docs/", "purpose": "Documentation"},
       {"path": "diagrams/", "purpose": "Architecture diagrams"}
     ],

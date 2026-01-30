@@ -5,6 +5,37 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-01-30
+
+### Added
+
+- **BDD/TDD Translation and Traceability System** - Configurable testing modes with bidirectional translation
+  - 6 testing modes: `tdd-only`, `bdd-only`, `layered`, `bdd-drives-tdd`, `tdd-documents-bdd`, `synchronized`
+  - Bidirectional translation between Gherkin scenarios and unit tests
+  - Full traceability linking with `@trace-id`, `@implements`, `@scenario` metadata
+  - Coverage matrix and orphan detection reports
+
+- **Test Translation Skill** - New skill for BDD/TDD conversion
+  - `patterns/skills/test-translation.json` - Translation workflow and modes
+  - `knowledge/test-traceability.json` - Traceability metadata schemas and patterns
+
+- **Translation Templates** - Templates for generated artifacts
+  - `templates/translation/generated-test-python.py.tmpl` - BDD→TDD test generation
+  - `templates/translation/generated-feature.feature.tmpl` - TDD→BDD feature generation
+  - `templates/translation/traceability-report.md.tmpl` - Coverage and traceability reports
+
+### Changed
+
+- **Updated test-generator agent** - Now supports all 6 testing modes with translation workflow
+- **Updated BDD skill** - Added traceability and translation sections
+- **Updated TDD skill** - Added traceability and translation sections
+- **Updated stack-configuration skill** - Expanded mode selection UI with all 6 options
+- **Updated 5 blueprints** - python-fastapi, typescript-react, java-spring, csharp-dotnet, kotlin-spring
+  - All now include `test-translation` skill and 6-mode configuration
+- **Updated PATTERNS.md** - Documented Test Translation skill and all modes
+
+---
+
 ## [2.6.0] - 2026-01-30
 
 ### Added
