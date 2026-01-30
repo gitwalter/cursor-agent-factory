@@ -168,74 +168,81 @@ For visual documentation, see the [diagrams/](diagrams/) folder:
 ```
 cursor-agent-factory/
 ├── .cursor/
-│   ├── agents/                  # Factory's own agents
-│   │   └── *.md                 # requirements-architect, stack-builder, etc.
-│   └── skills/                  # Factory's own skills (14 skills)
-│       ├── requirements-gathering/   # 5-layer requirements elicitation
-│       ├── axiom-selection/          # Layer 0 axiom configuration
-│       ├── purpose-definition/       # Layer 1 purpose definition
-│       ├── methodology-selection/    # Layer 3 methodology selection
-│       ├── enforcement-selection/    # Enforcement pattern selection
-│       ├── practice-selection/       # Practice pattern selection
-│       ├── pattern-feedback/         # Inductive learning skill
-│       └── ...                       # agent/skill/knowledge/template generation
-├── patterns/                    # Reusable patterns
-│   ├── axioms/                 # Layer 0 axiom definitions
-│   │   ├── core-axioms.json    # A1-A5 immutable axioms
-│   │   └── optional-axioms.json # A6-A10 optional axioms
-│   ├── principles/             # Layer 2 principle patterns
-│   │   ├── ethical-boundaries.json
-│   │   ├── quality-standards.json
-│   │   └── failure-handling.json
-│   ├── methodologies/          # Layer 3 methodology templates
-│   │   ├── agile-scrum.json
-│   │   ├── kanban.json
-│   │   ├── research-development.json
-│   │   └── enterprise-integration.json
-│   ├── enforcement/            # Enforcement patterns
-│   │   ├── quality-enforcement.json
-│   │   ├── safety-enforcement.json
-│   │   └── integrity-enforcement.json
-│   ├── practices/              # Practice patterns
-│   │   ├── daily-practices.json
-│   │   ├── craft-practices.json
-│   │   └── alignment-practices.json
-│   ├── agents/                 # Agent pattern definitions
-│   ├── skills/                 # Skill pattern definitions
-│   └── workflows/              # Workflow patterns
-├── blueprints/                  # Technology stack blueprints (7 blueprints)
+│   ├── agents/                  # Factory's own agents (7 agents)
+│   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
+│   └── skills/                  # Factory's own skills (19 skills)
+│       ├── agent-generation/
+│       ├── alignment-check/
+│       ├── axiom-selection/
+│       ├── cursorrules-generation/
+│       ├── enforcement-selection/
+│       ├── knowledge-generation/
+│       ├── methodology-selection/
+│       └── ...                       # + more skills
+├── patterns/                    # Reusable patterns (52 files)
+│   ├── axioms/                  # Layer 0 axiom definitions
+│   ├── principles/              # Layer 2 principle patterns
+│   ├── methodologies/           # Layer 3 methodology templates
+│   ├── enforcement/             # Enforcement patterns
+│   ├── practices/               # Practice patterns
+│   ├── agents/                  # Agent pattern definitions
+│   ├── skills/                  # Skill pattern definitions
+│   ├── games/                   # Workshop game definitions
+│   ├── workshops/               # Workshop pattern definitions
+│   ├── team-formats/            # Team size adaptations
+│   ├── stacks/                  # Stack blueprint patterns
+│   ├── templates/               # Template patterns
+│   └── workflows/               # Workflow patterns
+├── blueprints/                  # Technology stack blueprints (14 blueprints)
 │   ├── python-fastapi/
-│   ├── ai-agent-development/   # NEW: LangChain/LangGraph
+│   ├── python-streamlit/
+│   ├── ai-agent-development/
+│   ├── multi-agent-systems/
 │   ├── typescript-react/
 │   ├── nextjs-fullstack/
 │   ├── java-spring/
+│   ├── kotlin-spring/
 │   ├── csharp-dotnet/
-│   └── sap-abap/
-├── knowledge/                   # Reference data (12+ files)
-│   ├── langchain-patterns.json     # NEW: LangChain best practices
-│   ├── langgraph-workflows.json    # NEW: LangGraph patterns
-│   ├── agent-coordination.json     # NEW: Multi-agent patterns
-│   ├── prompt-engineering.json     # NEW: Prompt optimization
-│   └── ...                         # Stack, workflow, MCP, security
-├── templates/
-│   ├── factory/                # Factory templates
-│   │   ├── cursorrules-template.md  # 5-layer template
-│   │   ├── PURPOSE.md.tmpl
-│   │   ├── enforcement.yaml.tmpl
-│   │   └── practices.yaml.tmpl
-│   ├── ai/                     # AI agent templates
-│   │   ├── agent/base-agent.py.tmpl
-│   │   ├── prompt/system-prompt.md.tmpl
-│   │   └── workflow/langgraph-graph.py.tmpl
-│   └── methodology/            # Methodology templates
+│   ├── n8n-automation/
+│   ├── sap-abap/
+│   ├── sap-rap/
+│   ├── sap-cap/
+│   └── sap-cpi-pi/
+├── knowledge/                   # Reference data (42 files)
+│   └── *.json                   # Stack, workflow, MCP, security, AI patterns
+├── templates/                   # Code and document templates (164 files)
+│   ├── factory/                 # Factory templates (cursorrules, PURPOSE.md, etc.)
+│   ├── ai/                      # AI agent templates
+│   ├── python/                  # Python templates (FastAPI, Streamlit)
+│   ├── typescript/              # TypeScript templates (Next.js)
+│   ├── java/                    # Java Spring templates
+│   ├── csharp/                  # C# Clean Architecture templates
+│   ├── abap/                    # SAP ABAP/RAP templates
+│   ├── cap/                     # SAP CAP templates
+│   ├── integration/             # SAP CPI/PI integration templates
+│   ├── automation/              # n8n automation templates
+│   ├── workflows/               # CI/CD workflow templates
+│   ├── methodology/             # Methodology templates
+│   └── docs/                    # Documentation templates
 ├── docs/                        # Documentation
-│   ├── USAGE_GUIDE.md
-│   ├── LAYERED_ARCHITECTURE.md     # NEW: 5-layer architecture guide
-│   ├── LAYERED_ONBOARDING_CONCEPT.md # Implementation blueprint
-│   └── ...
-├── cli/
-│   └── factory_cli.py          # CLI interface
-└── .cursorrules                 # Factory behavior rules
+│   ├── reference/               # Detailed reference docs
+│   ├── research/                # Research paper series
+│   ├── examples/                # Example walkthroughs
+│   └── *.md                     # Guides and tutorials
+├── diagrams/                    # Architecture diagrams (Mermaid)
+├── scripts/                     # Utility scripts
+├── cli/                         # CLI interface
+│   └── factory_cli.py
+├── tests/                       # Test suite
+│   ├── unit/
+│   ├── integration/
+│   ├── validation/
+│   └── fixtures/
+├── .github/
+│   └── workflows/               # CI/CD workflows
+├── .cursorrules                 # Factory behavior rules
+├── CHANGELOG.md                 # Version history
+└── README.md                    # This file
 ```
 
 ## Available Blueprints
@@ -243,15 +250,19 @@ cursor-agent-factory/
 | Blueprint | Stack | Description |
 |-----------|-------|-------------|
 | `python-fastapi` | Python, FastAPI, SQLAlchemy | REST API development |
+| `python-streamlit` | Python, Streamlit, Pandas | Data apps and dashboards |
 | `ai-agent-development` | Python, LangChain, LangGraph | AI agent systems (single agents) |
-| `multi-agent-systems` | Python, LangGraph, LangChain | **NEW**: Orchestrated multi-agent systems |
+| `multi-agent-systems` | Python, LangGraph, LangChain | Orchestrated multi-agent systems |
 | `typescript-react` | TypeScript, React, Vite | Web application development |
 | `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
 | `kotlin-spring` | Kotlin, Spring Boot 3, WebFlux | Reactive Kotlin microservices |
 | `csharp-dotnet` | C#, .NET 8+, Entity Framework | Enterprise .NET development |
-| `sap-abap` | ABAP, RAP, CAP | SAP ABAP/RAP development |
-| `sap-cpi-pi` | Groovy, Java, SAP CPI/PI | **NEW**: SAP integration development |
+| `n8n-automation` | n8n, JavaScript, REST | Workflow automation |
+| `sap-abap` | ABAP, Clean ABAP | SAP ABAP development |
+| `sap-rap` | ABAP, RAP, Fiori | SAP RESTful ABAP Programming |
+| `sap-cap` | Node.js/Java, CDS, SAP BTP | SAP Cloud Application Programming |
+| `sap-cpi-pi` | Groovy, Java, SAP CPI/PI | SAP integration development |
 
 ### AI Agent Development Blueprint
 
@@ -352,6 +363,7 @@ For complete facilitation instructions, see [docs/TEAM_WORKSHOP_GUIDE.md](docs/T
 | `knowledge-manager` | Structure domain knowledge and generate knowledge files |
 | `template-generator` | Generate code and document templates |
 | `workshop-facilitator` | Facilitate team workshops for collaborative agent system design |
+| `onboarding-architect` | Orchestrate onboarding of existing repositories into the factory ecosystem |
 
 ## Available Pattern Agents
 
@@ -378,6 +390,15 @@ These agents can be included in generated projects:
 | `template-generation` | Code and document template generation |
 | `cursorrules-generation` | .cursorrules file generation |
 | `axiom-selection` | Layer 0 axiom configuration including A0 |
+| `purpose-definition` | Layer 1 purpose definition (mission, stakeholders, success) |
+| `methodology-selection` | Layer 3 methodology selection (Agile/Kanban/R&D) |
+| `enforcement-selection` | Enforcement pattern selection (quality, safety, integrity) |
+| `practice-selection` | Practice pattern selection (daily, craft, alignment) |
+| `pattern-feedback` | Inductive learning from pattern usage |
+| `onboarding-flow` | Onboard existing repositories into factory ecosystem |
+| `alignment-check` | Verify understanding and alignment before implementations |
+| `shell-platform` | Platform-specific shell command handling |
+| `readme-validation` | Validate README structure matches actual filesystem |
 
 ## Available Pattern Skills
 
@@ -709,7 +730,7 @@ Each example includes a complete walkthrough, sample answers, and expected outpu
 | [Blueprints Reference](docs/reference/BLUEPRINTS.md) | All 12 technology blueprints with detailed specifications |
 | [Patterns Reference](docs/reference/PATTERNS.md) | Agent, skill, axiom, methodology, and other patterns |
 | [Knowledge Files Reference](docs/reference/KNOWLEDGE_FILES.md) | All 32 knowledge files categorized and explained |
-| [Factory Components Reference](docs/reference/FACTORY_COMPONENTS.md) | Factory's own 7 agents and 18 skills |
+| [Factory Components Reference](docs/reference/FACTORY_COMPONENTS.md) | Factory's own 7 agents and 19 skills |
 | [Generated Output Reference](docs/reference/GENERATED_OUTPUT.md) | What gets generated: structure, formats, examples |
 
 ### Guides and Tutorials

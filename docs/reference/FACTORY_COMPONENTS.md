@@ -202,6 +202,7 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 | `onboarding-flow` | Specialized | Integrate Cursor Agent Factory into existing repositories non-destructively |
 | `team-workshop-onboarding` | Specialized | Orchestrate collaborative team workshop series for designing customized Cursor agent systems |
 | `shell-platform` | Specialized | Handle platform-specific shell command considerations for Windows PowerShell and Unix shells |
+| `readme-validation` | Quality | Validate README project structure matches actual filesystem and update automatically |
 
 ---
 
@@ -394,6 +395,18 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 **Process Steps**: (1) Observation Collection (gather data from code reviews, test results, user interactions, workflow execution), (2) Pattern Recognition (analyze observations to identify patterns: occurs 3+ times, consistent characteristics, suggests actionable improvement), (3) Generalization (propose general rules from specific patterns: identify commonality, abstract to rule, trace to axiom, validate consistency), (4) Proposal Generation (create improvement proposals with observed pattern, proposed rule, axiom alignment, consistency check, recommended action, validation criteria), (5) Integration (when approved, integrate into appropriate layer: L0 axiom, L2 principle, L3 methodology, L4 technical).
 
 **Integration with Agents**: Can be used by any agent during retrospectives or pattern analysis
+
+---
+
+#### readme-validation
+
+**Name and Description**: Validates that the project structure documented in README.md accurately reflects the actual filesystem structure. Ensures documentation stays synchronized with the codebase as the project evolves.
+
+**When to Use**: Before commits (validate README accuracy), after adding new agents, skills, blueprints, patterns, or templates, during CI/CD pipeline execution, during code review to verify documentation is updated alongside code changes.
+
+**Process Steps**: (1) Scan Filesystem (count agents in `.cursor/agents/`, skills in `.cursor/skills/`, blueprints in `blueprints/`, etc.), (2) Extract README Counts (parse project structure section for documented counts), (3) Compare Counts (identify discrepancies between actual and documented), (4) Report or Update (exit with error if mismatch, or update README in place with `--update` flag).
+
+**Integration with Agents**: Used by `onboarding-architect` (validate project state after changes), integrated into CI/CD via `.github/workflows/ci.yml`
 
 ---
 
