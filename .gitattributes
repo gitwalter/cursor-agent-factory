@@ -1,0 +1,11 @@
+# Linguist overrides for GitHub language statistics
+# See: https://github.com/github/linguist/blob/master/docs/overrides.md
+
+# Mark template files as templates (not Go)
+*.tmpl linguist-language=Jinja
+
+# Mark example files as documentation
+*.example linguist-documentation
+
+# Ensure Python is detected correctly
+*.py linguist-language=Python
