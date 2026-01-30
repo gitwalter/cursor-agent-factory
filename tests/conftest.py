@@ -269,3 +269,90 @@ def project_root(factory_root: Path) -> Path:
         Path to project root.
     """
     return factory_root
+
+
+# =============================================================================
+# PM System Fixtures
+# =============================================================================
+
+@pytest.fixture
+def pm_patterns_dir(factory_root: Path) -> Path:
+    """Get the PM system patterns directory.
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to PM patterns directory.
+    """
+    return factory_root / "patterns" / "products" / "pm-system"
+
+
+@pytest.fixture
+def pm_adapters_dir(pm_patterns_dir: Path) -> Path:
+    """Get the PM adapters directory.
+    
+    Args:
+        pm_patterns_dir: PM patterns directory fixture.
+        
+    Returns:
+        Path to PM adapters directory.
+    """
+    return pm_patterns_dir / "adapters"
+
+
+@pytest.fixture
+def pm_defaults_dir(pm_patterns_dir: Path) -> Path:
+    """Get the PM methodology defaults directory.
+    
+    Args:
+        pm_patterns_dir: PM patterns directory fixture.
+        
+    Returns:
+        Path to PM defaults directory.
+    """
+    return pm_patterns_dir / "defaults"
+
+
+@pytest.fixture
+def sample_pm_config() -> Dict[str, Any]:
+    """Create a sample PM configuration dictionary.
+    
+    Returns:
+        Dictionary with valid PM configuration.
+    """
+    return {
+        "pm_enabled": True,
+        "pm_backend": "github",
+        "pm_doc_backend": "github-wiki",
+        "pm_methodology": "scrum"
+    }
+
+
+@pytest.fixture
+def sample_pm_config_jira() -> Dict[str, Any]:
+    """Create a sample PM configuration for Jira.
+    
+    Returns:
+        Dictionary with Jira PM configuration.
+    """
+    return {
+        "pm_enabled": True,
+        "pm_backend": "jira",
+        "pm_doc_backend": "confluence",
+        "pm_methodology": "kanban"
+    }
+
+
+@pytest.fixture
+def sample_full_config_with_pm(sample_config_dict: Dict[str, Any], sample_pm_config: Dict[str, Any]) -> Dict[str, Any]:
+    """Create a full project config with PM settings.
+    
+    Args:
+        sample_config_dict: Base project configuration.
+        sample_pm_config: PM configuration.
+        
+    Returns:
+        Combined configuration dictionary.
+    """
+    return {**sample_config_dict, **sample_pm_config}

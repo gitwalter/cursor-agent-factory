@@ -82,6 +82,34 @@ Available blueprints:
 - `sap-abap` - SAP ABAP development
 - `sap-cpi-pi` - SAP CPI/PI integration
 
+### Step 3.5: Project Management Setup (Optional)
+
+After confirming the blueprint, offer PM system configuration:
+
+```
+"Would you like to set up project management for this repository?
+
+This will add:
+- PM agents (Product Owner, Sprint Master, Task Manager, Reporting)
+- Integration with your issue tracker (GitHub, Jira, Azure DevOps, Linear)
+- Sprint/Kanban workflow automation
+- Metrics and reporting capabilities
+
+Options:
+1. [Yes] - Configure full project management
+2. [Minimal] - Just issue tracking, no ceremonies
+3. [No] - Skip for now (can add later with pm-configuration skill)"
+```
+
+If user selects "Yes" or "Minimal":
+- Invoke the `pm-configuration` skill
+- Merge PM artifacts into the generation preview
+- Update the dry-run output to include PM files
+
+If user selects "No":
+- Acknowledge and continue to Step 4
+- Note that PM can be added later using the `pm-configuration` skill
+
 ### Step 4: Preview Changes (Dry Run)
 
 Before making any changes, show what will be modified:
@@ -94,6 +122,7 @@ Present the preview:
 - Files that will be created
 - Files that will be modified
 - Conflicts that need resolution
+- PM artifacts (if PM configuration was selected in Step 3.5)
 
 ### Step 5: Resolve Conflicts
 
@@ -123,7 +152,8 @@ The process will:
 4. Add missing skills
 5. Merge or add .cursorrules sections
 6. Add missing knowledge files
-7. Report results
+7. Generate PM configuration and agents (if PM was selected in Step 3.5)
+8. Report results
 
 ### Step 7: Provide Summary and Next Steps
 
@@ -137,6 +167,7 @@ Summary:
 - Files created: 8
 - Files merged: 2
 - Skipped (preserved): 3
+- PM configuration: Enabled (if PM was selected in Step 3.5)
 
 A backup was created: .cursor-factory-backup/20260129_143022/
 
@@ -144,6 +175,7 @@ Next steps:
 1. Review the merged .cursorrules file
 2. Test the new agents by mentioning them
 3. Check the knowledge/ folder for new reference files
+4. Configure PM backend credentials (if PM was enabled)
 
 If anything looks wrong, you can rollback:
 python cli/factory_cli.py --rollback <repo_path>
@@ -195,6 +227,7 @@ python cli/factory_cli.py --rollback <repo_path>
 | `stack-configuration` | Use if detected stack needs adjustment |
 | `agent-generation` | Used for generating missing agents |
 | `skill-generation` | Used for generating missing skills |
+| `pm-configuration` | Invoked in Step 3.5 if user wants PM system setup |
 | `team-workshop-onboarding` | Alternative for team onboarding with collaborative workshops |
 
 ## Team Onboarding Alternative
@@ -265,9 +298,39 @@ Would you like me to:
 
 What would you prefer?"
 
-**User:** "Show me the preview first"
+**User:** "Proceed with onboarding"
 
-**Agent:** *Runs dry run and shows preview...*
+**Agent:** "Great! Before I proceed, would you like to set up project management for this repository?
+
+This will add:
+- PM agents (Product Owner, Sprint Master, Task Manager, Reporting)
+- Integration with your issue tracker (GitHub, Jira, Azure DevOps, Linear)
+- Sprint/Kanban workflow automation
+- Metrics and reporting capabilities
+
+Options:
+1. [Yes] - Configure full project management
+2. [Minimal] - Just issue tracking, no ceremonies
+3. [No] - Skip for now (can add later with pm-configuration skill)"
+
+**User:** "Yes, let's set it up"
+
+**Agent:** *Invokes pm-configuration skill, then proceeds with onboarding...*
+
+**Agent:** "Onboarding complete!
+
+Summary:
+- Scenario: PARTIAL
+- Files created: 12 (including PM agents and configuration)
+- Files merged: 2
+- Skipped (preserved): 3
+- PM configuration: Enabled (Jira backend, Agile Scrum methodology)
+
+Next steps:
+1. Review the merged .cursorrules file
+2. Test the new agents by mentioning them
+3. Check the knowledge/ folder for new reference files
+4. Configure Jira credentials in .env.pm"
 
 ---
 

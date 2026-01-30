@@ -269,17 +269,80 @@ def interactive_mode(output_dir: str) -> None:
     skills_input = input("2. Skills to include (comma-separated) [bugfix-workflow,tdd]: ").strip() or "bugfix-workflow,tdd"
     skills = [s.strip() for s in skills_input.split(',')]
     
-    # Phase 5: MCP Servers
-    print("\n[PHASE 5] Integrations\n")
+    # Phase 5: Project Management (Optional)
+    print("\n[PHASE 5] Project Management (Optional)\n")
+    
+    pm_enabled = False
+    pm_backend = None
+    pm_doc_backend = None
+    pm_methodology = None
+    
+    enable_pm = input("1. Enable project management system? [y/N]: ").strip().lower()
+    if enable_pm == 'y':
+        pm_enabled = True
+        
+        print("\n   Available PM backends: github, jira, azure-devops, linear")
+        pm_backend = input("2. PM backend [github]: ").strip() or "github"
+        
+        print("\n   Available doc backends: github-wiki, confluence, azure-wiki, none")
+        pm_doc_backend = input("3. Documentation backend [github-wiki]: ").strip() or "github-wiki"
+        
+        print("\n   Available methodologies: scrum, kanban, hybrid, waterfall")
+        pm_methodology = input("4. Methodology [scrum]: ").strip() or "scrum"
+        
+        print(f"\n   [OK] PM system enabled: {pm_backend} + {pm_methodology}")
+    
+    # Phase 6: MCP Servers
+    print("\n[PHASE 6] Integrations\n")
     
     mcp_servers = []
+    
+    # Add PM-related MCP servers
+    if pm_enabled:
+        if pm_backend == 'github':
+            print("   [OK] Adding GitHub MCP server for PM")
+            mcp_servers.append({
+                'name': 'github-pm',
+                'command': 'npx',
+                'args': ['-y', '@modelcontextprotocol/server-github'],
+                'purpose': 'GitHub Issues and Projects'
+            })
+        elif pm_backend == 'jira':
+            print("   [OK] Adding Atlassian MCP server for Jira")
+            mcp_servers.append({
+                'name': 'atlassian',
+                'url': 'https://mcp.atlassian.com/v1/sse',
+                'purpose': 'Jira integration'
+            })
+        elif pm_backend == 'azure-devops':
+            print("   [OK] Adding Azure DevOps MCP server")
+            mcp_servers.append({
+                'name': 'azure-devops',
+                'command': 'npx',
+                'args': ['-y', '@mcp-apps/azure-devops-mcp-server'],
+                'purpose': 'Azure DevOps Work Items'
+            })
+        elif pm_backend == 'linear':
+            print("   [OK] Adding Linear MCP server")
+            mcp_servers.append({
+                'name': 'linear',
+                'command': 'npx',
+                'args': ['-y', 'mcp-remote', 'https://mcp.linear.app/sse'],
+                'purpose': 'Linear Issues and Projects'
+            })
+        
+        if pm_doc_backend == 'confluence':
+            print("   [OK] Adding Confluence MCP server")
+            # Confluence uses same Atlassian server
+    
     if 'jira' in triggers or 'confluence' in triggers:
-        print("   [OK] Adding Atlassian MCP server for Jira/Confluence")
-        mcp_servers.append({
-            'name': 'atlassian',
-            'url': 'https://mcp.atlassian.com/v1/sse',
-            'purpose': 'Jira/Confluence integration'
-        })
+        if not any(s.get('name') == 'atlassian' for s in mcp_servers):
+            print("   [OK] Adding Atlassian MCP server for Jira/Confluence")
+            mcp_servers.append({
+                'name': 'atlassian',
+                'url': 'https://mcp.atlassian.com/v1/sse',
+                'purpose': 'Jira/Confluence integration'
+            })
     
     add_deepwiki = input("Add DeepWiki for GitHub repo analysis? [y/N]: ").strip().lower()
     if add_deepwiki == 'y':
@@ -302,6 +365,13 @@ def interactive_mode(output_dir: str) -> None:
     print(f"  Agents: {', '.join(agents)}")
     print(f"  Skills: {', '.join(skills)}")
     print(f"  MCP Servers: {len(mcp_servers)}")
+    if pm_enabled:
+        print(f"  PM System: Enabled")
+        print(f"    Backend: {pm_backend}")
+        print(f"    Doc Backend: {pm_doc_backend}")
+        print(f"    Methodology: {pm_methodology}")
+    else:
+        print(f"  PM System: Disabled")
     print(f"  Output: {output_dir}")
     print("=" * 60)
     
@@ -309,6 +379,12 @@ def interactive_mode(output_dir: str) -> None:
     if confirm == 'n':
         print("Cancelled.")
         return
+    
+    # Add PM agents and skills if enabled
+    if pm_enabled:
+        agents.extend(['product-owner', 'sprint-master', 'task-manager', 'reporting-agent'])
+        skills.extend(['create-epic', 'create-story', 'create-task', 'estimate-task', 
+                       'run-standup', 'plan-sprint', 'close-sprint', 'generate-burndown', 'health-check'])
     
     # Generate
     config = ProjectConfig(
@@ -322,7 +398,11 @@ def interactive_mode(output_dir: str) -> None:
         skills=skills,
         mcp_servers=mcp_servers,
         blueprint_id=blueprint_id,
-        team_context=team_context
+        team_context=team_context,
+        pm_enabled=pm_enabled,
+        pm_backend=pm_backend,
+        pm_doc_backend=pm_doc_backend,
+        pm_methodology=pm_methodology
     )
     
     generator = ProjectGenerator(config, output_dir)
@@ -342,13 +422,25 @@ def interactive_mode(output_dir: str) -> None:
             print(f"   - {error}")
 
 
-def generate_from_blueprint(blueprint_id: str, output_dir: str, project_name: str = None) -> None:
+def generate_from_blueprint(
+    blueprint_id: str, 
+    output_dir: str, 
+    project_name: str = None,
+    pm_enabled: bool = False,
+    pm_backend: str = None,
+    pm_doc_backend: str = None,
+    pm_methodology: str = None
+) -> None:
     """Generate project from a blueprint.
     
     Args:
         blueprint_id: Blueprint identifier.
         output_dir: Target output directory.
         project_name: Optional project name override.
+        pm_enabled: If True, include PM system.
+        pm_backend: PM backend (github, jira, azure-devops, linear).
+        pm_doc_backend: Documentation backend.
+        pm_methodology: PM methodology (scrum, kanban, hybrid, waterfall).
     """
     blueprint_path = get_factory_root() / 'blueprints' / blueprint_id / 'blueprint.json'
     
@@ -363,6 +455,48 @@ def generate_from_blueprint(blueprint_id: str, output_dir: str, project_name: st
     metadata = blueprint.get('metadata', {})
     stack = blueprint.get('stack', {})
     
+    # Extract agents and skills from blueprint
+    agents = [a['patternId'] for a in blueprint.get('agents', [])]
+    skills = [s['patternId'] for s in blueprint.get('skills', [])]
+    mcp_servers = blueprint.get('mcpServers', [])
+    
+    # Add PM agents, skills, and MCP servers if enabled
+    if pm_enabled:
+        agents.extend(['product-owner', 'sprint-master', 'task-manager', 'reporting-agent'])
+        skills.extend(['create-epic', 'create-story', 'create-task', 'estimate-task', 
+                       'run-standup', 'plan-sprint', 'close-sprint', 'generate-burndown', 'health-check'])
+        
+        # Add PM MCP server
+        if pm_backend == 'github':
+            mcp_servers.append({
+                'name': 'github-pm',
+                'command': 'npx',
+                'args': ['-y', '@modelcontextprotocol/server-github'],
+                'purpose': 'GitHub Issues and Projects'
+            })
+        elif pm_backend == 'jira':
+            mcp_servers.append({
+                'name': 'atlassian',
+                'url': 'https://mcp.atlassian.com/v1/sse',
+                'purpose': 'Jira integration'
+            })
+        elif pm_backend == 'azure-devops':
+            mcp_servers.append({
+                'name': 'azure-devops',
+                'command': 'npx',
+                'args': ['-y', '@mcp-apps/azure-devops-mcp-server'],
+                'purpose': 'Azure DevOps Work Items'
+            })
+        elif pm_backend == 'linear':
+            mcp_servers.append({
+                'name': 'linear',
+                'command': 'npx',
+                'args': ['-y', 'mcp-remote', 'https://mcp.linear.app/sse'],
+                'purpose': 'Linear Issues and Projects'
+            })
+        
+        print(f"   [OK] PM system enabled: {pm_backend} + {pm_methodology}")
+    
     # Extract configuration from blueprint
     config = ProjectConfig(
         project_name=project_name or blueprint_id + '-project',
@@ -371,10 +505,14 @@ def generate_from_blueprint(blueprint_id: str, output_dir: str, project_name: st
         primary_language=stack.get('primaryLanguage', 'python'),
         frameworks=[f['name'] for f in stack.get('frameworks', [])],
         triggers=['jira', 'confluence'],  # Default triggers
-        agents=[a['patternId'] for a in blueprint.get('agents', [])],
-        skills=[s['patternId'] for s in blueprint.get('skills', [])],
-        mcp_servers=blueprint.get('mcpServers', []),
-        blueprint_id=blueprint_id
+        agents=agents,
+        skills=skills,
+        mcp_servers=mcp_servers,
+        blueprint_id=blueprint_id,
+        pm_enabled=pm_enabled,
+        pm_backend=pm_backend,
+        pm_doc_backend=pm_doc_backend,
+        pm_methodology=pm_methodology
     )
     
     print(f"\n[*] Generating from blueprint: {blueprint_id}")
@@ -462,7 +600,11 @@ def analyze_repository(repo_path: str) -> None:
 def onboard_repository(
     repo_path: str,
     blueprint_id: str = None,
-    dry_run: bool = False
+    dry_run: bool = False,
+    pm_enabled: bool = False,
+    pm_backend: str = None,
+    pm_doc_backend: str = None,
+    pm_methodology: str = None
 ) -> None:
     """Onboard an existing repository with Cursor Agent Factory.
     
@@ -470,6 +612,10 @@ def onboard_repository(
         repo_path: Path to repository to onboard.
         blueprint_id: Optional blueprint to use.
         dry_run: If True, preview changes without making them.
+        pm_enabled: If True, include PM system.
+        pm_backend: PM backend (github, jira, azure-devops, linear).
+        pm_doc_backend: Documentation backend.
+        pm_methodology: PM methodology (scrum, kanban, hybrid, waterfall).
     """
     from scripts.repo_analyzer import RepoAnalyzer
     
@@ -687,10 +833,15 @@ Examples:
   %(prog)s --config project.yaml --output C:\\Projects\\my-project
   %(prog)s --interactive --output C:\\Projects\\my-project
   
+  # Generate with Project Management System
+  %(prog)s --blueprint python-fastapi --output C:\\Projects\\my-api --pm-enabled --pm-backend github --pm-methodology scrum
+  %(prog)s --blueprint java-spring --output C:\\Projects\\my-api --pm-enabled --pm-backend jira --pm-doc-backend confluence
+  
   # Onboard existing repository
   %(prog)s --analyze C:\\Projects\\existing-repo
   %(prog)s --onboard C:\\Projects\\existing-repo
   %(prog)s --onboard C:\\Projects\\existing-repo --blueprint csharp-dotnet
+  %(prog)s --onboard C:\\Projects\\existing-repo --pm-enabled --pm-backend azure-devops
   %(prog)s --onboard C:\\Projects\\existing-repo --dry-run
   %(prog)s --rollback C:\\Projects\\existing-repo
         '''
@@ -804,6 +955,37 @@ Examples:
         help='Output directory for quickstart (default: ./quickstart-demo)'
     )
     
+    # Project Management System commands
+    parser.add_argument(
+        '--pm-enabled',
+        action='store_true',
+        help='Enable project management system (adds PM agents, skills, and MCP configs)'
+    )
+    
+    parser.add_argument(
+        '--pm-backend',
+        type=str,
+        choices=['github', 'jira', 'azure-devops', 'linear'],
+        metavar='BACKEND',
+        help='PM backend: github, jira, azure-devops, or linear'
+    )
+    
+    parser.add_argument(
+        '--pm-doc-backend',
+        type=str,
+        choices=['github-wiki', 'confluence', 'azure-wiki', 'none'],
+        metavar='DOC_BACKEND',
+        help='Documentation backend: github-wiki, confluence, azure-wiki, or none'
+    )
+    
+    parser.add_argument(
+        '--pm-methodology',
+        type=str,
+        choices=['scrum', 'kanban', 'hybrid', 'waterfall'],
+        metavar='METHODOLOGY',
+        help='PM methodology: scrum, kanban, hybrid, or waterfall'
+    )
+    
     args = parser.parse_args()
     
     # Handle list commands
@@ -821,7 +1003,15 @@ Examples:
         return
     
     if args.onboard:
-        onboard_repository(args.onboard, args.blueprint, args.dry_run)
+        onboard_repository(
+            args.onboard, 
+            args.blueprint, 
+            args.dry_run,
+            pm_enabled=args.pm_enabled,
+            pm_backend=args.pm_backend,
+            pm_doc_backend=args.pm_doc_backend,
+            pm_methodology=args.pm_methodology
+        )
         return
     
     if args.rollback:
@@ -847,7 +1037,15 @@ Examples:
     if args.interactive:
         interactive_mode(args.output)
     elif args.blueprint:
-        generate_from_blueprint(args.blueprint, args.output, args.name)
+        generate_from_blueprint(
+            args.blueprint, 
+            args.output, 
+            args.name,
+            pm_enabled=args.pm_enabled,
+            pm_backend=args.pm_backend,
+            pm_doc_backend=args.pm_doc_backend,
+            pm_methodology=args.pm_methodology
+        )
     elif args.config:
         generate_from_config_file(args.config, args.output)
     else:

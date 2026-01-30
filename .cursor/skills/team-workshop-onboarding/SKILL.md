@@ -173,7 +173,7 @@ What value are you protecting?"
 
 #### Part 3: Stack & Team Assembly (45 min)
 
-**Blueprint Selection (20 min)**
+**Blueprint Selection (15 min)**
 
 ```
 "Based on what you've shared, here are matching blueprints:
@@ -186,7 +186,27 @@ Quick show of hands: Which resonates more?
 Any must-have technologies not covered?"
 ```
 
-**Agent Quick Picks (25 min)**
+**PM Quick Selection (10 min)**
+
+```
+"How does your team prefer to work?
+
+Quick vote:
+- Fixed sprints with ceremonies [Scrum]
+- Continuous flow, pull work [Kanban]
+- Phased with gates [Waterfall]
+
+Where does your work live?
+- GitHub Issues/Projects
+- Jira
+- Azure DevOps
+- Linear
+- Other: {OTHER_TOOL}
+
+Your PM setup: {METHODOLOGY} + {BACKEND}"
+```
+
+**Agent Quick Picks (20 min)**
 
 ```
 "Here are agents that could help you. Vote for your top 4:
@@ -303,8 +323,10 @@ For teams who want comprehensive alignment, the full 5-workshop series provides 
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ WORKSHOP 3: Stack Safari (2-3 hours)                                    │
-│   Games: Trade-Off Tetris, Architecture Pictionary                      │
-│   Outputs: Stack Configuration, Architecture Diagrams, Blueprint        │
+│   Games: Trade-Off Tetris, Architecture Pictionary,                   │
+│          Methodology Match, Tool Territory                             │
+│   Outputs: Stack Configuration, Architecture Diagrams, Blueprint,      │
+│            PM Configuration                                             │
 └─────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
@@ -691,6 +713,92 @@ knowledgeSources:
       example: "{EXAMPLE_LOCATION}"
 ```
 
+### Project Flow Setup (30 min)
+
+How will your team organize work, track progress, and collaborate? Let's discover your project management preferences through interactive games.
+
+#### Game: Methodology Match (15 min)
+
+```
+"How does your team prefer to work?
+
+I'll describe scenarios. Vote on what feels most natural:
+
+Scenario 1: Planning
+A) We plan everything at sprint start, then execute [Scrum]
+B) We pull work continuously as capacity frees up [Kanban]
+C) We plan phases with formal gates [Waterfall]
+
+Scenario 2: Deadlines
+A) Fixed sprints with variable scope [Scrum]
+B) Variable time with fixed scope [Waterfall]
+C) Continuous flow, measure lead time [Kanban]
+
+Scenario 3: Ceremonies
+A) Regular standups, planning, retros [Scrum]
+B) On-demand syncs, focus on flow [Kanban]
+C) Phase reviews and sign-offs [Waterfall]
+
+Your team leans toward: {DETECTED_METHODOLOGY}"
+```
+
+**Synthesis:**
+- Tally votes for each scenario
+- Identify dominant methodology pattern
+- Note if team is hybrid (e.g., Scrum-Kanban)
+- Document methodology preference
+
+#### Game: Tool Territory (10 min)
+
+```
+"Where does your work live?
+
+Quick show of hands:
+- GitHub for everything (Issues, Projects, Wiki)
+- Jira for tickets, GitHub for code
+- Azure DevOps (Microsoft stack)
+- Linear (modern, fast)
+- Other/Multiple
+
+Your primary PM backend: {SELECTED_BACKEND}
+Your documentation backend: {SELECTED_DOC_BACKEND}"
+```
+
+**Synthesis:**
+- Identify primary project management backend
+- Identify documentation backend (may differ from PM backend)
+- Note any integrations needed
+- Document tool preferences
+
+#### PM Configuration (5 min)
+
+Based on game results, configure PM system using `pm-configuration` skill:
+
+```
+"Based on your preferences:
+- Methodology: {DETECTED_METHODOLOGY}
+- PM Backend: {SELECTED_BACKEND}
+- Documentation Backend: {SELECTED_DOC_BACKEND}
+
+I'm configuring your project management system now..."
+```
+
+**Action:** Use `pm-configuration` skill to:
+- Set up PM backend connection
+- Configure methodology (Scrum/Kanban/Waterfall)
+- Initialize PM metrics tracking
+- Set up sprint/epic/story structure (if applicable)
+
+**Output:**
+```yaml
+pmConfiguration:
+  methodology: "{DETECTED_METHODOLOGY}"
+  backend: "{SELECTED_BACKEND}"
+  docBackend: "{SELECTED_DOC_BACKEND}"
+  sprintLength: "{SPRINT_LENGTH}"  # if Scrum
+  metricsEnabled: true
+```
+
 ### Closing (15 min)
 
 Present stack configuration summary including knowledge sources.
@@ -871,6 +979,7 @@ At the end of the workshop series, the following artifacts are generated:
 | Team Charter | Vision Quest | `TEAM_CHARTER.md` |
 | Ethics Framework | Ethics Arena | `ETHICS_FRAMEWORK.md` |
 | Stack Configuration | Stack Safari | `stack-configuration.json` |
+| PM Configuration | Stack Safari | `knowledge/pm-metrics.json`, `.cursor/skills/pm-configuration/` |
 | Agent Roster | Agent Assembly | `agent-roster.json` |
 | .cursorrules | All workshops | `.cursorrules` |
 | Agents | Agent Assembly | `.cursor/agents/*.md` |

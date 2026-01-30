@@ -98,6 +98,11 @@ class ProjectConfig:
         mcp_servers: List of MCP server configurations.
         style_guide: Coding style guide preference.
         blueprint_id: Optional blueprint to use as base.
+        team_context: Team size and experience context.
+        pm_enabled: Whether to enable project management system.
+        pm_backend: PM backend (github, jira, azure-devops, linear).
+        pm_doc_backend: Documentation backend (github-wiki, confluence, azure-wiki, none).
+        pm_methodology: PM methodology (scrum, kanban, hybrid, waterfall).
     """
     project_name: str
     project_description: str = ""
@@ -111,6 +116,10 @@ class ProjectConfig:
     style_guide: str = "default"
     blueprint_id: Optional[str] = None
     team_context: str = ""
+    pm_enabled: bool = False
+    pm_backend: Optional[str] = None
+    pm_doc_backend: Optional[str] = None
+    pm_methodology: Optional[str] = None
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProjectConfig':
@@ -134,8 +143,43 @@ class ProjectConfig:
             mcp_servers=data.get('mcp_servers', []),
             style_guide=data.get('style_guide', 'default'),
             blueprint_id=data.get('blueprint_id'),
-            team_context=data.get('team_context', '')
+            team_context=data.get('team_context', ''),
+            pm_enabled=data.get('pm_enabled', False),
+            pm_backend=data.get('pm_backend'),
+            pm_doc_backend=data.get('pm_doc_backend'),
+            pm_methodology=data.get('pm_methodology')
         )
+    
+    def get_all_agents(self) -> List[str]:
+        """Get all agents including PM agents if PM is enabled.
+        
+        Returns:
+            List of all agent IDs to include.
+        """
+        agents = list(self.agents)
+        if self.pm_enabled:
+            pm_agents = ['product-owner', 'sprint-master', 'task-manager', 'reporting-agent']
+            for agent in pm_agents:
+                if agent not in agents:
+                    agents.append(agent)
+        return agents
+    
+    def get_all_skills(self) -> List[str]:
+        """Get all skills including PM skills if PM is enabled.
+        
+        Returns:
+            List of all skill IDs to include.
+        """
+        skills = list(self.skills)
+        if self.pm_enabled:
+            pm_skills = [
+                'create-epic', 'create-story', 'create-task', 'estimate-task',
+                'run-standup', 'plan-sprint', 'close-sprint', 'generate-burndown', 'health-check'
+            ]
+            for skill in pm_skills:
+                if skill not in skills:
+                    skills.append(skill)
+        return skills
     
     @classmethod
     def from_yaml_file(cls, filepath: str) -> 'ProjectConfig':
