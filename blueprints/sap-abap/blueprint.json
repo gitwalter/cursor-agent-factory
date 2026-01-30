@@ -39,11 +39,10 @@
     {"patternId": "feature-workflow", "required": true, "customizations": {"name": "sap-feature"}},
     {"patternId": "grounding", "required": true, "customizations": {"name": "sap-grounding"}},
     {"patternId": "tdd", "required": true, "customizations": {"name": "tdd-abap"}},
-    {"patternId": "code-templates", "required": true},
-    {"patternId": "cap-development", "required": false}
+    {"patternId": "code-templates", "required": true}
   ],
   "knowledge": [
-    {"filename": "sap-cap-patterns.json", "description": "SAP CAP, CDS, RAP, and ABAP Cloud patterns", "required": true},
+    {"filename": "sap-cap-patterns.json", "description": "SAP ABAP Cloud patterns (CDS basics)", "required": false},
     {"filename": "naming-conventions.json", "description": "ABAP naming conventions (Clean/Hungarian)"},
     {"filename": "cdhdr-object-classes.json", "description": "Change document object classes"},
     {"filename": "common-table-patterns.json", "description": "SAP table patterns"},
@@ -62,13 +61,6 @@
       {"category": "enhancement", "directory": "templates/abap/clean-abap/", "description": "Enhancement implementation"},
       {"category": "report", "directory": "templates/abap/clean-abap/", "description": "Executable report with selection screen"}
     ],
-    "capTemplates": [
-      {"category": "schema", "directory": "templates/cap/nodejs/db/"},
-      {"category": "service", "directory": "templates/cap/nodejs/srv/"},
-      {"category": "handler", "directory": "templates/cap/nodejs/srv/"},
-      {"category": "event-handler", "directory": "templates/cap/nodejs/srv/events/"},
-      {"category": "mta-config", "directory": "templates/cap/mta/"}
-    ],
     "fioriTemplates": [
       {"category": "list-report", "directory": "templates/fiori/list-report/"},
       {"category": "object-page", "directory": "templates/fiori/object-page/"},
@@ -76,10 +68,6 @@
       {"category": "worklist", "directory": "templates/fiori/worklist/"}
     ],
     "promptTemplates": [
-      {"category": "rap", "directory": "templates/prompts/rap/"},
-      {"category": "cds", "directory": "templates/prompts/cds/"},
-      {"category": "cap", "directory": "templates/prompts/cap/"},
-      {"category": "fiori", "directory": "templates/prompts/fiori/"},
       {"category": "service-class", "directory": "templates/prompts/service-class/"},
       {"category": "test-class", "directory": "templates/prompts/test-class/"},
       {"category": "abap-cloud", "directory": "templates/prompts/abap-cloud/"}

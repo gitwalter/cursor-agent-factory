@@ -5,6 +5,21 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2026-01-30
+
+### Added
+
+- **New SAP CAP Blueprint** (`blueprints/sap-cap/`)
+  - Dedicated blueprint for SAP Cloud Application Programming Model
+  - Covers CDS modeling, Node.js/Java services, Fiori Elements, BTP deployment
+  - Parity with SAP RAP blueprint for consistent SAP coverage
+
+### Changed
+
+- Updated `sap-abap` blueprint to focus on classic ABAP (removed CAP references)
+- Updated `docs/reference/BLUEPRINTS.md` with SAP CAP blueprint
+- Updated `docs/USAGE_GUIDE.md` with all 4 SAP blueprints
+
 ## [2.3.0] - 2026-01-30
 
 ### Added

@@ -316,7 +316,9 @@ C:\App\Anaconda\python.exe cli\factory_cli.py ^
 | `csharp-dotnet` | Enterprise .NET 8+ applications |
 | `ai-agent-development` | AI agents with LangChain/LangGraph |
 | `multi-agent-systems` | Multi-agent orchestration systems |
-| `sap-abap` | SAP ABAP/RAP development |
+| `sap-abap` | SAP ABAP development (Clean ABAP) |
+| `sap-rap` | SAP RAP development (RESTful ABAP) |
+| `sap-cap` | SAP CAP development (Node.js/Java) |
 | `sap-cpi-pi` | SAP CPI/PI integration flows |
 
 ### Viewing Blueprint Details
