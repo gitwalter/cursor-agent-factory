@@ -5,6 +5,66 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-01-30
+
+### Added
+
+- **New SAP RAP Blueprint** (`blueprints/sap-rap/`)
+  - Dedicated blueprint for RESTful ABAP Programming (RAP) development
+  - Covers CDS views, behavior definitions, Fiori Elements, ABAP Cloud
+  - Separate from general ABAP blueprint for focused RAP development
+
+- **SAP Knowledge Files** (10 new files in `knowledge/`)
+  - `cpi-error-handling.json` - Exception handling, retry strategies, circuit breaker patterns
+  - `mapping-patterns.json` - XML/JSON/IDoc mapping and transformation patterns
+  - `b2b-patterns.json` - EDI (EDIFACT/X12), AS2 protocol, partner management
+  - `security-patterns.json` - OAuth 2.0, certificates, encryption, credential management
+  - `naming-conventions.json` - Clean ABAP and Hungarian notation conventions
+  - `common-table-patterns.json` - SAP table structures, delivery classes, audit fields
+  - `tadir-object-types.json` - ABAP repository object types reference
+  - `cdhdr-object-classes.json` - Change document patterns for audit trails
+  - `service-class-catalog.json` - Service class, repository, factory patterns
+  - `sap-reference-repos.json` - Curated SAP sample repositories
+
+- **RAP Templates** (16 files in `templates/abap/rap/`)
+  - Behavior definitions: basic, draft, validation, determination, action, authorization
+  - Behavior implementations: basic, validation, determination, action
+  - CDS views: entity, interface-view, projection
+  - Fiori annotations: list-report, object-page
+  - Tests: behavior test template
+
+- **CPI Templates** (16 files in `templates/integration/`)
+  - Groovy error handling: exception-handling, retry-logic
+  - Groovy message processing: json-parser, json-builder, xml-to-json, structured-logging, credential-access
+  - iFlow patterns: exception-subprocess, content-router
+  - B2B integration: idoc-processing, edi-processor
+  - Documentation: iflow-spec, mapping-spec
+
+- **CAP Node.js Templates** (14 files in `templates/cap/`)
+  - CDS schemas: entity, entity-associations, aspect, schema
+  - Services: service.cds, service-handler.js, service-handler.ts
+  - Event handlers: before-create, after-create, on-action
+  - MTA deployment: mta.yaml, xs-security.json, package.json
+  - Tests: service-test
+
+- **Clean ABAP Templates** (8 files in `templates/abap/clean-abap/`)
+  - service-class, global-class, exception-class, factory-class
+  - test-class, report, enhancement, interface
+
+### Changed
+
+- Updated `sap-abap` blueprint - now focuses on classic ABAP patterns, Clean ABAP
+- Updated `sap-cpi-pi` blueprint - references new template structure
+- Updated `docs/reference/BLUEPRINTS.md` - added SAP RAP blueprint
+- Updated `docs/reference/KNOWLEDGE_FILES.md` - added 10 new SAP knowledge files
+
+### Summary
+
+This release adds comprehensive SAP template coverage with **66 new files** and **8,045 lines of code**, including:
+- 1 new blueprint (SAP RAP)
+- 10 new knowledge files
+- 54 new templates across RAP, CPI, CAP, and ABAP domains
+
 ## [2.2.1] - 2026-01-30
 
 ### Added
