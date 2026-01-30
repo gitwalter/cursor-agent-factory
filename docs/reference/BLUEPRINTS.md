@@ -44,7 +44,8 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 | `python-streamlit` | Python | Streamlit 1.28+, Pandas 2.0+, NumPy 1.24+ | Frontend/Full-Stack | Low-Medium |
 | `ai-agent-development` | Python | LangChain 0.3+, LangGraph 0.2+, CrewAI 0.50+ | AI/Agent | High |
 | `multi-agent-systems` | Python | LangGraph 0.1+, LangChain 0.2+, Multi-agent orchestration | AI/Agent | Very High |
-| `sap-abap` | ABAP | RAP 2.x, CAP 7.x, ABAP Cloud 2302+, Fiori Elements | Integration | High |
+| `sap-abap` | ABAP | Clean ABAP, ABAP Cloud 2302+, Classic patterns | Integration | High |
+| `sap-rap` | ABAP/CDS | RAP 2.x, CDS, Fiori Elements, ABAP Cloud | Integration | High |
 | `sap-cpi-pi` | Groovy | SAP CPI SDK 1.x, Groovy 4.0.x, Spock Framework 2.4+ | Integration | High |
 | `n8n-automation` | JavaScript | n8n 1.0+, Node.js 18+, TypeScript 5+ (optional) | Integration/Automation | Medium |
 
@@ -73,7 +74,8 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 - **Enterprise APIs**: `csharp-dotnet` - .NET 9 with Clean Architecture and CQRS
 
 **SAP Ecosystem:**
-- **ABAP Development**: `sap-abap` - RAP, CAP, ABAP Cloud, Fiori
+- **ABAP Development**: `sap-abap` - Clean ABAP, ABAP Cloud, classic patterns
+- **RAP Development**: `sap-rap` - RESTful ABAP Programming, CDS, Fiori Elements
 - **Integration Flows**: `sap-cpi-pi` - CPI/PI iFlows with Groovy scripting
 
 ### By Project Type

@@ -2,7 +2,7 @@
   "metadata": {
     "blueprintId": "sap-abap",
     "blueprintName": "SAP ABAP Blueprint",
-    "description": "SAP ABAP development with RAP, CAP, ABAP Cloud, and Fiori integration",
+    "description": "SAP ABAP development with Clean ABAP, ABAP Cloud, and classic patterns. For RAP-focused development, see sap-rap blueprint",
     "version": "2.0.0",
     "author": "Cursor Agent Factory",
     "tags": ["sap", "abap", "rap", "cap", "abap-cloud", "fiori", "btp", "enterprise"],
@@ -53,20 +53,14 @@
   ],
   "templates": {
     "codeTemplates": [
-      {"category": "service-class", "directory": "templates/abap/{style}/service-class/"},
-      {"category": "global-class", "directory": "templates/abap/{style}/global-class/"},
-      {"category": "test-class", "directory": "templates/abap/{style}/test-class/"},
-      {"category": "exception-class", "directory": "templates/abap/{style}/exception-class/"},
-      {"category": "enhancement", "directory": "templates/abap/{style}/enhancement/"},
-      {"category": "rap-behavior", "directory": "templates/abap/{style}/rap/behavior/"},
-      {"category": "rap-implementation", "directory": "templates/abap/{style}/rap/implementation/"},
-      {"category": "rap-draft", "directory": "templates/abap/{style}/rap/draft/"},
-      {"category": "cds-entity", "directory": "templates/abap/{style}/cds/entity/"},
-      {"category": "cds-view", "directory": "templates/abap/{style}/cds/view/"},
-      {"category": "cds-projection", "directory": "templates/abap/{style}/cds/projection/"},
-      {"category": "abap-cloud", "directory": "templates/abap/{style}/abap-cloud/"},
-      {"category": "report", "directory": "templates/abap/{style}/report/"},
-      {"category": "function", "directory": "templates/abap/{style}/function/"}
+      {"category": "service-class", "directory": "templates/abap/clean-abap/", "description": "Service class with dependency injection"},
+      {"category": "global-class", "directory": "templates/abap/clean-abap/", "description": "General purpose ABAP class"},
+      {"category": "test-class", "directory": "templates/abap/clean-abap/", "description": "ABAP Unit test class"},
+      {"category": "exception-class", "directory": "templates/abap/clean-abap/", "description": "Custom exception class"},
+      {"category": "factory-class", "directory": "templates/abap/clean-abap/", "description": "Factory for dependency injection"},
+      {"category": "interface", "directory": "templates/abap/clean-abap/", "description": "Interface definition"},
+      {"category": "enhancement", "directory": "templates/abap/clean-abap/", "description": "Enhancement implementation"},
+      {"category": "report", "directory": "templates/abap/clean-abap/", "description": "Executable report with selection screen"}
     ],
     "capTemplates": [
       {"category": "schema", "directory": "templates/cap/nodejs/db/"},

@@ -73,6 +73,16 @@ Key elements:
 | `iflow-patterns.json` | Integration | SAP Integration Flow patterns, adapters, routing, exception handling, monitoring |
 | `n8n-patterns.json` | Integration | n8n workflow patterns, node configurations, error handling, data transformations |
 | `sap-cap-patterns.json` | Integration | SAP Cloud Application Programming patterns, CDS views, services, Fiori integration |
+| `cpi-error-handling.json` | Integration | CPI exception handling patterns, retry strategies, circuit breaker, error routing |
+| `mapping-patterns.json` | Integration | XML/JSON/IDoc mapping patterns, data transformations, helper functions |
+| `b2b-patterns.json` | Integration | EDI (EDIFACT/X12), AS2 protocol, partner management, IDoc integration |
+| `security-patterns.json` | Integration | OAuth 2.0, certificates, encryption, credential management, data masking |
+| `naming-conventions.json` | SAP/ABAP | Clean ABAP and Hungarian notation naming conventions for ABAP development |
+| `common-table-patterns.json` | SAP/ABAP | SAP table structures, delivery classes, key patterns, audit fields |
+| `tadir-object-types.json` | SAP/ABAP | ABAP repository object types (CLAS, INTF, DDLS, BDEF, SRVB, etc.) |
+| `cdhdr-object-classes.json` | SAP/ABAP | Change document patterns for audit trails and history tracking |
+| `service-class-catalog.json` | SAP/ABAP | Service class patterns, repository patterns, factory patterns for Clean ABAP |
+| `sap-reference-repos.json` | SAP/ABAP | Curated SAP sample repositories for learning and reference |
 | `design-patterns.json` | Core | Gang of Four and modern design patterns with stack-specific examples |
 | `architecture-patterns.json` | Core | Architectural patterns: microservices, event-driven, CQRS, layered architecture |
 | `security-checklist.json` | Core | Security best practices, OWASP guidelines, authentication, authorization, data protection |

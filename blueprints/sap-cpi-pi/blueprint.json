@@ -71,19 +71,16 @@
   "templates": {
     "codeTemplates": [
       {"category": "groovy-script", "directory": "templates/integration/groovy/", "version": "4.x"},
-      {"category": "groovy-base", "directory": "templates/integration/groovy/base/", "description": "Base Groovy script template"},
-      {"category": "groovy-message-processing", "directory": "templates/integration/groovy/message-processing/", "description": "Message processing patterns"},
-      {"category": "groovy-error-handling", "directory": "templates/integration/groovy/error-handling/", "description": "Error handling patterns"},
-      {"category": "message-mapping", "directory": "templates/integration/mapping/"},
-      {"category": "java-adapter", "directory": "templates/integration/java/"},
+      {"category": "groovy-base", "directory": "templates/integration/groovy/", "description": "Base Groovy script templates"},
+      {"category": "groovy-message-processing", "directory": "templates/integration/groovy/message-processing/", "description": "XML, JSON, logging, credential access patterns"},
+      {"category": "groovy-error-handling", "directory": "templates/integration/groovy/error-handling/", "description": "Exception handling, retry, circuit breaker patterns"},
+      {"category": "b2b-integration", "directory": "templates/integration/b2b/", "description": "IDoc, EDI, AS2, partner management patterns"},
       {"category": "test-script", "directory": "templates/integration/test/", "framework": "Spock"},
-      {"category": "iflow-definition", "directory": "templates/integration/iflow/", "description": "iFlow structure templates"}
+      {"category": "iflow-patterns", "directory": "templates/integration/iflow/", "description": "Exception subprocess, content router, splitter patterns"}
     ],
     "documentTemplates": [
-      {"name": "iflow_spec.md", "directory": "templates/docs/", "description": "Integration flow specification template"},
-      {"name": "mapping_spec.md", "directory": "templates/docs/", "description": "Message mapping specification"},
-      {"name": "interface_spec.md", "directory": "templates/docs/", "description": "Interface specification"},
-      {"name": "error-handling-spec.md", "directory": "templates/docs/", "description": "Error handling documentation"}
+      {"name": "iflow-spec.md.tmpl", "directory": "templates/docs/integration/", "description": "Integration flow specification template"},
+      {"name": "mapping-spec.md.tmpl", "directory": "templates/docs/integration/", "description": "Message mapping specification"}
     ]
   },
   "workflows": [
