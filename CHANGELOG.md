@@ -5,6 +5,97 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2026-01-30
+
+### Added
+
+- **Project Management System** - Complete PM system as optional factory product
+  - Multi-backend support: GitHub, Jira, Confluence, Azure DevOps, Linear
+  - Methodology support: Scrum, Kanban, Hybrid, Waterfall, SAFe
+  - Backend abstraction layer with unified PM operations interface
+  - Questionnaire-driven configuration (8 adaptive questions)
+
+- **PM Agents** - Four specialized agents for project management
+  - `product-owner` - Creates/refines stories, prioritizes backlog, accepts work
+  - `sprint-master` - Facilitates planning, standups, retros, sprint transitions
+  - `task-manager` - Breaks down stories, extracts TODOs, updates status
+  - `reporting-agent` - Generates burndowns, velocity reports, health indicators
+
+- **PM Skills** - Nine backend-agnostic project management skills
+  - `create-epic`, `create-story`, `create-task` - Work item creation
+  - `estimate-task` - Story point estimation suggestions
+  - `plan-sprint`, `close-sprint` - Sprint lifecycle management
+  - `run-standup` - Daily standup status reporting
+  - `generate-burndown` - Sprint burndown chart data
+  - `health-check` - Team health indicators and metrics
+
+- **CLI PM Flags** - New command-line options for PM configuration
+  - `--pm-enabled` - Enable project management system
+  - `--pm-backend` - Select PM backend (github/jira/azure-devops/linear)
+  - `--pm-doc-backend` - Select documentation backend
+  - `--pm-methodology` - Select methodology (scrum/kanban/hybrid/waterfall)
+
+- **MCP Server Templates** - Configuration templates for all backends
+  - GitHub: npx @modelcontextprotocol/server-github
+  - Atlassian: Remote (mcp.atlassian.com) and local (mcp-atlassian)
+  - Azure DevOps: @mcp-apps/azure-devops-mcp-server
+  - Linear: Remote (mcp.linear.app/sse)
+  - Multi-backend combined configurations
+
+- **PM Metrics System** - Comprehensive metrics with formulas
+  - Velocity metrics: velocity, trend, completion rate, carry-over
+  - Flow metrics: lead time, cycle time, throughput, WIP
+  - Quality metrics: bug ratio, rework rate, escaped defects
+  - Predictive metrics: sprint forecast, release prediction, risk score
+  - Team health metrics: blocker frequency, stale items, assignment balance
+
+- **PM Documentation** - Complete user and reference documentation
+  - `docs/pm-system/README.md` - Overview and quick start
+  - `docs/pm-system/USER_GUIDE.md` - Setup and daily usage
+  - `docs/pm-system/METHODOLOGY_REFERENCE.md` - Links to official sources
+  - `docs/pm-system/METRICS_REFERENCE.md` - Formulas and interpretation
+  - Backend-specific setup guides (6 guides)
+  - Agent reference documentation (4 agents)
+
+- **PM Tests** - 73 tests covering the PM system
+  - Schema validation tests for all PM JSON files
+  - Unit tests for PM configuration and adapters
+  - Integration tests for CLI PM flags
+
+### Changed
+
+- **ProjectConfig** - Added PM fields (pm_enabled, pm_backend, pm_doc_backend, pm_methodology)
+  - New `get_all_agents()` method returns agents including PM agents when enabled
+  - New `get_all_skills()` method returns skills including PM skills when enabled
+
+- **onboarding-flow skill** - Added Step 3.5 for optional PM system setup
+
+- **team-workshop-onboarding skill** - Added Project Flow section to Stack Safari
+  - Methodology Match game (15 min) - Detect team's preferred methodology
+  - Tool Territory game (10 min) - Identify PM and documentation backends
+
+- **Interactive CLI mode** - Added PM configuration in Phase 5
+
+### Integration Points
+
+The PM system is seamlessly integrated into existing factory flows:
+- Individual onboarding: Optional Step 3.5 after blueprint selection
+- Team workshops: Project Flow section in Stack Safari (Workshop 3)
+- CLI quick start: PM flags available for programmatic configuration
+
+### Philosophy
+
+This release continues the tradition of **love and care** by making project management
+accessible and non-burdensome:
+
+> "Project management should enhance development, not burden it."
+
+Key principles applied:
+- Optional by default - PM is always opt-in, never forced
+- Backend-agnostic - Use the tools your team already knows
+- Methodology-flexible - Adapt to how your team works
+- Transparent - All metrics formulas and interpretations documented
+
 ## [2.4.0] - 2026-01-30
 
 ### Added
