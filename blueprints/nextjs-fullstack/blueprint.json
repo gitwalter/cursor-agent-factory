@@ -2,7 +2,7 @@
   "metadata": {
     "blueprintId": "nextjs-fullstack",
     "blueprintName": "Next.js Full-Stack Blueprint",
-    "description": "Full-stack TypeScript development with Next.js 14+ App Router",
+    "description": "Full-stack TypeScript development with Next.js 15 App Router, Server Actions, and React Server Components",
     "version": "1.0.0",
     "author": "Cursor Agent Factory",
     "tags": ["typescript", "nextjs", "react", "fullstack", "frontend", "backend"]
@@ -10,8 +10,8 @@
   "stack": {
     "primaryLanguage": "typescript",
     "frameworks": [
-      {"name": "Next.js", "version": "14+", "purpose": "Full-stack framework"},
-      {"name": "React", "version": "18+", "purpose": "UI library"},
+      {"name": "Next.js", "version": "15", "purpose": "Full-stack framework"},
+      {"name": "React", "version": "19", "purpose": "UI library"},
       {"name": "Tailwind CSS", "version": "3+", "purpose": "Styling"},
       {"name": "Prisma", "version": "5+", "purpose": "ORM"},
       {"name": "tRPC", "version": "11+", "purpose": "Type-safe APIs", "optional": true},
@@ -51,18 +51,18 @@
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "TypeScript naming conventions"},
     {"filename": "component-patterns.json", "description": "React component patterns"},
-    {"filename": "nextjs-patterns.json", "description": "Next.js App Router patterns"},
+    {"filename": "nextjs-patterns.json", "description": "Next.js 15 App Router patterns, Server Actions, and React Server Components"},
     {"filename": "test-patterns.json", "description": "Vitest and Playwright patterns"}
   ],
   "templates": {
     "codeTemplates": [
-      {"category": "server-component", "directory": "templates/nextjs/components/server/"},
-      {"category": "client-component", "directory": "templates/nextjs/components/client/"},
-      {"category": "api-route", "directory": "templates/nextjs/api/"},
-      {"category": "server-action", "directory": "templates/nextjs/actions/"},
-      {"category": "prisma-model", "directory": "templates/nextjs/prisma/"},
-      {"category": "hook", "directory": "templates/nextjs/hooks/"},
-      {"category": "test", "directory": "templates/nextjs/test/"}
+      {"category": "server-component", "directory": "templates/typescript/nextjs/components/feature/"},
+      {"category": "client-component", "directory": "templates/typescript/nextjs/components/ui/"},
+      {"category": "page", "directory": "templates/typescript/nextjs/app/"},
+      {"category": "server-action", "directory": "templates/typescript/nextjs/app/[domain]/"},
+      {"category": "prisma-model", "directory": "templates/typescript/nextjs/"},
+      {"category": "hook", "directory": "templates/typescript/nextjs/"},
+      {"category": "test", "directory": "templates/typescript/nextjs/"}
     ],
     "documentTemplates": [
       {"name": "implementation_plan.md", "directory": "templates/docs/"},
@@ -114,8 +114,9 @@
     ],
     "rules": [
       {"name": "TypeScript Strict", "description": "Use strict TypeScript mode with no any types"},
-      {"name": "Server Components", "description": "Prefer React Server Components, use 'use client' only when needed"},
-      {"name": "Server Actions", "description": "Use Server Actions for mutations instead of API routes"},
+      {"name": "Server Components", "description": "Prefer React Server Components by default, use 'use client' only when needed for interactivity"},
+      {"name": "Server Actions", "description": "Use Server Actions for mutations instead of API routes. Place in app/[domain]/actions.ts"},
+      {"name": "App Router", "description": "Use Next.js 15 App Router with route groups, parallel routes, and intercepting routes"},
       {"name": "Zod Validation", "description": "Validate all inputs with Zod schemas"},
       {"name": "Testing", "description": "Write Vitest unit tests and Playwright E2E tests"}
     ]

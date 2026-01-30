@@ -2,27 +2,31 @@
   "metadata": {
     "blueprintId": "sap-abap",
     "blueprintName": "SAP ABAP Blueprint",
-    "description": "SAP ABAP development with RAP and CAP support",
-    "version": "1.0.0",
+    "description": "SAP ABAP development with RAP, CAP, ABAP Cloud, and Fiori integration",
+    "version": "2.0.0",
     "author": "Cursor Agent Factory",
-    "tags": ["sap", "abap", "rap", "cap", "enterprise"],
+    "tags": ["sap", "abap", "rap", "cap", "abap-cloud", "fiori", "btp", "enterprise"],
     "reference": "https://github.com/fielmann-ag/cursor-sap-development-workflow"
   },
   "stack": {
     "primaryLanguage": "abap",
-    "secondaryLanguages": ["cds", "javascript"],
+    "secondaryLanguages": ["cds", "javascript", "typescript"],
     "frameworks": [
-      {"name": "RAP", "purpose": "RESTful Application Programming"},
-      {"name": "CAP", "purpose": "Cloud Application Programming"}
+      {"name": "RAP", "version": "2.x", "purpose": "RESTful Application Programming"},
+      {"name": "CAP", "version": "7.x", "purpose": "Cloud Application Programming"},
+      {"name": "ABAP Cloud", "version": "2302+", "purpose": "Cloud-compatible ABAP development"},
+      {"name": "Fiori Elements", "version": "1.x", "purpose": "UI5-based Fiori applications"}
     ],
     "tools": [
-      {"name": "ABAP Unit", "purpose": "Testing"},
-      {"name": "abaplint", "purpose": "Linting"},
-      {"name": "Eclipse ADT", "purpose": "IDE"}
+      {"name": "ABAP Unit", "version": "latest", "purpose": "Unit testing framework"},
+      {"name": "abaplint", "version": "latest", "purpose": "ABAP linting and static analysis"},
+      {"name": "Eclipse ADT", "version": "latest", "purpose": "ABAP Development Tools IDE"},
+      {"name": "SAP Business Application Studio", "purpose": "CAP and Fiori development"},
+      {"name": "MTA Build Tool", "purpose": "Multi-target application deployment"}
     ],
     "styleGuides": [
-      {"name": "clean-abap", "description": "SAP Clean ABAP", "reference": "https://github.com/SAP/styleguides"},
-      {"name": "hungarian", "description": "Traditional Hungarian Notation"}
+      {"name": "clean-abap", "description": "SAP Clean ABAP", "reference": "https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md", "enforcement": "required"},
+      {"name": "hungarian", "description": "Traditional Hungarian Notation", "enforcement": "optional"}
     ]
   },
   "agents": [
@@ -39,6 +43,7 @@
     {"patternId": "cap-development", "required": false}
   ],
   "knowledge": [
+    {"filename": "sap-cap-patterns.json", "description": "SAP CAP, CDS, RAP, and ABAP Cloud patterns", "required": true},
     {"filename": "naming-conventions.json", "description": "ABAP naming conventions (Clean/Hungarian)"},
     {"filename": "cdhdr-object-classes.json", "description": "Change document object classes"},
     {"filename": "common-table-patterns.json", "description": "SAP table patterns"},
@@ -53,26 +58,44 @@
       {"category": "test-class", "directory": "templates/abap/{style}/test-class/"},
       {"category": "exception-class", "directory": "templates/abap/{style}/exception-class/"},
       {"category": "enhancement", "directory": "templates/abap/{style}/enhancement/"},
-      {"category": "rap", "directory": "templates/abap/{style}/rap/"},
+      {"category": "rap-behavior", "directory": "templates/abap/{style}/rap/behavior/"},
+      {"category": "rap-implementation", "directory": "templates/abap/{style}/rap/implementation/"},
+      {"category": "rap-draft", "directory": "templates/abap/{style}/rap/draft/"},
+      {"category": "cds-entity", "directory": "templates/abap/{style}/cds/entity/"},
+      {"category": "cds-view", "directory": "templates/abap/{style}/cds/view/"},
+      {"category": "cds-projection", "directory": "templates/abap/{style}/cds/projection/"},
+      {"category": "abap-cloud", "directory": "templates/abap/{style}/abap-cloud/"},
       {"category": "report", "directory": "templates/abap/{style}/report/"},
       {"category": "function", "directory": "templates/abap/{style}/function/"}
     ],
     "capTemplates": [
       {"category": "schema", "directory": "templates/cap/nodejs/db/"},
       {"category": "service", "directory": "templates/cap/nodejs/srv/"},
-      {"category": "handler", "directory": "templates/cap/nodejs/srv/"}
+      {"category": "handler", "directory": "templates/cap/nodejs/srv/"},
+      {"category": "event-handler", "directory": "templates/cap/nodejs/srv/events/"},
+      {"category": "mta-config", "directory": "templates/cap/mta/"}
+    ],
+    "fioriTemplates": [
+      {"category": "list-report", "directory": "templates/fiori/list-report/"},
+      {"category": "object-page", "directory": "templates/fiori/object-page/"},
+      {"category": "analytical-list", "directory": "templates/fiori/analytical-list/"},
+      {"category": "worklist", "directory": "templates/fiori/worklist/"}
     ],
     "promptTemplates": [
       {"category": "rap", "directory": "templates/prompts/rap/"},
+      {"category": "cds", "directory": "templates/prompts/cds/"},
+      {"category": "cap", "directory": "templates/prompts/cap/"},
+      {"category": "fiori", "directory": "templates/prompts/fiori/"},
       {"category": "service-class", "directory": "templates/prompts/service-class/"},
-      {"category": "test-class", "directory": "templates/prompts/test-class/"}
+      {"category": "test-class", "directory": "templates/prompts/test-class/"},
+      {"category": "abap-cloud", "directory": "templates/prompts/abap-cloud/"}
     ]
   },
   "mcpServers": [
-    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": true},
-    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal", "required": true},
-    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "SAP sample repos", "required": true},
-    {"name": "sequentialthinking", "url": "https://remote.mcpservers.org/sequentialthinking/mcp", "purpose": "Complex analysis", "required": false}
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence integration", "required": true},
+    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal, ABAP, RAP, CAP, Fiori documentation", "required": true},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "SAP sample repositories and documentation", "required": true},
+    {"name": "sequentialthinking", "url": "https://remote.mcpservers.org/sequentialthinking/mcp", "purpose": "Complex analysis and problem-solving", "required": false}
   ],
   "projectStructure": {
     "directories": [
@@ -94,15 +117,58 @@
       {"path": "README.md", "purpose": "Project documentation"}
     ]
   },
+  "enforcement": [
+    {"patternId": "clean-abap-enforcement", "required": true, "description": "Enforce Clean ABAP guidelines"},
+    {"patternId": "abap-cloud-compliance", "required": false, "description": "Verify ABAP Cloud compatibility"},
+    {"patternId": "rap-pattern-compliance", "required": true, "description": "Ensure RAP patterns are followed"},
+    {"patternId": "cds-best-practices", "required": true, "description": "Enforce CDS modeling best practices"},
+    {"patternId": "abap-unit-coverage", "required": true, "description": "Require ABAP Unit test coverage"}
+  ],
+  "testing": {
+    "frameworks": [
+      {"name": "ABAP Unit", "purpose": "Unit testing", "required": true},
+      {"name": "Test Double Framework", "purpose": "Mocking dependencies", "required": false}
+    ],
+    "patterns": [
+      {"name": "Given-When-Then", "description": "Structure test methods"},
+      {"name": "Test Isolation", "description": "Each test should be independent"},
+      {"name": "Mock Dependencies", "description": "Use test doubles for external dependencies"},
+      {"name": "Test Coverage", "description": "Aim for >80% coverage of business logic"}
+    ]
+  },
+  "deployment": {
+    "patterns": [
+      {"name": "BTP Deployment", "description": "Deploy CAP applications to SAP BTP using MTA"},
+      {"name": "Transport Management", "description": "Use SAP Transport Management for on-premise"},
+      {"name": "ABAP Git", "description": "Version control with ABAP Git"},
+      {"name": "CI/CD Integration", "description": "Automated testing and deployment"}
+    ],
+    "tools": [
+      {"name": "MTA Build Tool", "purpose": "Build multi-target applications"},
+      {"name": "Cloud Foundry CLI", "purpose": "Deploy to BTP Cloud Foundry"},
+      {"name": "SAP Transport Management", "purpose": "On-premise transport management"}
+    ]
+  },
   "cursorrules": {
     "variables": [
       {"name": "PYTHON_PATH", "description": "Python executable path", "default": "C:\\App\\Anaconda\\python.exe"},
-      {"name": "ABAP_STYLE_GUIDE", "description": "ABAP coding style", "default": "clean-abap"}
+      {"name": "ABAP_STYLE_GUIDE", "description": "ABAP coding style", "default": "clean-abap"},
+      {"name": "ABAP_CLOUD_MODE", "description": "Enable ABAP Cloud compatibility checks", "default": "false"},
+      {"name": "RAP_ENABLED", "description": "Enable RAP development patterns", "default": "true"},
+      {"name": "CAP_ENABLED", "description": "Enable CAP development patterns", "default": "true"},
+      {"name": "FIORI_ENABLED", "description": "Enable Fiori Elements patterns", "default": "true"}
     ],
     "rules": [
-      {"name": "Data Model Grounding", "description": "ALWAYS verify SAP table structures before implementation"},
-      {"name": "Style Guide Selection", "description": "Ask for style guide at project start"},
-      {"name": "MCP Integration", "description": "Auto-fetch Jira/Confluence when mentioned"}
+      {"name": "Data Model Grounding", "description": "ALWAYS verify SAP table structures and CDS views before implementation. Use MCP SAP documentation server to verify."},
+      {"name": "Style Guide Selection", "description": "Ask for style guide at project start. Default to Clean ABAP. Enforce Clean ABAP guidelines strictly."},
+      {"name": "MCP Integration", "description": "Auto-fetch Jira/Confluence when mentioned. Use SAP documentation MCP for ABAP, RAP, CAP, and Fiori questions."},
+      {"name": "RAP Patterns", "description": "When developing RAP applications, follow behavior definition patterns, use draft handling for complex scenarios, implement proper validations and determinations."},
+      {"name": "CDS Patterns", "description": "Separate base views from projection views. Use aspects for reusable fields. Define proper associations and compositions."},
+      {"name": "ABAP Cloud Compliance", "description": "When ABAP_CLOUD_MODE is enabled, only use released APIs. Check API release status using SAP documentation MCP."},
+      {"name": "Fiori Integration", "description": "When FIORI_ENABLED is true, add proper UI annotations (@UI.lineItem, @UI.identification) to projection views."},
+      {"name": "BTP Deployment", "description": "For CAP applications, use MTA for deployment. Configure proper service bindings and XSUAA settings."},
+      {"name": "ABAP Unit Testing", "description": "Write ABAP Unit tests for all business logic. Use Given-When-Then pattern. Mock dependencies."},
+      {"name": "Error Handling", "description": "Always use exception classes. Never use MESSAGE without exception. Implement proper error handling in behavior implementations."}
     ]
   }
 }

@@ -2,7 +2,7 @@
   "metadata": {
     "blueprintId": "java-spring",
     "blueprintName": "Java Spring Boot Blueprint",
-    "description": "Enterprise application development with Java and Spring Boot",
+    "description": "Enterprise application development with Java, Spring Boot 3.4, and Spring Modulith",
     "version": "1.0.0",
     "author": "Cursor Agent Factory",
     "tags": ["java", "spring", "backend", "enterprise"]
@@ -10,10 +10,11 @@
   "stack": {
     "primaryLanguage": "java",
     "frameworks": [
-      {"name": "Spring Boot", "version": "3.2+", "purpose": "Application framework"},
-      {"name": "Spring Data JPA", "version": "3.2+", "purpose": "Data access"},
-      {"name": "Spring Security", "version": "6.2+", "purpose": "Security"},
-      {"name": "Spring Web", "version": "6.1+", "purpose": "REST APIs"}
+      {"name": "Spring Boot", "version": "3.4", "purpose": "Application framework"},
+      {"name": "Spring Data JPA", "version": "3.4", "purpose": "Data access"},
+      {"name": "Spring Security", "version": "6.4+", "purpose": "Security"},
+      {"name": "Spring Web", "version": "6.1+", "purpose": "REST APIs"},
+      {"name": "Spring Modulith", "version": "1.2+", "purpose": "Modular monolith architecture", "optional": true}
     ],
     "databases": [
       {"type": "sql", "name": "PostgreSQL", "purpose": "Primary database"},
@@ -43,17 +44,25 @@
   ],
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "Java naming conventions"},
-    {"filename": "spring-patterns.json", "description": "Spring Boot patterns"},
+    {"filename": "spring-patterns.json", "description": "Spring Boot 3.4 patterns, Spring Modulith, and best practices"},
     {"filename": "test-patterns.json", "description": "JUnit patterns"}
   ],
   "templates": {
     "codeTemplates": [
-      {"category": "controller", "directory": "templates/java/controller/"},
-      {"category": "service", "directory": "templates/java/service/"},
-      {"category": "repository", "directory": "templates/java/repository/"},
-      {"category": "entity", "directory": "templates/java/entity/"},
-      {"category": "dto", "directory": "templates/java/dto/"},
-      {"category": "test", "directory": "templates/java/test/"}
+      {"category": "controller", "directory": "templates/java/spring/domain/"},
+      {"category": "service", "directory": "templates/java/spring/domain/"},
+      {"category": "repository", "directory": "templates/java/spring/domain/"},
+      {"category": "entity", "directory": "templates/java/spring/domain/"},
+      {"category": "dto", "directory": "templates/java/spring/domain/"},
+      {"category": "config", "directory": "templates/java/spring/config/"},
+      {"category": "exception", "directory": "templates/java/spring/exception/"},
+      {"category": "modulith", "directory": "templates/java/spring/modulith/"},
+      {"category": "test", "directory": "templates/java/spring/domain/"}
+    ],
+    "documentTemplates": [
+      {"name": "implementation_plan.md", "directory": "templates/docs/"},
+      {"name": "technical_spec.md", "directory": "templates/docs/"},
+      {"name": "test_plan.md", "directory": "templates/docs/"}
     ]
   },
   "projectStructure": {
@@ -61,7 +70,8 @@
       {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
       {"path": ".cursor/skills/", "purpose": "Reusable skills"},
       {"path": "knowledge/", "purpose": "Reference data"},
-      {"path": "templates/", "purpose": "Code templates"},
+      {"path": "templates/java/spring/", "purpose": "Code templates"},
+      {"path": "templates/docs/", "purpose": "Document templates"},
       {"path": "workflows/", "purpose": "Workflow documentation"},
       {"path": "src/main/java/", "purpose": "Java source"},
       {"path": "src/main/resources/", "purpose": "Resources"},
@@ -71,6 +81,21 @@
       {"path": ".cursorrules", "purpose": "Agent behavior rules"},
       {"path": "README.md", "purpose": "Project documentation"},
       {"path": "pom.xml", "purpose": "Maven config"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "JAVA_VERSION", "description": "Java version", "default": "21"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "google"}
+    ],
+    "rules": [
+      {"name": "Spring Boot 3.4", "description": "Use Spring Boot 3.4 with Java 21+ features"},
+      {"name": "Spring Modulith", "description": "Consider Spring Modulith for modular monolith architecture"},
+      {"name": "Dependency Injection", "description": "Use constructor injection, avoid field injection"},
+      {"name": "REST Controllers", "description": "Use @RestController with @RequestMapping for REST APIs"},
+      {"name": "Service Layer", "description": "Business logic in @Service classes"},
+      {"name": "Repository Pattern", "description": "Use Spring Data JPA repositories"},
+      {"name": "Testing", "description": "Write JUnit 5 tests with @SpringBootTest for integration tests"}
     ]
   }
 }

@@ -10,16 +10,16 @@
   "stack": {
     "primaryLanguage": "typescript",
     "frameworks": [
-      {"name": "React", "version": "18+", "purpose": "UI framework"},
+      {"name": "React", "version": "19", "purpose": "UI framework"},
       {"name": "Vite", "version": "5+", "purpose": "Build tool"},
       {"name": "React Query", "version": "5+", "purpose": "Data fetching"},
       {"name": "Zustand", "version": "4+", "purpose": "State management"}
     ],
     "tools": [
+      {"name": "TypeScript", "version": "5.6+", "purpose": "Type system"},
       {"name": "vitest", "purpose": "Testing"},
       {"name": "eslint", "purpose": "Linting"},
-      {"name": "prettier", "purpose": "Formatting"},
-      {"name": "typescript", "purpose": "Type checking"}
+      {"name": "prettier", "purpose": "Formatting"}
     ],
     "styleGuides": [
       {"name": "airbnb", "description": "Airbnb JavaScript Style Guide"},
@@ -39,7 +39,7 @@
   ],
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "TypeScript/React naming conventions"},
-    {"filename": "component-patterns.json", "description": "React component patterns"},
+    {"filename": "component-patterns.json", "description": "React 19 component patterns and best practices"},
     {"filename": "test-patterns.json", "description": "Vitest/RTL patterns"}
   ],
   "templates": {
@@ -63,7 +63,7 @@
       {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
       {"path": ".cursor/skills/", "purpose": "Reusable skills"},
       {"path": "knowledge/", "purpose": "Reference data"},
-      {"path": "templates/", "purpose": "Code templates"},
+      {"path": "templates/typescript/", "purpose": "Code templates"},
       {"path": "workflows/", "purpose": "Workflow documentation"},
       {"path": "src/components/", "purpose": "React components"},
       {"path": "src/hooks/", "purpose": "Custom hooks"},
@@ -76,6 +76,19 @@
       {"path": "README.md", "purpose": "Project documentation"},
       {"path": "package.json", "purpose": "NPM config"},
       {"path": "tsconfig.json", "purpose": "TypeScript config"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "NODE_VERSION", "description": "Node.js version", "default": "20"},
+      {"name": "STYLE_GUIDE", "description": "Coding style", "default": "airbnb"}
+    ],
+    "rules": [
+      {"name": "TypeScript Strict", "description": "Use strict TypeScript mode with no any types"},
+      {"name": "React 19", "description": "Use React 19 features including Actions, useOptimistic, and useFormStatus"},
+      {"name": "Component Patterns", "description": "Use functional components with hooks, prefer composition over inheritance"},
+      {"name": "Type Safety", "description": "Define proper TypeScript types for props, state, and API responses"},
+      {"name": "Testing", "description": "Write Vitest unit tests with React Testing Library"}
     ]
   }
 }

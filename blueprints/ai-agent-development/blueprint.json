@@ -11,8 +11,10 @@
   "stack": {
     "primaryLanguage": "python",
     "frameworks": [
-      {"name": "LangChain", "version": "0.2+", "purpose": "Agent framework and chains"},
-      {"name": "LangGraph", "version": "0.1+", "purpose": "Stateful agent orchestration"},
+      {"name": "LangChain", "version": "0.3+", "purpose": "Agent framework and chains"},
+      {"name": "LangGraph", "version": "0.2+", "purpose": "Stateful agent orchestration"},
+      {"name": "CrewAI", "version": "0.50+", "purpose": "Multi-agent crew orchestration"},
+      {"name": "AutoGen", "version": "0.2+", "purpose": "Conversational multi-agent systems"},
       {"name": "Streamlit", "version": "1.30+", "purpose": "Interactive UI"},
       {"name": "FastAPI", "version": "0.100+", "purpose": "API endpoints"},
       {"name": "Pydantic", "version": "2.0+", "purpose": "Data validation and structured outputs"}
@@ -58,6 +60,10 @@
   "knowledge": [
     {"filename": "langchain-patterns.json", "description": "LangChain best practices and patterns"},
     {"filename": "langgraph-workflows.json", "description": "LangGraph state machine patterns"},
+    {"filename": "crewai-patterns.json", "description": "CrewAI crew orchestration and agent patterns"},
+    {"filename": "autogen-patterns.json", "description": "AutoGen conversational agent patterns"},
+    {"filename": "mcp-patterns.json", "description": "Model Context Protocol (MCP) server integration patterns"},
+    {"filename": "agent-testing.json", "description": "Agent testing, evaluation, and benchmarking patterns"},
     {"filename": "prompt-engineering.json", "description": "Prompt optimization techniques"},
     {"filename": "agent-coordination.json", "description": "Multi-agent coordination patterns"},
     {"filename": "llm-providers.json", "description": "LLM provider comparison and selection"}
@@ -85,6 +91,18 @@
     {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "GitHub analysis", "required": true},
     {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false}
   ],
+  "mcpIntegration": {
+    "patterns": [
+      {"name": "mcp-server-setup", "description": "Setting up MCP servers for agent tools"},
+      {"name": "mcp-resource-handling", "description": "Handling MCP resources in agent workflows"},
+      {"name": "mcp-tool-integration", "description": "Integrating MCP tools into agent toolkits"},
+      {"name": "mcp-gateway-pattern", "description": "Gateway pattern for MCP server communication"}
+    ],
+    "knowledgeFile": "knowledge/mcp-patterns.json",
+    "templates": [
+      {"category": "mcp-server", "directory": "templates/ai/mcp/"}
+    ]
+  },
   "projectStructure": {
     "directories": [
       {"path": ".cursor/agents/", "purpose": "AI agent definitions for Cursor"},

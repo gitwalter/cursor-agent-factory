@@ -13,6 +13,7 @@
       {"name": "Spring Boot", "version": "3.2+", "purpose": "Application framework"},
       {"name": "Spring WebFlux", "version": "6.1+", "purpose": "Reactive web framework"},
       {"name": "Spring Data R2DBC", "version": "3.2+", "purpose": "Reactive data access"},
+      {"name": "Kotlin", "version": "2.0", "purpose": "Programming language"},
       {"name": "Kotlin Coroutines", "version": "1.8+", "purpose": "Async programming"},
       {"name": "Arrow", "version": "1.2+", "purpose": "Functional programming (optional)"}
     ],
@@ -47,9 +48,9 @@
     {"patternId": "code-templates", "required": true}
   ],
   "knowledge": [
-    {"filename": "kotlin-idioms.json", "description": "Kotlin idiomatic patterns"},
+    {"filename": "kotlin-idioms.json", "description": "Kotlin 2.0 idiomatic patterns"},
     {"filename": "spring-kotlin-patterns.json", "description": "Spring Boot with Kotlin patterns"},
-    {"filename": "coroutines-patterns.json", "description": "Kotlin coroutines patterns"},
+    {"filename": "coroutines-patterns.json", "description": "Kotlin coroutines patterns and best practices"},
     {"filename": "reactive-patterns.json", "description": "Reactive programming patterns"},
     {"filename": "kotest-patterns.json", "description": "Kotest testing patterns"}
   ],
@@ -104,15 +105,16 @@
   },
   "cursorrules": {
     "variables": [
-      {"name": "KOTLIN_VERSION", "description": "Kotlin version", "default": "1.9"},
+      {"name": "KOTLIN_VERSION", "description": "Kotlin version", "default": "2.0"},
       {"name": "STYLE_GUIDE", "description": "Coding style", "default": "kotlin-official"},
       {"name": "JAVA_VERSION", "description": "JDK version", "default": "21"}
     ],
     "rules": [
+      {"name": "Kotlin 2.0", "description": "Use Kotlin 2.0 language features and improvements"},
       {"name": "Null Safety", "description": "Leverage Kotlin null safety, avoid platform types"},
       {"name": "Data Classes", "description": "Use data classes for DTOs and value objects"},
       {"name": "Extension Functions", "description": "Use extension functions for utility methods"},
-      {"name": "Coroutines", "description": "Use suspend functions and coroutines for async operations"},
+      {"name": "Coroutines", "description": "Use suspend functions and coroutines for async operations. Follow coroutines best practices for structured concurrency"},
       {"name": "Immutability", "description": "Prefer val over var, immutable collections"},
       {"name": "Expression Bodies", "description": "Use expression bodies for simple functions"},
       {"name": "When Expressions", "description": "Use when for multi-branch conditionals"},
@@ -127,6 +129,10 @@
     "flowController": {
       "description": "Controller returning Flow for streaming",
       "example": "fun getAll(): Flow<Entity>"
+    },
+    "coroutines": {
+      "description": "Kotlin coroutines patterns - structured concurrency, coroutine scopes, and flow operators",
+      "example": "coroutineScope { launch { asyncOperation() } }"
     },
     "nullSafety": {
       "description": "Kotlin null-safe patterns",

@@ -3,18 +3,20 @@
     "blueprintId": "sap-cpi-pi",
     "blueprintName": "SAP CPI/PI Integration Blueprint",
     "description": "SAP Cloud Platform Integration and Process Integration development with Groovy scripts, Java adapters, and iFlow patterns",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "author": "Cursor Agent Factory",
     "tags": ["sap", "cpi", "pi", "integration", "groovy", "java", "iflow", "b2b", "edi"],
     "purpose": "Enable SAP integration developers to build robust iFlows with proper patterns, error handling, and testing"
   },
   "stack": {
     "primaryLanguage": "groovy",
+    "groovyVersion": "4.0.x",
     "secondaryLanguage": "java",
     "frameworks": [
       {"name": "SAP CPI Groovy SDK", "version": "1.x", "purpose": "Cloud Platform Integration scripting"},
       {"name": "SAP PI Adapter Framework", "version": "7.5+", "purpose": "On-premise adapter development"},
-      {"name": "Apache Camel", "version": "underlying", "purpose": "Integration framework (CPI foundation)"}
+      {"name": "Apache Camel", "version": "underlying", "purpose": "Integration framework (CPI foundation)"},
+      {"name": "Spock Framework", "version": "2.4+", "purpose": "Groovy testing framework"}
     ],
     "platforms": [
       {"name": "SAP Integration Suite", "type": "cloud", "purpose": "Cloud-based integration"},
@@ -58,8 +60,9 @@
     {"patternId": "feature-workflow", "required": true}
   ],
   "knowledge": [
-    {"filename": "groovy-patterns.json", "description": "Groovy scripting best practices for CPI"},
-    {"filename": "iflow-patterns.json", "description": "Integration flow design patterns"},
+    {"filename": "groovy-patterns.json", "description": "Groovy scripting best practices for CPI (Groovy 4.x compatible)", "required": true},
+    {"filename": "iflow-patterns.json", "description": "Integration flow design patterns and architecture", "required": true},
+    {"filename": "sap-cap-patterns.json", "description": "SAP CAP patterns for integration scenarios and API development", "required": false},
     {"filename": "cpi-error-handling.json", "description": "Exception handling and alerting patterns"},
     {"filename": "mapping-patterns.json", "description": "Message mapping techniques"},
     {"filename": "b2b-patterns.json", "description": "EDI, IDoc, partner management patterns"},
@@ -67,15 +70,20 @@
   ],
   "templates": {
     "codeTemplates": [
-      {"category": "groovy-script", "directory": "templates/integration/groovy/"},
+      {"category": "groovy-script", "directory": "templates/integration/groovy/", "version": "4.x"},
+      {"category": "groovy-base", "directory": "templates/integration/groovy/base/", "description": "Base Groovy script template"},
+      {"category": "groovy-message-processing", "directory": "templates/integration/groovy/message-processing/", "description": "Message processing patterns"},
+      {"category": "groovy-error-handling", "directory": "templates/integration/groovy/error-handling/", "description": "Error handling patterns"},
       {"category": "message-mapping", "directory": "templates/integration/mapping/"},
       {"category": "java-adapter", "directory": "templates/integration/java/"},
-      {"category": "test-script", "directory": "templates/integration/test/"}
+      {"category": "test-script", "directory": "templates/integration/test/", "framework": "Spock"},
+      {"category": "iflow-definition", "directory": "templates/integration/iflow/", "description": "iFlow structure templates"}
     ],
     "documentTemplates": [
-      {"name": "iflow_spec.md", "directory": "templates/docs/"},
-      {"name": "mapping_spec.md", "directory": "templates/docs/"},
-      {"name": "interface_spec.md", "directory": "templates/docs/"}
+      {"name": "iflow_spec.md", "directory": "templates/docs/", "description": "Integration flow specification template"},
+      {"name": "mapping_spec.md", "directory": "templates/docs/", "description": "Message mapping specification"},
+      {"name": "interface_spec.md", "directory": "templates/docs/", "description": "Interface specification"},
+      {"name": "error-handling-spec.md", "directory": "templates/docs/", "description": "Error handling documentation"}
     ]
   },
   "workflows": [
@@ -84,8 +92,9 @@
     {"patternId": "confluence-feature", "customizations": {}}
   ],
   "mcpServers": [
-    {"name": "sap-docs", "purpose": "SAP Help Portal and CPI documentation", "required": true},
-    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false}
+    {"name": "sap-documentation", "url": "https://mcp-sap-docs.marianzeis.de/mcp", "purpose": "SAP Help Portal, CPI/PI documentation, Groovy patterns, iFlow best practices", "required": true},
+    {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence integration for requirements and documentation", "required": false},
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "SAP sample repositories and integration examples", "required": false}
   ],
   "projectStructure": {
     "directories": [
@@ -108,20 +117,58 @@
       {"path": "build.gradle", "purpose": "Gradle build for testing"}
     ]
   },
+  "enforcement": [
+    {"patternId": "groovy-style-enforcement", "required": true, "description": "Enforce Groovy style guide compliance"},
+    {"patternId": "iflow-pattern-compliance", "required": true, "description": "Ensure iFlow patterns are followed"},
+    {"patternId": "error-handling-enforcement", "required": true, "description": "Require proper error handling"},
+    {"patternId": "security-enforcement", "required": true, "description": "Enforce security best practices"}
+  ],
+  "testing": {
+    "frameworks": [
+      {"name": "Spock Framework", "version": "2.4+", "purpose": "Groovy unit testing", "required": true},
+      {"name": "Mockito", "purpose": "Mocking for Java adapters", "required": false}
+    ],
+    "patterns": [
+      {"name": "Given-When-Then", "description": "Structure test methods using Spock blocks"},
+      {"name": "Mock Message Objects", "description": "Mock CPI message objects for testing"},
+      {"name": "Test Isolation", "description": "Each test should be independent"},
+      {"name": "Integration Tests", "description": "Test complete iFlow scenarios"}
+    ]
+  },
+  "deployment": {
+    "patterns": [
+      {"name": "CPI Deployment", "description": "Deploy iFlows to SAP Integration Suite"},
+      {"name": "PI Transport", "description": "Use SAP Transport Management for PI/PO"},
+      {"name": "Version Control", "description": "Track iFlow versions and changes"},
+      {"name": "CI/CD Integration", "description": "Automated testing and deployment"}
+    ],
+    "tools": [
+      {"name": "SAP Integration Suite", "purpose": "Cloud-based integration platform"},
+      {"name": "SAP Transport Management", "purpose": "On-premise transport management"},
+      {"name": "Git", "purpose": "Version control for Groovy scripts and iFlow definitions"}
+    ]
+  },
   "cursorrules": {
     "variables": [
       {"name": "CPI_TENANT", "description": "CPI tenant URL", "default": ""},
       {"name": "STYLE_GUIDE", "description": "Coding style", "default": "groovy-style"},
-      {"name": "LOG_LEVEL", "description": "Default log level", "default": "INFO"}
+      {"name": "LOG_LEVEL", "description": "Default log level", "default": "INFO"},
+      {"name": "GROOVY_VERSION", "description": "Groovy version", "default": "4.0.x"},
+      {"name": "SPOCK_VERSION", "description": "Spock Framework version", "default": "2.4+"}
     ],
     "rules": [
-      {"name": "Null Safety", "description": "Use Groovy safe navigation (?.) for null handling"},
-      {"name": "Logging", "description": "Use messageLog for CPI logging, never System.out"},
-      {"name": "Error Handling", "description": "Always use try-catch with proper exception routing"},
-      {"name": "Properties", "description": "Use message properties/headers, not hardcoded values"},
-      {"name": "Closures", "description": "Use closures for collection operations"},
-      {"name": "Testing", "description": "Write Spock tests for all scripts"},
-      {"name": "Security", "description": "Never hardcode credentials, use Secure Parameters"}
+      {"name": "Groovy 4.x Features", "description": "Use Groovy 4.x features like sealed classes, switch expressions, and improved null safety. Check compatibility with CPI runtime."},
+      {"name": "Null Safety", "description": "Use Groovy safe navigation (?.) and elvis operator (?:) for null handling. Prefer Groovy 4.x null-safe operators."},
+      {"name": "Logging", "description": "Use messageLog for CPI logging, never System.out.println. Include context information in log messages."},
+      {"name": "Error Handling", "description": "Always use try-catch with proper exception routing. Set error properties and route to exception subprocess."},
+      {"name": "Properties", "description": "Use message properties/headers, not hardcoded values. Document all custom properties."},
+      {"name": "Closures", "description": "Use closures for collection operations. Leverage Groovy 4.x closure improvements."},
+      {"name": "Testing", "description": "Write Spock tests for all scripts. Use Given-When-Then blocks. Mock message objects."},
+      {"name": "Security", "description": "Never hardcode credentials, use Secure Parameters. Encrypt sensitive data."},
+      {"name": "iFlow Patterns", "description": "Follow iFlow design patterns: use exception subprocesses, implement retry logic, configure proper timeouts."},
+      {"name": "MCP Integration", "description": "Use SAP documentation MCP server for CPI/PI questions, Groovy patterns, and iFlow best practices."},
+      {"name": "Message Processing", "description": "Handle large messages efficiently. Use streaming for large payloads. Validate message structure early."},
+      {"name": "Performance", "description": "Optimize Groovy scripts for performance. Avoid unnecessary iterations. Cache frequently accessed data."}
     ]
   },
   "groovyPatterns": {

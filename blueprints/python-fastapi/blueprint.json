@@ -10,7 +10,7 @@
   "stack": {
     "primaryLanguage": "python",
     "frameworks": [
-      {"name": "FastAPI", "version": "0.100+", "purpose": "Web framework"},
+      {"name": "FastAPI", "version": "0.115+", "purpose": "Web framework"},
       {"name": "SQLAlchemy", "version": "2.0+", "purpose": "ORM"},
       {"name": "Pydantic", "version": "2.0+", "purpose": "Validation"},
       {"name": "Alembic", "version": "1.12+", "purpose": "Migrations"}
@@ -44,17 +44,20 @@
   ],
   "knowledge": [
     {"filename": "naming-conventions.json", "description": "Python naming conventions"},
-    {"filename": "api-patterns.json", "description": "FastAPI patterns and best practices"},
-    {"filename": "test-patterns.json", "description": "Pytest patterns"}
+    {"filename": "fastapi-patterns.json", "description": "FastAPI patterns and best practices"},
+    {"filename": "test-patterns.json", "description": "Pytest patterns"},
+    {"filename": "tdd-patterns.json", "description": "Test-driven development patterns"}
   ],
   "templates": {
     "codeTemplates": [
-      {"category": "service-class", "directory": "templates/python/service/"},
-      {"category": "repository", "directory": "templates/python/repository/"},
-      {"category": "model", "directory": "templates/python/model/"},
-      {"category": "schema", "directory": "templates/python/schema/"},
-      {"category": "router", "directory": "templates/python/router/"},
-      {"category": "test-class", "directory": "templates/python/test/"}
+      {"category": "service-class", "directory": "templates/python/fastapi/domain/"},
+      {"category": "repository", "directory": "templates/python/fastapi/domain/"},
+      {"category": "model", "directory": "templates/python/fastapi/domain/"},
+      {"category": "schema", "directory": "templates/python/fastapi/domain/"},
+      {"category": "router", "directory": "templates/python/fastapi/domain/"},
+      {"category": "config", "directory": "templates/python/fastapi/config/"},
+      {"category": "main", "directory": "templates/python/fastapi/"},
+      {"category": "test-class", "directory": "templates/python/fastapi/domain/"}
     ],
     "documentTemplates": [
       {"name": "implementation_plan.md", "directory": "templates/docs/"},
@@ -64,7 +67,8 @@
   },
   "workflows": [
     {"patternId": "jira-bugfix", "customizations": {}},
-    {"patternId": "confluence-feature", "customizations": {}}
+    {"patternId": "confluence-feature", "customizations": {}},
+    {"patternId": "github-actions-ci", "customizations": {"template": "templates/workflows/github/ci.yml.tmpl"}}
   ],
   "mcpServers": [
     {"name": "atlassian", "url": "https://mcp.atlassian.com/v1/sse", "purpose": "Jira/Confluence", "required": false},
