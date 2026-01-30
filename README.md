@@ -170,7 +170,7 @@ cursor-agent-factory/
 ├── .cursor/
 │   ├── agents/                  # Factory's own agents (7 agents)
 │   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
-│   └── skills/                  # Factory's own skills (20 skills)
+│   └── skills/                  # Factory's own skills (22 skills)
 │       ├── agent-generation/
 │       ├── alignment-check/
 │       ├── axiom-selection/
@@ -208,9 +208,9 @@ cursor-agent-factory/
 │   ├── sap-rap/
 │   ├── sap-cap/
 │   └── sap-cpi-pi/
-├── knowledge/                   # Reference data (42 files)
+├── knowledge/                   # Reference data (43 files)
 │   └── *.json                   # Stack, workflow, MCP, security, AI patterns
-├── templates/                   # Code and document templates (164 files)
+├── templates/                   # Code and document templates (180 files)
 │   ├── factory/                 # Factory templates (cursorrules, PURPOSE.md, etc.)
 │   ├── ai/                      # AI agent templates
 │   ├── python/                  # Python templates (FastAPI, Streamlit)
