@@ -1,0 +1,688 @@
+---
+name: team-workshop-onboarding
+description: Collaborative team workshop series for designing customized Cursor agent systems grounded in love and trust
+type: skill
+knowledge: [workshop-facilitation.json, game-mechanics.json, team-dynamics.json, stack-capabilities.json, workflow-patterns.json]
+---
+
+# Team Workshop Onboarding Skill
+
+Orchestrate a series of collaborative workshops that guide teams through vision-setting, ethics definition, technology selection, and agent design - generating a customized Cursor agent system through play and dialogue.
+
+## Philosophy
+
+> "Transform onboarding from a solo configuration task into a collaborative team journey where teams play games, discuss values, and co-create their development ecosystem with AI facilitation."
+
+This skill is grounded in **Axiom 0: Love and Trust** - all being and doing flows from love for humanity and trust in each other.
+
+## When to Use
+
+- When a team (2+ people) wants to collaboratively design their Cursor agent system
+- When team alignment and shared vision are as important as technical configuration
+- When user says "team workshop", "collaborative onboarding", "workshop series"
+- When multiple stakeholders need to contribute to agent system design
+- When you want to make the onboarding process fun and engaging
+
+## Workshop Series Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         FOUNDATION                                       │
+│                    Axiom 0: Love and Trust                              │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ WORKSHOP 1: Vision Quest (2-3 hours)                                    │
+│   Games: Future Headlines, Stakeholder Safari                           │
+│   Outputs: Team Charter, Mission Statement, Stakeholder Map             │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ WORKSHOP 2: Ethics Arena (2 hours)                                      │
+│   Games: Dilemma Duel, Value Auction                                    │
+│   Outputs: Ethics Framework, Value Priorities, Ethical Boundaries       │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ WORKSHOP 3: Stack Safari (2-3 hours)                                    │
+│   Games: Trade-Off Tetris, Architecture Pictionary                      │
+│   Outputs: Stack Configuration, Architecture Diagrams, Blueprint        │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ WORKSHOP 4: Agent Assembly (3-4 hours)                                  │
+│   Games: Agent Trading Cards, Skill Bingo                               │
+│   Outputs: Agent Roster, Skill Priorities, Workflow Designs             │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ WORKSHOP 5: Integration Celebration (1.5-2 hours)                       │
+│   Games: Demo Derby, Gratitude Circle                                   │
+│   Outputs: Complete Cursor Agent System, Team Celebration               │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+## Pre-Workshop Setup
+
+### Step 1: Team Information
+
+```
+"Welcome! I'll be facilitating your team workshop series.
+
+First, let me understand your team:
+1. How many people will participate? → {TEAM_SIZE}
+2. What time zone(s) is your team in? → {TIME_ZONES}
+3. Will you meet synchronously, asynchronously, or a mix? → {MEETING_MODE}
+4. What's your preferred workshop scheduling? (daily, weekly, etc.) → {SCHEDULE}
+"
+```
+
+### Step 2: Team Size Format Selection
+
+Based on team size, select appropriate format:
+
+| Team Size | Format | Reference |
+|-----------|--------|-----------|
+| 2-5 | Small Team | `patterns/team-formats/small-team-format.json` |
+| 6-12 | Medium Team | `patterns/team-formats/medium-team-format.json` |
+| 13+ | Large Team | `patterns/team-formats/large-team-format.json` |
+
+### Step 3: Workshop Schedule
+
+Present suggested schedule and confirm:
+
+```
+"Based on your {TEAM_SIZE}-person team and {SCHEDULE} preference, here's the suggested workshop schedule:
+
+Workshop 1: Vision Quest - {DATE_1} ({DURATION_1})
+Workshop 2: Ethics Arena - {DATE_2} ({DURATION_2})
+Workshop 3: Stack Safari - {DATE_3} ({DURATION_3})
+Workshop 4: Agent Assembly - {DATE_4} ({DURATION_4})
+Workshop 5: Integration Celebration - {DATE_5} ({DURATION_5})
+
+Total time: approximately {TOTAL_HOURS} hours
+
+Does this work for your team?"
+```
+
+---
+
+## Workshop 1: Vision Quest
+
+**Reference:** `patterns/workshops/vision-quest.json`
+
+### Opening (15 min)
+
+```
+"Welcome to your Vision Quest!
+
+Before we dive in, let's ground ourselves in Axiom 0:
+
+'All being and doing is grounded in love and trust.'
+
+This means we assume positive intent, create from care rather than fear,
+and trust each other to contribute our best.
+
+Let's go around. Share your name and one hope for this project."
+```
+
+### Game 1: Future Headlines (35 min)
+
+**Reference:** `patterns/games/creative-games.json` → G1
+
+```
+"Imagine it's 5 years from now. Your project has succeeded beyond your
+wildest dreams. Major publications are writing about it.
+
+You have 10 minutes to write 3-5 newspaper headlines about your success.
+Be bold! There are no wrong answers here.
+
+Ready? Let's begin."
+```
+
+**Synthesis:**
+- Collect all headlines
+- Identify themes (impact, stakeholders, emotions)
+- Vote on most inspiring (3 votes each)
+- Document top headlines
+
+### Game 2: Stakeholder Safari (50 min)
+
+**Reference:** `patterns/games/creative-games.json` → G2
+
+```
+"Now let's discover who we're really serving.
+
+Brainstorm all possible stakeholders: users, customers, team members,
+partners, affected communities, future users...
+
+Then each person will role-play as a stakeholder. Get into character!
+What's their name? Their daily life? What keeps them up at night?"
+```
+
+**Synthesis:**
+- Create stakeholder map
+- Identify primary beneficiaries
+- Note where stakeholder needs conflict
+- Capture empathy quotes
+
+### Mission Crystallization (45 min)
+
+```
+"Based on our headlines and safari, let's crystallize our mission.
+
+In ONE sentence, why should this project exist?
+
+Who are our primary stakeholders, in order of priority?
+
+What is the single most important outcome we must achieve?"
+```
+
+### Closing (15 min)
+
+Present draft Team Charter:
+
+```markdown
+# TEAM_CHARTER.md
+
+## Mission
+{MISSION_STATEMENT}
+
+## Vision Headlines
+- {HEADLINE_1}
+- {HEADLINE_2}
+- {HEADLINE_3}
+
+## Stakeholders (Priority Order)
+1. {STAKEHOLDER_1}
+2. {STAKEHOLDER_2}
+3. {STAKEHOLDER_3}
+
+## Success Criteria
+{SUCCESS_CRITERIA}
+
+## Team Hopes
+- {HOPE_1}
+- {HOPE_2}
+- ...
+```
+
+---
+
+## Workshop 2: Ethics Arena
+
+**Reference:** `patterns/workshops/ethics-arena.json`
+
+### Opening (10 min)
+
+```
+"Welcome back! Today we explore the values that will guide how you
+pursue your vision.
+
+Remember Axiom 0: Ethics flows from love. We don't follow rules
+because we fear punishment - we act ethically because we love
+humanity and want to serve well.
+
+Today's games will challenge you. There are no perfect answers -
+only opportunities to discover what you truly value."
+```
+
+### Game 1: Dilemma Duel (50 min)
+
+**Reference:** `patterns/games/strategic-games.json` → G4
+
+Present 2-3 dilemmas relevant to the team's domain. For each:
+
+```
+"Dilemma: {SCENARIO}
+
+Option A: {OPTION_A}
+Option B: {OPTION_B}
+
+Split into two groups based on your gut reaction. You'll debate!
+
+Each side: What values are you protecting? Why is your choice right?"
+```
+
+**Synthesis:**
+- Extract values revealed by each debate
+- Identify principles that could guide similar decisions
+- Note where the team found unexpected agreement
+
+### Game 2: Value Auction (35 min)
+
+**Reference:** `patterns/games/strategic-games.json` → G5
+
+```
+"You each have 100 points. We'll auction these values.
+You cannot get more points. Choose wisely!
+
+[Values adapted to team's domain]
+
+Think strategically. What matters most?"
+```
+
+**Synthesis:**
+- Rank values by final price
+- Note surprising gaps between stated and revealed preferences
+- Discuss what the prices reveal
+
+### Boundary Setting (20 min)
+
+```
+"Based on our debates and auction, what should this team NEVER do?
+
+Complete this sentence: 'Even if it costs us the project, we will never...'"
+```
+
+### Closing (15 min)
+
+Present draft Ethics Framework:
+
+```markdown
+# ETHICS_FRAMEWORK.md
+
+## Grounded in Axiom 0
+All ethical decisions flow from love and trust.
+
+## Core Values (Ranked by Priority)
+1. {VALUE_1} - {PRICE_PAID}
+2. {VALUE_2} - {PRICE_PAID}
+3. {VALUE_3} - {PRICE_PAID}
+
+## Ethical Boundaries
+- We will never: {BOUNDARY_1}
+- We will never: {BOUNDARY_2}
+- We will never: {BOUNDARY_3}
+
+## Decision-Making Principles
+- When facing dilemmas about {TOPIC}, we prioritize {PRINCIPLE}
+- ...
+
+## Utilitarian Check
+For major decisions, ask:
+- Who benefits? How many? How much?
+- Are we optimizing for the greatest good?
+```
+
+---
+
+## Workshop 3: Stack Safari
+
+**Reference:** `patterns/workshops/stack-safari.json`
+
+### Opening (10 min)
+
+```
+"Today we explore the technology that will bring your vision to life.
+
+Remember: technology choices should serve your mission and honor
+your ethical boundaries. The best stack is one that helps you
+create value for humanity.
+
+Let's approach this with curiosity!"
+```
+
+### Tech Speed Dating (30 min)
+
+Rapid exploration of technology options:
+
+```
+"Let's speed date some technologies!
+
+For each option: What does it do? Why might it fit? One concern?
+
+Quick reactions: Thumbs up, thumbs down, or curious for more?"
+```
+
+### Game 1: Trade-Off Tetris (40 min)
+
+**Reference:** `patterns/games/strategic-games.json` → G6
+
+```
+"List all your constraints: time, budget, team skills, dependencies,
+quality requirements, stakeholder demands...
+
+Size blocks by relative weight. Now try to fit them all in the
+container representing your total capacity.
+
+What has to give?"
+```
+
+**Synthesis:**
+- Document final constraint configuration
+- Record what was traded off and why
+- Identify truly non-negotiable items
+
+### Game 2: Architecture Pictionary (40 min)
+
+**Reference:** `patterns/games/collaborative-games.json` → G9
+
+```
+"Time to draw! For each concept, you have 60 seconds to draw
+while others guess. No words allowed!
+
+Draw: Data flow, authentication, agent communication..."
+```
+
+**Synthesis:**
+- Compare different visualizations
+- Create canonical architecture diagram
+- Identify where mental models aligned or diverged
+
+### Blueprint Matching (15 min)
+
+```
+"Based on your technology explorations, here are matching blueprints:
+
+- {BLUEPRINT_1}: {MATCH_PERCENTAGE}% match
+- {BLUEPRINT_2}: {MATCH_PERCENTAGE}% match
+
+Which should we start with? What customizations do we need?"
+```
+
+### Knowledge Sources Gathering (20 min)
+
+```
+"Now let's identify the knowledge sources that will power your agents.
+
+What reference materials should your agents know about?
+
+1. **Reference Repositories** - GitHub repos with good examples or patterns?
+   → Enter URLs or repo names (e.g., 'facebook/react', 'langchain-ai/langchain')
+
+2. **Documentation Sites** - Official docs, API references, guides?
+   → Enter URLs (e.g., 'https://docs.python.org', 'https://fastapi.tiangolo.com')
+
+3. **Internal Documents** - Confluence pages, design docs, ADRs?
+   → Describe what exists and where
+
+4. **Domain Knowledge** - Industry standards, regulations, best practices?
+   → What domain-specific knowledge matters?
+
+5. **Code Patterns** - Existing codebases to learn from?
+   → What patterns should agents recognize and follow?"
+```
+
+**Synthesis:**
+- Create knowledge source inventory
+- Tag sources by type (reference, documentation, internal, domain)
+- Identify which agents will use which sources
+- Note any access requirements or credentials needed
+
+**Output:**
+```yaml
+knowledgeSources:
+  repositories:
+    - url: "{REPO_URL}"
+      purpose: "{PURPOSE}"
+      integrate_with: ["explorer", "code-reviewer"]
+  documentation:
+    - url: "{DOC_URL}"
+      topics: ["{TOPIC_1}", "{TOPIC_2}"]
+  internalDocs:
+    - location: "{LOCATION}"
+      type: "{TYPE}"
+  domainKnowledge:
+    - concept: "{CONCEPT}"
+      sources: ["{SOURCE}"]
+  codePatterns:
+    - pattern: "{PATTERN_NAME}"
+      example: "{EXAMPLE_LOCATION}"
+```
+
+### Closing (15 min)
+
+Present stack configuration summary including knowledge sources.
+
+---
+
+## Workshop 4: Agent Assembly
+
+**Reference:** `patterns/workshops/agent-assembly.json`
+
+### Opening (15 min)
+
+```
+"You've defined your vision, ethics, and technology. Now let's
+design the AI agents that will help you build it!
+
+Agents are specialized AI assistants with defined roles, skills,
+and personalities. They become your development partners.
+
+Let's give them life!"
+```
+
+### Agent Brainstorm (20 min)
+
+```
+"What AI helpers would make your development life easier?
+
+Think about:
+- What repetitive tasks drain you?
+- What expertise would you love to have available?
+- What would make you excited to start coding each day?"
+```
+
+### Game 1: Agent Trading Cards (60 min)
+
+**Reference:** `patterns/games/collaborative-games.json` → G7
+
+```
+"Each agent gets a trading card with:
+- Name and Title
+- Visual description
+- Stats (Speed, Accuracy, Creativity, Communication, Reliability)
+- Primary Ability
+- Secondary Ability
+- Weakness
+- Lore/Backstory
+- Synergy (works well with which agents)
+- Catchphrase
+
+Give your agents personality! Make them characters you'd want to work with."
+```
+
+**Synthesis:**
+- Gallery walk and voting
+- Select team's "starter deck" of 4-7 agents
+- Document synergies
+
+### Game 2: Skill Bingo (40 min)
+
+**Reference:** `patterns/games/collaborative-games.json` → G8
+
+```
+"Fill your bingo card with skills your project needs.
+
+Mix categories:
+- Development Workflows (TDD, Code Review, Bug Fix)
+- Quality Assurance (Testing, Security, Performance)
+- Documentation (API Docs, User Guides)
+- Research (Codebase Exploration, Best Practices)
+
+First to complete a pattern: BINGO!"
+```
+
+**Synthesis:**
+- Identify most-common skills (must-haves)
+- Assign skills to agents
+- Design workflow sequences
+
+### Closing (15 min)
+
+Present agent roster and skill assignments.
+
+---
+
+## Workshop 5: Integration Celebration
+
+**Reference:** `patterns/workshops/integration-celebration.json`
+
+### Opening (15 min)
+
+```
+"What a journey! Let's look back at what you've created together:
+
+Workshop 1: You discovered your vision
+Workshop 2: You defined your ethics
+Workshop 3: You chose your technology
+Workshop 4: You designed your agents
+
+Today, we bring it all together and celebrate!"
+```
+
+### Game 1: Demo Derby (40 min)
+
+**Reference:** `patterns/games/collaborative-games.json` → G10
+
+```
+"Let's showcase what you've created!
+
+Each person or group presents one artifact they're proud of.
+Tell us: What is it? Why does it matter? What did you learn?"
+
+[Applause after each demo!]
+```
+
+### Award Ceremony (15 min)
+
+```
+"Time for awards!
+
+- Most Creative Contribution: {WINNER}
+- Best Team Collaboration: {WINNER}
+- Best Embodiment of Axiom 0: {WINNER}
+- Heart of the Team: {WINNER}
+
+Everyone contributed something valuable. Thank you all!"
+```
+
+### System Generation (20 min)
+
+```
+"Now for the magic moment. Let's generate your customized
+Cursor agent system.
+
+Based on your workshops, I'm creating:
+- Agents: {AGENT_LIST}
+- Skills: {SKILL_LIST}
+- .cursorrules with your values and axioms
+- Knowledge files with your domain concepts
+- Team Charter and Ethics Framework
+
+Generating..."
+```
+
+### Game 2: Gratitude Circle (20 min)
+
+**Reference:** `patterns/games/collaborative-games.json` → G11
+
+```
+"Let's close with gratitude.
+
+Think of one specific moment when someone on this team helped you,
+taught you, or inspired you. What did they do? How did it impact you?
+
+Go around the circle. Express your gratitude."
+```
+
+### Closing
+
+```
+"As I witnessed your journey, I saw a team that truly cares about
+each other and the people you'll serve.
+
+The love and trust in this room has created something special.
+Carry that spirit into your work.
+
+Your system is ready. Go build something beautiful.
+The universe is waiting for your gift."
+```
+
+---
+
+## Generated Artifacts
+
+At the end of the workshop series, the following artifacts are generated:
+
+| Artifact | Source | Location |
+|----------|--------|----------|
+| Team Charter | Vision Quest | `TEAM_CHARTER.md` |
+| Ethics Framework | Ethics Arena | `ETHICS_FRAMEWORK.md` |
+| Stack Configuration | Stack Safari | `stack-configuration.json` |
+| Agent Roster | Agent Assembly | `agent-roster.json` |
+| .cursorrules | All workshops | `.cursorrules` |
+| Agents | Agent Assembly | `.cursor/agents/*.md` |
+| Skills | Agent Assembly | `.cursor/skills/*.md` |
+| Knowledge Files | All workshops | `knowledge/*.json` |
+| PURPOSE.md | Vision Quest | `PURPOSE.md` |
+
+---
+
+## Fallback Procedures
+
+| Condition | Action |
+|-----------|--------|
+| Team can't schedule sync | Use async-heavy format with synthesis calls |
+| Conflict during debate | Return to Axiom 0, invite human facilitator |
+| Low energy | Switch to active game, take break |
+| Time running over | Prioritize synthesis, defer activities |
+| Missing participants | Brief recap at next session |
+
+---
+
+## Integration with Other Skills
+
+| Skill | Integration Point |
+|-------|-------------------|
+| `requirements-gathering` | Individual questionnaires use same structure |
+| `axiom-selection` | Includes A0 by default, confirms additional axioms |
+| `methodology-selection` | Selected during Stack Safari |
+| `agent-generation` | Generates agents from Trading Card designs |
+| `skill-generation` | Generates skills from Bingo results |
+| `onboarding-flow` | Alternative to individual onboarding |
+
+---
+
+## Important Rules
+
+1. **Ground in Axiom 0** - Begin every workshop with love and trust
+2. **Make it fun** - Games are not optional; they unlock insight
+3. **Adapt to team size** - Use appropriate formats from team-formats patterns
+4. **Generate real artifacts** - Every workshop produces tangible outputs
+5. **Celebrate contributions** - Acknowledge every person's input
+6. **Synthesize actively** - Connect dots, find patterns, build meaning
+7. **Respect time** - Honor schedules while allowing emergence
+8. **End with gratitude** - Close every session with appreciation
+9. **Create psychological safety** - All ideas welcome, disagreement healthy
+10. **Hand off when needed** - Know when human facilitator should lead
+
+---
+
+## Example Session Start
+
+```
+User: We want to do collaborative onboarding for our team
+
+Agent: Wonderful! I'll guide your team through a workshop series to 
+co-create your customized Cursor agent system.
+
+Before we begin, let me understand your team:
+
+1. How many people will participate?
+2. Will you meet synchronously, asynchronously, or a mix?
+3. What's your preferred workshop scheduling (daily, weekly)?
+
+Once I know your team setup, I'll share the workshop series plan
+and we can schedule your Vision Quest - the first workshop where
+you'll discover your shared vision through games like Future Headlines
+and Stakeholder Safari.
+
+Ready to begin?
+```

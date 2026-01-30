@@ -80,7 +80,7 @@ All configuration files in `expected-output/` use the `.example` extension to **
 
 | Depth | What's Configured | Examples |
 |-------|-------------------|----------|
-| **Standard** | Layers 0-4 with methodology selection | 01, 02, 03, 06, 07 |
+| **Standard** | Layers 0-4 with methodology selection | 01, 02, 03, 06, 07, 08 |
 | **Comprehensive** | All layers + enforcement + practices | 04, 05 |
 
 ## The 5-Layer Architecture
@@ -105,9 +105,10 @@ Layer 4: TECHNICAL            →  Stack, agents, skills, templates
 | 02 Next.js | Yes | - | - | - | - |
 | 03 RAG Chatbot | Yes | - | - | - | Yes |
 | 04 Multi-Agent | Yes | - | - | Yes | Yes |
-| 05 SAP | Yes | Yes | Yes | - | - |
+| 05 SAP Fiori | Yes | Yes | Yes | - | - |
 | 06 .NET | Yes | Yes | - | - | - |
 | 07 Kotlin | Yes | Yes | - | - | - |
+| 08 SAP CPI | Yes | Yes | Yes | - | - |
 
 ### Methodology Selection
 
@@ -117,9 +118,10 @@ Layer 4: TECHNICAL            →  Stack, agents, skills, templates
 | 02 Next.js | Kanban | 2-4 | WIP limits, continuous flow |
 | 03 RAG Chatbot | Research & Development | 1-3 | 70/30 exploration, spike reviews |
 | 04 Multi-Agent | Research & Development | 2-4 | Experiment cycles, hypothesis testing |
-| 05 SAP | Enterprise Integration | 4-8 | Change advisory, release gates |
+| 05 SAP Fiori | Enterprise Integration | 4-8 | Change advisory, release gates |
 | 06 .NET | Agile Scrum | 4-8 | Sprint planning, code review gates |
 | 07 Kotlin | Kanban | 2-4 | Pull-based flow, continuous deployment |
+| 08 SAP CPI | Enterprise Integration | 2-4 | Integration reviews, iFlow testing |
 
 ## Prerequisites
 

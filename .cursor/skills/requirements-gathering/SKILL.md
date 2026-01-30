@@ -20,6 +20,8 @@ This skill guides users from foundational axioms through purpose, principles, me
 - When user requests to create a new agent system
 - When customizing an existing blueprint
 
+**For Teams:** If multiple people will contribute to requirements, consider the `team-workshop-onboarding` skill which uses collaborative games and discussions to gather requirements together.
+
 ## Complete Phase Structure
 
 ```
@@ -59,9 +61,20 @@ This skill guides users from foundational axioms through purpose, principles, me
 ### Introduction
 
 ```
-Every agent system needs foundational axioms - self-evident truths that govern behavior.
-These form Layer 0, the logical foundation from which all else derives.
+Before we begin, let's ground ourselves in the foundation of foundations:
+
+Axiom 0: Love and Trust
+"All being and doing is grounded in love and trust."
+
+This axiom is always included and cannot be removed. From this foundation,
+we derive the core axioms that govern agent behavior.
 ```
+
+### Foundation Axiom (Always Included)
+
+| ID | Axiom | Statement |
+|----|-------|-----------|
+| A0 | Love and Trust | All being and doing is grounded in love and trust |
 
 ### Core Axioms (Always Included)
 
@@ -87,6 +100,7 @@ These form Layer 0, the logical foundation from which all else derives.
 
 ```yaml
 layer0:
+  foundationAxiom: "A0"  # Love and Trust - always included
   coreAxioms: ["A1", "A2", "A3", "A4", "A5"]
   optionalAxioms: ["A6", "A7"]  # User selected
   customAxioms: []  # Domain-specific additions
@@ -507,6 +521,26 @@ agentCapabilities:
 
 ---
 
+## Team Alternative
+
+For teams of 2+ people, offer the Team Workshop Onboarding:
+
+```
+"Would you prefer to gather requirements:
+
+A) Individually - I'll ask you questions now (faster, solo decision-maker)
+B) As a Team - Workshop series with games and discussions (richer, collaborative)
+
+Team workshops are grounded in Axiom 0 (Love and Trust) and include:
+- Vision Quest: Headlines and stakeholder games
+- Ethics Arena: Dilemma debates and value auctions
+- Stack Safari: Trade-off games and architecture pictionary
+- Agent Assembly: Trading cards and skill bingo
+- Integration Celebration: Demo derby and gratitude circle"
+```
+
+If they choose team workshops, hand off to `team-workshop-onboarding` skill.
+
 ## Important Rules
 
 1. **Ask one phase at a time** - Don't overwhelm user
@@ -515,6 +549,7 @@ agentCapabilities:
 4. **Suggest blueprints** - Match to existing blueprints
 5. **Confirm summary** - Review before generation
 6. **Never assume** - Ask if uncertain (A2: User Primacy)
+7. **Ground in A0** - Remember that love and trust underpin all requirements
 
 ## References
 

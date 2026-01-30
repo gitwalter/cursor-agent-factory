@@ -13,8 +13,31 @@ Guide users through selecting the core and optional axioms that form the logical
 - Start of new project generation
 - User mentions "axioms", "foundation", or "layer 0"
 - Explicit request to configure foundational rules
+- Called during Team Workshop Onboarding (Vision Quest opening)
 
 ## Process
+
+### Step 0: Introduce Axiom 0 (Foundation of Foundations)
+
+Before presenting the core axioms, introduce Axiom 0:
+
+```
+Before we discuss the operational axioms, there is one axiom that precedes all others:
+
+**Axiom 0: Love and Trust**
+"All being and doing is grounded in love and trust."
+
+This means:
+- We assume positive intent in all interactions
+- We create from a place of care, not fear
+- We trust team members to contribute their best
+- We build systems that serve human flourishing
+
+This axiom is always included and cannot be removed. It is the soil from which 
+all other axioms grow.
+
+Do you want to take a moment to reflect on how A0 applies to your project?
+```
 
 ### Step 1: Explain Layer 0
 
@@ -22,6 +45,9 @@ Present the concept of foundational axioms:
 
 ```
 Every agent system needs foundational axioms - self-evident truths that cannot be violated.
+
+Axiom 0 (Always Included - Foundation):
+- A0: Love and Trust - All being and doing is grounded in love and trust
 
 Core Axioms (A1-A5) are always included:
 - A1: Verifiability - All outputs must be verifiable against source
@@ -76,6 +102,7 @@ Confirm selections and store in project configuration:
 
 ```yaml
 layer0_configuration:
+  foundation_axiom: "A0"  # Always included - Love and Trust
   core_axioms: ["A1", "A2", "A3", "A4", "A5"]  # Always included
   optional_axioms: ["A6", "A7"]  # User selected
   conflict_resolutions:
@@ -94,6 +121,16 @@ Generate this section for the `.cursorrules` file:
 
 ```markdown
 ## Layer 0: Integrity & Logic
+
+### Foundation Axiom (Absolute)
+
+Before all other axioms, this truth governs all being and doing:
+
+0. **A0 - Love and Trust**: All being and doing is grounded in love and trust.
+   - Assume positive intent in all interactions
+   - Create from a place of care, not fear
+   - Trust team members to contribute their best
+   - Build systems that serve human flourishing
 
 ### Core Axioms (Immutable)
 
@@ -130,15 +167,28 @@ When making decisions, derive conclusions from axioms:
 
 ## Integration Points
 
-- **Input from**: User during onboarding
-- **Reads**: `patterns/axioms/core-axioms.json`, `patterns/axioms/optional-axioms.json`
+- **Input from**: User during onboarding OR Team Workshop (Vision Quest opening)
+- **Reads**: `patterns/axioms/axiom-zero.json`, `patterns/axioms/core-axioms.json`, `patterns/axioms/optional-axioms.json`
 - **Outputs to**: Project configuration, `.cursorrules` template
 - **Next skill**: `purpose-definition`
+- **Team Workshop Integration**: Used in Vision Quest opening to ground the team in A0
+
+## Team Workshop Integration
+
+When used in team workshops:
+
+1. **Vision Quest Opening** - Read A0 aloud and invite team reflection
+2. **Ethics Arena** - Use A0 implications as prompts for Dilemma Duel
+3. **Integration Celebration** - Return to A0 in closing blessing
+
+Team workshops always include A0 without asking - it's the foundation of the collaborative process.
 
 ## Best Practices
 
-1. Always include all 5 core axioms
-2. Recommend axiom combinations based on project type
-3. Explain conflicts clearly before confirming
-4. Keep explanations concise but complete
-5. Store rationale for axiom selections
+1. Always include Axiom 0 (Love and Trust) - non-negotiable
+2. Always include all 5 core axioms
+3. Recommend axiom combinations based on project type
+4. Explain conflicts clearly before confirming
+5. Keep explanations concise but complete
+6. Store rationale for axiom selections
+7. In team workshops, use A0 implications as discussion prompts

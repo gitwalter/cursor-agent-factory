@@ -206,10 +206,13 @@ The analyzer detects your technology stack from:
 |-----------|------------|----------|
 | `python-fastapi` | Python, FastAPI, SQLAlchemy | REST APIs |
 | `typescript-react` | TypeScript, React, Node.js | Web apps |
+| `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack apps |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise apps |
-| `kotlin-spring` | Kotlin, Spring Boot | Kotlin apps |
-| `csharp-dotnet` | C#, .NET, ASP.NET Core | .NET apps |
-| `sap-abap` | ABAP, SAP | SAP development |
+| `kotlin-spring` | Kotlin, Spring Boot | Kotlin microservices |
+| `csharp-dotnet` | C#, .NET 8+, ASP.NET Core | .NET apps |
+| `ai-agent-development` | Python, LangChain, LangGraph | AI agents |
+| `multi-agent-systems` | Python, LangGraph, Multi-agent | Agent orchestration |
+| `sap-abap` | ABAP, SAP RAP | SAP development |
 | `sap-cpi-pi` | Groovy, iFlows | SAP integration |
 
 ## Protected Files

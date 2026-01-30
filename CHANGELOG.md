@@ -5,6 +5,45 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-01-30
+
+### Added
+
+- **Team Workshop Onboarding** - Collaborative 5-workshop series for teams to co-create their Cursor agent system
+  - Workshop 1: Vision Quest (mission, stakeholders, success criteria)
+  - Workshop 2: Ethics Arena (values, boundaries, ethical framework)
+  - Workshop 3: Stack Safari (technology selection, architecture)
+  - Workshop 4: Agent Assembly (agent trading cards, skill bingo)
+  - Workshop 5: Integration Celebration (demo derby, gratitude circle)
+
+- **New Agent**
+  - `workshop-facilitator` - Orchestrates team workshops with games and facilitation
+
+- **New Skill**
+  - `team-workshop-onboarding` - Complete workshop series skill with detailed facilitation guides
+
+- **New Documentation**
+  - `docs/TEAM_WORKSHOP_GUIDE.md` - Comprehensive facilitator's manual (~1200 lines)
+
+- **New Knowledge Files**
+  - `knowledge/workshop-facilitation.json` - Facilitation techniques and prompts
+  - `knowledge/game-mechanics.json` - Game rules, variations, and mechanics
+  - `knowledge/team-dynamics.json` - Team collaboration patterns and adaptations
+
+- **New Patterns**
+  - `patterns/axioms/axiom-zero.json` - Axiom 0: Love and Trust foundation
+  - `patterns/games/` - 11 workshop games (creative, strategic, collaborative)
+  - `patterns/team-formats/` - Small (2-5), medium (6-12), large (13+) team adaptations
+  - `patterns/workshops/` - 5 workshop pattern definitions
+
+### Philosophy
+
+This release introduces **Axiom 0: Love and Trust** as the philosophical foundation:
+
+> "Before verification, before user primacy, before all rules - we act from love for humanity and trust in each other."
+
+Workshop activities are designed to make onboarding fun and engaging through play, debate, and celebration.
+
 ## [2.1.0] - 2026-01-29
 
 ### Added

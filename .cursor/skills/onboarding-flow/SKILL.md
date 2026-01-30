@@ -22,6 +22,8 @@ This skill enables seamless integration of the factory's agent system into repos
 - User provides a path to a local repository
 - User wants to upgrade an older factory-generated setup
 
+**For Team Onboarding:** If the user mentions a team (2+ people), consider suggesting the `team-workshop-onboarding` skill instead, which provides a collaborative workshop series with games and discussions.
+
 ## Prerequisites
 
 Before starting the onboarding flow, ensure:
@@ -193,6 +195,24 @@ python cli/factory_cli.py --rollback <repo_path>
 | `stack-configuration` | Use if detected stack needs adjustment |
 | `agent-generation` | Used for generating missing agents |
 | `skill-generation` | Used for generating missing skills |
+| `team-workshop-onboarding` | Alternative for team onboarding with collaborative workshops |
+
+## Team Onboarding Alternative
+
+If a team (2+ people) is onboarding together, suggest the Team Workshop Onboarding:
+
+```
+"I notice you mentioned a team. Would you like to:
+
+A) Individual Onboarding - I'll analyze and enhance your repo now
+B) Team Workshop Series - Collaborative 5-workshop journey with games 
+   and discussions that builds shared vision, ethics, and custom agents
+
+The workshop series takes more time but creates deeper team alignment
+and more customized results. It's grounded in Axiom 0: Love and Trust."
+```
+
+If they choose team workshops, hand off to `team-workshop-onboarding` skill.
 
 ## Important Rules
 

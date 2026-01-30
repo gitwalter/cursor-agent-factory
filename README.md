@@ -13,11 +13,12 @@ A meta-system that generates complete Cursor AI agent development systems ground
 
 The Cursor Agent Factory uses a **5-layer deductive-inductive architecture** to generate agent systems that are not just technically capable, but also grounded in clear values and purpose.
 
-### The 5 Layers
+### The 5 Layers (+ Foundation)
 
 | Layer | Name | Purpose | Artifact |
 |-------|------|---------|----------|
-| **0** | Integrity & Logic | Foundational axioms | `.cursorrules` L0 section |
+| **A0** | Love & Trust | Foundation of all being and doing | `.cursorrules` foundation |
+| **0** | Integrity & Logic | Foundational axioms (A1-A5) | `.cursorrules` L0 section |
 | **1** | Purpose | Mission, stakeholders, success | `PURPOSE.md` |
 | **2** | Principles | Ethical boundaries, quality standards | `.cursorrules` principles |
 | **3** | Methodology | Agile/Kanban/R&D, enforcement, practices | `methodology.yaml` |
@@ -69,6 +70,23 @@ flowchart LR
 3. Follow the 5-phase questionnaire
 4. Specify output directory
 5. Review generated project
+
+### Team Workshop Onboarding (Collaborative)
+
+For teams of 2+ people, use the collaborative workshop series:
+
+1. Open this project in Cursor IDE
+2. Say: **"We want to run team workshops for our project"**
+3. Complete 5 workshops with your team:
+   - **Vision Quest** (2-3h): Games to discover shared vision
+   - **Ethics Arena** (2h): Debate and auction to find values
+   - **Stack Safari** (2-3h): Explore technology through play
+   - **Agent Assembly** (3-4h): Design agents as trading cards
+   - **Integration Celebration** (1.5-2h): Demo and celebrate
+
+Each workshop includes games, questionnaires, and discussions grounded in **Axiom 0: Love and Trust**.
+
+See [docs/TEAM_WORKSHOP_GUIDE.md](docs/TEAM_WORKSHOP_GUIDE.md) for the complete facilitator's manual.
 
 ### CLI (Advanced Users)
 
@@ -212,6 +230,59 @@ The `sap-cpi-pi` blueprint includes:
 - Spock framework for script testing
 - SAP Documentation MCP integration for grounding
 
+## Team Workshop System
+
+### Axiom 0: Love and Trust
+
+The Team Workshop System is grounded in **Axiom 0**:
+
+> "All being and doing is grounded in love and trust."
+
+This foundational axiom precedes all technical axioms (A1-A5) and ensures that collaborative design emerges from:
+- Assuming positive intent in all interactions
+- Creating from care, not fear
+- Trusting team members to contribute their best
+- Building systems that serve human flourishing
+
+### Workshop Series Overview
+
+| Workshop | Duration | Games | Output |
+|----------|----------|-------|--------|
+| **Vision Quest** | 2-3h | Future Headlines, Stakeholder Safari | Team Charter |
+| **Ethics Arena** | 2h | Dilemma Duel, Value Auction | Ethics Framework |
+| **Stack Safari** | 2-3h | Trade-Off Tetris, Architecture Pictionary | Stack Configuration |
+| **Agent Assembly** | 3-4h | Agent Trading Cards, Skill Bingo | Agent Roster |
+| **Integration Celebration** | 1.5-2h | Demo Derby, Gratitude Circle | Complete System |
+
+### Game Library
+
+**Creative Games** (Vision & Ideation):
+- **Future Headlines**: Write newspaper headlines from 5 years in the future
+- **Stakeholder Safari**: Role-play as different stakeholders
+- **Dream Demo**: Describe the ideal product demo without constraints
+
+**Strategic Games** (Ethics & Decisions):
+- **Dilemma Duel**: Debate ethical scenarios with no perfect answer
+- **Value Auction**: Bid limited points on values to reveal priorities
+- **Trade-Off Tetris**: Fit constraints into limited capacity
+
+**Collaborative Games** (Design & Celebration):
+- **Agent Trading Cards**: Create collectible cards for each agent
+- **Skill Bingo**: Fill bingo cards with needed skills
+- **Architecture Pictionary**: Draw and guess system components
+- **Demo Derby**: Showcase all workshop artifacts
+- **Gratitude Circle**: Express appreciation to team members
+
+### Team Size Adaptations
+
+| Size | Format |
+|------|--------|
+| Small (2-5) | Everyone participates in everything, intimate discussions |
+| Medium (6-12) | Breakout groups for games, plenary for synthesis |
+| Large (13+) | Representative groups, async pre-work, sync synthesis |
+
+For complete facilitation instructions, see [docs/TEAM_WORKSHOP_GUIDE.md](docs/TEAM_WORKSHOP_GUIDE.md).
+
 ## Factory Agents
 
 | Agent | Purpose |
@@ -221,6 +292,7 @@ The `sap-cpi-pi` blueprint includes:
 | `workflow-designer` | Design development workflows and trigger integrations |
 | `knowledge-manager` | Structure domain knowledge and generate knowledge files |
 | `template-generator` | Generate code and document templates |
+| `workshop-facilitator` | Facilitate team workshops for collaborative agent system design |
 
 ## Available Pattern Agents
 
@@ -238,6 +310,7 @@ These agents can be included in generated projects:
 | Skill | Description |
 |-------|-------------|
 | `requirements-gathering` | 5-phase interactive requirements elicitation |
+| `team-workshop-onboarding` | Collaborative 5-workshop series with games for teams |
 | `stack-configuration` | Technology stack selection and configuration |
 | `workflow-generation` | Workflow pattern generation and customization |
 | `agent-generation` | Agent definition file generation |
@@ -245,6 +318,7 @@ These agents can be included in generated projects:
 | `knowledge-generation` | JSON knowledge file generation |
 | `template-generation` | Code and document template generation |
 | `cursorrules-generation` | .cursorrules file generation |
+| `axiom-selection` | Layer 0 axiom configuration including A0 |
 
 ## Available Pattern Skills
 
@@ -571,6 +645,7 @@ Each example includes a complete walkthrough, sample answers, and expected outpu
 | Document | Description |
 |----------|-------------|
 | [Usage Guide](docs/USAGE_GUIDE.md) | Detailed usage instructions and examples |
+| [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) | Complete facilitator's manual for team workshops |
 | [Example Walkthroughs](docs/examples/) | Complete end-to-end examples with real stacks |
 | [Layered Architecture](docs/LAYERED_ARCHITECTURE.md) | 5-layer architecture guide |
 | [Onboarding Concept](docs/LAYERED_ONBOARDING_CONCEPT.md) | Full implementation blueprint |

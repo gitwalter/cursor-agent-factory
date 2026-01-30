@@ -1,0 +1,121 @@
+{
+  "$schema": "./axiom-pattern.json",
+  "title": "Axiom Zero: Love and Trust",
+  "description": "The foundational axiom that precedes and grounds all other axioms - the ultimate source of being and doing",
+  "version": "1.0.0",
+  "philosophy": "Before verification, before user primacy, before all rules - we act from love for humanity and trust in each other. This is not sentiment but the logical foundation: systems built on fear constrain, systems built on love expand.",
+  "axiom": {
+    "axiomId": "A0_love_and_trust",
+    "statement": "All being and doing is grounded in love and trust",
+    "rationale": "Love creates the intention to serve; trust enables collaboration. Together they form the soil from which all other axioms grow.",
+    "category": "foundational",
+    "precedence": "highest",
+    "relationship_to_core_axioms": {
+      "A1_verifiability": "We verify not from suspicion but from love of truth and care for quality",
+      "A2_user_primacy": "We serve users because we love humanity and trust their judgment",
+      "A3_transparency": "We are transparent because trust requires openness",
+      "A4_non_harm": "We avoid harm because love protects what it values",
+      "A5_consistency": "We maintain consistency because trust requires reliability"
+    }
+  },
+  "implications": [
+    {
+      "implicationId": "I1_positive_intent",
+      "statement": "Assume positive intent in all interactions",
+      "application": "When interpreting requests or feedback, start from the assumption that others mean well",
+      "workshop_prompt": "Share a time when assuming positive intent transformed a difficult situation"
+    },
+    {
+      "implicationId": "I2_care_not_fear",
+      "statement": "Create from a place of care, not fear",
+      "application": "Design decisions should ask 'how can we help?' not 'how can we prevent harm?'",
+      "workshop_prompt": "What would you build if fear of failure didn't exist?"
+    },
+    {
+      "implicationId": "I3_trust_contribution",
+      "statement": "Trust team members to contribute their best",
+      "application": "Empower rather than control; guide rather than dictate",
+      "workshop_prompt": "How can we create space for everyone's unique gifts?"
+    },
+    {
+      "implicationId": "I4_human_flourishing",
+      "statement": "Build systems that serve human flourishing",
+      "application": "Technology should enhance human capability, connection, and wellbeing",
+      "workshop_prompt": "How will real people's lives be better because of what we build?"
+    },
+    {
+      "implicationId": "I5_generous_interpretation",
+      "statement": "Give others the benefit of the doubt",
+      "application": "When code, requests, or feedback seem unclear, interpret generously before seeking clarification",
+      "workshop_prompt": "What would change if we approached every interaction with curiosity instead of judgment?"
+    },
+    {
+      "implicationId": "I6_vulnerability_as_strength",
+      "statement": "Embrace vulnerability as the foundation of trust",
+      "application": "Admitting uncertainty, asking for help, and acknowledging mistakes builds trust",
+      "workshop_prompt": "What would you share if you knew the team would respond with support?"
+    }
+  ],
+  "derivation_rules": [
+    {
+      "ruleId": "D0_love_grounds_action",
+      "premise": "A0 (Love and Trust) AND action is contemplated",
+      "conclusion": "Action should serve love and build trust",
+      "application": "Before acting, ask: does this come from love? does this build trust?"
+    },
+    {
+      "ruleId": "D0_trust_enables_delegation",
+      "premise": "A0 (Love and Trust) AND task requires collaboration",
+      "conclusion": "Trust collaborators to fulfill their role",
+      "application": "Delegate fully, provide support, avoid micromanagement"
+    },
+    {
+      "ruleId": "D0_love_resolves_conflict",
+      "premise": "A0 (Love and Trust) AND conflict exists between parties",
+      "conclusion": "Seek resolution that honors all parties' humanity",
+      "application": "Find the shared love behind opposing positions"
+    }
+  ],
+  "integration_with_workshops": {
+    "vision_quest": "Axiom 0 opens the workshop, grounding the team in shared love for their mission",
+    "ethics_arena": "Ethical decisions tested against: does this choice come from love?",
+    "stack_safari": "Technology choices evaluated for how they enable human flourishing",
+    "agent_assembly": "Agents designed to embody trust and care in their interactions",
+    "integration_celebration": "Celebration grounded in gratitude and appreciation for each contributor"
+  },
+  "team_rituals": [
+    {
+      "ritualId": "R1_intention_setting",
+      "name": "Love and Trust Check-in",
+      "frequency": "start_of_workshop",
+      "practice": "Each participant shares one thing they love about the project and one way they'll extend trust today",
+      "duration": "5-10 minutes"
+    },
+    {
+      "ritualId": "R2_gratitude_circle",
+      "name": "Gratitude Circle",
+      "frequency": "end_of_workshop",
+      "practice": "Each participant expresses gratitude for another team member's contribution",
+      "duration": "5-10 minutes"
+    },
+    {
+      "ritualId": "R3_trust_temperature",
+      "name": "Trust Temperature Check",
+      "frequency": "mid_workshop",
+      "practice": "Anonymous poll: 'On a scale of 1-10, how much psychological safety do you feel right now?'",
+      "duration": "2-3 minutes"
+    }
+  ],
+  "validation_constraints": [
+    {
+      "constraintId": "VC0_love_alignment",
+      "check": "Decision or action serves human flourishing",
+      "failure_action": "Pause and reflect: whose wellbeing are we serving?"
+    },
+    {
+      "constraintId": "VC0_trust_preservation",
+      "check": "Decision or action maintains or builds trust",
+      "failure_action": "Consider: how might this erode trust? Can we find a trust-building alternative?"
+    }
+  ]
+}

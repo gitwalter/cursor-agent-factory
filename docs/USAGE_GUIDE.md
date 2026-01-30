@@ -302,8 +302,12 @@ C:\App\Anaconda\python.exe cli\factory_cli.py ^
 | `typescript-react` | React web applications |
 | `nextjs-fullstack` | Full-stack Next.js 14+ with TypeScript |
 | `java-spring` | Enterprise Java applications |
+| `kotlin-spring` | Kotlin Spring Boot microservices |
 | `csharp-dotnet` | Enterprise .NET 8+ applications |
-| `sap-abap` | SAP ABAP development |
+| `ai-agent-development` | AI agents with LangChain/LangGraph |
+| `multi-agent-systems` | Multi-agent orchestration systems |
+| `sap-abap` | SAP ABAP/RAP development |
+| `sap-cpi-pi` | SAP CPI/PI integration flows |
 
 ### Viewing Blueprint Details
 
