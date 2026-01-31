@@ -19,16 +19,30 @@ We gratefully acknowledge Armin's contributions to the Python ecosystem. The ele
 
 ### The Generation Flow
 
-```
-┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
-│  Blueprint      │────▶│   Template   │────▶│  Generated      │
-│  Configuration  │     │   Engine     │     │  Project Files  │
-└─────────────────┘     └──────────────┘     └─────────────────┘
-        │                      │
-        │                      │
-        ▼                      ▼
-   Variables from         Templates from
-   config + stack         templates/ directory
+```mermaid
+flowchart LR
+    subgraph Input["Input"]
+        BP["📋 Blueprint<br/>Configuration"]
+        VAR["Variables from<br/>config + stack"]
+    end
+
+    subgraph Engine["Template Engine"]
+        TE["⚙️ Jinja<br/>Processor"]
+        TF["📁 Templates from<br/>templates/ directory"]
+    end
+
+    subgraph Output["Output"]
+        GEN["📂 Generated<br/>Project Files"]
+    end
+
+    BP --> TE
+    VAR --> BP
+    TF --> TE
+    TE --> GEN
+
+    style Input fill:#e3f2fd,stroke:#1976d2
+    style Engine fill:#fff3e0,stroke:#ff9800
+    style Output fill:#e8f5e9,stroke:#4caf50
 ```
 
 1. **Load Configuration**: Blueprint defines variables (project name, stack, options)

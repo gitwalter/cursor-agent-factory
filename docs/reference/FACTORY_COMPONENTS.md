@@ -208,6 +208,8 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 
 **Name and Description**: The Knowledge Evolution agent monitors external sources and coordinates automatic knowledge updates. It manages the evolution of the Factory's knowledge base over time.
 
+> **📖 Full Documentation**: See [KNOWLEDGE_EVOLUTION.md](../KNOWLEDGE_EVOLUTION.md) for complete system architecture, configuration options, update modes, and source adapters.
+
 **When Activated**: 
 - When running `--check-updates` command
 - When external sources have new releases

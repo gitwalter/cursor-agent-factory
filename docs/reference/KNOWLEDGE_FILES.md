@@ -215,6 +215,8 @@ Core knowledge files provide universal development patterns applicable across al
 
 Factory Meta knowledge files provide information about the Factory itself, its capabilities, and how to use it effectively.
 
+> **📖 Related Documentation**: See [KNOWLEDGE_EVOLUTION.md](../KNOWLEDGE_EVOLUTION.md) for the complete Knowledge Evolution System architecture and configuration.
+
 **`skill-catalog.json`**: Comprehensive registry of all available skills in the Factory. Organizes skills by category (core, workflow, grounding, testing, verification) and by stack (generic, sap-abap). Each skill entry includes ID, name, category, description, factory pattern path, when to use, and stack-specific implementation details. Skills with `factoryPattern: null` are implemented in external repositories.
 
 **`stack-capabilities.json`**: Stack-specific agent capabilities including supported languages (Python, TypeScript, Java, C#, ABAP, Go, Rust), frameworks (FastAPI, Django, React, Next.js, Spring, .NET), file extensions, package managers, test frameworks, linters, formatters, style guides, naming conventions, and suggested agents/skills for each stack.

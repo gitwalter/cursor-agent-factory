@@ -199,6 +199,80 @@ Agent patterns define specialized AI assistants with distinct roles, workflows, 
 
 ---
 
+### Knowledge Agents
+
+#### Knowledge Extender Agent
+
+**Pattern ID**: `knowledge-extender`  
+**Category**: Knowledge  
+**Purpose**: Add new knowledge to projects through research and synthesis  
+**Pattern File**: `patterns/agents/knowledge-extender.json`
+
+**When Activated**:
+- User requests "extend knowledge for [topic]"
+- User says "add knowledge about [subject]"
+- User asks to "create a skill for [purpose]"
+- User provides documentation to incorporate
+
+**Workflow**:
+1. Parse request to identify topic and artifact type
+2. Research using web search, documents, or user input
+3. Generate artifact using extend-knowledge skill
+4. Update manifest.json with new entry
+5. Validate and report results
+
+**Skills Used**: `extend-knowledge`
+
+---
+
+#### Knowledge Evolution Agent
+
+**Pattern ID**: `knowledge-evolution`  
+**Category**: Knowledge  
+**Purpose**: Track and manage project knowledge independently  
+**Pattern File**: `patterns/agents/knowledge-evolution.json`
+
+**When Activated**:
+- User requests "check knowledge status"
+- User asks "what knowledge do we have?"
+- During sprint retrospectives or learning sessions
+
+**Workflow**:
+1. Inventory current knowledge base
+2. Identify gaps or stale content
+3. Gather new knowledge from team or research
+4. Apply updates using extend-knowledge skill
+5. Validate and report status
+
+**Skills Used**: `extend-knowledge`
+
+> **📖 Full System Documentation**: See [KNOWLEDGE_EVOLUTION.md](../KNOWLEDGE_EVOLUTION.md)
+
+---
+
+#### Factory Updates Agent
+
+**Pattern ID**: `factory-updates`  
+**Category**: Knowledge  
+**Purpose**: Receive updates from the Cursor Agent Factory  
+**Pattern File**: `patterns/agents/factory-updates.json`
+
+**When Activated**:
+- User requests "check for Factory updates"
+- User says "sync with Factory"
+- User asks "are there updates from the Factory?"
+
+**Workflow**:
+1. Read project-info.json for Factory origin
+2. Fetch update feed from Factory repository
+3. Filter updates applicable to this project's blueprint
+4. Present available updates to user
+5. Apply selected updates
+
+**Skills Used**: `receive-updates`
+
+---
+
 ## 3. Skill Patterns
 
 Skill patterns define reusable capabilities that agents can invoke. Skills are composable building blocks that can be combined to create complex workflows.
@@ -340,6 +414,61 @@ Ask an LLM: "How many r's are in 'strawberry'?" The LLM might write out "s-t-r-a
 - Document reasoning for each verification decision
 
 **Credits**: [Leon Chlon's Pythea/Strawberry](https://github.com/leochlon/pythea)
+
+---
+
+#### Extend Knowledge Skill
+
+**Pattern ID**: `extend-knowledge`  
+**Category**: Core  
+**Purpose**: Extend project knowledge base with new topics, patterns, and skills  
+**Pattern File**: `patterns/skills/extend-knowledge.json`
+
+**When to Use**:
+- When adding knowledge about new technologies or frameworks
+- When creating project-specific patterns
+- When incorporating external documentation or links
+- When team learns something new to capture
+
+**Process**:
+1. Identify extension type (knowledge file, skill, template)
+2. Research via web search, document reading, or user input
+3. Generate structured content following project conventions
+4. Update manifest.json and skill-catalog.json as needed
+5. Validate JSON syntax
+
+**Important Rules**:
+- ALWAYS follow existing knowledge file patterns
+- ALWAYS update manifest.json after creating knowledge files
+- Include version numbers for traceability
+- Validate JSON before completing
+
+---
+
+#### Receive Updates Skill
+
+**Pattern ID**: `receive-updates`  
+**Category**: Core  
+**Purpose**: Receive and apply updates from the Cursor Agent Factory  
+**Pattern File**: `patterns/skills/receive-updates.json`
+
+**When to Use**:
+- When checking for Factory updates
+- When syncing with Factory improvements
+- When applying new patterns from Factory
+
+**Process**:
+1. Read project-info.json for Factory origin
+2. Fetch update feed from Factory repository
+3. Compare versions to identify applicable updates
+4. Present updates to user for approval
+5. Apply selected updates and update project-info.json
+
+**Important Rules**:
+- Always show update details before applying
+- Backup files before overwriting
+- Respect user's channel preference (stable/latest)
+- Never auto-apply without confirmation
 
 ---
 
