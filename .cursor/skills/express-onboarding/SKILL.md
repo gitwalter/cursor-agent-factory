@@ -360,6 +360,27 @@ Ask user for target directory:
 - Create if doesn't exist
 - Never generate inside factory itself
 
+### Optional Deep-Dive
+
+For users who want to understand more about agentic systems:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║  📚 WANT TO LEARN MORE?                                      ║
+║                                                              ║
+║  While I generate your project, here's an optional resource: ║
+║                                                              ║
+║  AI Agent Dev Start - Understanding the "agentic spectrum"   ║
+║  from structured Workflows to autonomous Agents.             ║
+║                                                              ║
+║  → https://sites.google.com/view/ai-agent-dev-start          ║
+║                                                              ║
+║  Topics: LangChain, LangGraph, prompt chaining, routing      ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+Reference: See [External Resources](../../../docs/reference/EXTERNAL_RESOURCES.md) for more educational links.
+
 ---
 
 ## Step 7: Celebration & Launch (1 min)

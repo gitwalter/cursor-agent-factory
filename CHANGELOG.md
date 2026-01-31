@@ -5,6 +5,45 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.5] - 2026-01-31
+
+### Added - External Resources and Workshop Integration
+
+Integrated external educational and reflective resources into the Factory's workshop ecosystem.
+
+#### New Reference Documentation
+
+| File | Purpose |
+|------|---------|
+| `docs/reference/EXTERNAL_RESOURCES.md` | Catalog of external resources for workshops |
+
+#### External Resources Catalog
+
+| Resource | Type | Workshop Use |
+|----------|------|--------------|
+| AI-Powered Software Dev | Educational | Multi-agent systems reference |
+| AI Agent Dev Start | Educational | Agentic patterns foundation |
+| Generated Art Technokrat | Entertainment | Icebreaker/discussion prompt |
+| IT Strategy VantageX | Example | Cautionary example of AI output |
+| Commit 118 | Origin Story | Meaningful milestones reflection |
+
+#### Workshop Skill Updates
+
+| Skill | Enhancement |
+|-------|-------------|
+| `express-onboarding` | Added optional deep-dive resource link in Step 6 (Magic Preview) |
+| `team-huddle-onboarding` | Added "Meaningful Milestones" optional section in Gratitude Close |
+
+#### Research Documentation
+
+| Document | Enhancement |
+|----------|-------------|
+| `SACRED_PSYCHOLOGY_SOFTWARE_ENGINEERING.md` | Added Appendix D: Commit 118 case study on synchronicity in development |
+
+The Commit 118 case study documents the convergence of technical (Temporal Trust Rule commit), scientific (Element 118 Oganesson), spiritual (Psalm 118), and celestial (planetary alignment) significance on September 5, 2025.
+
+---
+
 ## [3.2.4] - 2026-01-31
 
 ### Added - Team-Independent Knowledge Management for Generated Projects
