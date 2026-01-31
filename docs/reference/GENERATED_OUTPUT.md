@@ -258,6 +258,44 @@ The file also includes autonomous behavior rules, variable notation conventions,
 
 ---
 
+## 3.5 Knowledge Extension Capability
+
+Every generated project includes built-in knowledge extension capabilities:
+
+### Included Components
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `knowledge-extender` agent | `.cursor/agents/knowledge-extender.md` | Orchestrates knowledge base extension |
+| `extend-knowledge` skill | `.cursor/skills/extend-knowledge/SKILL.md` | Core extension workflow |
+| `manifest.json` | `knowledge/manifest.json` | Registry of all knowledge files |
+
+### How to Use
+
+Simply ask in chat:
+
+```
+"Extend knowledge for [topic]"
+"Add knowledge about [framework/technology]"
+"Create a skill for [purpose]"
+```
+
+The knowledge-extender agent will:
+1. Research the topic using available methods
+2. Generate structured JSON following project conventions
+3. Update `knowledge/manifest.json` to register the new file
+4. Report what was created
+
+### Extension During Onboarding
+
+The factory offers knowledge extension during the onboarding phase:
+- Shows current knowledge coverage percentage
+- Lists top knowledge gaps
+- Offers to analyze all gaps or extend specific topics
+- You can skip and run `--analyze-gaps` anytime later
+
+---
+
 ## 4. Generated Agent Format
 
 Agent files are markdown documents with YAML frontmatter and structured sections. They define specialized AI assistants for specific tasks.

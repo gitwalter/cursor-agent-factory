@@ -37,6 +37,7 @@ The factory generates agent systems using a **5-layer architecture** that ensure
 5. [CLI Generation](#cli-generation)
 6. [Working with Blueprints](#working-with-blueprints)
 7. [Customizing Generated Projects](#customizing-generated-projects)
+   - [Extending Knowledge (Chat-Based)](#extending-knowledge-chat-based) ← **New!**
 8. [Understanding Generated Structure](#understanding-generated-structure)
 9. [Enforcement and Practices](#enforcement-and-practices)
 
@@ -394,6 +395,45 @@ type: skill
 ## Process
 ...
 ```
+
+### Extending Knowledge (Chat-Based)
+
+Your generated project includes a **knowledge-extender agent** and **extend-knowledge skill** that allow you to expand the knowledge base without manual file creation.
+
+#### Quick Commands
+
+Simply ask in chat:
+
+```
+"Extend knowledge for [topic]"
+"Add knowledge about [framework/technology]"
+"Create a skill for [purpose]"
+"Incorporate this document: [path or URL]"
+```
+
+#### Examples
+
+```
+"Extend knowledge for GraphQL patterns"
+"Add knowledge about our internal API conventions"
+"Create a skill for database migrations"
+```
+
+The knowledge-extender agent will:
+1. Research the topic using available methods (web search, documents, your input)
+2. Generate structured JSON following your project's conventions
+3. Update `knowledge/manifest.json` to register the new file
+4. Report what was created
+
+#### Manual Extension
+
+For fine-grained control, you can manually:
+1. Create a new `.json` file in `knowledge/`
+2. Follow the schema from existing knowledge files
+3. Update `knowledge/manifest.json` to register it
+4. Reference it in agents/skills as needed
+
+See `knowledge/manifest.json` for the list of all available knowledge files.
 
 ## Understanding Generated Structure
 

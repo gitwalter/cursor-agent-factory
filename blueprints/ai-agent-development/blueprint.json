@@ -47,6 +47,7 @@
     {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
     {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
     {"patternId": "documentation-agent", "required": true, "customizations": {"focus": "agent-documentation"}},
+    {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
     {"patternId": "explorer", "required": false, "customizations": {"focus": "research-papers"}}
   ],
   "skills": [
@@ -55,7 +56,8 @@
     {"patternId": "grounding", "required": true},
     {"patternId": "tdd", "required": true},
     {"patternId": "bugfix-workflow", "required": true},
-    {"patternId": "feature-workflow", "required": true}
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"}
   ],
   "knowledge": [
     {"filename": "langchain-patterns.json", "description": "LangChain best practices and patterns"},
