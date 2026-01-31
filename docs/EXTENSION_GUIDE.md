@@ -10,9 +10,10 @@ This guide explains how to extend the factory with new patterns, blueprints, and
 1. [Adding New Blueprints](#adding-new-blueprints)
 2. [Creating Agent Patterns](#creating-agent-patterns)
 3. [Creating Skill Patterns](#creating-skill-patterns)
-4. [Adding Knowledge Files](#adding-knowledge-files)
+4. [Adding Knowledge Files](#adding-knowledge-files) ← **Chat-based or Manual**
 5. [Template Development](#template-development)
 6. [MCP Server Integration](#mcp-server-integration)
+7. [Post-Extension Automation](#post-extension-automation-mandatory) ← **MANDATORY**
 
 ## Adding New Blueprints
 
@@ -287,6 +288,38 @@ patterns/skills/{skill-id}.json
 
 ## Adding Knowledge Files
 
+There are **two ways** to extend the Factory's knowledge base:
+
+### Method 1: Chat-Based Extension (Recommended)
+
+Simply ask in chat:
+
+```
+"Extend knowledge for [topic]"
+"Add knowledge about [subject]"
+"Create a skill for [purpose]"
+"Incorporate this document: [path or URL]"
+```
+
+The **knowledge-extender agent** will:
+1. Research the topic (web search, documents, or your input)
+2. Generate structured JSON following templates
+3. Execute **Post-Extension Automation** (Rule 6):
+   - Update `knowledge/manifest.json`
+   - Update `knowledge/skill-catalog.json` (if skill)
+   - Update `docs/reference/KNOWLEDGE_FILES.md`
+   - Update `docs/reference/FACTORY_COMPONENTS.md` (if Factory component)
+   - Update `CHANGELOG.md`
+   - Run `scripts/sync_manifest_versions.py --sync`
+   - Run `scripts/validate_readme_structure.py --update`
+4. Ask before git commit/push
+
+**See:** `.cursor/skills/extend-knowledge/SKILL.md` for full procedures.
+
+### Method 2: Manual File Creation
+
+For fine-grained control, create files manually:
+
 ### Knowledge File Location
 
 Factory knowledge: `knowledge/{topic}.json`
@@ -471,6 +504,40 @@ For servers requiring authentication, document in the catalog:
   }
 }
 ```
+
+## Post-Extension Automation (MANDATORY)
+
+After extending ANY artifact, you MUST complete these steps (enforced by `.cursorrules` Rule 6):
+
+### Quick Reference
+
+| Artifact Type | Must Update |
+|---------------|-------------|
+| Knowledge file (new) | manifest.json + KNOWLEDGE_FILES.md + CHANGELOG.md |
+| Knowledge file (extend) | manifest.json (version) + CHANGELOG.md |
+| Skill (new) | skill-catalog.json + CHANGELOG.md |
+| Factory skill/agent | FACTORY_COMPONENTS.md + CHANGELOG.md |
+| Blueprint (new) | BLUEPRINTS.md + CHANGELOG.md |
+
+### Automation Scripts
+
+```powershell
+# Sync versions from source files (single source of truth)
+python scripts/sync_manifest_versions.py --sync
+
+# Validate README counts match filesystem
+python scripts/validate_readme_structure.py --update
+```
+
+### Dependency Map
+
+See `knowledge/artifact-dependencies.json` for the complete mapping of:
+- `update_rules` - What must be updated for each artifact type
+- `documentation_map` - Exact sections to update in each doc
+- `factory_artifact_detection` - List of Factory components
+- `post_extension_checklist` - Step-by-step automation
+
+---
 
 ## Testing Extensions
 
