@@ -5,6 +5,66 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-01-31
+
+### Added - AI/ML Factory Expansion
+
+This major release adds comprehensive AI/ML capabilities with 12 new knowledge files and 8 new blueprints.
+
+#### New Knowledge Files (12 files)
+
+**Foundational ML:**
+- `ml-workflow-patterns.json` - Framework-agnostic ML patterns (train/test, cross-validation, pipelines)
+- `deep-learning-patterns.json` - PyTorch/TensorFlow training, optimization, checkpointing
+- `mlops-patterns.json` - MLflow, Weights & Biases, TensorBoard experiment tracking
+- `llm-provider-comparison.json` - OpenAI, Anthropic, Google, Ollama comparison with pricing
+
+**AI Application Patterns:**
+- `vector-database-patterns.json` - ChromaDB, Qdrant, Pinecone, FAISS, pgvector
+- `huggingface-patterns.json` - Transformers, Datasets, PEFT, Hub integration
+- `rag-patterns.json` - RAG architecture, chunking, retrieval, RAGAS evaluation
+- `multi-agent-patterns.json` - Consolidated CrewAI, AutoGen, LangGraph patterns
+
+**Advanced AI:**
+- `llm-evaluation-patterns.json` - RAGAS, LLM-as-judge, automated testing
+- `model-serving-patterns.json` - FastAPI, vLLM, BentoML deployment
+- `llm-fine-tuning-patterns.json` - LoRA, QLoRA, DPO, ORPO patterns
+- `prompt-library.json` - Reusable prompt templates for common tasks
+
+#### New Blueprints (8 blueprints)
+
+**Production AI/ML:**
+- `python-ml-experimentation` - ML research with PyTorch, scikit-learn, MLflow
+- `python-deep-learning` - Deep learning with Transformers, PEFT, Accelerate
+- `python-rag-system` - Production RAG with LangChain, vector databases
+- `python-multi-agent` - Multi-agent systems with CrewAI, AutoGen, LangGraph
+- `python-fine-tuning` - LLM fine-tuning with LoRA, QLoRA, TRL
+
+**Starter/Onboarding Blueprints:**
+- `starter-ml-classification` - Beginner ML classification (notebooks + patterns)
+- `starter-chatbot` - Beginner LLM chatbot with OpenAI and Streamlit
+- `starter-rag` - Beginner RAG application with LangChain and ChromaDB
+
+#### Enhanced Blueprints
+
+- `ai-agent-development` - Updated to v2.0.0 with expanded knowledge files and latest LLM models
+
+### Framework Coverage
+
+**Foundational Frameworks:** PyTorch, TensorFlow/Keras, scikit-learn, Hugging Face  
+**Orchestration Frameworks:** LangChain, LangGraph, CrewAI, AutoGen  
+**Infrastructure:** MLflow, W&B, ChromaDB, Qdrant, Pinecone, vLLM, BentoML  
+**LLM Providers:** OpenAI (GPT-4o, o1), Anthropic (Claude 3.5), Google (Gemini), Ollama
+
+### Documentation
+
+- Updated `docs/reference/BLUEPRINTS.md` with new AI/ML blueprints
+- Updated `docs/reference/KNOWLEDGE_FILES.md` with new AI/ML knowledge
+- Updated `README.md` with AI/ML blueprint listings
+- Updated `docs/QUICKSTART.md` with new blueprint options
+
+---
+
 ## [2.8.0] - 2026-01-30
 
 ### Added

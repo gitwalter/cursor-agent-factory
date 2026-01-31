@@ -69,6 +69,18 @@ Key elements:
 | `agent-testing.json` | AI/Agent | Testing strategies for AI agents, evaluation patterns, verification methods |
 | `prompt-engineering.json` | AI/Agent | Prompt design patterns, few-shot examples, chain-of-thought, structured outputs |
 | `multi-agent-coordination.json` | AI/Agent | Advanced multi-agent systems, orchestration, conflict resolution, shared state |
+| `multi-agent-patterns.json` | AI/Agent | Consolidated CrewAI, AutoGen, LangGraph multi-agent patterns |
+| `rag-patterns.json` | AI/Agent | RAG architecture, chunking, retrieval, reranking, evaluation |
+| `llm-evaluation-patterns.json` | AI/Agent | RAGAS, LLM-as-judge, automated testing patterns |
+| `prompt-library.json` | AI/Agent | Reusable prompt templates for common AI tasks |
+| `ml-workflow-patterns.json` | AI/ML | Framework-agnostic ML workflow patterns |
+| `deep-learning-patterns.json` | AI/ML | PyTorch/TensorFlow training, optimization, checkpointing |
+| `vector-database-patterns.json` | AI/ML | ChromaDB, Qdrant, Pinecone, FAISS patterns |
+| `mlops-patterns.json` | AI/ML | MLflow, W&B, TensorBoard experiment tracking |
+| `llm-provider-comparison.json` | AI/ML | OpenAI, Anthropic, Google, Ollama comparison |
+| `huggingface-patterns.json` | AI/ML | Transformers, Datasets, PEFT, Hub patterns |
+| `model-serving-patterns.json` | AI/ML | FastAPI, vLLM, BentoML deployment patterns |
+| `llm-fine-tuning-patterns.json` | AI/ML | LoRA, QLoRA, DPO, ORPO fine-tuning patterns |
 | `groovy-patterns.json` | Integration | SAP CPI Groovy script patterns, message processing, error handling, transformations |
 | `iflow-patterns.json` | Integration | SAP Integration Flow patterns, adapters, routing, exception handling, monitoring |
 | `n8n-patterns.json` | Integration | n8n workflow patterns, node configurations, error handling, data transformations |
@@ -135,6 +147,32 @@ AI/Agent knowledge files provide patterns for building AI-powered applications, 
 **`prompt-engineering.json`**: Prompt design patterns including few-shot learning, chain-of-thought prompting, structured output patterns, role-based prompting, and prompt optimization techniques. Includes patterns for reducing hallucinations and improving consistency.
 
 **`multi-agent-coordination.json`**: Advanced multi-agent system patterns including orchestration architectures, shared knowledge bases, conflict resolution strategies, and distributed decision-making. Covers both competitive and collaborative multi-agent scenarios.
+
+### AI/ML Knowledge (NEW)
+
+**`ml-workflow-patterns.json`**: Framework-agnostic machine learning workflow patterns including train/test splitting, cross-validation, feature scaling, handling missing values, categorical encoding, imbalanced data, hyperparameter tuning, model comparison, and scikit-learn pipelines. Includes best practices for reproducibility and avoiding data leakage.
+
+**`deep-learning-patterns.json`**: Deep learning training patterns for PyTorch and TensorFlow/Keras including training loops, gradient accumulation, mixed precision training, learning rate scheduling, early stopping, regularization (dropout, batch normalization, data augmentation), transfer learning, model ensembling, checkpointing, and distributed training.
+
+**`vector-database-patterns.json`**: Patterns for vector databases used in RAG and semantic search including ChromaDB, Qdrant, Pinecone, Weaviate, Milvus, and pgvector. Covers embedding selection, chunking strategies, retrieval patterns (similarity, MMR, hybrid, reranking), and production deployment.
+
+**`mlops-patterns.json`**: MLOps patterns for experiment tracking (MLflow, Weights & Biases, TensorBoard), model registry, model serving, CI/CD pipelines, and production monitoring including prediction logging and data drift detection.
+
+**`llm-provider-comparison.json`**: Comprehensive comparison of LLM providers including OpenAI (GPT-4o, o1), Anthropic (Claude 3.5), Google (Gemini 2.0), and local models (Ollama). Includes pricing, features, structured output patterns, error handling, and LangChain integration.
+
+**`huggingface-patterns.json`**: Hugging Face Transformers patterns including model loading, inference, chat models, datasets, preprocessing, Trainer API, PEFT/LoRA fine-tuning, Hub integration, and optimization (quantization, Flash Attention).
+
+**`rag-patterns.json`**: RAG architecture patterns including basic RAG, conversational RAG, agentic RAG, chunking strategies, retrieval strategies, prompt patterns, RAGAS evaluation, and production patterns (caching, streaming, observability).
+
+**`multi-agent-patterns.json`**: Consolidated patterns for multi-agent systems using CrewAI (role definition, task workflows, hierarchical crews), AutoGen (two-agent chat, group chat, teachable agents), and LangGraph (multi-agent graphs). Includes coordination patterns and anti-patterns.
+
+**`llm-evaluation-patterns.json`**: Patterns for evaluating LLMs and RAG systems including RAGAS metrics, LLM-as-judge, pairwise comparison, automated testing, regression testing, and observability with LangSmith.
+
+**`model-serving-patterns.json`**: Model deployment patterns including FastAPI serving, batch predictions, async inference, vLLM for LLM serving, BentoML, Docker containerization, Prometheus metrics, and scaling patterns.
+
+**`llm-fine-tuning-patterns.json`**: LLM fine-tuning patterns including data preparation, LoRA, QLoRA, full fine-tuning with DeepSpeed, DPO/ORPO for preference optimization, evaluation, and merging/deployment.
+
+**`prompt-library.json`**: Reusable prompt templates including system prompts for code assistant, code reviewer, RAG Q&A, and data analyst. Task prompts for summarization, classification, entity extraction, code generation, SQL generation. Few-shot examples and guardrail prompts.
 
 ### Integration Knowledge
 

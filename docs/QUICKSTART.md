@@ -195,6 +195,13 @@ The AI will guide you through the full requirements process.
 | `sap-cap` | SAP Cloud Application Programming |
 | `sap-rap` | SAP RESTful ABAP Programming |
 | `sap-cpi-pi` | SAP integration development |
+| `python-ml-experimentation` | ML research with PyTorch/sklearn |
+| `python-deep-learning` | Deep learning with Transformers |
+| `python-rag-system` | Production RAG applications |
+| `python-fine-tuning` | LLM fine-tuning with LoRA |
+| `starter-ml-classification` | Beginner ML (great for learning!) |
+| `starter-chatbot` | Beginner chatbot (great for learning!) |
+| `starter-rag` | Beginner RAG (great for learning!) |
 
 See all blueprints with:
 ```powershell

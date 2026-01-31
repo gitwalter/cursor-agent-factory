@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Algorithmic Trading Patterns",
+  "description": "Strategy patterns and best practices for algorithmic trading",
+  "version": "1.0.0",
+  "axiomAlignment": {
+    "A1_verifiability": "All strategies must be backtested with statistical validation",
+    "A4_non_harm": "Risk management is mandatory for all strategies"
+  },
+  "strategy_categories": {
+    "momentum": {
+      "description": "Trade in direction of recent price movement",
+      "principle": "Trending assets tend to continue trending",
+      "patterns": {
+        "moving_average_crossover": {
+          "description": "Fast MA crosses above/below slow MA",
+          "parameters": ["fast_period", "slow_period"],
+          "code_example": "import pandas as pd\nimport pandas_ta as ta\n\ndef ma_crossover_signals(df: pd.DataFrame, fast: int = 10, slow: int = 50) -> pd.Series:\n    \"\"\"\n    Generate trading signals based on moving average crossover.\n    \n    Args:\n        df: DataFrame with 'close' column\n        fast: Fast MA period\n        slow: Slow MA period\n        \n    Returns:\n        Series with signals: 1 (buy), -1 (sell), 0 (hold)\n    \"\"\"\n    fast_ma = df['close'].rolling(window=fast).mean()\n    slow_ma = df['close'].rolling(window=slow).mean()\n    \n    signals = pd.Series(0, index=df.index)\n    signals[fast_ma > slow_ma] = 1\n    signals[fast_ma < slow_ma] = -1\n    \n    # Only signal on crossover\n    return signals.diff().fillna(0).clip(-1, 1)",
+          "best_practices": [
+            "Use longer periods in trending markets",
+            "Add filter for trend strength (ADX)",
+            "Consider using EMA instead of SMA"
+          ]
+        },
+        "breakout": {
+          "description": "Enter when price breaks through resistance/support",
+          "parameters": ["lookback_period", "breakout_threshold"],
+          "code_example": "def breakout_signals(df: pd.DataFrame, lookback: int = 20) -> pd.Series:\n    \"\"\"\n    Generate breakout trading signals.\n    \n    Args:\n        df: DataFrame with 'high', 'low', 'close' columns\n        lookback: Period for calculating range\n        \n    Returns:\n        Series with signals\n    \"\"\"\n    rolling_high = df['high'].rolling(window=lookback).max()\n    rolling_low = df['low'].rolling(window=lookback).min()\n    \n    signals = pd.Series(0, index=df.index)\n    signals[df['close'] > rolling_high.shift(1)] = 1  # Breakout up\n    signals[df['close'] < rolling_low.shift(1)] = -1  # Breakout down\n    \n    return signals",
+          "filters": [
+            "Volume confirmation",
+            "ATR expansion",
+            "Time-of-day filters"
+          ]
+        },
+        "trend_following": {
+          "description": "Follow established trends with trailing stops",
+          "indicators": ["ADX", "Parabolic SAR", "Supertrend"],
+          "code_example": "def trend_following_signals(\n    df: pd.DataFrame,\n    adx_period: int = 14,\n    adx_threshold: float = 25\n) -> pd.Series:\n    \"\"\"\n    Generate trend-following signals using ADX filter.\n    \"\"\"\n    adx = ta.adx(df['high'], df['low'], df['close'], length=adx_period)\n    \n    signals = pd.Series(0, index=df.index)\n    \n    # Only trade when trend is strong\n    trending = adx['ADX_14'] > adx_threshold\n    signals[(adx['DMP_14'] > adx['DMN_14']) & trending] = 1\n    signals[(adx['DMN_14'] > adx['DMP_14']) & trending] = -1\n    \n    return signals"
+        }
+      }
+    },
+    "mean_reversion": {
+      "description": "Trade expecting price to return to average",
+      "principle": "Prices oscillate around a mean value",
+      "patterns": {
+        "bollinger_bands": {
+          "description": "Trade reversals at band extremes",
+          "parameters": ["period", "std_dev"],
+          "code_example": "def bollinger_signals(\n    df: pd.DataFrame,\n    period: int = 20,\n    std_dev: float = 2.0\n) -> pd.Series:\n    \"\"\"\n    Generate mean-reversion signals using Bollinger Bands.\n    \"\"\"\n    bb = ta.bbands(df['close'], length=period, std=std_dev)\n    \n    signals = pd.Series(0, index=df.index)\n    \n    # Buy when price touches lower band\n    signals[df['close'] <= bb[f'BBL_{period}_{std_dev}']] = 1\n    \n    # Sell when price touches upper band\n    signals[df['close'] >= bb[f'BBU_{period}_{std_dev}']] = -1\n    \n    return signals",
+          "enhancements": [
+            "Add RSI confirmation",
+            "Wait for price to re-enter bands",
+            "Use ATR for position sizing"
+          ]
+        },
+        "rsi_reversal": {
+          "description": "Trade overbought/oversold conditions",
+          "parameters": ["period", "overbought", "oversold"],
+          "code_example": "def rsi_signals(\n    df: pd.DataFrame,\n    period: int = 14,\n    overbought: float = 70,\n    oversold: float = 30\n) -> pd.Series:\n    \"\"\"\n    Generate RSI-based mean reversion signals.\n    \"\"\"\n    rsi = ta.rsi(df['close'], length=period)\n    \n    signals = pd.Series(0, index=df.index)\n    signals[rsi < oversold] = 1   # Oversold = buy\n    signals[rsi > overbought] = -1  # Overbought = sell\n    \n    return signals"
+        },
+        "pairs_trading": {
+          "description": "Trade spread between correlated assets",
+          "code_example": "def pairs_trading_signals(\n    prices_a: pd.Series,\n    prices_b: pd.Series,\n    lookback: int = 60,\n    entry_z: float = 2.0,\n    exit_z: float = 0.5\n) -> tuple[pd.Series, pd.Series]:\n    \"\"\"\n    Generate pairs trading signals based on z-score.\n    \n    Returns:\n        Tuple of (signals_a, signals_b)\n    \"\"\"\n    # Calculate spread\n    spread = prices_a / prices_b\n    \n    # Z-score of spread\n    spread_mean = spread.rolling(window=lookback).mean()\n    spread_std = spread.rolling(window=lookback).std()\n    z_score = (spread - spread_mean) / spread_std\n    \n    signals_a = pd.Series(0, index=prices_a.index)\n    signals_b = pd.Series(0, index=prices_b.index)\n    \n    # Spread too high: short A, long B\n    signals_a[z_score > entry_z] = -1\n    signals_b[z_score > entry_z] = 1\n    \n    # Spread too low: long A, short B\n    signals_a[z_score < -entry_z] = 1\n    signals_b[z_score < -entry_z] = -1\n    \n    # Exit when spread normalizes\n    signals_a[abs(z_score) < exit_z] = 0\n    signals_b[abs(z_score) < exit_z] = 0\n    \n    return signals_a, signals_b",
+          "requirements": [
+            "High correlation between assets",
+            "Cointegration test (Engle-Granger)",
+            "Similar sector/industry"
+          ]
+        }
+      }
+    },
+    "statistical_arbitrage": {
+      "description": "Exploit statistical mispricings",
+      "patterns": {
+        "factor_model": {
+          "description": "Trade based on factor exposures",
+          "factors": ["value", "momentum", "size", "quality", "volatility"],
+          "implementation": "scikit-learn linear regression or PCA"
+        },
+        "market_making": {
+          "description": "Provide liquidity, profit from spread",
+          "requirements": ["Low latency", "Inventory management", "Quote optimization"]
+        }
+      }
+    },
+    "machine_learning": {
+      "description": "ML-based signal generation",
+      "patterns": {
+        "classification": {
+          "description": "Predict direction (up/down/neutral)",
+          "algorithms": ["Random Forest", "XGBoost", "Neural Networks"],
+          "code_example": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.preprocessing import StandardScaler\nimport numpy as np\n\ndef train_ml_model(features: pd.DataFrame, labels: pd.Series):\n    \"\"\"\n    Train ML classification model for direction prediction.\n    \n    Args:\n        features: DataFrame with feature columns\n        labels: Series with -1, 0, 1 labels\n    \"\"\"\n    # Scale features\n    scaler = StandardScaler()\n    X_scaled = scaler.fit_transform(features)\n    \n    # Train model\n    model = RandomForestClassifier(\n        n_estimators=100,\n        max_depth=10,\n        min_samples_leaf=50,\n        random_state=42\n    )\n    model.fit(X_scaled, labels)\n    \n    return model, scaler\n\ndef generate_ml_signals(model, scaler, features: pd.DataFrame) -> pd.Series:\n    \"\"\"Generate signals from trained model.\"\"\"\n    X_scaled = scaler.transform(features)\n    predictions = model.predict(X_scaled)\n    return pd.Series(predictions, index=features.index)"
+        },
+        "reinforcement_learning": {
+          "description": "Learn optimal actions through interaction",
+          "algorithms": ["DQN", "PPO", "A2C"],
+          "libraries": ["stable-baselines3", "RLlib"]
+        }
+      },
+      "best_practices": [
+        "Walk-forward validation (no look-ahead bias)",
+        "Feature importance analysis",
+        "Regularization to prevent overfitting",
+        "Ensemble methods for robustness"
+      ]
+    }
+  },
+  "indicators": {
+    "trend": {
+      "SMA": "Simple Moving Average",
+      "EMA": "Exponential Moving Average",
+      "ADX": "Average Directional Index",
+      "MACD": "Moving Average Convergence Divergence",
+      "Supertrend": "Trend direction with ATR bands"
+    },
+    "momentum": {
+      "RSI": "Relative Strength Index",
+      "Stochastic": "Stochastic Oscillator",
+      "CCI": "Commodity Channel Index",
+      "ROC": "Rate of Change",
+      "Williams_R": "Williams %R"
+    },
+    "volatility": {
+      "ATR": "Average True Range",
+      "Bollinger_Bands": "Volatility bands",
+      "Keltner_Channels": "ATR-based channels",
+      "VIX": "Implied volatility index"
+    },
+    "volume": {
+      "OBV": "On-Balance Volume",
+      "VWAP": "Volume-Weighted Average Price",
+      "MFI": "Money Flow Index",
+      "AD": "Accumulation/Distribution"
+    }
+  },
+  "execution_patterns": {
+    "order_types": {
+      "market": "Immediate execution at current price",
+      "limit": "Execute at specified price or better",
+      "stop": "Trigger market order at price level",
+      "stop_limit": "Trigger limit order at price level",
+      "trailing_stop": "Dynamic stop that follows price"
+    },
+    "execution_algorithms": {
+      "TWAP": "Time-Weighted Average Price - spread order over time",
+      "VWAP": "Volume-Weighted Average Price - match volume profile",
+      "iceberg": "Show only portion of total order"
+    }
+  },
+  "position_sizing": {
+    "fixed_fraction": {
+      "description": "Risk fixed percentage per trade",
+      "formula": "position_size = (account_size * risk_percent) / (entry - stop_loss)",
+      "code_example": "def fixed_fraction_size(\n    account_value: float,\n    risk_percent: float,\n    entry_price: float,\n    stop_loss: float\n) -> float:\n    \"\"\"Calculate position size using fixed fractional method.\"\"\"\n    risk_per_share = abs(entry_price - stop_loss)\n    risk_amount = account_value * risk_percent\n    return risk_amount / risk_per_share"
+    },
+    "kelly_criterion": {
+      "description": "Optimal bet size based on edge and odds",
+      "formula": "f* = (bp - q) / b where b=odds, p=win_prob, q=loss_prob",
+      "note": "Use fractional Kelly (0.25-0.5) for safety"
+    },
+    "volatility_based": {
+      "description": "Size inversely proportional to volatility",
+      "formula": "position_size = target_volatility / asset_volatility * account_size"
+    }
+  },
+  "anti_patterns": {
+    "curve_fitting": {
+      "description": "Over-optimizing parameters to historical data",
+      "problem": "Strategy fails in live trading",
+      "solution": "Walk-forward validation, parameter stability testing"
+    },
+    "survivorship_bias": {
+      "description": "Only testing on assets that still exist",
+      "problem": "Overstated historical performance",
+      "solution": "Use point-in-time datasets with delisted securities"
+    },
+    "look_ahead_bias": {
+      "description": "Using future information in historical test",
+      "problem": "Unrealistic backtest results",
+      "solution": "Strict data alignment, point-in-time features"
+    },
+    "transaction_cost_neglect": {
+      "description": "Ignoring slippage and commissions",
+      "problem": "Profitable backtest becomes unprofitable live",
+      "solution": "Include realistic costs (0.1-0.5% per trade)"
+    }
+  }
+}

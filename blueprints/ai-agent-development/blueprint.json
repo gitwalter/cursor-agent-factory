@@ -3,7 +3,7 @@
     "blueprintId": "ai-agent-development",
     "blueprintName": "AI Agent Development Blueprint",
     "description": "Build AI agent systems with LangChain, LangGraph, and modern LLM frameworks",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "author": "Cursor Agent Factory",
     "tags": ["python", "ai", "agents", "langchain", "langgraph", "llm", "ml"],
     "purpose": "Enable developers to create intelligent, coordinated AI agent systems that serve users with integrity"
@@ -26,10 +26,10 @@
       {"type": "sql", "name": "PostgreSQL", "purpose": "Production database"}
     ],
     "llmProviders": [
-      {"name": "OpenAI", "models": ["gpt-4", "gpt-4-turbo", "gpt-4o"], "purpose": "Primary LLM"},
-      {"name": "Anthropic", "models": ["claude-3-opus", "claude-3-sonnet", "claude-3-haiku"], "purpose": "Alternative LLM"},
-      {"name": "Google", "models": ["gemini-pro", "gemini-2.0-flash"], "purpose": "Alternative LLM"},
-      {"name": "Ollama", "models": ["llama3", "mistral", "codellama"], "purpose": "Local LLM"}
+      {"name": "OpenAI", "models": ["gpt-4o", "gpt-4o-mini", "o1", "o1-mini"], "purpose": "Primary LLM"},
+      {"name": "Anthropic", "models": ["claude-3-5-sonnet", "claude-3-opus", "claude-3-haiku"], "purpose": "Alternative LLM"},
+      {"name": "Google", "models": ["gemini-2.0-flash", "gemini-1.5-pro"], "purpose": "Long context LLM"},
+      {"name": "Ollama", "models": ["llama3.2", "mistral", "codellama"], "purpose": "Local LLM"}
     ],
     "tools": [
       {"name": "pytest", "purpose": "Testing"},
@@ -66,7 +66,13 @@
     {"filename": "agent-testing.json", "description": "Agent testing, evaluation, and benchmarking patterns"},
     {"filename": "prompt-engineering.json", "description": "Prompt optimization techniques"},
     {"filename": "agent-coordination.json", "description": "Multi-agent coordination patterns"},
-    {"filename": "llm-providers.json", "description": "LLM provider comparison and selection"}
+    {"filename": "llm-provider-comparison.json", "description": "LLM provider comparison and selection"},
+    {"filename": "multi-agent-patterns.json", "description": "Consolidated multi-agent coordination patterns"},
+    {"filename": "rag-patterns.json", "description": "RAG architecture and retrieval patterns"},
+    {"filename": "vector-database-patterns.json", "description": "Vector store selection and usage"},
+    {"filename": "llm-evaluation-patterns.json", "description": "LLM and RAG evaluation patterns"},
+    {"filename": "prompt-library.json", "description": "Reusable prompt templates"},
+    {"filename": "huggingface-patterns.json", "description": "Hugging Face Transformers patterns"}
   ],
   "templates": {
     "codeTemplates": [

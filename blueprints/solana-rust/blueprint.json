@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "blueprintId": "solana-rust",
+    "blueprintName": "Solana Rust Blueprint",
+    "description": "Solana program development with Rust and Anchor framework",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["rust", "solana", "anchor", "blockchain", "smart-contracts", "web3"]
+  },
+  "stack": {
+    "primaryLanguage": "rust",
+    "secondaryLanguage": "typescript",
+    "frameworks": [
+      {"name": "Anchor", "version": "0.30+", "purpose": "Solana program framework"},
+      {"name": "Solana SDK", "version": "1.18+", "purpose": "Solana primitives"},
+      {"name": "SPL Token", "version": "4.0+", "purpose": "Token program library"},
+      {"name": "Metaplex", "version": "latest", "purpose": "NFT standards", "optional": true}
+    ],
+    "databases": [
+      {"type": "blockchain", "name": "Solana Mainnet", "purpose": "Production"},
+      {"type": "blockchain", "name": "Solana Devnet", "purpose": "Testing"},
+      {"type": "local", "name": "solana-test-validator", "purpose": "Local development"}
+    ],
+    "tools": [
+      {"name": "cargo", "purpose": "Rust package manager"},
+      {"name": "anchor", "purpose": "Build and deploy"},
+      {"name": "solana-cli", "purpose": "Solana interaction"},
+      {"name": "cargo-clippy", "purpose": "Rust linting"},
+      {"name": "cargo-fmt", "purpose": "Rust formatting"}
+    ],
+    "styleGuides": [
+      {"name": "rust-style", "description": "Rust API Guidelines", "reference": "https://rust-lang.github.io/api-guidelines/"},
+      {"name": "anchor-conventions", "description": "Anchor best practices"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["rust-review", "grounding"]}},
+    {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
+    {"patternId": "explorer", "required": false}
+  ],
+  "skills": [
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true},
+    {"patternId": "grounding", "required": true},
+    {"patternId": "tdd", "required": true},
+    {"patternId": "code-templates", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "solana-patterns.json", "description": "Solana program patterns"},
+    {"filename": "anchor-patterns.json", "description": "Anchor framework patterns"},
+    {"filename": "naming-conventions.json", "description": "Rust naming conventions"}
+  ],
+  "templates": {
+    "codeTemplates": [
+      {"category": "anchor-program", "directory": "templates/rust-solana/programs/"},
+      {"category": "token-program", "directory": "templates/rust-solana/programs/"},
+      {"category": "state-account", "directory": "templates/rust-solana/programs/"},
+      {"category": "integration-test", "directory": "templates/rust-solana/tests/"}
+    ],
+    "documentTemplates": [
+      {"name": "program_design.md", "directory": "templates/docs/"}
+    ]
+  },
+  "workflows": [
+    {"patternId": "solana-development", "customizations": {}},
+    {"patternId": "jira-bugfix", "customizations": {}}
+  ],
+  "mcpServers": [
+    {"name": "deepwiki", "url": "https://mcp.deepwiki.com/mcp", "purpose": "Solana/Anchor docs", "required": false}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "programs/", "purpose": "Solana programs"},
+      {"path": "programs/{{PROGRAM_NAME}}/src/", "purpose": "Program source"},
+      {"path": "programs/{{PROGRAM_NAME}}/src/instructions/", "purpose": "Instruction handlers"},
+      {"path": "programs/{{PROGRAM_NAME}}/src/state/", "purpose": "Account state"},
+      {"path": "tests/", "purpose": "Integration tests"},
+      {"path": "app/", "purpose": "Frontend application", "optional": true},
+      {"path": "scripts/", "purpose": "Utility scripts"},
+      {"path": "migrations/", "purpose": "Deployment migrations"},
+      {"path": "target/", "purpose": "Build artifacts"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "Anchor.toml", "purpose": "Anchor configuration"},
+      {"path": "Cargo.toml", "purpose": "Rust workspace"},
+      {"path": "package.json", "purpose": "TypeScript tests"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "RUST_VERSION", "default": "1.75.0"},
+      {"name": "SOLANA_VERSION", "default": "1.18"},
+      {"name": "ANCHOR_VERSION", "default": "0.30.0"},
+      {"name": "CLUSTER", "default": "devnet"}
+    ],
+    "rules": [
+      {"name": "Account Validation", "description": "Always validate account ownership and constraints"},
+      {"name": "PDA Seeds", "description": "Use consistent, documented PDA seed patterns"},
+      {"name": "Error Handling", "description": "Use custom error types with descriptive messages"},
+      {"name": "Rent Exemption", "description": "Ensure all accounts are rent-exempt"},
+      {"name": "CPI Safety", "description": "Validate program IDs before cross-program invocations"},
+      {"name": "Testing", "description": "Write TypeScript integration tests for all instructions"}
+    ]
+  },
+  "solanaPatterns": {
+    "accounts": [
+      "Program Derived Addresses (PDAs)",
+      "Account Data Layout",
+      "Account Validation",
+      "Rent Exemption"
+    ],
+    "instructions": [
+      "Anchor Constraints",
+      "Account Contexts",
+      "Error Handling",
+      "Events"
+    ],
+    "security": [
+      "Signer Verification",
+      "Owner Checks",
+      "PDA Validation",
+      "CPI Guard"
+    ]
+  },
+  "securityChecklist": {
+    "required": [
+      "Signer verification on privileged operations",
+      "Account owner validation",
+      "PDA seed verification",
+      "Integer overflow protection",
+      "Rent exemption verification"
+    ],
+    "recommended": [
+      "Reentrancy protection",
+      "Rate limiting",
+      "Multi-sig for admin functions",
+      "Upgrade authority management"
+    ]
+  }
+}

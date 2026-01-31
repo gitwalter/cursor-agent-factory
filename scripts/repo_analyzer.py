@@ -22,7 +22,7 @@ import re
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Union
 
 
 class OnboardingScenario(Enum):
@@ -278,7 +278,7 @@ class RepoAnalyzer:
         4: re.compile(r"Layer\s*4|LAYER\s*4|Technical", re.IGNORECASE),
     }
     
-    def __init__(self, repo_path: str | Path, factory_root: Optional[Path] = None):
+    def __init__(self, repo_path: Union[str, Path], factory_root: Optional[Path] = None):
         """Initialize the analyzer.
         
         Args:

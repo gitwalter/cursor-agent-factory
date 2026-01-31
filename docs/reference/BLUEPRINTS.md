@@ -44,11 +44,24 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 | `python-streamlit` | Python | Streamlit 1.28+, Pandas 2.0+, NumPy 1.24+ | Frontend/Full-Stack | Low-Medium |
 | `ai-agent-development` | Python | LangChain 0.3+, LangGraph 0.2+, CrewAI 0.50+ | AI/Agent | High |
 | `multi-agent-systems` | Python | LangGraph 0.1+, LangChain 0.2+, Multi-agent orchestration | AI/Agent | Very High |
+| `python-ml-experimentation` | Python | PyTorch, scikit-learn, MLflow | AI/ML | Medium |
+| `python-deep-learning` | Python | PyTorch, Transformers, PEFT | AI/ML | High |
+| `python-rag-system` | Python | LangChain 0.3+, ChromaDB, OpenAI | AI/RAG | Medium-High |
+| `python-multi-agent` | Python | CrewAI, AutoGen, LangGraph | AI/Agent | High |
+| `python-fine-tuning` | Python | Transformers, PEFT, TRL | AI/ML | High |
+| `starter-ml-classification` | Python | scikit-learn, pandas | AI/ML Starter | Low |
+| `starter-chatbot` | Python | OpenAI, Streamlit | AI/LLM Starter | Low |
+| `starter-rag` | Python | LangChain, ChromaDB, Streamlit | AI/RAG Starter | Low |
 | `sap-abap` | ABAP | Clean ABAP, ABAP Cloud 2302+, Classic patterns | Integration | High |
 | `sap-rap` | ABAP/CDS | RAP 2.x, CDS, Fiori Elements, ABAP Cloud | Integration | High |
 | `sap-cap` | JavaScript/CDS | CAP 7.x, CDS, Node.js, BTP, Fiori Elements | Integration | High |
 | `sap-cpi-pi` | Groovy | SAP CPI SDK 1.x, Groovy 4.0.x, Spock Framework 2.4+ | Integration | High |
 | `n8n-automation` | JavaScript | n8n 1.0+, Node.js 18+, TypeScript 5+ (optional) | Integration/Automation | Medium |
+| `solidity-ethereum` | Solidity | Hardhat 2.x, Foundry, OpenZeppelin 5.x | Blockchain | High |
+| `defi-protocols` | Solidity | Hardhat, Foundry, Chainlink, OpenZeppelin | Blockchain/DeFi | Very High |
+| `solana-rust` | Rust | Anchor 0.30+, Solana SDK 1.18+ | Blockchain | High |
+| `quantitative-trading` | Python | pandas 2.x, vectorbt, backtrader, scikit-learn | Financial AI | High |
+| `financial-ai-agents` | Python | LangChain 0.3+, vectorbt, pandas 2.x | Financial AI/Agent | Very High |
 
 ---
 
@@ -58,9 +71,18 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 
 **Python Projects:**
 - **REST APIs**: `python-fastapi` - Modern async API development with FastAPI
+- **Quantitative Trading**: `quantitative-trading` - Algorithmic trading with backtesting
+- **Financial AI Agents**: `financial-ai-agents` - AI agents for investment and trading
 - **Data Applications**: `python-streamlit` - Interactive dashboards and data apps
 - **AI Agents**: `ai-agent-development` - Single agent systems with LangChain
 - **Multi-Agent**: `multi-agent-systems` - Coordinated multi-agent orchestration
+- **ML Research**: `python-ml-experimentation` - ML experimentation with PyTorch/sklearn
+- **Deep Learning**: `python-deep-learning` - Deep learning with Transformers/PEFT
+- **RAG Systems**: `python-rag-system` - Production RAG with LangChain
+- **Fine-Tuning**: `python-fine-tuning` - LLM fine-tuning with LoRA/PEFT
+- **ML Starter**: `starter-ml-classification` - Beginner ML classification
+- **Chatbot Starter**: `starter-chatbot` - Beginner LLM chatbot
+- **RAG Starter**: `starter-rag` - Beginner RAG application
 
 **TypeScript/JavaScript Projects:**
 - **Frontend Only**: `typescript-react` - React 19 with modern tooling
@@ -86,7 +108,11 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 
 **Web Applications**: `typescript-react`, `nextjs-fullstack`, `python-streamlit`
 
-**AI Agent Systems**: `ai-agent-development`, `multi-agent-systems`
+**AI Agent Systems**: `ai-agent-development`, `multi-agent-systems`, `financial-ai-agents`
+
+**Blockchain**: `solidity-ethereum`, `defi-protocols`, `solana-rust`
+
+**Financial AI/Trading**: `quantitative-trading`, `financial-ai-agents`
 
 **Integration/Automation**: `sap-abap`, `sap-cpi-pi`, `n8n-automation`
 
@@ -122,11 +148,32 @@ The factory analyzes requirements and matches them to the most appropriate bluep
 ### AI/Agent Blueprints
 - **ai-agent-development**: AI agent systems with LangChain, LangGraph, and CrewAI
 - **multi-agent-systems**: Orchestrated multi-agent systems with coordination patterns
+- **python-multi-agent**: Multi-agent systems with CrewAI, AutoGen, and LangGraph
+- **python-rag-system**: Production RAG systems with LangChain and vector databases
+
+### AI/ML Blueprints
+- **python-ml-experimentation**: ML research with PyTorch, scikit-learn, and MLflow
+- **python-deep-learning**: Deep learning with Hugging Face Transformers and PEFT
+- **python-fine-tuning**: LLM fine-tuning with LoRA, QLoRA, and TRL
+
+### AI Starter Blueprints (Onboarding)
+- **starter-ml-classification**: Beginner-friendly ML classification project
+- **starter-chatbot**: Simple LLM chatbot with OpenAI and Streamlit
+- **starter-rag**: Simple RAG application with LangChain and ChromaDB
 
 ### Integration/Automation Blueprints
 - **sap-abap**: SAP ABAP development with RAP, CAP, and Fiori integration
 - **sap-cpi-pi**: SAP CPI/PI integration flows with Groovy scripting
 - **n8n-automation**: Workflow automation with n8n and AI integrations
+
+### Blockchain Blueprints
+- **solidity-ethereum**: Ethereum smart contract development with Hardhat and Foundry
+- **defi-protocols**: DeFi protocol development (AMMs, lending, staking)
+- **solana-rust**: Solana program development with Anchor framework
+
+### Financial AI Blueprints
+- **quantitative-trading**: Algorithmic trading with backtesting and risk management
+- **financial-ai-agents**: AI agents for investment analysis and trading
 
 ---
 
@@ -1151,6 +1198,14 @@ No specific axiom alignment defaults defined.
 
 ## Summary
 
-This reference document provides comprehensive information about all 12 technology blueprints available in the Cursor Agent Factory. Each blueprint is designed to provide a complete, production-ready foundation for developing applications in specific technology stacks, with pre-configured AI agents, skills, knowledge bases, and best practices.
+This reference document provides comprehensive information about all 17 technology blueprints available in the Cursor Agent Factory. Each blueprint is designed to provide a complete, production-ready foundation for developing applications in specific technology stacks, with pre-configured AI agents, skills, knowledge bases, and best practices.
+
+**Blueprint Categories:**
+- **Backend/API**: python-fastapi, java-spring, kotlin-spring, csharp-dotnet
+- **Frontend/Full-Stack**: typescript-react, nextjs-fullstack, python-streamlit
+- **AI/Agent**: ai-agent-development, multi-agent-systems, financial-ai-agents
+- **Blockchain**: solidity-ethereum, defi-protocols, solana-rust
+- **Financial AI**: quantitative-trading, financial-ai-agents
+- **Integration**: sap-abap, sap-rap, sap-cap, sap-cpi-pi, n8n-automation
 
 When selecting a blueprint, consider your team's language preferences, project type, experience level, and enterprise context. The factory will customize the selected blueprint based on your specific requirements during project generation.

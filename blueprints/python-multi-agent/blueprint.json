@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "blueprintId": "python-multi-agent",
+    "blueprintName": "Python Multi-Agent System Blueprint",
+    "description": "Multi-agent AI systems with CrewAI, AutoGen, and LangGraph",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "multi-agent", "crewai", "autogen", "langgraph", "ai"],
+    "purpose": "Enable development of sophisticated multi-agent systems for complex task automation"
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "CrewAI", "version": "0.50+", "purpose": "Role-based agent orchestration"},
+      {"name": "AutoGen", "version": "0.2+", "purpose": "Conversational multi-agent", "optional": true},
+      {"name": "LangGraph", "version": "0.2+", "purpose": "State machine workflows"},
+      {"name": "LangChain", "version": "0.3+", "purpose": "Agent tools and chains"},
+      {"name": "FastAPI", "version": "0.100+", "purpose": "API serving"},
+      {"name": "Pydantic", "version": "2.0+", "purpose": "Data validation"}
+    ],
+    "databases": [
+      {"type": "vector", "name": "ChromaDB", "purpose": "Agent memory"},
+      {"type": "sql", "name": "SQLite", "purpose": "Task history"},
+      {"type": "cache", "name": "Redis", "purpose": "Session state", "optional": true}
+    ],
+    "llmProviders": [
+      {"name": "OpenAI", "models": ["gpt-4o", "gpt-4o-mini"], "purpose": "Primary LLM"},
+      {"name": "Anthropic", "models": ["claude-3-5-sonnet"], "purpose": "Alternative LLM", "optional": true}
+    ],
+    "tools": [
+      {"name": "pytest", "purpose": "Testing"},
+      {"name": "ruff", "purpose": "Linting"},
+      {"name": "langsmith", "purpose": "Tracing"},
+      {"name": "crewai-tools", "purpose": "Agent tools"}
+    ]
+  },
+  "agents": [
+    {"patternId": "code-reviewer", "required": true},
+    {"patternId": "test-generator", "required": true},
+    {"patternId": "documentation-agent", "required": true}
+  ],
+  "skills": [
+    {"patternId": "prompt-engineering", "required": true},
+    {"patternId": "bugfix-workflow", "required": true},
+    {"patternId": "feature-workflow", "required": true}
+  ],
+  "knowledge": [
+    {"filename": "multi-agent-patterns.json", "description": "Multi-agent coordination patterns"},
+    {"filename": "crewai-patterns.json", "description": "CrewAI-specific patterns"},
+    {"filename": "autogen-patterns.json", "description": "AutoGen patterns"},
+    {"filename": "langgraph-workflows.json", "description": "LangGraph state machines"},
+    {"filename": "llm-provider-comparison.json", "description": "LLM selection guide"}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": ".cursor/agents/", "purpose": "AI agent definitions"},
+      {"path": ".cursor/skills/", "purpose": "Reusable skills"},
+      {"path": "src/", "purpose": "Source code"},
+      {"path": "src/agents/", "purpose": "Agent definitions"},
+      {"path": "src/crews/", "purpose": "Crew configurations"},
+      {"path": "src/tasks/", "purpose": "Task definitions"},
+      {"path": "src/tools/", "purpose": "Custom tools"},
+      {"path": "src/workflows/", "purpose": "LangGraph workflows"},
+      {"path": "src/api/", "purpose": "API endpoints"},
+      {"path": "config/", "purpose": "Configuration files"},
+      {"path": "prompts/", "purpose": "Agent prompts"},
+      {"path": "tests/", "purpose": "Test files"}
+    ],
+    "files": [
+      {"path": ".cursorrules", "purpose": "Agent behavior rules"},
+      {"path": "README.md", "purpose": "Project documentation"},
+      {"path": "pyproject.toml", "purpose": "Python project config"},
+      {"path": "requirements.txt", "purpose": "Dependencies"},
+      {"path": "main.py", "purpose": "Entry point"},
+      {"path": ".env.example", "purpose": "Environment template"}
+    ]
+  },
+  "cursorrules": {
+    "variables": [
+      {"name": "OPENAI_API_KEY", "description": "OpenAI API key"},
+      {"name": "LANGCHAIN_TRACING_V2", "description": "Enable LangSmith", "default": "true"}
+    ],
+    "rules": [
+      {"name": "Agent Roles", "description": "Define clear, non-overlapping agent roles"},
+      {"name": "Task Dependencies", "description": "Specify task dependencies explicitly"},
+      {"name": "Error Handling", "description": "Implement fallbacks for agent failures"},
+      {"name": "Iteration Limits", "description": "Set max iterations to prevent loops"},
+      {"name": "Tracing", "description": "Enable LangSmith for debugging"}
+    ]
+  }
+}

@@ -196,7 +196,7 @@ cursor-agent-factory/
 │   ├── stacks/                  # Stack blueprint patterns
 │   ├── templates/               # Template patterns
 │   └── workflows/               # Workflow patterns
-├── blueprints/                  # Technology stack blueprints (14 blueprints)
+├── blueprints/                  # Technology stack blueprints (27 blueprints)
 │   ├── python-fastapi/
 │   ├── python-streamlit/
 │   ├── ai-agent-development/
@@ -211,9 +211,9 @@ cursor-agent-factory/
 │   ├── sap-rap/
 │   ├── sap-cap/
 │   └── sap-cpi-pi/
-├── knowledge/                   # Reference data (40+ files)
+├── knowledge/                   # Reference data (50+ files)
 │   └── *.json                   # Stack, workflow, MCP, security, AI patterns
-├── templates/                   # Code and document templates (150+ files)
+├── templates/                   # Code and document templates (200+ files)
 │   ├── factory/                 # Factory templates (cursorrules, PURPOSE.md, etc.)
 │   ├── ai/                      # AI agent templates
 │   ├── python/                  # Python templates (FastAPI, Streamlit)
@@ -256,6 +256,19 @@ cursor-agent-factory/
 | `python-streamlit` | Python, Streamlit, Pandas | Data apps and dashboards |
 | `ai-agent-development` | Python, LangChain, LangGraph | AI agent systems (single agents) |
 | `multi-agent-systems` | Python, LangGraph, LangChain | Orchestrated multi-agent systems |
+| `python-ml-experimentation` | Python, PyTorch, scikit-learn | ML research and experimentation |
+| `python-deep-learning` | Python, Transformers, PEFT | Deep learning with Hugging Face |
+| `python-rag-system` | Python, LangChain, ChromaDB | Production RAG systems |
+| `python-multi-agent` | Python, CrewAI, AutoGen | Multi-agent orchestration |
+| `python-fine-tuning` | Python, PEFT, TRL | LLM fine-tuning with LoRA |
+| `starter-ml-classification` | Python, scikit-learn | Beginner ML classification |
+| `starter-chatbot` | Python, OpenAI, Streamlit | Beginner LLM chatbot |
+| `starter-rag` | Python, LangChain, ChromaDB | Beginner RAG application |
+| `solidity-ethereum` | Solidity, Hardhat, Foundry | Ethereum smart contract development |
+| `defi-protocols` | Solidity, Chainlink, OpenZeppelin | DeFi protocol development (AMM, lending) |
+| `solana-rust` | Rust, Anchor, Solana SDK | Solana program development |
+| `quantitative-trading` | Python, vectorbt, pandas | Algorithmic trading and backtesting |
+| `financial-ai-agents` | Python, LangChain, vectorbt | AI agents for trading and investment |
 | `typescript-react` | TypeScript, React, Vite | Web application development |
 | `nextjs-fullstack` | TypeScript, Next.js 14+, Prisma | Full-stack React development |
 | `java-spring` | Java, Spring Boot, JPA | Enterprise application development |
@@ -276,7 +289,7 @@ The `ai-agent-development` blueprint includes:
 - Templates for agents, prompts, and workflows
 - Default: Research & Development methodology with A10 (Learning) axiom
 
-### Multi-Agent Systems Blueprint (NEW)
+### Multi-Agent Systems Blueprint
 
 The `multi-agent-systems` blueprint includes:
 - LangGraph for multi-agent orchestration
@@ -284,6 +297,28 @@ The `multi-agent-systems` blueprint includes:
 - Agent handoff protocols
 - Coordination strategies (task decomposition, consensus)
 - Default: A8 (Collaboration) + A10 (Learning) axioms
+
+### AI/ML Blueprints (NEW)
+
+The factory now includes comprehensive AI/ML blueprints:
+
+| Blueprint | Purpose | Key Technologies |
+|-----------|---------|------------------|
+| `python-ml-experimentation` | ML research | PyTorch, scikit-learn, MLflow, Jupyter |
+| `python-deep-learning` | Deep learning | Transformers, PEFT, Accelerate, TensorBoard |
+| `python-rag-system` | RAG applications | LangChain, ChromaDB/Qdrant, RAGAS |
+| `python-multi-agent` | Multi-agent systems | CrewAI, AutoGen, LangGraph |
+| `python-fine-tuning` | LLM fine-tuning | LoRA, QLoRA, TRL, PEFT |
+
+### Starter Blueprints (Onboarding)
+
+Beginner-friendly blueprints for learning:
+
+| Blueprint | Purpose | What You'll Learn |
+|-----------|---------|-------------------|
+| `starter-ml-classification` | First ML project | Train/test split, sklearn, metrics |
+| `starter-chatbot` | First LLM app | Chat completions, streaming, prompts |
+| `starter-rag` | First RAG app | Chunking, embeddings, retrieval |
 
 ### Kotlin Spring Blueprint
 
@@ -768,7 +803,7 @@ Each example includes a complete walkthrough, sample answers, and expected outpu
 | Document | Description |
 |----------|-------------|
 | **[Factory Reference](docs/FACTORY_REFERENCE.md)** | **Start here** - Complete overview of the factory with links to detailed references |
-| [Blueprints Reference](docs/reference/BLUEPRINTS.md) | All 12 technology blueprints with detailed specifications |
+| [Blueprints Reference](docs/reference/BLUEPRINTS.md) | All 17 technology blueprints with detailed specifications |
 | [Patterns Reference](docs/reference/PATTERNS.md) | Agent, skill, axiom, methodology, and other patterns |
 | [Knowledge Files Reference](docs/reference/KNOWLEDGE_FILES.md) | All 32 knowledge files categorized and explained |
 | [Factory Components Reference](docs/reference/FACTORY_COMPONENTS.md) | Factory's own 7 agents and 19 skills |

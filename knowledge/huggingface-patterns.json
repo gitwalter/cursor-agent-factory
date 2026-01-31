@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Hugging Face Patterns",
+  "description": "Patterns for Hugging Face Transformers, Datasets, and Hub",
+  "version": "1.0.0",
+  "axiomAlignment": {
+    "A1_verifiability": "Model cards and dataset cards provide transparency",
+    "A3_transparency": "Model behavior documented through Hub metadata"
+  },
+  "transformers_patterns": {
+    "loading_models": {
+      "description": "Load pretrained models and tokenizers",
+      "use_when": "Starting with Hugging Face models",
+      "code_example": "from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModel\nimport torch\n\n# Load tokenizer and model\nmodel_name = 'meta-llama/Llama-3.2-1B'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=torch.float16,\n    device_map='auto'  # Automatic GPU placement\n)\n\n# For embeddings\nembedding_model = AutoModel.from_pretrained(\n    'sentence-transformers/all-MiniLM-L6-v2'\n)\n\n# Load with specific revision\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    revision='main',  # or specific commit hash\n    trust_remote_code=True  # For custom models\n)",
+      "best_practices": [
+        "Use Auto* classes for flexibility",
+        "Set torch_dtype for memory efficiency",
+        "Use device_map='auto' for multi-GPU",
+        "Specify revision for reproducibility"
+      ]
+    },
+    "inference": {
+      "description": "Run inference with transformers",
+      "use_when": "Generating text or embeddings",
+      "code_example": "from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer\nimport torch\n\n# Pipeline API (simplest)\ngenerator = pipeline(\n    'text-generation',\n    model='meta-llama/Llama-3.2-1B',\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\n\noutput = generator(\n    'Once upon a time',\n    max_new_tokens=100,\n    temperature=0.7,\n    do_sample=True\n)\nprint(output[0]['generated_text'])\n\n# Manual inference (more control)\ntokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-3.2-1B')\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-3.2-1B',\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\n\ninputs = tokenizer('Once upon a time', return_tensors='pt').to(model.device)\n\nwith torch.no_grad():\n    outputs = model.generate(\n        **inputs,\n        max_new_tokens=100,\n        temperature=0.7,\n        do_sample=True,\n        pad_token_id=tokenizer.eos_token_id\n    )\n\ntext = tokenizer.decode(outputs[0], skip_special_tokens=True)\nprint(text)",
+      "best_practices": [
+        "Use pipeline for quick prototyping",
+        "Manual generate() for production control",
+        "Set pad_token_id to avoid warnings",
+        "Use torch.no_grad() for inference"
+      ]
+    },
+    "chat_models": {
+      "description": "Use chat-formatted models",
+      "use_when": "Working with instruction-tuned models",
+      "code_example": "from transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\nmodel_name = 'meta-llama/Llama-3.2-1B-Instruct'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\n\n# Format as chat\nmessages = [\n    {'role': 'system', 'content': 'You are a helpful assistant.'},\n    {'role': 'user', 'content': 'What is machine learning?'}\n]\n\n# Apply chat template\ninput_text = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\n\ninputs = tokenizer(input_text, return_tensors='pt').to(model.device)\n\nwith torch.no_grad():\n    outputs = model.generate(\n        **inputs,\n        max_new_tokens=256,\n        temperature=0.7,\n        do_sample=True\n    )\n\nresponse = tokenizer.decode(outputs[0][inputs['input_ids'].shape[1]:], skip_special_tokens=True)\nprint(response)",
+      "best_practices": [
+        "Use apply_chat_template for proper formatting",
+        "Set add_generation_prompt=True",
+        "Decode only the generated part"
+      ]
+    }
+  },
+  "datasets_patterns": {
+    "loading_datasets": {
+      "description": "Load datasets from Hub or local files",
+      "use_when": "Working with training data",
+      "code_example": "from datasets import load_dataset, Dataset, DatasetDict\nimport pandas as pd\n\n# Load from Hub\ndataset = load_dataset('imdb')  # Full dataset\ntrain_dataset = load_dataset('imdb', split='train')  # Specific split\nsubset = load_dataset('imdb', split='train[:1000]')  # First 1000 examples\n\n# Load from local files\ndataset = load_dataset('csv', data_files='data.csv')\ndataset = load_dataset('json', data_files='data.jsonl')\ndataset = load_dataset('parquet', data_files='data.parquet')\n\n# From pandas DataFrame\ndf = pd.read_csv('data.csv')\ndataset = Dataset.from_pandas(df)\n\n# Create DatasetDict for train/val/test\ndataset_dict = DatasetDict({\n    'train': train_dataset,\n    'validation': val_dataset,\n    'test': test_dataset\n})\n\n# Stream large datasets\ndataset = load_dataset('bigcode/the-stack', streaming=True)\nfor example in dataset['train']:\n    print(example)\n    break",
+      "best_practices": [
+        "Use streaming for large datasets",
+        "Specify split to avoid loading everything",
+        "Use DatasetDict for organized splits"
+      ]
+    },
+    "preprocessing": {
+      "description": "Preprocess and tokenize datasets",
+      "use_when": "Preparing data for training",
+      "code_example": "from datasets import load_dataset\nfrom transformers import AutoTokenizer\n\ndataset = load_dataset('imdb')\ntokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')\n\n# Tokenization function\ndef tokenize_function(examples):\n    return tokenizer(\n        examples['text'],\n        padding='max_length',\n        truncation=True,\n        max_length=512\n    )\n\n# Apply to dataset (batched for speed)\ntokenized_dataset = dataset.map(\n    tokenize_function,\n    batched=True,\n    remove_columns=['text'],  # Remove original text\n    num_proc=4  # Parallel processing\n)\n\n# Set format for PyTorch\ntokenized_dataset.set_format('torch', columns=['input_ids', 'attention_mask', 'label'])\n\n# Filter examples\nfiltered = dataset.filter(lambda x: len(x['text']) > 100)\n\n# Select columns\nsubset = dataset.select_columns(['text', 'label'])\n\n# Shuffle and select\nshuffled = dataset['train'].shuffle(seed=42).select(range(1000))",
+      "best_practices": [
+        "Use batched=True for faster processing",
+        "Set num_proc for parallelization",
+        "Remove unused columns to save memory",
+        "Set format for framework compatibility"
+      ]
+    }
+  },
+  "training_patterns": {
+    "trainer_api": {
+      "description": "Fine-tune with Trainer API",
+      "use_when": "Standard fine-tuning workflow",
+      "code_example": "from transformers import (\n    AutoModelForSequenceClassification,\n    AutoTokenizer,\n    Trainer,\n    TrainingArguments,\n    DataCollatorWithPadding\n)\nfrom datasets import load_dataset\nimport numpy as np\nfrom sklearn.metrics import accuracy_score, f1_score\n\n# Load model and tokenizer\nmodel_name = 'bert-base-uncased'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForSequenceClassification.from_pretrained(\n    model_name,\n    num_labels=2\n)\n\n# Load and preprocess data\ndataset = load_dataset('imdb')\n\ndef tokenize(examples):\n    return tokenizer(examples['text'], truncation=True, max_length=512)\n\ntokenized = dataset.map(tokenize, batched=True)\n\n# Data collator\ndata_collator = DataCollatorWithPadding(tokenizer=tokenizer)\n\n# Metrics\ndef compute_metrics(eval_pred):\n    predictions, labels = eval_pred\n    predictions = np.argmax(predictions, axis=1)\n    return {\n        'accuracy': accuracy_score(labels, predictions),\n        'f1': f1_score(labels, predictions, average='weighted')\n    }\n\n# Training arguments\ntraining_args = TrainingArguments(\n    output_dir='./results',\n    num_train_epochs=3,\n    per_device_train_batch_size=16,\n    per_device_eval_batch_size=32,\n    learning_rate=2e-5,\n    weight_decay=0.01,\n    eval_strategy='epoch',\n    save_strategy='epoch',\n    load_best_model_at_end=True,\n    logging_dir='./logs',\n    logging_steps=100,\n    fp16=True,  # Mixed precision\n    push_to_hub=False\n)\n\n# Create trainer\ntrainer = Trainer(\n    model=model,\n    args=training_args,\n    train_dataset=tokenized['train'],\n    eval_dataset=tokenized['test'],\n    tokenizer=tokenizer,\n    data_collator=data_collator,\n    compute_metrics=compute_metrics\n)\n\n# Train\ntrainer.train()\n\n# Evaluate\nresults = trainer.evaluate()\nprint(results)\n\n# Save\ntrainer.save_model('./final_model')",
+      "best_practices": [
+        "Use DataCollatorWithPadding for dynamic padding",
+        "Enable fp16 for faster training",
+        "Set eval_strategy to monitor progress",
+        "Load best model at end"
+      ]
+    },
+    "peft_lora": {
+      "description": "Parameter-efficient fine-tuning with LoRA",
+      "use_when": "Fine-tuning large models with limited resources",
+      "code_example": "from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments\nfrom peft import LoraConfig, get_peft_model, TaskType\nfrom trl import SFTTrainer\nfrom datasets import load_dataset\nimport torch\n\n# Load base model\nmodel_name = 'meta-llama/Llama-3.2-1B'\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\ntokenizer.pad_token = tokenizer.eos_token\n\n# LoRA configuration\nlora_config = LoraConfig(\n    r=16,  # Rank\n    lora_alpha=32,  # Scaling\n    lora_dropout=0.1,\n    bias='none',\n    task_type=TaskType.CAUSAL_LM,\n    target_modules=['q_proj', 'v_proj', 'k_proj', 'o_proj']  # Attention layers\n)\n\n# Apply LoRA\nmodel = get_peft_model(model, lora_config)\nmodel.print_trainable_parameters()  # Shows % of trainable params\n\n# Load dataset\ndataset = load_dataset('your_dataset')\n\n# Training arguments\ntraining_args = TrainingArguments(\n    output_dir='./lora_output',\n    num_train_epochs=3,\n    per_device_train_batch_size=4,\n    gradient_accumulation_steps=4,\n    learning_rate=2e-4,\n    fp16=True,\n    logging_steps=10,\n    save_strategy='epoch'\n)\n\n# SFT Trainer from TRL\ntrainer = SFTTrainer(\n    model=model,\n    args=training_args,\n    train_dataset=dataset['train'],\n    tokenizer=tokenizer,\n    max_seq_length=512\n)\n\ntrainer.train()\n\n# Save LoRA weights only\nmodel.save_pretrained('./lora_weights')\n\n# Later: Load and merge\nfrom peft import PeftModel\n\nbase_model = AutoModelForCausalLM.from_pretrained(model_name)\npeft_model = PeftModel.from_pretrained(base_model, './lora_weights')\nmerged_model = peft_model.merge_and_unload()  # Full model with LoRA merged",
+      "best_practices": [
+        "Start with r=16, adjust based on results",
+        "Target attention layers for best results",
+        "Use SFTTrainer from TRL for convenience",
+        "Save LoRA weights separately for flexibility"
+      ]
+    }
+  },
+  "hub_patterns": {
+    "push_to_hub": {
+      "description": "Upload models to Hugging Face Hub",
+      "use_when": "Sharing or versioning models",
+      "code_example": "from huggingface_hub import HfApi, login\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\n# Login (or use HF_TOKEN env var)\nlogin(token='your_token')\n\n# Push model and tokenizer\nmodel.push_to_hub('username/my-model')\ntokenizer.push_to_hub('username/my-model')\n\n# Push with Trainer\ntraining_args = TrainingArguments(\n    ...,\n    push_to_hub=True,\n    hub_model_id='username/my-model'\n)\ntrainer.push_to_hub()\n\n# Push any files\napi = HfApi()\napi.upload_file(\n    path_or_fileobj='./model.pt',\n    path_in_repo='model.pt',\n    repo_id='username/my-model'\n)\n\n# Create model card\nfrom huggingface_hub import ModelCard\n\ncard = ModelCard.from_template(\n    card_data={\n        'license': 'apache-2.0',\n        'language': 'en',\n        'tags': ['text-generation', 'pytorch']\n    },\n    template_path='modelcard_template.md'\n)\ncard.push_to_hub('username/my-model')",
+      "best_practices": [
+        "Always include model card",
+        "Specify license",
+        "Add relevant tags",
+        "Use private repos for internal models"
+      ]
+    }
+  },
+  "optimization_patterns": {
+    "quantization": {
+      "description": "Reduce model size with quantization",
+      "use_when": "Deploying to limited hardware",
+      "code_example": "from transformers import AutoModelForCausalLM, BitsAndBytesConfig\nimport torch\n\n# 4-bit quantization\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type='nf4',\n    bnb_4bit_compute_dtype=torch.float16,\n    bnb_4bit_use_double_quant=True\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-3.2-1B',\n    quantization_config=bnb_config,\n    device_map='auto'\n)\n\n# 8-bit quantization\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-3.2-1B',\n    load_in_8bit=True,\n    device_map='auto'\n)",
+      "best_practices": [
+        "4-bit for max memory savings",
+        "8-bit for better quality",
+        "Use nf4 quant type for LLMs",
+        "Double quant reduces memory further"
+      ]
+    },
+    "flash_attention": {
+      "description": "Use Flash Attention for faster inference",
+      "use_when": "Need faster generation",
+      "code_example": "from transformers import AutoModelForCausalLM\nimport torch\n\n# Enable Flash Attention 2\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-3.2-1B',\n    torch_dtype=torch.float16,\n    attn_implementation='flash_attention_2',\n    device_map='auto'\n)",
+      "best_practices": [
+        "Requires compatible GPU (Ampere+)",
+        "Significant speedup for long sequences",
+        "Install flash-attn package first"
+      ]
+    }
+  },
+  "best_practices_summary": [
+    "Use Auto* classes for flexibility",
+    "Enable mixed precision (fp16/bf16)",
+    "Use device_map='auto' for multi-GPU",
+    "Apply chat templates for instruction models",
+    "Use PEFT/LoRA for efficient fine-tuning",
+    "Stream large datasets",
+    "Always create model cards",
+    "Quantize for deployment"
+  ]
+}

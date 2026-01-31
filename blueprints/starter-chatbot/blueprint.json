@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "blueprintId": "starter-chatbot",
+    "blueprintName": "Starter: LLM Chatbot",
+    "description": "Beginner-friendly chatbot project with OpenAI and Streamlit",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "llm", "openai", "streamlit", "starter", "chatbot", "beginner"],
+    "purpose": "Onboard developers to LLM applications with a simple chatbot"
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "OpenAI", "version": "1.0+", "purpose": "LLM API"},
+      {"name": "Streamlit", "version": "1.30+", "purpose": "Web UI"},
+      {"name": "python-dotenv", "version": "1.0+", "purpose": "Environment variables"}
+    ],
+    "tools": [
+      {"name": "ruff", "purpose": "Linting"}
+    ]
+  },
+  "knowledge": [
+    {"filename": "llm-provider-comparison.json", "description": "LLM basics"},
+    {"filename": "prompt-library.json", "description": "Prompt templates"}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": "src/", "purpose": "Source code"}
+    ],
+    "files": [
+      {"path": "README.md", "purpose": "Getting started guide"},
+      {"path": "requirements.txt", "purpose": "Dependencies"},
+      {"path": "app.py", "purpose": "Streamlit chatbot app"},
+      {"path": "src/chat.py", "purpose": "Chat logic"},
+      {"path": ".env.example", "purpose": "Environment template"}
+    ]
+  },
+  "onboarding": {
+    "learningPath": [
+      {"step": 1, "topic": "Setup", "description": "Get API key, install dependencies"},
+      {"step": 2, "topic": "Basic Chat", "description": "Understand chat completions API"},
+      {"step": 3, "topic": "System Prompts", "description": "Customize chatbot personality"},
+      {"step": 4, "topic": "Streaming", "description": "Add streaming responses"},
+      {"step": 5, "topic": "UI", "description": "Build Streamlit interface"}
+    ],
+    "concepts": [
+      "Chat completions API",
+      "System prompts",
+      "Conversation history",
+      "Streaming responses",
+      "Token management"
+    ]
+  }
+}

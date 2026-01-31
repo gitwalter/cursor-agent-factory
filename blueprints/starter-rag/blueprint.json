@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "blueprintId": "starter-rag",
+    "blueprintName": "Starter: RAG Application",
+    "description": "Beginner-friendly RAG project with LangChain and ChromaDB",
+    "version": "1.0.0",
+    "author": "Cursor Agent Factory",
+    "tags": ["python", "rag", "langchain", "chromadb", "starter", "beginner"],
+    "purpose": "Onboard developers to RAG with a simple document Q&A application"
+  },
+  "stack": {
+    "primaryLanguage": "python",
+    "frameworks": [
+      {"name": "LangChain", "version": "0.3+", "purpose": "RAG framework"},
+      {"name": "ChromaDB", "version": "0.4+", "purpose": "Vector store"},
+      {"name": "OpenAI", "version": "1.0+", "purpose": "LLM and embeddings"},
+      {"name": "Streamlit", "version": "1.30+", "purpose": "Web UI"},
+      {"name": "PyPDF", "version": "3.0+", "purpose": "PDF loading"}
+    ],
+    "tools": [
+      {"name": "ruff", "purpose": "Linting"}
+    ]
+  },
+  "knowledge": [
+    {"filename": "rag-patterns.json", "description": "RAG fundamentals"},
+    {"filename": "vector-database-patterns.json", "description": "Vector store basics"}
+  ],
+  "projectStructure": {
+    "directories": [
+      {"path": "src/", "purpose": "Source code"},
+      {"path": "data/", "purpose": "Documents to ingest"},
+      {"path": "vectorstore/", "purpose": "ChromaDB files"}
+    ],
+    "files": [
+      {"path": "README.md", "purpose": "Getting started guide"},
+      {"path": "requirements.txt", "purpose": "Dependencies"},
+      {"path": "app.py", "purpose": "Streamlit RAG app"},
+      {"path": "ingest.py", "purpose": "Document ingestion script"},
+      {"path": "src/rag.py", "purpose": "RAG chain logic"},
+      {"path": ".env.example", "purpose": "Environment template"}
+    ]
+  },
+  "onboarding": {
+    "learningPath": [
+      {"step": 1, "topic": "Setup", "description": "Install dependencies, get API key"},
+      {"step": 2, "topic": "Document Loading", "description": "Load and chunk documents"},
+      {"step": 3, "topic": "Embeddings", "description": "Create and store embeddings"},
+      {"step": 4, "topic": "Retrieval", "description": "Query the vector store"},
+      {"step": 5, "topic": "Generation", "description": "Build the RAG chain"},
+      {"step": 6, "topic": "UI", "description": "Create Streamlit interface"}
+    ],
+    "concepts": [
+      "Document chunking",
+      "Text embeddings",
+      "Vector similarity search",
+      "Prompt templates",
+      "RAG chain"
+    ]
+  }
+}
