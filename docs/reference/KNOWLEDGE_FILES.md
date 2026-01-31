@@ -1,8 +1,12 @@
 # Knowledge Files Reference
 
+> **Philosophy:** Knowledge files embody our [Culture and Values](../CULTURE_AND_VALUES.md)—grounding agent decisions in verified, empirical knowledge (Comte's positivism, Axiom A1 Verifiability).
+
 ## Introduction
 
 Knowledge files are JSON documents that provide structured, queryable information to Cursor agents during code generation and project development. These files serve as the "memory" of the Cursor Agent Factory, encoding patterns, best practices, capabilities, and domain-specific knowledge that agents can reference when generating code, workflows, and project configurations.
+
+The factory currently includes **66 knowledge files** covering technology stacks, AI/agent patterns, integration patterns, and factory metadata.
 
 ### Purpose of JSON Knowledge Files
 

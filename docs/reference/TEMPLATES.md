@@ -1,5 +1,7 @@
 # Template System Reference
 
+> **Philosophy:** Templates embody our [Culture and Values](../CULTURE_AND_VALUES.md)—craftsmanship patterns that serve future maintainers with love and care.
+
 The Cursor Agent Factory uses a template-based code generation system to produce consistent, high-quality project artifacts. This document explains how templates work and how to create your own.
 
 ## Credits and Inspiration

@@ -1,8 +1,15 @@
 # Cursor Agent Factory Blueprints Reference
 
+> **Philosophy:** All blueprints embody our [Culture and Values](../CULTURE_AND_VALUES.md)—love, wisdom, and care as foundations for technical decisions.
+
 ## 1. Introduction
 
 Blueprints are pre-configured technology stacks that define the complete development environment, tooling, and AI agent system for a specific technology or domain. Each blueprint provides a standardized foundation for generating Cursor agent systems tailored to particular development needs.
+
+All 27 blueprints share common foundations:
+- **Axiom 0 (Love and Trust)** grounding all technical decisions
+- **5-Layer Architecture** (Integrity → Purpose → Principles → Methodology → Technical)
+- **Optional PM Integration** for project management support
 
 ### Blueprint JSON Schema Overview
 

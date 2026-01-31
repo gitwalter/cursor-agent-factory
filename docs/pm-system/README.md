@@ -1,8 +1,12 @@
 # PM System Documentation
 
+> **Philosophy:** The PM System embodies our [Culture and Values](../CULTURE_AND_VALUES.md)—love and trust as the foundation for all project coordination.
+
 ## What is the PM System?
 
-The PM (Project Management) System is an integrated project management solution for Cursor Agent Factory that enhances development workflows without burdening teams. It provides:
+The PM (Project Management) System is an **integrated feature** of the Cursor Agent Factory that enhances development workflows without burdening teams. It is designed and included during project generation, not added as an afterthought.
+
+### Core Features
 
 - **Multi-backend support**: Integrate with Jira, Linear, GitHub Projects, Azure DevOps, or use local tracking
 - **Methodology flexibility**: Support for Agile Scrum, Kanban, SAFe, Waterfall, Lean/Six Sigma, XP, and custom methodologies
@@ -10,7 +14,17 @@ The PM (Project Management) System is an integrated project management solution 
 - **Automated metrics**: Track velocity, burndown, cycle time, throughput, and team health indicators
 - **Workflow integration**: Seamlessly connect PM activities with your development workflows
 
-The system is grounded in **Axiom 0: Love and Trust** - project management should enhance development, not burden it.
+### Grounded in Axiom 0
+
+> **"Project management should enhance development, not burden it."**
+
+This principle derives directly from **Axiom 0: Love and Trust**—the foundation of our [Culture and Values](../CULTURE_AND_VALUES.md). Every PM feature is evaluated against this standard:
+
+- Does it serve the team's flourishing?
+- Does it reduce friction, not add it?
+- Does it make work more meaningful?
+
+If the answer is no, we change or remove it.
 
 ## Quick Start Guide
 

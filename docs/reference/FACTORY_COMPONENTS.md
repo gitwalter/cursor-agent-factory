@@ -1,8 +1,12 @@
 # Factory Components Reference
 
+> **Philosophy:** Factory components embody our [Culture and Values](../CULTURE_AND_VALUES.md)—Axiom 0 (Love and Trust) grounds every agent and skill.
+
 ## 1. Introduction
 
 The Cursor Agent Factory is a meta-system that generates customized Cursor agent development systems for software projects. This document describes the **factory's own components** - the agents and skills that work together during project generation - as distinct from the components that are generated for target projects.
+
+All factory components operate according to the core axioms (A0-A5) and implement the 5-layer architecture, ensuring consistent, trustworthy, and value-aligned behavior.
 
 ### What Are Factory Components?
 

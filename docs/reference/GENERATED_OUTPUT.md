@@ -1,5 +1,7 @@
 # Generated Output Reference
 
+> **Philosophy:** Every generated artifact embodies our [Culture and Values](../CULTURE_AND_VALUES.md)—love, wisdom, and care for those who will use and maintain the code.
+
 This document provides a comprehensive reference for what the Cursor Agent Factory generates. Understanding the generated structure and file formats helps you customize and extend your agent system effectively.
 
 ---
@@ -7,6 +9,8 @@ This document provides a comprehensive reference for what the Cursor Agent Facto
 ## 1. Introduction
 
 The Cursor Agent Factory generates complete, working Cursor AI agent development environments tailored to your project's needs. Instead of manually configuring agents, skills, and rules for each project, you describe your requirements and the factory generates a tailored system grounded in clear values, purpose, and methodology.
+
+Every generated system includes **Axiom 0 (Love and Trust)** as its foundation, ensuring that technical decisions serve the flourishing of users, developers, and maintainers.
 
 ### What Gets Generated
 
@@ -21,6 +25,7 @@ The factory generates a complete project structure including:
 - **Methodology configuration** (`workflows/methodology.yaml`) - Team workflow and coordination patterns
 - **Enforcement patterns** (`enforcement.yaml`) - Quality gates and safety checks (Comprehensive only)
 - **Practice patterns** (`practices.yaml`) - Daily, craft, and alignment practices (Comprehensive only)
+- **PM configuration** (`pm/`) - Project management integration (if enabled)
 
 ### Relationship to Blueprints and Patterns
 

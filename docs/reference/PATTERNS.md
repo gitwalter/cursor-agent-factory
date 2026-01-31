@@ -1,8 +1,12 @@
 # Pattern Reference Guide
 
+> **Philosophy:** Patterns embody our [Culture and Values](../CULTURE_AND_VALUES.md)—reusable wisdom distilled from empirical practice (Comte, Hume) and validated against axioms (Russell, Carnap).
+
 ## 1. Introduction
 
 Patterns are reusable, structured templates that define how agents, skills, methodologies, and other components work within the Cursor Agent Factory. They serve as blueprints that guide the generation of customized agent systems tailored to specific project needs.
+
+All patterns are grounded in **Axiom 0 (Love and Trust)** and validated against the core axioms (A1-A5).
 
 ### Pattern Types
 
@@ -10,13 +14,14 @@ The factory includes several pattern categories:
 
 - **Agent Patterns**: Define specialized AI agents with specific roles and workflows
 - **Skill Patterns**: Reusable capabilities that agents can invoke
-- **Axiom Patterns**: Foundational principles that govern all agent behavior
+- **Axiom Patterns**: Foundational principles that govern all agent behavior (A0-A10)
 - **Methodology Patterns**: Development methodologies with defined ceremonies and quality gates
 - **Principle Patterns**: Quality standards and ethical boundaries
 - **Enforcement Patterns**: Automated checks that ensure compliance
 - **Practice Patterns**: Daily, craft, and alignment practices for teams
 - **Workshop Patterns**: Structured team workshops for onboarding
 - **Team Format Patterns**: Adaptations for different team sizes
+- **PM System Patterns**: Project management configurations, backends, and methodologies
 
 ### Pattern JSON Structure
 
