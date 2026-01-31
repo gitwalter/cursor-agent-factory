@@ -871,7 +871,7 @@ MIT License
 
 ---
 
-*Cursor Agent Factory v2.6.0*  
+*Cursor Agent Factory v3.1.0*  
 *Meta-system for generating Cursor AI agent development systems*  
 *Now with 5-layer architecture: Integrity → Purpose → Principles → Methodology → Technical*  
 *50+ MCP servers across 6 categories with starter packs and role-based recommendations*
