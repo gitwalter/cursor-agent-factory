@@ -191,6 +191,23 @@ Configure in `.cursor/config/settings.json` or use the `system-configuration` sk
 
 See [docs/KNOWLEDGE_EVOLUTION.md](docs/KNOWLEDGE_EVOLUTION.md) for complete documentation.
 
+### Factory → Generated Project Updates
+
+Generated projects can receive updates from the Factory:
+
+```
+"Check for Factory updates"    # In your generated project
+"Sync with Factory"            # Apply available updates
+```
+
+| Component | Purpose |
+|-----------|---------|
+| `factory-updates` agent | Fetches and applies updates from Factory |
+| `knowledge/project-info.json` | Tracks Factory origin and installed versions |
+| Update channels: `stable` / `latest` | Choose your update preference |
+
+This creates a connection between the Factory and generated projects, allowing teams to benefit from ongoing Factory improvements.
+
 ---
 
 ## Architecture Diagrams

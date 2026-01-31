@@ -40,6 +40,7 @@
     {"patternId": "documentation-agent", "required": false, "customizations": {}},
     {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
     {"patternId": "knowledge-evolution", "required": true, "description": "Manage and evolve project knowledge independently"},
+    {"patternId": "factory-updates", "required": true, "description": "Receive updates from the Cursor Agent Factory"},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [
@@ -52,7 +53,8 @@
     {"patternId": "code-templates", "required": true},
     {"patternId": "security-audit", "required": false},
     {"patternId": "code-review", "required": false},
-    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"}
+    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"},
+    {"patternId": "receive-updates", "required": true, "description": "Receive updates from Factory"}
   ],
   "testingApproach": {
     "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],

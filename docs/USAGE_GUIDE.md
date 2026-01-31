@@ -460,6 +460,42 @@ For fine-grained control, you can manually:
 
 See `knowledge/manifest.json` for the list of all available knowledge files.
 
+### Receiving Factory Updates
+
+Your generated project can receive updates from the Cursor Agent Factory to stay current with the latest knowledge, patterns, and best practices.
+
+#### Check for Updates
+
+```
+"Check for Factory updates"
+"Are there updates from the Factory?"
+"Sync with Factory"
+```
+
+#### How It Works
+
+1. **factory-updates** agent fetches the update feed from the Factory
+2. Shows you available updates relevant to your blueprint
+3. You choose which updates to apply
+4. Updates are downloaded and installed automatically
+
+#### Update Channels
+
+| Channel | Description | Best For |
+|---------|-------------|----------|
+| `stable` | Tested, production-ready | Most teams |
+| `latest` | Newest updates, may have breaking changes | Early adopters |
+
+Configure your channel in `knowledge/project-info.json`.
+
+#### What Can Be Updated
+
+- Knowledge files (patterns, best practices)
+- Skills (new workflows)
+- Agents (new capabilities)
+
+Your local customizations are preserved - updates only add or update Factory-provided content.
+
 ## Understanding Generated Structure
 
 For detailed architecture diagrams, see [../diagrams/agent-skill-architecture.md](../diagrams/agent-skill-architecture.md).

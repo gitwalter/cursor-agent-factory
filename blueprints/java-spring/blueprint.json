@@ -35,6 +35,7 @@
     {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
     {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
     {"patternId": "knowledge-evolution", "required": true, "description": "Manage and evolve project knowledge independently"},
+    {"patternId": "factory-updates", "required": true, "description": "Receive updates from the Cursor Agent Factory"},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [
@@ -45,7 +46,8 @@
     {"patternId": "bdd", "required": false, "default": false, "description": "Optional BDD for stakeholder collaboration"},
     {"patternId": "test-translation", "required": false, "default": false, "description": "Translation and traceability between BDD/TDD"},
     {"patternId": "code-templates", "required": true},
-    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"}
+    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"},
+    {"patternId": "receive-updates", "required": true, "description": "Receive updates from Factory"}
   ],
   "testingApproach": {
     "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],

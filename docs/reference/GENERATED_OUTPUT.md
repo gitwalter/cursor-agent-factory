@@ -311,6 +311,24 @@ The factory offers knowledge extension during the onboarding phase:
 - Offers to analyze all gaps or extend specific topics
 - You can skip and run `--analyze-gaps` anytime later
 
+### Receiving Factory Updates
+
+Your project can receive updates from the Factory:
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `factory-updates` agent | `.cursor/agents/factory-updates.md` | Check for and apply Factory updates |
+| `receive-updates` skill | `.cursor/skills/receive-updates/SKILL.md` | Core update workflow |
+| `project-info.json` | `knowledge/project-info.json` | Tracks Factory origin and installed versions |
+
+**Commands:**
+```
+"Check for Factory updates"
+"Sync with Factory"
+```
+
+**Update Feed:** The Factory publishes updates to `knowledge/factory-updates.json` which projects can fetch to see available updates for their blueprint
+
 ---
 
 ## 4. Generated Agent Format
