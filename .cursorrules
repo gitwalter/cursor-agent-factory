@@ -158,6 +158,31 @@ After generating project:
 - Provide summary of generated artifacts
 - Offer to open project in new Cursor window
 
+### Rule 6: Post-Extension Automation (MANDATORY)
+After creating or extending ANY Factory artifact (knowledge, skill, template, agent):
+
+**Step 0: Read dependency map** (`knowledge/artifact-dependencies.json`) - Determine what must be updated
+
+**Step 1-3: Registry Updates**
+1. **Update Manifest** (`knowledge/manifest.json`) - Bump version, update timestamp, add change_history, update statistics
+2. **Update Skill Catalog** (`knowledge/skill-catalog.json`) - Register new skills, update category lists
+3. **Update Blueprints Doc** (`docs/reference/BLUEPRINTS.md`) - If blueprint created, add to table and details
+
+**Step 4-5: Documentation Updates**
+4. **Update KNOWLEDGE_FILES.md** (`docs/reference/KNOWLEDGE_FILES.md`) - Update count, table row, category details
+5. **Update FACTORY_COMPONENTS.md** (`docs/reference/FACTORY_COMPONENTS.md`) - If Factory agent/skill created, add to table, details, diagram, integration points
+
+**Step 6-9: Finalization**
+6. **Update Changelog** (`CHANGELOG.md`) - Add version entry with tables listing all changes
+7. **Validate JSON** - Run `python -c "import json; json.load(...)"` on all modified JSON files
+8. **Sync Versions** - Run `python scripts/sync_manifest_versions.py --sync` (single source of truth)
+9. **Validate README** - Run `python scripts/validate_readme_structure.py --update`
+10. **Ask Before Git** - Propose commit message, ask user before commit/push
+
+**Factory vs Project Detection**: Check `factory_artifact_detection` in artifact-dependencies.json to determine if FACTORY_COMPONENTS.md needs updating.
+
+This rule ensures excellence through complete traceability. See `.cursor/skills/extend-knowledge/SKILL.md` for detailed procedures.
+
 ## Pattern Library References
 
 | Pattern Type | Location | Usage |

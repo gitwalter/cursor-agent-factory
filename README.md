@@ -209,16 +209,16 @@ For visual documentation, see the [diagrams/](diagrams/) folder:
 ```
 cursor-agent-factory/
 ├── .cursor/
-│   ├── agents/                  # Factory's own agents (8 agents)
-│   │   └── *.md                 # knowledge-evolution, knowledge-manager, onboarding-architect, etc.
-│   └── skills/                  # Factory's own skills (30 skills)
+│   ├── agents/                  # Factory's own agents (9 agents)
+│   │   └── *.md                 # knowledge-evolution, knowledge-extender, knowledge-manager, etc.
+│   └── skills/                  # Factory's own skills (33 skills)
 │       ├── agent-generation/
+│       ├── algo-trading/
 │       ├── alignment-check/
 │       ├── axiom-selection/
+│       ├── crewai-workflow/
 │       ├── cursorrules-generation/
 │       ├── enforcement-selection/
-│       ├── express-onboarding/
-│       ├── grounding-verification/
 │       └── ...                       # + more skills
 ├── patterns/                    # Reusable patterns (50+ files)
 │   ├── axioms/                  # Layer 0 axiom definitions

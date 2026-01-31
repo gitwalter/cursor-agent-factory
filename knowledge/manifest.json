@@ -3,12 +3,12 @@
   "title": "Knowledge Manifest",
   "description": "Central manifest tracking all knowledge files, their versions, sources, and update status",
   "version": "1.0.0",
-  "generated": "2026-01-31T00:00:00Z",
-  "factory_version": "2.0.0",
+  "generated": "2026-01-31T14:35:00Z",
+  "factory_version": "3.2.3",
   "statistics": {
-    "total_files": 66,
+    "total_files": 67,
     "categories": {
-      "stack_specific": 22,
+      "stack_specific": 23,
       "ai_agent": 15,
       "integration": 12,
       "factory_meta": 8,
@@ -23,7 +23,12 @@
       "category": "stack_specific",
       "title": "FastAPI Patterns",
       "description": "Production-grade patterns for FastAPI 0.115+ applications",
-      "tags": ["python", "fastapi", "api", "web"],
+      "tags": [
+        "python",
+        "fastapi",
+        "api",
+        "web"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -49,7 +54,12 @@
       "category": "stack_specific",
       "title": "Next.js Patterns",
       "description": "Next.js 14+ patterns, App Router, Server Components",
-      "tags": ["typescript", "nextjs", "react", "web"],
+      "tags": [
+        "typescript",
+        "nextjs",
+        "react",
+        "web"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -75,7 +85,12 @@
       "category": "stack_specific",
       "title": "Spring Patterns",
       "description": "Spring Boot patterns, REST APIs, JPA, microservices",
-      "tags": ["java", "spring", "api", "enterprise"],
+      "tags": [
+        "java",
+        "spring",
+        "api",
+        "enterprise"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -97,11 +112,16 @@
       "dependencies": []
     },
     "langchain-patterns.json": {
-      "version": "1.0.0",
+      "version": "2.0.0",
       "category": "ai_agent",
       "title": "LangChain Patterns",
       "description": "LangChain integration patterns and best practices",
-      "tags": ["python", "langchain", "ai", "llm"],
+      "tags": [
+        "python",
+        "langchain",
+        "ai",
+        "llm"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -126,11 +146,18 @@
       "version": "1.0.0",
       "category": "ai_agent",
       "title": "CrewAI Patterns",
-      "description": "Multi-agent orchestration patterns with CrewAI",
-      "tags": ["python", "crewai", "ai", "multi-agent"],
+      "description": "Multi-agent orchestration patterns with CrewAI including Flows, Pipelines, and Knowledge",
+      "tags": [
+        "python",
+        "crewai",
+        "ai",
+        "multi-agent",
+        "flows",
+        "pipelines"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
-        "updated": "2026-01-31T00:00:00Z",
+        "updated": "2026-01-31T14:19:00Z",
         "checksum": null,
         "author": "Cursor Agent Factory"
       },
@@ -146,14 +173,32 @@
         "auto_update": false,
         "locked": false
       },
-      "dependencies": []
+      "dependencies": [],
+      "change_history": [
+        {
+          "version": "1.1.0",
+          "date": "2026-01-31",
+          "changes": [
+            "Added flow_patterns",
+            "Added pipeline_patterns",
+            "Added knowledge_patterns",
+            "Added training_patterns",
+            "Added kickoff_patterns"
+          ]
+        }
+      ]
     },
     "autogen-patterns.json": {
       "version": "1.0.0",
       "category": "ai_agent",
       "title": "AutoGen Patterns",
       "description": "Microsoft AutoGen multi-agent conversation patterns",
-      "tags": ["python", "autogen", "ai", "multi-agent"],
+      "tags": [
+        "python",
+        "autogen",
+        "ai",
+        "multi-agent"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -175,11 +220,15 @@
       "dependencies": []
     },
     "mcp-servers-catalog.json": {
-      "version": "1.0.0",
+      "version": "2.0.0",
       "category": "integration",
       "title": "MCP Servers Catalog",
       "description": "Available MCP servers and their configurations",
-      "tags": ["mcp", "integration", "tools"],
+      "tags": [
+        "mcp",
+        "integration",
+        "tools"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -205,7 +254,11 @@
       "category": "integration",
       "title": "CI/CD Patterns",
       "description": "GitHub Actions, GitLab CI, Azure DevOps patterns",
-      "tags": ["cicd", "devops", "automation"],
+      "tags": [
+        "cicd",
+        "devops",
+        "automation"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -231,7 +284,11 @@
       "category": "methodology",
       "title": "TDD Patterns",
       "description": "Test-Driven Development patterns and practices",
-      "tags": ["testing", "tdd", "methodology"],
+      "tags": [
+        "testing",
+        "tdd",
+        "methodology"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -251,7 +308,11 @@
       "category": "methodology",
       "title": "BDD Patterns",
       "description": "Behavior-Driven Development patterns",
-      "tags": ["testing", "bdd", "methodology"],
+      "tags": [
+        "testing",
+        "bdd",
+        "methodology"
+      ],
       "metadata": {
         "created": "2026-01-01T00:00:00Z",
         "updated": "2026-01-31T00:00:00Z",
@@ -264,15 +325,124 @@
         "auto_update": false,
         "locked": false
       },
-      "dependencies": ["tdd-patterns.json"]
+      "dependencies": [
+        "tdd-patterns.json"
+      ]
+    },
+    "artifact-dependencies.json": {
+      "version": "1.1.0",
+      "category": "factory_meta",
+      "title": "Artifact Dependency Map",
+      "description": "Defines which artifacts must be updated when other artifacts change. Includes documentation tracking and Factory component detection.",
+      "tags": [
+        "factory",
+        "automation",
+        "dependencies",
+        "traceability",
+        "documentation"
+      ],
+      "metadata": {
+        "created": "2026-01-31T00:00:00Z",
+        "updated": "2026-01-31T14:40:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": true
+      },
+      "dependencies": [],
+      "change_history": [
+        {
+          "version": "1.1.0",
+          "date": "2026-01-31",
+          "changes": [
+            "Added documentation_map",
+            "Added factory_artifact_detection",
+            "Added post_extension_checklist"
+          ]
+        }
+      ]
+    },
+    "trading-patterns.json": {
+      "version": "1.0.0",
+      "category": "stack_specific",
+      "title": "Algorithmic Trading Patterns",
+      "description": "Strategy patterns, technical indicators, fundamental data fetching, backtesting frameworks for algorithmic trading",
+      "tags": [
+        "python",
+        "trading",
+        "backtesting",
+        "technical-analysis",
+        "fundamental-data",
+        "quant"
+      ],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T14:30:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "community",
+          "identifier": "vectorbt/pandas-ta",
+          "trust_level": "community"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": [
+        "quantitative-finance.json",
+        "risk-management.json"
+      ],
+      "change_history": [
+        {
+          "version": "1.1.0",
+          "date": "2026-01-31",
+          "changes": [
+            "Added technical_indicators_advanced",
+            "Added fundamental_data_fetching",
+            "Added backtesting_frameworks",
+            "Added strategy_building_patterns",
+            "Added data_sources"
+          ]
+        }
+      ]
     }
   },
   "update_history": [],
   "subscriptions": {
-    "default": ["*"],
-    "python_stack": ["python-*", "fastapi-*", "langchain-*", "crewai-*"],
-    "javascript_stack": ["nextjs-*", "react-*", "typescript-*"],
-    "ai_ml_stack": ["langchain-*", "crewai-*", "autogen-*", "rag-*", "llm-*"],
-    "enterprise_stack": ["spring-*", "dotnet-*", "sap-*"]
+    "default": [
+      "*"
+    ],
+    "python_stack": [
+      "python-*",
+      "fastapi-*",
+      "langchain-*",
+      "crewai-*"
+    ],
+    "javascript_stack": [
+      "nextjs-*",
+      "react-*",
+      "typescript-*"
+    ],
+    "ai_ml_stack": [
+      "langchain-*",
+      "crewai-*",
+      "autogen-*",
+      "rag-*",
+      "llm-*"
+    ],
+    "enterprise_stack": [
+      "spring-*",
+      "dotnet-*",
+      "sap-*"
+    ]
   }
 }

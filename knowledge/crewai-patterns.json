@@ -358,5 +358,123 @@
         "Check output formats"
       ]
     }
+  },
+  "flow_patterns": {
+    "description": "CrewAI Flows for complex state management and orchestration",
+    "added_date": "2026-01-31",
+    "basic_flow": {
+      "description": "Create a flow with state management between steps",
+      "use_when": "Need fine-grained control over execution flow and state",
+      "code_example": "from crewai.flow.flow import Flow, listen, start\nfrom pydantic import BaseModel\n\nclass ResearchState(BaseModel):\n    topic: str = \"\"\n    research_results: str = \"\"\n    article: str = \"\"\n    reviewed: bool = False\n\nclass ResearchFlow(Flow[ResearchState]):\n    \n    @start()\n    def set_topic(self):\n        self.state.topic = \"AI Agents\"\n        return self.state.topic\n    \n    @listen(set_topic)\n    def research(self, topic):\n        # Research crew runs here\n        self.state.research_results = research_crew.kickoff(\n            inputs={\"topic\": topic}\n        ).raw\n        return self.state.research_results\n    \n    @listen(research)\n    def write_article(self, research):\n        self.state.article = writing_crew.kickoff(\n            inputs={\"research\": research}\n        ).raw\n        return self.state.article\n\n# Run the flow\nflow = ResearchFlow()\nresult = flow.kickoff()",
+      "best_practices": [
+        "Use Pydantic BaseModel for typed state",
+        "Decorate entry point with @start()",
+        "Use @listen() for step dependencies",
+        "Access state via self.state",
+        "Return values pass to next step"
+      ]
+    },
+    "conditional_flow": {
+      "description": "Flow with conditional branching based on state",
+      "use_when": "Different paths based on intermediate results",
+      "code_example": "from crewai.flow.flow import Flow, listen, start, router\n\nclass ConditionalFlow(Flow[MyState]):\n    \n    @start()\n    def analyze(self):\n        self.state.score = analyze_data()\n        return self.state.score\n    \n    @router(analyze)\n    def route_by_score(self, score):\n        if score > 0.8:\n            return \"high_quality\"\n        elif score > 0.5:\n            return \"medium_quality\"\n        return \"low_quality\"\n    \n    @listen(\"high_quality\")\n    def handle_high(self):\n        return \"Approved automatically\"\n    \n    @listen(\"medium_quality\")\n    def handle_medium(self):\n        return \"Needs review\"\n    \n    @listen(\"low_quality\")\n    def handle_low(self):\n        return \"Rejected\"",
+      "best_practices": [
+        "Use @router() for conditional branching",
+        "Return string route names from router",
+        "@listen() can listen to route names",
+        "Keep routing logic simple and clear"
+      ]
+    },
+    "parallel_flow": {
+      "description": "Execute multiple steps in parallel using or_",
+      "use_when": "Independent tasks that can run concurrently",
+      "code_example": "from crewai.flow.flow import Flow, listen, start, or_\n\nclass ParallelFlow(Flow[MyState]):\n    \n    @start()\n    def begin(self):\n        return \"starting\"\n    \n    @listen(begin)\n    def task_a(self, _):\n        # Runs in parallel with task_b\n        return crew_a.kickoff()\n    \n    @listen(begin)\n    def task_b(self, _):\n        # Runs in parallel with task_a\n        return crew_b.kickoff()\n    \n    @listen(or_(task_a, task_b))\n    def combine_results(self):\n        # Runs when EITHER task completes\n        return self.state",
+      "best_practices": [
+        "Use or_() for race conditions",
+        "Use and_() when all must complete",
+        "State is shared - handle concurrency",
+        "Independent crews for parallel steps"
+      ]
+    }
+  },
+  "pipeline_patterns": {
+    "description": "CrewAI Pipelines for sequential crew orchestration",
+    "added_date": "2026-01-31",
+    "basic_pipeline": {
+      "description": "Chain multiple crews in sequence",
+      "use_when": "Multi-stage workflows with different crews",
+      "code_example": "from crewai import Pipeline\n\n# Define crews\nresearch_crew = Crew(agents=[researcher], tasks=[research_task])\nwriting_crew = Crew(agents=[writer], tasks=[write_task])\nreview_crew = Crew(agents=[reviewer], tasks=[review_task])\n\n# Create pipeline\npipeline = Pipeline(\n    stages=[research_crew, writing_crew, review_crew]\n)\n\n# Run pipeline\nresults = pipeline.kickoff(\n    inputs=[{\"topic\": \"AI Agents\"}]\n)\n\n# Access results from each stage\nfor result in results:\n    print(result.raw)",
+      "best_practices": [
+        "Each stage is a complete Crew",
+        "Outputs pass automatically to next stage",
+        "Use inputs list for batch processing",
+        "Results maintain stage order"
+      ]
+    },
+    "parallel_pipeline": {
+      "description": "Run pipeline stages in parallel",
+      "use_when": "Independent crews that don't depend on each other",
+      "code_example": "from crewai import Pipeline\n\npipeline = Pipeline(\n    stages=[\n        [crew_a, crew_b],  # Parallel stage\n        crew_c              # Sequential after parallel\n    ]\n)\n\nresults = pipeline.kickoff(inputs=[{\"data\": \"input\"}])",
+      "best_practices": [
+        "Use list within stages for parallel execution",
+        "Parallel crews share same input",
+        "Results merge before next stage"
+      ]
+    }
+  },
+  "knowledge_patterns": {
+    "description": "CrewAI Knowledge for agent context and grounding",
+    "added_date": "2026-01-31",
+    "knowledge_sources": {
+      "description": "Add knowledge sources to agents",
+      "use_when": "Agents need domain-specific context",
+      "code_example": "from crewai import Agent, Crew, Task\nfrom crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource\nfrom crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource\n\n# String knowledge source\ncompany_info = StringKnowledgeSource(\n    content=\"Our company specializes in AI solutions...\",\n    metadata={\"type\": \"company_info\"}\n)\n\n# File knowledge source\ndocs = TextFileKnowledgeSource(\n    file_path=\"docs/product_guide.txt\"\n)\n\n# Create crew with knowledge\ncrew = Crew(\n    agents=[support_agent],\n    tasks=[support_task],\n    knowledge_sources=[company_info, docs],\n    embedder={\n        \"provider\": \"openai\",\n        \"config\": {\"model\": \"text-embedding-3-small\"}\n    }\n)",
+      "best_practices": [
+        "Use StringKnowledgeSource for inline content",
+        "Use TextFileKnowledgeSource for documents",
+        "Add metadata for filtering",
+        "Configure embedder for vector storage"
+      ]
+    },
+    "pdf_knowledge": {
+      "description": "Load PDF documents as knowledge",
+      "code_example": "from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource\n\nmanual = PDFKnowledgeSource(\n    file_path=\"docs/user_manual.pdf\",\n    metadata={\"source\": \"official_docs\"}\n)\n\ncrew = Crew(\n    agents=[agent],\n    tasks=[task],\n    knowledge_sources=[manual]\n)"
+    },
+    "crew_knowledge": {
+      "description": "Crew-level knowledge shared by all agents",
+      "code_example": "crew = Crew(\n    agents=[agent1, agent2, agent3],\n    tasks=[task1, task2, task3],\n    knowledge_sources=[company_docs, product_info],\n    embedder={\"provider\": \"openai\"}\n)",
+      "best_practices": [
+        "Crew knowledge available to all agents",
+        "Agents can also have individual knowledge",
+        "Knowledge persists across crew runs"
+      ]
+    }
+  },
+  "training_patterns": {
+    "description": "Train crews for improved performance",
+    "added_date": "2026-01-31",
+    "crew_training": {
+      "description": "Train a crew on examples for better outputs",
+      "use_when": "Need consistent, high-quality outputs",
+      "code_example": "# Train the crew\ncrew.train(\n    n_iterations=5,\n    filename=\"training_data.pkl\",\n    inputs={\"topic\": \"AI Safety\"}\n)\n\n# Use trained crew\nresult = crew.kickoff(inputs={\"topic\": \"New Topic\"})",
+      "best_practices": [
+        "Provide representative training inputs",
+        "Use 3-10 iterations typically",
+        "Training data persists to file",
+        "Retrain when requirements change"
+      ]
+    }
+  },
+  "kickoff_patterns": {
+    "description": "Different ways to start crew execution",
+    "added_date": "2026-01-31",
+    "async_kickoff": {
+      "description": "Run crew asynchronously",
+      "code_example": "import asyncio\n\nasync def run_crews():\n    result = await crew.kickoff_async(\n        inputs={\"topic\": \"AI\"}\n    )\n    return result\n\n# Run multiple crews concurrently\nasync def run_all():\n    results = await asyncio.gather(\n        crew1.kickoff_async(inputs={\"topic\": \"A\"}),\n        crew2.kickoff_async(inputs={\"topic\": \"B\"}),\n        crew3.kickoff_async(inputs={\"topic\": \"C\"})\n    )\n    return results"
+    },
+    "kickoff_for_each": {
+      "description": "Run crew for multiple inputs",
+      "code_example": "topics = [\n    {\"topic\": \"AI Safety\"},\n    {\"topic\": \"AI Ethics\"},\n    {\"topic\": \"AI Governance\"}\n]\n\nresults = crew.kickoff_for_each(inputs=topics)\n\nfor result in results:\n    print(result.raw)"
+    }
   }
 }

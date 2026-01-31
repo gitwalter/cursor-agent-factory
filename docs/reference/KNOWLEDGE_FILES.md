@@ -6,7 +6,7 @@
 
 Knowledge files are JSON documents that provide structured, queryable information to Cursor agents during code generation and project development. These files serve as the "memory" of the Cursor Agent Factory, encoding patterns, best practices, capabilities, and domain-specific knowledge that agents can reference when generating code, workflows, and project configurations.
 
-The factory currently includes **66 knowledge files** covering technology stacks, AI/agent patterns, integration patterns, and factory metadata.
+The factory currently includes **67 knowledge files** covering technology stacks, AI/agent patterns, integration patterns, trading/quant patterns, and factory metadata.
 
 ### Purpose of JSON Knowledge Files
 
@@ -66,7 +66,7 @@ Key elements:
 | `streamlit-patterns.json` | Stack-Specific | Streamlit app patterns, data visualization, state management, deployment |
 | `langchain-patterns.json` | AI/Agent | LangChain LCEL patterns, agent development, tool usage, memory, streaming |
 | `langgraph-workflows.json` | AI/Agent | LangGraph state machines, agent workflows, multi-agent coordination |
-| `crewai-patterns.json` | AI/Agent | CrewAI agent teams, task delegation, role-based agents, collaboration patterns |
+| `crewai-patterns.json` | AI/Agent | CrewAI agent teams, Flows, Pipelines, Knowledge sources, training, async execution |
 | `autogen-patterns.json` | AI/Agent | AutoGen multi-agent patterns, conversation patterns, code generation workflows |
 | `mcp-patterns.json` | AI/Agent | Model Context Protocol patterns, server integration, tool definitions |
 | `agent-coordination.json` | AI/Agent | Multi-agent coordination patterns, communication protocols, task distribution |
@@ -106,6 +106,9 @@ Key elements:
 | `cicd-patterns.json` | Core | CI/CD pipeline patterns, testing strategies, deployment automation, quality gates |
 | `tdd-patterns.json` | Core | Test-Driven Development patterns, red-green-refactor, test organization, mocking |
 | `workflow-patterns.json` | Core | Development workflow patterns, git workflows, branching strategies, code review |
+| `trading-patterns.json` | Trading/Quant | Algo trading strategies, technical indicators, backtesting, fundamental data |
+| `quantitative-finance.json` | Trading/Quant | Risk metrics, portfolio theory, statistical tests, performance reporting |
+| `risk-management.json` | Trading/Quant | Position sizing, VaR, drawdown management, portfolio risk |
 | `skill-catalog.json` | Factory Meta | Registry of all available skills (generic + stack-specific) with metadata |
 | `stack-capabilities.json` | Factory Meta | Stack-specific agent capabilities, frameworks, naming conventions, tooling |
 | `mcp-servers-catalog.json` | Factory Meta | Available MCP server integrations with configuration examples and capabilities |
@@ -138,7 +141,7 @@ AI/Agent knowledge files provide patterns for building AI-powered applications, 
 
 **`langgraph-workflows.json`**: LangGraph state machine patterns for building complex agent workflows. Covers state management, node definitions, edge routing, conditional transitions, human-in-the-loop patterns, and multi-agent coordination within LangGraph. Includes patterns for error recovery and workflow persistence.
 
-**`crewai-patterns.json`**: CrewAI patterns for building agent teams with specialized roles. Includes agent role definitions, task delegation patterns, collaboration protocols, shared memory, and result aggregation. Covers both sequential and parallel task execution patterns.
+**`crewai-patterns.json`**: Comprehensive CrewAI patterns for building multi-agent systems. Includes agent/task/crew definitions, process types (sequential, hierarchical, consensual), memory patterns, tool integration, and peer review patterns. **Extended in v1.1.0** with Flows (state management, conditional routing, parallel execution), Pipelines (crew chaining), Knowledge sources (string, file, PDF), training patterns, and async/batch kickoff patterns. Related skill: `crewai-workflow`.
 
 **`autogen-patterns.json`**: AutoGen multi-agent conversation patterns, including group chat patterns, code generation workflows, function calling patterns, and agent specialization strategies. Includes patterns for managing agent conversations and coordinating multiple specialized agents.
 

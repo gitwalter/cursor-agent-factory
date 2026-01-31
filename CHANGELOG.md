@@ -5,6 +5,133 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.3] - 2026-01-31
+
+### Improved - Comprehensive Artifact Dependency Tracking
+
+Enhanced the artifact-dependencies.json to include documentation as dependent artifacts, enabling reliable detection of what needs updating.
+
+#### Dependency Map Improvements (v1.1.0)
+
+| Feature | Description |
+|---------|-------------|
+| `documentation_map` | Maps artifact types to their doc sections with regex patterns |
+| `factory_artifact_detection` | Lists all Factory agents (9) and skills (21) for reliable detection |
+| `post_extension_checklist` | 9-step checklist with specific conditions for each step |
+| `factory_agent_created` rule | Explicit rule for Factory agents → FACTORY_COMPONENTS.md |
+| `factory_skill_created` rule | Explicit rule for Factory skills → FACTORY_COMPONENTS.md |
+
+#### Updated Artifacts
+
+- `knowledge/artifact-dependencies.json` - Version 1.1.0 with comprehensive documentation tracking
+- `.cursorrules` - Rule 6 now includes explicit documentation steps
+- `.cursor/skills/extend-knowledge/SKILL.md` - Step 0 updated with Factory detection logic
+
+---
+
+## [3.2.2] - 2026-01-31
+
+### Added - Algorithmic Trading Knowledge Extension
+
+Extended trading patterns with advanced technical indicators, fundamental data fetching, backtesting frameworks, and strategy building patterns.
+
+#### Knowledge Updates
+
+| File | Version | Changes |
+|------|---------|---------|
+| `knowledge/trading-patterns.json` | 1.1.0 | Added 5 major sections |
+
+#### New Sections
+
+| Section | Description |
+|---------|-------------|
+| `technical_indicators_advanced` | Ichimoku, Fibonacci, VWAP, ATR stops, Heikin-Ashi, Elder Ray |
+| `fundamental_data_fetching` | yfinance, Alpha Vantage, SEC EDGAR, Piotroski F-Score |
+| `backtesting_frameworks` | VectorBT, Backtrader, walk-forward optimization, Monte Carlo |
+| `strategy_building_patterns` | Base strategy, multi-factor, regime-aware, portfolio construction |
+| `data_sources` | Free and paid data providers with caching patterns |
+
+#### New Skill
+
+| Skill | Description |
+|-------|-------------|
+| `.cursor/skills/algo-trading/SKILL.md` | Complete guide for building trading systems |
+
+#### Updated Artifacts
+
+- `knowledge/manifest.json` - Added trading-patterns.json entry (v1.1.0), updated file count to 67
+- `knowledge/skill-catalog.json` - Registered algo-trading skill
+- `docs/reference/KNOWLEDGE_FILES.md` - Added Trading/Quant category, updated count to 67
+- `docs/reference/FACTORY_COMPONENTS.md` - Added knowledge-extender agent, knowledge-evolution agent, extend-knowledge skill, update-knowledge skill, Knowledge Extension flow diagram
+
+---
+
+## [3.2.1] - 2026-01-31
+
+### Added - CrewAI Knowledge Extension & Post-Extension Automation
+
+Extended CrewAI patterns with advanced orchestration features and integrated mandatory post-extension automation into the Factory system.
+
+#### Knowledge Updates
+
+| File | Changes |
+|------|---------|
+| `knowledge/crewai-patterns.json` | Added 5 new pattern sections (v1.1.0) |
+
+#### New Sections in CrewAI Patterns
+
+| Section | Description |
+|---------|-------------|
+| `flow_patterns` | State management with Flows (basic, conditional, parallel) |
+| `pipeline_patterns` | Pipeline orchestration for chaining crews |
+| `knowledge_patterns` | Adding knowledge sources (string, file, PDF) |
+| `training_patterns` | Training crews for improved outputs |
+| `kickoff_patterns` | Async and batch execution patterns |
+
+#### New Skill
+
+| Skill | Description |
+|-------|-------------|
+| `.cursor/skills/crewai-workflow/SKILL.md` | Step-by-step guide for CrewAI workflows |
+
+#### Post-Extension Automation (MANDATORY)
+
+Integrated systematic post-extension workflow into Factory rules (`.cursorrules` Rule 6):
+
+| Step | Artifact | Action |
+|------|----------|--------|
+| 1 | `knowledge/manifest.json` | Bump version, update timestamp, add change_history |
+| 2 | `knowledge/skill-catalog.json` | Register new skills, update category lists |
+| 3 | `docs/reference/KNOWLEDGE_FILES.md` | Update descriptions for modified knowledge |
+| 4 | `CHANGELOG.md` | Add version entry with change tables |
+| 5 | JSON validation | Run `python -c "import json; json.load(...)"` |
+| 6 | Git operations | Ask user before commit/push |
+
+#### Artifact Dependency Map
+
+Created `knowledge/artifact-dependencies.json` for systematic detection of what to update:
+
+| Artifact Type | Must Update |
+|---------------|-------------|
+| New knowledge file | manifest.json, KNOWLEDGE_FILES.md, CHANGELOG.md |
+| Extended knowledge | manifest.json (bump version), CHANGELOG.md |
+| New skill | skill-catalog.json, CHANGELOG.md |
+| New agent | CHANGELOG.md |
+| New template | CHANGELOG.md |
+| New blueprint | BLUEPRINTS.md, CHANGELOG.md |
+
+#### Updated Artifacts
+
+- `.cursorrules` - Added Rule 6: Post-Extension Automation
+- `.cursor/skills/extend-knowledge/SKILL.md` - Added Post-Extension Automation section with detection
+- `.cursor/agents/knowledge-extender.md` - Updated workflow diagram and rules
+- `knowledge/artifact-dependencies.json` - NEW: Dependency mapping for automation
+- `knowledge/manifest.json` - Version bumped to 1.1.0 for crewai-patterns.json, added artifact-dependencies
+- `knowledge/skill-catalog.json` - Registered crewai-workflow skill
+- `docs/reference/KNOWLEDGE_FILES.md` - Updated CrewAI description
+
+---
+
 ## [3.2.0] - 2026-01-31
 
 ### Added - Knowledge Evolution System

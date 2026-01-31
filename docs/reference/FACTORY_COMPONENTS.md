@@ -57,6 +57,8 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 | `workflow-designer` | Design and configure development workflows and trigger integrations | `workflow-generation` | `workflow-patterns.json`, `mcp-servers-catalog.json` |
 | `onboarding-architect` | Orchestrate the onboarding of existing repositories into the Cursor Agent Factory ecosystem | `onboarding-flow`, `requirements-gathering`, `stack-configuration` | `skill-catalog.json`, `stack-capabilities.json`, `mcp-servers-catalog.json` |
 | `workshop-facilitator` | Facilitate team workshops for collaborative Cursor agent system design | `team-workshop-onboarding`, `requirements-gathering`, `axiom-selection`, `methodology-selection` | `workshop-facilitation.json`, `game-mechanics.json`, `team-dynamics.json`, `axiom-zero.json` |
+| `knowledge-extender` | Extend Factory knowledge, create new skills/templates/agents via research and synthesis | `extend-knowledge` | `artifact-dependencies.json`, `skill-catalog.json`, `manifest.json` |
+| `knowledge-evolution` | Monitor and coordinate automatic knowledge updates from external sources | `update-knowledge` | `manifest.json`, Knowledge source adapters |
 
 ---
 
@@ -184,6 +186,41 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 
 ---
 
+### Knowledge Extender
+
+**Name and Description**: The Knowledge Extender extends the Factory's own knowledge base, creates new skills, templates, and agents through research, document reading, and synthesis. This agent enables continuous improvement of the Factory itself.
+
+**When Activated**: 
+- When user says "extend knowledge for X", "add knowledge about X"
+- When user provides links or documents to incorporate
+- When gap analysis identifies missing or shallow topics
+- When user says "create skill for X", "add template for X"
+
+**Workflow**: (1) Determine extension type (knowledge, skill, template, agent), (2) Research via web search, document reading, or user-provided links, (3) Read templates and patterns for structure, (4) Synthesize content using built-in LLM, (5) Write artifact, (6) Execute Post-Extension Automation (update manifest, skill-catalog, documentation, changelog), (7) Ask user before git operations.
+
+**Skills Used**: `extend-knowledge` (main extension workflow with post-extension automation)
+
+**Knowledge Files Referenced**: `artifact-dependencies.json` (determines what to update), `skill-catalog.json` (register new skills), `manifest.json` (track versions)
+
+---
+
+### Knowledge Evolution Agent
+
+**Name and Description**: The Knowledge Evolution agent monitors external sources and coordinates automatic knowledge updates. It manages the evolution of the Factory's knowledge base over time.
+
+**When Activated**: 
+- When running `--check-updates` command
+- When external sources have new releases
+- When manual update is triggered
+
+**Workflow**: (1) Aggregate updates from source adapters (GitHub, PyPI, NPM, docs), (2) Prioritize and deduplicate updates, (3) Apply merge strategy (conservative, balanced, aggressive), (4) Create backups before changes, (5) Validate all modifications, (6) Generate changelog entries.
+
+**Skills Used**: `update-knowledge` (apply updates with merge strategies)
+
+**Knowledge Files Referenced**: `manifest.json` (version tracking), Various knowledge files (targets for updates)
+
+---
+
 ## 4. Factory Skills Overview
 
 | Skill | Category | Purpose |
@@ -207,6 +244,8 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 | `team-workshop-onboarding` | Specialized | Orchestrate collaborative team workshop series for designing customized Cursor agent systems |
 | `shell-platform` | Specialized | Handle platform-specific shell command considerations for Windows PowerShell and Unix shells |
 | `readme-validation` | Quality | Validate README project structure matches actual filesystem and update automatically |
+| `extend-knowledge` | Knowledge Extension | Extend Factory knowledge via web research, document reading, or user-provided links with post-extension automation |
+| `update-knowledge` | Knowledge Evolution | Apply updates from external sources with merge strategies and rollback support |
 
 ---
 
@@ -511,6 +550,27 @@ Any Agent (before major work):
 
 Any Agent (during retrospectives):
    └─→ pattern-feedback (Learn from experience, propose improvements)
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    KNOWLEDGE EXTENSION                          │
+└─────────────────────────────────────────────────────────────────┘
+
+knowledge-extender
+   └─→ extend-knowledge
+       ├─→ Research (web_search, read_file, user links)
+       ├─→ Synthesize (templates, patterns, LLM)
+       ├─→ Post-Extension Automation:
+       │   ├─→ Update manifest.json (version, change_history)
+       │   ├─→ Update skill-catalog.json (new skills)
+       │   ├─→ Update KNOWLEDGE_FILES.md (documentation)
+       │   └─→ Update CHANGELOG.md (version entry)
+       └─→ Ask before git commit/push
+
+knowledge-evolution
+   └─→ update-knowledge
+       ├─→ source_aggregator (fetch from adapters)
+       ├─→ update_engine (merge with strategies)
+       └─→ backup_manager (rollback support)
 ```
 
 ### Key Integration Points
@@ -524,6 +584,8 @@ Any Agent (during retrospectives):
 - **Workshop Facilitator** orchestrates `team-workshop-onboarding` which internally uses `axiom-selection`, `requirements-gathering`, and `methodology-selection` during workshops
 - **Alignment Check** can be invoked by any agent before significant implementations
 - **Pattern Feedback** can be invoked by any agent during retrospectives or pattern analysis
+- **Knowledge Extender** uses `extend-knowledge` to research, synthesize, and create new Factory artifacts with mandatory post-extension automation
+- **Knowledge Evolution** uses `update-knowledge` to apply external updates with merge strategies and rollback support
 
 ---
 

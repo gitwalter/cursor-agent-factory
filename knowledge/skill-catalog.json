@@ -486,6 +486,42 @@
       ],
       "mechanisms": ["majority-voting", "weighted-voting", "debate-synthesis", "iterative-refinement"]
     },
+    "crewai-workflow": {
+      "id": "crewai-workflow",
+      "name": "CrewAI Workflow",
+      "category": "ai-development",
+      "stackAgnostic": true,
+      "description": "Build production-ready multi-agent workflows using CrewAI patterns including Flows, Pipelines, and Knowledge",
+      "factorySkill": ".cursor/skills/crewai-workflow/SKILL.md",
+      "factoryKnowledge": "knowledge/crewai-patterns.json",
+      "whenToUse": [
+        "When building multi-agent systems with CrewAI",
+        "When need hierarchical or sequential task execution",
+        "When implementing Flows for state management",
+        "When building pipelines that chain multiple crews"
+      ],
+      "patterns": ["agent-definition", "task-definition", "crew-orchestration", "flows", "pipelines"],
+      "frameworks": ["CrewAI"]
+    },
+    "algo-trading": {
+      "id": "algo-trading",
+      "name": "Algorithmic Trading",
+      "category": "workflow",
+      "stackAgnostic": false,
+      "targetStack": "python",
+      "description": "Build algorithmic trading strategies with backtesting, technical indicators, and fundamental data fetching",
+      "factorySkill": ".cursor/skills/algo-trading/SKILL.md",
+      "factoryKnowledge": "knowledge/trading-patterns.json",
+      "whenToUse": [
+        "When building automated trading strategies",
+        "When backtesting trading ideas",
+        "When calculating technical indicators",
+        "When fetching fundamental data",
+        "When constructing multi-factor portfolios"
+      ],
+      "patterns": ["momentum", "mean-reversion", "statistical-arbitrage", "multi-factor"],
+      "frameworks": ["vectorbt", "backtrader", "yfinance", "pandas-ta"]
+    },
     "rap-behavior-design": {
       "id": "rap-behavior-design",
       "name": "RAP Behavior Design",
@@ -718,13 +754,15 @@
       "test-translation",
       "code-templates",
       "security-audit",
-      "code-review"
+      "code-review",
+      "algo-trading"
     ],
     "ai-development": [
       "prompt-engineering",
       "agent-coordination",
       "task-decomposition",
-      "consensus-building"
+      "consensus-building",
+      "crewai-workflow"
     ],
     "sap-abap": [
       "sap-grounding",

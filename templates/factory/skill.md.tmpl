@@ -1,0 +1,60 @@
+---
+name: {{SKILL_NAME}}
+description: {{SKILL_DESCRIPTION}}
+type: skill
+agents: [{{AGENTS}}]
+templates: [{{TEMPLATES}}]
+patterns: [{{PATTERNS}}]
+knowledge: [{{KNOWLEDGE}}]
+---
+
+# {{SKILL_TITLE}}
+
+{{SKILL_INTRODUCTION}}
+
+## When to Use
+
+{{WHEN_TO_USE}}
+
+## Prerequisites
+
+{{PREREQUISITES}}
+
+## Process
+
+### Step 1: {{STEP_1_TITLE}}
+
+{{STEP_1_CONTENT}}
+
+### Step 2: {{STEP_2_TITLE}}
+
+{{STEP_2_CONTENT}}
+
+### Step 3: {{STEP_3_TITLE}}
+
+{{STEP_3_CONTENT}}
+
+## What Gets Created/Changed
+
+| Action | File | Change |
+|--------|------|--------|
+| {{ACTION_1}} | `{{FILE_1}}` | {{CHANGE_1}} |
+
+## Example
+
+```
+User: {{EXAMPLE_INPUT}}
+
+Agent: {{EXAMPLE_OUTPUT}}
+```
+
+## Fallback Procedures
+
+| Issue | Resolution |
+|-------|------------|
+| {{FALLBACK_1_ISSUE}} | {{FALLBACK_1_RESOLUTION}} |
+
+## Related Artifacts
+
+- **Agent**: `.cursor/agents/{{RELATED_AGENT}}.md`
+- **Knowledge**: `knowledge/{{RELATED_KNOWLEDGE}}.json`

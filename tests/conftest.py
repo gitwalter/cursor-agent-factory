@@ -356,3 +356,150 @@ def sample_full_config_with_pm(sample_config_dict: Dict[str, Any], sample_pm_con
         Combined configuration dictionary.
     """
     return {**sample_config_dict, **sample_pm_config}
+
+
+# =============================================================================
+# Knowledge Extension System Fixtures
+# =============================================================================
+
+@pytest.fixture
+def taxonomy_dir(factory_root: Path) -> Path:
+    """Get the taxonomy directory.
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to taxonomy directory.
+    """
+    return factory_root / "scripts" / "taxonomy"
+
+
+@pytest.fixture
+def sample_taxonomy_data() -> Dict[str, Any]:
+    """Create minimal valid taxonomy for testing.
+    
+    Returns:
+        Dictionary with valid taxonomy structure.
+    """
+    return {
+        "domains": {
+            "test_domain": {
+                "description": "Test domain for unit tests",
+                "required_depth": 2,
+                "topics": {
+                    "test_topic": {
+                        "description": "Test topic",
+                        "keywords": ["test", "keyword"],
+                        "required_depth": 2
+                    },
+                    "another_topic": {
+                        "description": "Another test topic",
+                        "keywords": ["another", "sample"],
+                        "required_depth": 1
+                    }
+                }
+            }
+        }
+    }
+
+
+@pytest.fixture
+def mock_knowledge_dir(tmp_path: Path) -> Path:
+    """Create temp knowledge directory with sample files.
+    
+    Args:
+        tmp_path: Pytest's built-in temporary path fixture.
+        
+    Returns:
+        Path to temporary knowledge directory.
+    """
+    knowledge_dir = tmp_path / "knowledge"
+    knowledge_dir.mkdir()
+    
+    # Create sample knowledge file with patterns
+    sample = {
+        "title": "Test Patterns",
+        "description": "Test patterns for unit testing",
+        "version": "1.0.0",
+        "patterns": [
+            {
+                "name": "test-pattern",
+                "description": "A test pattern",
+                "category": "testing",
+                "when_to_use": "When testing",
+                "implementation": {
+                    "steps": ["Step 1", "Step 2"],
+                    "code_example": "print('hello')"
+                },
+                "best_practices": ["Practice 1"]
+            }
+        ]
+    }
+    (knowledge_dir / "test-patterns.json").write_text(json.dumps(sample, indent=2))
+    
+    # Create another sample file
+    another = {
+        "title": "Another Patterns",
+        "patterns": [
+            {"name": "another", "description": "Another pattern"}
+        ]
+    }
+    (knowledge_dir / "another-patterns.json").write_text(json.dumps(another, indent=2))
+    
+    return knowledge_dir
+
+
+@pytest.fixture
+def mock_taxonomy_file(tmp_path: Path, sample_taxonomy_data: Dict[str, Any]) -> Path:
+    """Create a temporary taxonomy file.
+    
+    Args:
+        tmp_path: Pytest's built-in temporary path fixture.
+        sample_taxonomy_data: Sample taxonomy data fixture.
+        
+    Returns:
+        Path to temporary taxonomy file.
+    """
+    taxonomy_file = tmp_path / "test_taxonomy.json"
+    taxonomy_file.write_text(json.dumps(sample_taxonomy_data, indent=2))
+    return taxonomy_file
+
+
+@pytest.fixture
+def extension_templates_dir(factory_root: Path) -> Path:
+    """Get the extension templates directory.
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to factory templates directory.
+    """
+    return factory_root / "templates" / "factory"
+
+
+@pytest.fixture
+def knowledge_schema_path(factory_root: Path) -> Path:
+    """Get the knowledge schema pattern path.
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to knowledge schema pattern.
+    """
+    return factory_root / "patterns" / "knowledge" / "knowledge-schema.json"
+
+
+@pytest.fixture
+def knowledge_template_path(factory_root: Path) -> Path:
+    """Get the knowledge file template path.
+    
+    Args:
+        factory_root: Factory root directory fixture.
+        
+    Returns:
+        Path to knowledge file template.
+    """
+    return factory_root / "templates" / "knowledge" / "knowledge-file.tmpl"

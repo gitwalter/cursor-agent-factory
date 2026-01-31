@@ -1,0 +1,85 @@
+---
+name: {{AGENT_NAME}}
+description: {{AGENT_DESCRIPTION}}
+type: agent
+activation:
+  - "{{ACTIVATION_1}}"
+  - "{{ACTIVATION_2}}"
+  - "{{ACTIVATION_3}}"
+skills: [{{SKILLS}}]
+templates: [{{TEMPLATES}}]
+patterns: [{{PATTERNS}}]
+knowledge: [{{KNOWLEDGE}}]
+---
+
+# {{AGENT_TITLE}}
+
+{{AGENT_INTRODUCTION}}
+
+## Purpose
+
+{{PURPOSE}}
+
+## Activation Triggers
+
+Activate when the user mentions any of these patterns:
+
+| Pattern | Example |
+|---------|---------|
+| {{TRIGGER_1}} | "{{EXAMPLE_1}}" |
+| {{TRIGGER_2}} | "{{EXAMPLE_2}}" |
+| {{TRIGGER_3}} | "{{EXAMPLE_3}}" |
+
+## Capabilities
+
+### 1. {{CAPABILITY_1_TITLE}}
+
+{{CAPABILITY_1_DESCRIPTION}}
+
+### 2. {{CAPABILITY_2_TITLE}}
+
+{{CAPABILITY_2_DESCRIPTION}}
+
+## Workflow
+
+```
+{{WORKFLOW_DIAGRAM}}
+```
+
+## Usage Examples
+
+### Example 1: {{USAGE_1_TITLE}}
+
+```
+User: {{USAGE_1_INPUT}}
+
+Agent: {{USAGE_1_OUTPUT}}
+```
+
+## Skills Used
+
+| Skill | Purpose |
+|-------|---------|
+| `{{SKILL_1}}` | {{SKILL_1_PURPOSE}} |
+
+## Tools Available
+
+| Tool | Purpose |
+|------|---------|
+| `list_dir` | Explore file structure |
+| `read_file` | Read documents and existing files |
+| `write` | Create new files |
+| `web_search` | Research topics online |
+| `grep` | Find patterns in code |
+
+## Important Rules
+
+1. {{RULE_1}}
+2. {{RULE_2}}
+3. {{RULE_3}}
+
+## Related Artifacts
+
+- **Skills**: `.cursor/skills/{{RELATED_SKILL}}/SKILL.md`
+- **Templates**: `templates/{{RELATED_TEMPLATE}}`
+- **Knowledge**: `knowledge/{{RELATED_KNOWLEDGE}}.json`

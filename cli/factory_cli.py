@@ -632,6 +632,9 @@ def generate_from_blueprint(
     print(f"\n[*] Generating from blueprint: {blueprint_id}")
     print(f"   Output: {output_dir}\n")
     
+    # Check knowledge coverage before generation
+    _check_blueprint_knowledge(blueprint_id)
+    
     generator = ProjectGenerator(config, output_dir)
     result = generator.generate()
     
@@ -797,6 +800,10 @@ def onboard_repository(
                 print(f"\n   Skipped artifacts:")
                 for item in result['skipped']:
                     print(f"     - {item}")
+            
+            # Offer knowledge extension analysis
+            if not dry_run:
+                _offer_knowledge_extension(blueprint_id)
         else:
             print("[ERROR] Onboarding failed:")
             for error in result['errors']:
@@ -806,6 +813,93 @@ def onboard_repository(
     except Exception as e:
         print(f"[ERROR] Onboarding failed: {e}")
         sys.exit(1)
+
+
+def _check_blueprint_knowledge(blueprint_id: str) -> None:
+    """Check and warn about missing knowledge for a blueprint.
+    
+    Args:
+        blueprint_id: Blueprint identifier
+    """
+    try:
+        blueprint_path = get_factory_root() / 'blueprints' / blueprint_id / 'blueprint.json'
+        knowledge_dir = get_factory_root() / 'knowledge'
+        
+        if not blueprint_path.exists():
+            return
+        
+        with open(blueprint_path, 'r', encoding='utf-8') as f:
+            blueprint = json.load(f)
+        
+        knowledge_files = blueprint.get('knowledge', [])
+        missing = [k['filename'] for k in knowledge_files 
+                   if not (knowledge_dir / k['filename']).exists()]
+        
+        if missing:
+            print("   [!] Knowledge files missing for this blueprint:")
+            for mf in missing[:3]:
+                print(f"       - {mf}")
+            if len(missing) > 3:
+                print(f"       ... and {len(missing) - 3} more")
+            print("       Run --coverage-report to see full details")
+            print()
+    except Exception:
+        pass  # Don't block generation for knowledge issues
+
+
+def _offer_knowledge_extension(blueprint_id: str = None) -> None:
+    """Offer knowledge extension after onboarding.
+    
+    Args:
+        blueprint_id: Blueprint used for onboarding (if any)
+    """
+    print("\n" + "-" * 60)
+    print("  Knowledge Extension Available")
+    print("-" * 60)
+    
+    try:
+        from scripts.knowledge_gap_analyzer import KnowledgeGapAnalyzer
+        
+        factory_root = get_factory_root()
+        analyzer = KnowledgeGapAnalyzer(
+            factory_root / 'knowledge',
+            factory_root / 'scripts' / 'taxonomy'
+        )
+        result = analyzer.analyze("agent_taxonomy.json")
+        
+        print(f"\n  Factory Knowledge Status:")
+        print(f"    Coverage: {result.coverage_percentage:.1f}%")
+        print(f"    Topics covered: {result.covered_topics}/{result.total_topics}")
+        
+        # Show top gaps
+        top_gaps = result.get_top_gaps(3)
+        if top_gaps:
+            print(f"\n  Top knowledge gaps:")
+            for gap in top_gaps:
+                print(f"    - {gap.topic.name} ({gap.priority.name})")
+        
+        print("\n  Would you like to extend the knowledge base?")
+        print("    1. Analyze all gaps")
+        print("    2. Extend a specific topic")
+        print("    3. Skip for now")
+        
+        choice = input("\n  Enter choice [3]: ").strip()
+        
+        if choice == '1':
+            print()
+            analyze_knowledge_gaps()
+        elif choice == '2':
+            topic = input("  Enter topic name: ").strip()
+            if topic:
+                print()
+                extend_knowledge_topic(topic)
+        else:
+            print("\n  Tip: Run 'factory_cli.py --analyze-gaps' anytime to check knowledge status.")
+    
+    except Exception as e:
+        # Don't fail onboarding if knowledge extension has issues
+        print(f"\n  [Note] Knowledge extension unavailable: {e}")
+        print("  You can run --analyze-gaps later to check knowledge status.")
 
 
 def _create_default_config(repo_path: str, inventory) -> ProjectConfig:
@@ -926,6 +1020,313 @@ def rollback_session(repo_path: str, session_id: str = None) -> None:
         sys.exit(1)
 
 
+# =============================================================================
+# KNOWLEDGE EXTENSION COMMANDS
+# =============================================================================
+
+def analyze_knowledge_gaps(
+    scope: str = 'all',
+    filter_value: str = None
+) -> None:
+    """Analyze knowledge gaps in the Factory.
+    
+    Args:
+        scope: Analysis scope (all, blueprint, domain, topic)
+        filter_value: Filter value for the scope
+    """
+    from scripts.knowledge_gap_analyzer import KnowledgeGapAnalyzer, GapPriority
+    
+    print()
+    print("=" * 60)
+    print("  Knowledge Gap Analysis")
+    print("=" * 60)
+    print()
+    
+    factory_root = get_factory_root()
+    analyzer = KnowledgeGapAnalyzer(
+        factory_root / 'knowledge',
+        factory_root / 'scripts' / 'taxonomy'
+    )
+    
+    try:
+        print(f"Analyzing gaps (scope: {scope})")
+        result = analyzer.analyze("agent_taxonomy.json")
+        
+        # Apply scope filtering
+        if scope == 'topic' and filter_value:
+            result.gaps = [g for g in result.gaps if filter_value.lower() in g.topic.name.lower()]
+        elif scope == 'domain' and filter_value:
+            result.gaps = [g for g in result.gaps if filter_value.lower() in g.coverage.topic_path.lower()]
+        
+        print()
+        print(f"Total Topics: {result.total_topics}")
+        print(f"Covered: {result.covered_topics}")
+        print(f"Coverage: {result.coverage_percentage:.1f}%")
+        print()
+        
+        if not result.gaps:
+            print("[OK] No gaps found!")
+            return
+        
+        print(f"Found {len(result.gaps)} gaps:")
+        print()
+        
+        # Group by priority
+        for priority in GapPriority:
+            gaps = result.gaps_by_priority.get(priority, [])
+            if gaps:
+                print(f"  {priority.name} ({len(gaps)}):")
+                for gap in gaps[:5]:  # Show first 5 per priority
+                    print(f"    - {gap.topic.name}: {gap.description}")
+                if len(gaps) > 5:
+                    print(f"    ... and {len(gaps) - 5} more")
+                print()
+        
+        # Show suggestions
+        print("To extend a topic:")
+        print(f"  python cli/factory_cli.py --extend-knowledge <topic_name>")
+        print("  Or ask: 'Follow extend-knowledge skill for <topic_name>'")
+        print()
+        
+    except Exception as e:
+        print(f"[ERROR] Gap analysis failed: {e}")
+        sys.exit(1)
+
+
+def show_coverage_report(blueprint_id: str) -> None:
+    """Show knowledge coverage report for a blueprint.
+    
+    Args:
+        blueprint_id: Blueprint identifier
+    """
+    factory_root = get_factory_root()
+    blueprint_path = factory_root / 'blueprints' / blueprint_id / 'blueprint.json'
+    knowledge_dir = factory_root / 'knowledge'
+    
+    print()
+    print("=" * 60)
+    print(f"  Knowledge Coverage: {blueprint_id}")
+    print("=" * 60)
+    print()
+    
+    try:
+        if not blueprint_path.exists():
+            print(f"[ERROR] Blueprint not found: {blueprint_id}")
+            sys.exit(1)
+        
+        with open(blueprint_path, 'r', encoding='utf-8') as f:
+            blueprint = json.load(f)
+        
+        knowledge_refs = blueprint.get('knowledge', [])
+        
+        print(f"Blueprint: {blueprint_id}")
+        print(f"Knowledge Files: {len(knowledge_refs)}")
+        
+        # Check each file
+        existing = 0
+        missing_files = []
+        
+        print()
+        print("File Status:")
+        for k in knowledge_refs:
+            filename = k['filename']
+            file_path = knowledge_dir / filename
+            
+            if file_path.exists():
+                existing += 1
+                # Try to get version
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    version = data.get('version', '')
+                except Exception:
+                    version = ''
+                print(f"  [OK] {filename} {version}")
+            else:
+                missing_files.append(filename)
+                print(f"  [MISSING] {filename}")
+        
+        coverage = (existing / len(knowledge_refs) * 100) if knowledge_refs else 100.0
+        print()
+        print(f"Coverage Score: {coverage:.1f}%")
+        
+        if missing_files:
+            print()
+            print("To create missing files:")
+            for mf in missing_files:
+                topic = mf.replace('-patterns.json', '').replace('.json', '').replace('-', '_')
+                print(f"  'Follow extend-knowledge skill for {topic}'")
+        
+        print()
+        
+    except Exception as e:
+        print(f"[ERROR] Coverage report failed: {e}")
+        sys.exit(1)
+
+
+def suggest_extensions(blueprint_id: str) -> None:
+    """Suggest knowledge extensions for a blueprint.
+    
+    Args:
+        blueprint_id: Blueprint identifier
+    """
+    factory_root = get_factory_root()
+    blueprint_path = factory_root / 'blueprints' / blueprint_id / 'blueprint.json'
+    knowledge_dir = factory_root / 'knowledge'
+    
+    print()
+    print("=" * 60)
+    print(f"  Extension Suggestions: {blueprint_id}")
+    print("=" * 60)
+    print()
+    
+    try:
+        if not blueprint_path.exists():
+            print(f"[ERROR] Blueprint not found: {blueprint_id}")
+            sys.exit(1)
+        
+        with open(blueprint_path, 'r', encoding='utf-8') as f:
+            blueprint = json.load(f)
+        
+        # Get current knowledge refs
+        current_refs = set(k['filename'] for k in blueprint.get('knowledge', []))
+        
+        # Get all available knowledge files
+        available = set(f.name for f in knowledge_dir.glob('*.json'))
+        
+        # Get blueprint tags for relevance matching
+        tags = set(t.lower() for t in blueprint.get('metadata', {}).get('tags', []))
+        
+        # Find relevant files not yet in blueprint
+        suggestions = []
+        for filename in available - current_refs:
+            # Skip manifest and schemas
+            if filename in ('manifest.json',) or filename.startswith('schema'):
+                continue
+            # Check if file seems relevant to blueprint tags
+            name_parts = set(filename.replace('.json', '').replace('-', ' ').split())
+            if name_parts & tags or 'patterns' in filename:
+                suggestions.append(filename)
+        
+        if not suggestions:
+            print("[OK] No additional knowledge files suggested.")
+            print("     Blueprint knowledge appears comprehensive.")
+            return
+        
+        print(f"Found {len(suggestions)} knowledge files that could enhance this blueprint:")
+        print()
+        
+        for i, filename in enumerate(sorted(suggestions)[:15], 1):
+            print(f"  {i}. {filename}")
+        
+        if len(suggestions) > 15:
+            print(f"  ... and {len(suggestions) - 15} more")
+        
+        print()
+        print("To add these to the blueprint, edit:")
+        print(f"  blueprints/{blueprint_id}/blueprint.json")
+        print()
+        
+    except ValueError as e:
+        print(f"[ERROR] {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"[ERROR] Suggestion failed: {e}")
+        sys.exit(1)
+
+
+def extend_knowledge_topic(
+    topic_name: str,
+    auto_apply: bool = False,
+    use_mock_llm: bool = False
+) -> None:
+    """Show extension instructions using Factory artifacts.
+    
+    Uses artifacts:
+    - Template: templates/knowledge/knowledge-file.tmpl
+    - Pattern: patterns/knowledge/knowledge-schema.json
+    - Skill: .cursor/skills/extend-knowledge/SKILL.md
+    
+    Args:
+        topic_name: Topic to extend
+        auto_apply: Not used
+        use_mock_llm: Not used
+    """
+    from scripts.knowledge_gap_analyzer import KnowledgeGapAnalyzer, GapPriority
+    
+    print()
+    print("=" * 60)
+    print(f"  Knowledge Extension: {topic_name}")
+    print("=" * 60)
+    print()
+    
+    factory_root = Path(__file__).parent.parent
+    knowledge_dir = factory_root / "knowledge"
+    taxonomy_dir = factory_root / "scripts" / "taxonomy"
+    
+    # Check if topic has a gap
+    try:
+        analyzer = KnowledgeGapAnalyzer(knowledge_dir, taxonomy_dir)
+        result = analyzer.analyze("agent_taxonomy.json")
+        
+        gap = None
+        for g in result.gaps:
+            if g.topic.name.lower() == topic_name.lower():
+                gap = g
+                break
+        
+        if not gap:
+            print(f"[INFO] Topic '{topic_name}' is not in gaps list.")
+            print("       It may already be covered or not in taxonomy.")
+            print()
+            print("  Run: python cli/factory_cli.py --analyze-gaps")
+            print()
+            return
+        
+        # Show gap info
+        target_file = f"{topic_name.lower().replace('_', '-')}-patterns.json"
+        
+        print(f"  Gap Type: {gap.gap_type.name}")
+        print(f"  Priority: {gap.priority.name}")
+        print(f"  Required Depth: {gap.coverage.required_depth}")
+        print(f"  Target File: knowledge/{target_file}")
+        print()
+        
+        # Show artifacts to use
+        print("-" * 60)
+        print("  ARTIFACTS TO USE")
+        print("-" * 60)
+        print()
+        print("  1. TEMPLATE: templates/knowledge/knowledge-file.tmpl")
+        print("     Read this for the JSON structure")
+        print()
+        print("  2. PATTERN: patterns/knowledge/knowledge-schema.json")
+        print("     Read this for validation rules (min 3 patterns, etc.)")
+        print()
+        print("  3. SKILL: .cursor/skills/extend-knowledge/SKILL.md")
+        print("     Follow this step-by-step process")
+        print()
+        
+        # Show instructions
+        print("-" * 60)
+        print("  INSTRUCTIONS")
+        print("-" * 60)
+        print()
+        print(f"  1. Research: {topic_name.replace('_', ' ')}")
+        print(f"  2. Read template: templates/knowledge/knowledge-file.tmpl")
+        print(f"  3. Create file: knowledge/{target_file}")
+        print(f"  4. Include at least {max(3, gap.coverage.required_depth)} patterns")
+        print(f"  5. Add code examples and sources")
+        print(f"  6. Validate JSON structure")
+        print()
+        print("  Ask: 'Follow extend-knowledge skill for " + topic_name + "'")
+        print()
+        
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        sys.exit(1)
+
+
 def main():
     """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
@@ -958,6 +1359,13 @@ Examples:
   %(prog)s --onboard C:\\Projects\\existing-repo --pm-enabled --pm-backend azure-devops
   %(prog)s --onboard C:\\Projects\\existing-repo --dry-run
   %(prog)s --rollback C:\\Projects\\existing-repo
+  
+  # Knowledge Extension (uses Factory artifacts)
+  %(prog)s --analyze-gaps                                    # Analyze all gaps
+  %(prog)s --analyze-gaps --gap-scope blueprint --gap-filter ai-agent-development
+  %(prog)s --coverage-report ai-agent-development            # Blueprint coverage
+  %(prog)s --suggest-extensions ai-agent-development         # Suggest additions
+  %(prog)s --extend-knowledge constitutional_ai              # Show extension instructions
         '''
     )
     
@@ -1100,6 +1508,50 @@ Examples:
         help='PM methodology: scrum, kanban, hybrid, or waterfall'
     )
     
+    # Knowledge Extension commands
+    parser.add_argument(
+        '--analyze-gaps',
+        action='store_true',
+        help='Analyze knowledge gaps in the Factory knowledge base'
+    )
+    
+    parser.add_argument(
+        '--gap-scope',
+        type=str,
+        choices=['all', 'blueprint', 'domain', 'topic'],
+        default='all',
+        metavar='SCOPE',
+        help='Scope for gap analysis: all, blueprint, domain, or topic'
+    )
+    
+    parser.add_argument(
+        '--gap-filter',
+        type=str,
+        metavar='VALUE',
+        help='Filter value for gap analysis (blueprint ID, domain name, or topic name)'
+    )
+    
+    parser.add_argument(
+        '--extend-knowledge',
+        type=str,
+        metavar='TOPIC',
+        help='Show extension instructions for a topic (uses Factory artifacts)'
+    )
+    
+    parser.add_argument(
+        '--coverage-report',
+        type=str,
+        metavar='BLUEPRINT',
+        help='Show knowledge coverage report for a blueprint'
+    )
+    
+    parser.add_argument(
+        '--suggest-extensions',
+        type=str,
+        metavar='BLUEPRINT',
+        help='Suggest knowledge extensions for a blueprint'
+    )
+    
     args = parser.parse_args()
     
     # Handle list commands
@@ -1130,6 +1582,26 @@ Examples:
     
     if args.rollback:
         rollback_session(args.rollback, args.session_id)
+        return
+    
+    # Handle knowledge extension commands
+    if args.analyze_gaps:
+        analyze_knowledge_gaps(
+            scope=args.gap_scope,
+            filter_value=args.gap_filter
+        )
+        return
+    
+    if args.coverage_report:
+        show_coverage_report(args.coverage_report)
+        return
+    
+    if args.suggest_extensions:
+        suggest_extensions(args.suggest_extensions)
+        return
+    
+    if args.extend_knowledge:
+        extend_knowledge_topic(args.extend_knowledge)
         return
     
     # Handle quickstart command
