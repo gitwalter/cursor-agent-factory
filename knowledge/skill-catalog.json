@@ -522,6 +522,37 @@
       "patterns": ["momentum", "mean-reversion", "statistical-arbitrage", "multi-factor"],
       "frameworks": ["vectorbt", "backtrader", "yfinance", "pandas-ta"]
     },
+    "extend-knowledge": {
+      "id": "extend-knowledge",
+      "name": "Extend Knowledge",
+      "category": "core",
+      "stackAgnostic": true,
+      "description": "Extend project knowledge base with new topics, patterns, and skills through research or user input",
+      "factoryPattern": "patterns/skills/extend-knowledge.json",
+      "whenToUse": [
+        "When adding knowledge about new technologies",
+        "When creating project-specific patterns",
+        "When incorporating external documentation",
+        "When team learns something new"
+      ],
+      "patterns": ["knowledge-extension", "document-ingestion"],
+      "includedInGenerated": true
+    },
+    "receive-updates": {
+      "id": "receive-updates",
+      "name": "Receive Factory Updates",
+      "category": "core",
+      "stackAgnostic": true,
+      "description": "Receive and apply updates from the Cursor Agent Factory to keep knowledge current",
+      "factoryPattern": "patterns/skills/receive-updates.json",
+      "whenToUse": [
+        "When checking for Factory updates",
+        "When syncing with Factory improvements",
+        "When applying new patterns from Factory"
+      ],
+      "patterns": ["update-channel", "version-sync"],
+      "includedInGenerated": true
+    },
     "rap-behavior-design": {
       "id": "rap-behavior-design",
       "name": "RAP Behavior Design",

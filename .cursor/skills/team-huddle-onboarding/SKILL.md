@@ -537,7 +537,9 @@ End with appreciation and connection.
 ║  Next steps:                                                 ║
 ║  1. Open the project in Cursor                               ║
 ║  2. Try talking to your agents                               ║
-║  3. Check out FIRST_WEEK_GUIDE.md                            ║
+║  3. Extend knowledge: "extend knowledge for [topic]"         ║
+║  4. Check updates: "check for Factory updates"               ║
+║  5. Check out FIRST_WEEK_GUIDE.md                            ║
 ║                                                              ║
 ║  Go build something amazing, together!                       ║
 ║                                                              ║

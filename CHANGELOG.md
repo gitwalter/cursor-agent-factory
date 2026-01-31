@@ -5,6 +5,73 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.4] - 2026-01-31
+
+### Added - Team-Independent Knowledge Management for Generated Projects
+
+Generated projects now include a complete, self-sufficient knowledge management system that allows teams to extend, evolve, and receive updates independently.
+
+#### Three Knowledge Capabilities
+
+| Capability | Agent | Direction | Commands |
+|------------|-------|-----------|----------|
+| **Extend** | `knowledge-extender` | Team → Project | "extend knowledge for [topic]" |
+| **Evolve** | `knowledge-evolution` | Project → Future | "check knowledge status" |
+| **Receive** | `factory-updates` | Factory → Project | "check for Factory updates" |
+
+#### New Pattern Files
+
+| File | Purpose |
+|------|---------|
+| `patterns/agents/knowledge-extender.json` | Add new knowledge to projects |
+| `patterns/agents/knowledge-evolution.json` | Track and manage project knowledge |
+| `patterns/agents/factory-updates.json` | Receive updates from Factory |
+| `patterns/skills/extend-knowledge.json` | Core extension workflow |
+| `patterns/skills/receive-updates.json` | Core update workflow |
+
+#### New Knowledge & Templates
+
+| File | Purpose |
+|------|---------|
+| `knowledge/factory-updates.json` | Update feed for generated projects |
+| `templates/knowledge/manifest.json.tmpl` | Project manifest template |
+| `templates/knowledge/project-info.json.tmpl` | Project origin tracking |
+
+#### Updated Blueprints (5)
+
+All major blueprints now include knowledge management:
+- `python-fastapi`
+- `typescript-react`
+- `ai-agent-development`
+- `java-spring`
+- `csharp-dotnet`
+
+Each blueprint now includes:
+- `knowledge-extender` agent
+- `knowledge-evolution` agent
+- `factory-updates` agent
+- `extend-knowledge` skill
+- `receive-updates` skill
+
+#### Documentation Updates
+
+| Document | Changes |
+|----------|---------|
+| `docs/USAGE_GUIDE.md` | Added "Knowledge Management (Team-Independent)" and "Receiving Factory Updates" sections |
+| `docs/reference/GENERATED_OUTPUT.md` | Updated section 3.5 with full knowledge system |
+| `docs/EXTENSION_GUIDE.md` | Added chat-based extension workflow |
+| `README.md` | Added "Factory → Generated Project Updates" section |
+
+#### Factory Update Channel
+
+Generated projects can now receive updates from the Factory:
+- Update feed at `knowledge/factory-updates.json`
+- Channels: `stable` (production) and `latest` (early adopters)
+- Updates are filtered by blueprint applicability
+- User confirms before applying updates
+
+---
+
 ## [3.2.3] - 2026-01-31
 
 ### Improved - Comprehensive Artifact Dependency Tracking

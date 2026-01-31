@@ -383,7 +383,9 @@ Execute generation using collected configuration.
 ║   What's next?                                               ║
 ║   1. Open the project folder in Cursor                       ║
 ║   2. Try: "Review my code for issues"                        ║
-║   3. See FIRST_WEEK_GUIDE.md for more                        ║
+║   3. Extend knowledge: "extend knowledge for [topic]"        ║
+║   4. Check for updates: "check for Factory updates"          ║
+║   5. See FIRST_WEEK_GUIDE.md for more                        ║
 ║                                                              ║
 ║   Your mission: {MISSION}                                    ║
 ║   Your values: {VALUES}                                      ║

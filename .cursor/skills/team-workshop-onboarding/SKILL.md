@@ -262,8 +262,11 @@ Let's open the project in Cursor and try a quick command..."
 
 Day 1: Explore - Ask agents to explain the codebase
 Day 2: Try a workflow - Use the code review agent
-Day 3: Customize - Edit .cursorrules to add team preferences
-Day 4-5: Build - Start your first feature with agent assistance
+Day 3: Extend knowledge - 'extend knowledge for [your domain]'
+Day 4: Check updates - 'check for Factory updates'
+Day 5: Build - Start your first feature with agent assistance
+
+Your project can grow its knowledge independently AND receive Factory updates!
 
 Who's owning the first day exploration?"
 ```
