@@ -1,35 +1,66 @@
 {
   "$schema": "./tools-schema.json",
   "description": "Tool path configuration for Cursor Agent Factory development environment",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "resolution_order": [
+    "environment_variable",
+    "local_config",
+    "auto_detect",
+    "default"
+  ],
   "tools": {
     "gh": {
-      "path": "C:\\App\\gh\\bin\\gh.exe",
       "env_var": "GH_CLI_PATH",
+      "auto_detect": ["gh", "gh.exe"],
+      "fallbacks": [
+        "C:\\App\\gh\\bin\\gh.exe"
+      ],
       "description": "GitHub CLI for repository operations (issues, PRs, actions)",
       "docs": "https://cli.github.com/"
     },
     "python": {
-      "path": "C:\\App\\Anaconda\\python.exe",
       "env_var": "PYTHON_PATH",
-      "description": "Python interpreter (Anaconda distribution)",
+      "conda_env": "cursor-factory",
+      "auto_detect": ["python", "python3", "python.exe"],
+      "fallbacks": [
+        "D:\\Anaconda\\envs\\cursor-factory\\python.exe",
+        "C:\\App\\Anaconda\\envs\\cursor-factory\\python.exe",
+        "D:\\Anaconda\\python.exe",
+        "C:\\App\\Anaconda\\python.exe"
+      ],
+      "min_version": "3.10",
+      "description": "Python 3.10+ interpreter (prefer cursor-factory conda env)",
       "docs": "https://docs.python.org/"
     },
     "conda": {
-      "path": "C:\\App\\Anaconda\\Scripts\\conda.exe",
       "env_var": "CONDA_PATH",
+      "auto_detect": ["conda", "conda.exe"],
+      "fallbacks": [
+        "D:\\Anaconda\\Scripts\\conda.exe",
+        "C:\\App\\Anaconda\\Scripts\\conda.exe"
+      ],
       "description": "Conda environment and package manager",
       "docs": "https://docs.conda.io/"
     },
     "pip": {
-      "path": "C:\\App\\Anaconda\\Scripts\\pip.exe",
       "env_var": "PIP_PATH",
+      "auto_detect": ["pip", "pip3", "pip.exe"],
+      "fallbacks": [
+        "D:\\Anaconda\\envs\\cursor-factory\\Scripts\\pip.exe",
+        "C:\\App\\Anaconda\\envs\\cursor-factory\\Scripts\\pip.exe",
+        "D:\\Anaconda\\Scripts\\pip.exe",
+        "C:\\App\\Anaconda\\Scripts\\pip.exe"
+      ],
       "description": "Python package installer",
       "docs": "https://pip.pypa.io/"
     },
     "pytest": {
-      "path": "C:\\App\\Anaconda\\Scripts\\pytest.exe",
       "env_var": "PYTEST_PATH",
+      "auto_detect": ["pytest", "pytest.exe"],
+      "fallbacks": [
+        "D:\\Anaconda\\envs\\cursor-factory\\Scripts\\pytest.exe",
+        "C:\\App\\Anaconda\\envs\\cursor-factory\\Scripts\\pytest.exe"
+      ],
       "description": "Python testing framework",
       "docs": "https://docs.pytest.org/"
     }

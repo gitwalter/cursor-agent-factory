@@ -4,16 +4,17 @@ This document describes how to configure the Cursor Agent Factory for your devel
 
 ## Overview
 
-The factory uses a **layered configuration system** that allows customization at multiple levels:
+The factory uses a **flexible path resolution system** that works across multiple machines:
 
-1. **Config File** (`.cursor/config/tools.json`) - Project-specific tool paths
-2. **Environment Variables** - Machine-wide overrides
-3. **Hardcoded Defaults** - Fallback values
+1. **Environment Variables** - Machine-specific overrides (highest priority)
+2. **Auto-Detection** - Finds tools on PATH
+3. **Fallback Paths** - Known installation locations (tries each until found)
 
 ```mermaid
 flowchart LR
-    A[".cursor/config/tools.json"] -->|not found| B["Environment Variables"]
-    B -->|not set| C["Hardcoded Defaults"]
+    A["$env:PYTHON_PATH"] -->|not set| B["Auto-detect on PATH"]
+    B -->|not found| C["Try fallback paths"]
+    C -->|first match| D["Use tool"]
 ```
 
 ## Tool Paths Configuration
@@ -28,15 +29,17 @@ The primary configuration file is located at:
 
 This file defines paths to development tools used by the factory and its generated projects.
 
-### Current Default Values
+### Tool Resolution
 
-| Tool | Path | Environment Variable |
-|------|------|---------------------|
-| **Python** | `C:\App\Anaconda\python.exe` | `PYTHON_PATH` |
-| **Pip** | `C:\App\Anaconda\Scripts\pip.exe` | `PIP_PATH` |
-| **Conda** | `C:\App\Anaconda\Scripts\conda.exe` | `CONDA_PATH` |
-| **GitHub CLI** | `C:\App\gh\bin\gh.exe` | `GH_CLI_PATH` |
-| **Pytest** | `C:\App\Anaconda\Scripts\pytest.exe` | `PYTEST_PATH` |
+| Tool | Environment Variable | Fallback Paths |
+|------|---------------------|----------------|
+| **Python** | `PYTHON_PATH` | `D:\Anaconda\envs\cursor-factory\python.exe`, `C:\App\Anaconda\envs\cursor-factory\python.exe` |
+| **Pip** | `PIP_PATH` | `D:\Anaconda\envs\cursor-factory\Scripts\pip.exe`, `C:\App\Anaconda\envs\cursor-factory\Scripts\pip.exe` |
+| **Conda** | `CONDA_PATH` | `D:\Anaconda\Scripts\conda.exe`, `C:\App\Anaconda\Scripts\conda.exe` |
+| **GitHub CLI** | `GH_CLI_PATH` | `C:\App\gh\bin\gh.exe` |
+| **Pytest** | `PYTEST_PATH` | `D:\Anaconda\envs\cursor-factory\Scripts\pytest.exe`, `C:\App\Anaconda\envs\cursor-factory\Scripts\pytest.exe` |
+
+> **Note**: Python 3.10+ required. The `cursor-factory` conda environment is recommended.
 
 ### How to Customize
 
@@ -142,8 +145,8 @@ Similar to Linux, with Homebrew paths if applicable:
 The factory resolves tool paths in this order:
 
 1. **Environment Variable** - If set, takes highest priority
-2. **Config File** - Read from `.cursor/config/tools.json`
-3. **Hardcoded Default** - Built-in fallback value
+2. **Auto-Detection** - Searches PATH for the tool
+3. **Fallback Paths** - Tries known installation locations in order
 
 ### Example Resolution
 
@@ -151,9 +154,13 @@ For the Python interpreter:
 
 ```
 1. Check: Is $PYTHON_PATH set? → Use it
-2. Check: Does tools.json have python.path? → Use it
-3. Fallback: Use "C:\App\Anaconda\python.exe"
+2. Check: Can "python" be found on PATH? → Use it (if version >= 3.10)
+3. Check: Does D:\Anaconda\envs\cursor-factory\python.exe exist? → Use it
+4. Check: Does C:\App\Anaconda\envs\cursor-factory\python.exe exist? → Use it
+5. Continue through remaining fallbacks...
 ```
+
+This allows the same configuration to work across multiple machines with different installation paths.
 
 ## Validation
 
@@ -198,17 +205,20 @@ $ghPath = if ($env:GH_CLI_PATH) { $env:GH_CLI_PATH } else { "C:\App\gh\bin\gh.ex
 }
 ```
 
-### Anaconda Installation (Windows)
+### Conda Environment Setup (Recommended)
 
-```json
-{
-  "tools": {
-    "python": { "path": "C:\\App\\Anaconda\\python.exe" },
-    "pip": { "path": "C:\\App\\Anaconda\\Scripts\\pip.exe" },
-    "conda": { "path": "C:\\App\\Anaconda\\Scripts\\conda.exe" }
-  }
-}
+Create a dedicated `cursor-factory` environment with Python 3.11:
+
+```powershell
+# Create the environment
+conda create -n cursor-factory python=3.11 -y
+
+# Install dependencies
+conda activate cursor-factory
+pip install -r requirements-dev.txt
 ```
+
+The factory will auto-detect this environment via the fallback paths.
 
 ### Virtual Environment
 

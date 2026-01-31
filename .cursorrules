@@ -11,10 +11,12 @@ The Factory itself is a Cursor agent system that produces other Cursor agent sys
 Tool paths are configurable via `.cursor/config/tools.json` or environment variables.
 See [Configuration Guide](docs/CONFIGURATION.md) for full documentation.
 
-### Python Path (configurable)
+### Python Path (auto-detected)
 ```
-# Default (override via $env:PYTHON_PATH or tools.json)
-PYTHON_PATH = C:\App\Anaconda\python.exe
+# Resolution order: $env:PYTHON_PATH > auto-detect > fallbacks
+# Fallbacks: D:\Anaconda\envs\cursor-factory\python.exe
+#            C:\App\Anaconda\envs\cursor-factory\python.exe
+# Requires: Python 3.10+ (cursor-factory conda env recommended)
 ```
 
 ### Factory Mode
