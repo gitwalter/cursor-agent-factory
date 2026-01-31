@@ -34,6 +34,7 @@
     {"patternId": "code-reviewer", "required": true, "customizations": {"skills": ["clean-code-review", "grounding"]}},
     {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
     {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
+    {"patternId": "knowledge-evolution", "required": true, "description": "Manage and evolve project knowledge independently"},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [

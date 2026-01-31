@@ -37,7 +37,7 @@ The factory generates agent systems using a **5-layer architecture** that ensure
 5. [CLI Generation](#cli-generation)
 6. [Working with Blueprints](#working-with-blueprints)
 7. [Customizing Generated Projects](#customizing-generated-projects)
-   - [Extending Knowledge (Chat-Based)](#extending-knowledge-chat-based) ← **New!**
+   - [Knowledge Management (Team-Independent)](#knowledge-management-team-independent) ← **New!**
 8. [Understanding Generated Structure](#understanding-generated-structure)
 9. [Enforcement and Practices](#enforcement-and-practices)
 
@@ -396,14 +396,20 @@ type: skill
 ...
 ```
 
-### Extending Knowledge (Chat-Based)
+### Knowledge Management (Team-Independent)
 
-Your generated project includes a **knowledge-extender agent** and **extend-knowledge skill** that allow you to expand the knowledge base without manual file creation.
+Your generated project includes a complete **knowledge management system** that allows your team to extend and evolve knowledge independently, without depending on the Factory.
+
+#### Two Agents for Knowledge
+
+| Agent | Purpose | Commands |
+|-------|---------|----------|
+| `knowledge-extender` | Add new knowledge | "extend knowledge for [topic]" |
+| `knowledge-evolution` | Track and manage knowledge | "check knowledge status" |
 
 #### Quick Commands
 
-Simply ask in chat:
-
+**Extending Knowledge:**
 ```
 "Extend knowledge for [topic]"
 "Add knowledge about [framework/technology]"
@@ -411,19 +417,38 @@ Simply ask in chat:
 "Incorporate this document: [path or URL]"
 ```
 
+**Managing Knowledge:**
+```
+"Check knowledge status"
+"What knowledge do we have?"
+"Update our knowledge about [topic]"
+"Review knowledge gaps"
+```
+
 #### Examples
 
 ```
 "Extend knowledge for GraphQL patterns"
 "Add knowledge about our internal API conventions"
-"Create a skill for database migrations"
+"Check knowledge status"
+"What knowledge gaps do we have for authentication?"
 ```
 
-The knowledge-extender agent will:
-1. Research the topic using available methods (web search, documents, your input)
-2. Generate structured JSON following your project's conventions
-3. Update `knowledge/manifest.json` to register the new file
-4. Report what was created
+#### How It Works
+
+1. **knowledge-extender** creates new knowledge files from research or your input
+2. **knowledge-evolution** tracks all files in `knowledge/manifest.json`
+3. Both agents work independently - no Factory connection needed
+4. Knowledge evolves with your project through retrospectives and learnings
+
+#### Team Workflow
+
+Integrate knowledge evolution into your development process:
+
+1. **Sprint Retrospectives**: "What did we learn? Add to knowledge base"
+2. **New Technology**: "Extend knowledge for [new framework]"
+3. **Lessons Learned**: "Update knowledge about error handling patterns"
+4. **Onboarding**: "Check knowledge status" to see what's documented
 
 #### Manual Extension
 

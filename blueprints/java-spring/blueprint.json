@@ -33,6 +33,8 @@
   "agents": [
     {"patternId": "code-reviewer", "required": true},
     {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd", "bdd"]}},
+    {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
+    {"patternId": "knowledge-evolution", "required": true, "description": "Manage and evolve project knowledge independently"},
     {"patternId": "explorer", "required": false}
   ],
   "skills": [
@@ -42,7 +44,8 @@
     {"patternId": "tdd", "required": true, "default": true},
     {"patternId": "bdd", "required": false, "default": false, "description": "Optional BDD for stakeholder collaboration"},
     {"patternId": "test-translation", "required": false, "default": false, "description": "Translation and traceability between BDD/TDD"},
-    {"patternId": "code-templates", "required": true}
+    {"patternId": "code-templates", "required": true},
+    {"patternId": "extend-knowledge", "required": true, "description": "Extend knowledge base with new topics"}
   ],
   "testingApproach": {
     "modes": ["tdd-only", "bdd-only", "layered", "bdd-drives-tdd", "tdd-documents-bdd", "synchronized"],

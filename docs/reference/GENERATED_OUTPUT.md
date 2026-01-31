@@ -258,33 +258,50 @@ The file also includes autonomous behavior rules, variable notation conventions,
 
 ---
 
-## 3.5 Knowledge Extension Capability
+## 3.5 Knowledge Management System
 
-Every generated project includes built-in knowledge extension capabilities:
+Every generated project includes a complete, **team-independent** knowledge management system:
 
 ### Included Components
 
 | Component | Location | Purpose |
 |-----------|----------|---------|
-| `knowledge-extender` agent | `.cursor/agents/knowledge-extender.md` | Orchestrates knowledge base extension |
+| `knowledge-extender` agent | `.cursor/agents/knowledge-extender.md` | Add new knowledge to the project |
+| `knowledge-evolution` agent | `.cursor/agents/knowledge-evolution.md` | Track, manage, and evolve knowledge |
 | `extend-knowledge` skill | `.cursor/skills/extend-knowledge/SKILL.md` | Core extension workflow |
 | `manifest.json` | `knowledge/manifest.json` | Registry of all knowledge files |
 
-### How to Use
+### Key Feature: Team Independence
 
-Simply ask in chat:
+Your generated project can evolve its knowledge **independently from the Factory**:
+- No external dependencies or connections required
+- Team manages knowledge through chat commands
+- Knowledge grows with your project
+- Integrates with retrospectives and learning sessions
 
+### Commands
+
+**Extending (Adding New Knowledge):**
 ```
 "Extend knowledge for [topic]"
-"Add knowledge about [framework/technology]"
+"Add knowledge about [framework]"
 "Create a skill for [purpose]"
 ```
 
-The knowledge-extender agent will:
-1. Research the topic using available methods
-2. Generate structured JSON following project conventions
-3. Update `knowledge/manifest.json` to register the new file
-4. Report what was created
+**Evolution (Managing Knowledge):**
+```
+"Check knowledge status"
+"What knowledge do we have?"
+"Review knowledge gaps"
+"Update our knowledge about [topic]"
+```
+
+### How It Works
+
+1. **knowledge-extender** creates new knowledge from research or input
+2. **knowledge-evolution** tracks all files and identifies gaps
+3. Both update `knowledge/manifest.json` automatically
+4. Knowledge evolves through team workflows (retrospectives, learnings)
 
 ### Extension During Onboarding
 

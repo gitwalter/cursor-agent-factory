@@ -48,6 +48,7 @@
     {"patternId": "test-generator", "required": true, "customizations": {"skills": ["tdd"]}},
     {"patternId": "documentation-agent", "required": true, "customizations": {"focus": "agent-documentation"}},
     {"patternId": "knowledge-extender", "required": true, "description": "Extend knowledge base during development"},
+    {"patternId": "knowledge-evolution", "required": true, "description": "Manage and evolve project knowledge independently"},
     {"patternId": "explorer", "required": false, "customizations": {"focus": "research-papers"}}
   ],
   "skills": [
