@@ -94,24 +94,7 @@
       {"file": "solidity-patterns.json", "content": "Secure implementation patterns"},
       {"file": "defi-patterns.json", "content": "DeFi-specific security considerations"}
     ],
-    "outputFormat": {
-      "sections": [
-        "Executive Summary",
-        "Scope and Methodology",
-        "Findings (by severity)",
-        "Recommendations",
-        "Appendix: Tool Outputs"
-      ],
-      "findingFormat": {
-        "title": "Brief description",
-        "severity": "Critical/High/Medium/Low/Info",
-        "location": "File and line numbers",
-        "description": "Detailed explanation",
-        "impact": "Potential consequences",
-        "proof_of_concept": "Code demonstrating the issue",
-        "recommendation": "How to fix"
-      }
-    },
+    "outputFormat": "Structured audit report with: Executive Summary, Scope and Methodology, Findings by severity (Critical/High/Medium/Low/Info with title, location, description, impact, proof of concept, and recommendation for each), overall Recommendations, and Appendix with tool outputs.",
     "importantRules": [
       "NEVER approve contracts with Critical or High severity unfixed issues",
       "Always verify findings manually - automated tools have false positives",
