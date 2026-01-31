@@ -1,0 +1,278 @@
+{
+  "$schema": "./schemas/versioning-schema.json",
+  "title": "Knowledge Manifest",
+  "description": "Central manifest tracking all knowledge files, their versions, sources, and update status",
+  "version": "1.0.0",
+  "generated": "2026-01-31T00:00:00Z",
+  "factory_version": "2.0.0",
+  "statistics": {
+    "total_files": 66,
+    "categories": {
+      "stack_specific": 22,
+      "ai_agent": 15,
+      "integration": 12,
+      "factory_meta": 8,
+      "methodology": 9
+    },
+    "last_full_update": null,
+    "pending_updates": 0
+  },
+  "files": {
+    "fastapi-patterns.json": {
+      "version": "1.0.0",
+      "category": "stack_specific",
+      "title": "FastAPI Patterns",
+      "description": "Production-grade patterns for FastAPI 0.115+ applications",
+      "tags": ["python", "fastapi", "api", "web"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "tiangolo/fastapi",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "nextjs-patterns.json": {
+      "version": "1.0.0",
+      "category": "stack_specific",
+      "title": "Next.js Patterns",
+      "description": "Next.js 14+ patterns, App Router, Server Components",
+      "tags": ["typescript", "nextjs", "react", "web"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "vercel/next.js",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "spring-patterns.json": {
+      "version": "1.0.0",
+      "category": "stack_specific",
+      "title": "Spring Patterns",
+      "description": "Spring Boot patterns, REST APIs, JPA, microservices",
+      "tags": ["java", "spring", "api", "enterprise"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "spring-projects/spring-boot",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "langchain-patterns.json": {
+      "version": "1.0.0",
+      "category": "ai_agent",
+      "title": "LangChain Patterns",
+      "description": "LangChain integration patterns and best practices",
+      "tags": ["python", "langchain", "ai", "llm"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "langchain-ai/langchain",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "latest",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "crewai-patterns.json": {
+      "version": "1.0.0",
+      "category": "ai_agent",
+      "title": "CrewAI Patterns",
+      "description": "Multi-agent orchestration patterns with CrewAI",
+      "tags": ["python", "crewai", "ai", "multi-agent"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "joaomdmoura/crewAI",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "latest",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "autogen-patterns.json": {
+      "version": "1.0.0",
+      "category": "ai_agent",
+      "title": "AutoGen Patterns",
+      "description": "Microsoft AutoGen multi-agent conversation patterns",
+      "tags": ["python", "autogen", "ai", "multi-agent"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "microsoft/autogen",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "latest",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "mcp-servers-catalog.json": {
+      "version": "1.0.0",
+      "category": "integration",
+      "title": "MCP Servers Catalog",
+      "description": "Available MCP servers and their configurations",
+      "tags": ["mcp", "integration", "tools"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "community",
+          "identifier": "mcp-servers-registry",
+          "trust_level": "community"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "cicd-patterns.json": {
+      "version": "1.0.0",
+      "category": "integration",
+      "title": "CI/CD Patterns",
+      "description": "GitHub Actions, GitLab CI, Azure DevOps patterns",
+      "tags": ["cicd", "devops", "automation"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [
+        {
+          "type": "github",
+          "identifier": "actions/runner",
+          "trust_level": "official"
+        }
+      ],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "tdd-patterns.json": {
+      "version": "1.0.0",
+      "category": "methodology",
+      "title": "TDD Patterns",
+      "description": "Test-Driven Development patterns and practices",
+      "tags": ["testing", "tdd", "methodology"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": []
+    },
+    "bdd-patterns.json": {
+      "version": "1.0.0",
+      "category": "methodology",
+      "title": "BDD Patterns",
+      "description": "Behavior-Driven Development patterns",
+      "tags": ["testing", "bdd", "methodology"],
+      "metadata": {
+        "created": "2026-01-01T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "locked": false
+      },
+      "dependencies": ["tdd-patterns.json"]
+    }
+  },
+  "update_history": [],
+  "subscriptions": {
+    "default": ["*"],
+    "python_stack": ["python-*", "fastapi-*", "langchain-*", "crewai-*"],
+    "javascript_stack": ["nextjs-*", "react-*", "typescript-*"],
+    "ai_ml_stack": ["langchain-*", "crewai-*", "autogen-*", "rag-*", "llm-*"],
+    "enterprise_stack": ["spring-*", "dotnet-*", "sap-*"]
+  }
+}

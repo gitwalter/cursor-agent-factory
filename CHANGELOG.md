@@ -5,6 +5,86 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-01-31
+
+### Added - Knowledge Evolution System
+
+This release introduces a comprehensive **Knowledge Evolution System** that automatically keeps the Factory's knowledge base current with the latest best practices from multiple trusted sources.
+
+#### Core Components
+
+| Component | Description |
+|-----------|-------------|
+| **Source Adapters** | GitHub, PyPI, NPM, official docs, community, user feedback |
+| **Configuration Manager** | Unified settings with environment variable support |
+| **Update Engine** | Merge, backup, rollback, conflict resolution |
+| **Notification System** | Configurable alerts for available updates |
+| **Changelog Generator** | Automatic documentation of all changes |
+
+#### New Files
+
+##### Scripts (`scripts/`)
+- `config_manager.py` - Centralized configuration management
+- `source_aggregator.py` - Multi-source update aggregation
+- `update_engine.py` - Update processing and merging
+- `conflict_resolver.py` - Conflict detection and resolution
+- `notification_system.py` - User notification system
+- `changelog_generator.py` - Automatic changelog generation
+
+##### Adapters (`scripts/adapters/`)
+- `base_adapter.py` - Abstract adapter interface
+- `github_adapter.py` - GitHub releases and trending
+- `pypi_adapter.py` - Python package updates
+- `npm_adapter.py` - JavaScript/TypeScript packages
+- `docs_adapter.py` - Official documentation
+- `community_adapter.py` - Community sources
+- `feedback_adapter.py` - User feedback learning
+
+##### Schemas (`knowledge/schemas/`)
+- `versioning-schema.json` - Knowledge file versioning
+- `changelog-schema.json` - Changelog format
+
+##### Configuration
+- `.cursor/config/settings.json` - Unified configuration (migrates from tools.json)
+- `.cursor/config/settings-schema.json` - Configuration schema
+
+##### Skills
+- `.cursor/skills/system-configuration/SKILL.md` - Interactive system configuration
+- `.cursor/skills/update-knowledge/SKILL.md` - Knowledge update management
+
+##### Agents
+- `.cursor/agents/knowledge-evolution.md` - Orchestrates knowledge updates
+
+##### Documentation
+- `docs/KNOWLEDGE_EVOLUTION.md` - Complete system documentation
+- `knowledge/manifest.json` - Central version tracking
+
+#### Update Modes
+
+| Mode | Description |
+|------|-------------|
+| `stability_first` | Lock versions, explicit approval required |
+| `awareness_hybrid` | Notify of updates, user approves (default) |
+| `freshness_first` | Auto-apply non-breaking changes |
+| `subscription` | Subscribe to specific knowledge files |
+
+#### Features
+
+- **Multi-source aggregation** - Parallel fetching from all configured sources
+- **Configurable merge strategies** - Conservative, balanced, aggressive
+- **Full rollback support** - Backup before update, easy restore
+- **Conflict resolution** - Detect and resolve merge conflicts
+- **User customization preservation** - Don't overwrite user changes
+- **Schema validation** - All updates validated
+- **Source traceability** - Full attribution for every change
+
+#### Tests
+
+- `tests/unit/test_config_manager.py` - Configuration tests
+- `tests/unit/test_adapters.py` - Adapter unit tests
+
+---
+
 ## [3.1.0] - 2026-01-31
 
 ### Added - Enhanced Onboarding Experience

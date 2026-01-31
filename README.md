@@ -157,6 +157,42 @@ Generated projects include:
 - **Code and document templates** (`templates/`) - Consistent starting points
 - **Methodology configuration** (`workflows/methodology.yaml`) - How your team works
 
+## Knowledge Evolution System
+
+The Factory includes an automatic **Knowledge Evolution System** that keeps blueprints, patterns, and knowledge files current with the latest best practices from trusted sources.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Multi-Source Updates** | GitHub, PyPI, NPM, official docs, community sources |
+| **Configurable Modes** | Stability-first, awareness-hybrid, freshness-first, subscription |
+| **Full Control** | Preview, approve, apply, or rollback any update |
+| **Traceability** | Every change tracked with source attribution |
+
+### Update Modes
+
+| Mode | Best For | Description |
+|------|----------|-------------|
+| `stability_first` | Enterprise | Lock versions, explicit approval required |
+| `awareness_hybrid` | Most Teams | Notify of updates, user approves (default) |
+| `freshness_first` | Startups | Auto-apply non-breaking changes |
+| `subscription` | Focused Teams | Subscribe to specific knowledge files |
+
+### Quick Usage
+
+```
+"Check for knowledge updates"        # See what's available
+"Apply pending updates"              # Apply with confirmation
+"Configure knowledge evolution"      # Change settings
+```
+
+Configure in `.cursor/config/settings.json` or use the `system-configuration` skill.
+
+See [docs/KNOWLEDGE_EVOLUTION.md](docs/KNOWLEDGE_EVOLUTION.md) for complete documentation.
+
+---
+
 ## Architecture Diagrams
 
 For visual documentation, see the [diagrams/](diagrams/) folder:
@@ -173,9 +209,9 @@ For visual documentation, see the [diagrams/](diagrams/) folder:
 ```
 cursor-agent-factory/
 ├── .cursor/
-│   ├── agents/                  # Factory's own agents (7 agents)
-│   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
-│   └── skills/                  # Factory's own skills (28 skills)
+│   ├── agents/                  # Factory's own agents (8 agents)
+│   │   └── *.md                 # knowledge-evolution, knowledge-manager, onboarding-architect, etc.
+│   └── skills/                  # Factory's own skills (30 skills)
 │       ├── agent-generation/
 │       ├── alignment-check/
 │       ├── axiom-selection/
