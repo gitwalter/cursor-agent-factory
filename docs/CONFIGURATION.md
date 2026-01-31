@@ -33,6 +33,7 @@ This file defines paths to development tools used by the factory and its generat
 
 | Tool | Environment Variable | Fallback Paths |
 |------|---------------------|----------------|
+| **Git** | `GIT_PATH` | `C:\Program Files\Git\cmd\git.exe`, `C:\Program Files (x86)\Git\cmd\git.exe` |
 | **Python** | `PYTHON_PATH` | `D:\Anaconda\envs\cursor-factory\python.exe`, `C:\App\Anaconda\envs\cursor-factory\python.exe` |
 | **Pip** | `PIP_PATH` | `D:\Anaconda\envs\cursor-factory\Scripts\pip.exe`, `C:\App\Anaconda\envs\cursor-factory\Scripts\pip.exe` |
 | **Conda** | `CONDA_PATH` | `D:\Anaconda\Scripts\conda.exe`, `C:\App\Anaconda\Scripts\conda.exe` |
