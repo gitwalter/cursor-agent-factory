@@ -2,39 +2,50 @@
 
 This document describes the test suite for the Cursor Agent Factory project.
 
-> **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
+> **Tool Paths:** Commands in this document use the `cursor-factory` conda environment.
 > See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
 
 ## Overview
 
-The test suite uses **pytest** and consists of **131 tests** organized into three categories:
+The test suite uses **pytest** and consists of **458 tests** organized into three categories:
 
 | Category | Tests | Purpose |
 |----------|-------|---------|
-| Unit Tests | 60 | Test individual components in isolation |
-| Integration Tests | 38 | Test component interactions and CLI |
-| Validation Tests | 33 | Validate JSON schemas and file structure |
+| Unit Tests | ~200 | Test individual components in isolation |
+| Integration Tests | ~50 | Test component interactions and CLI |
+| Validation Tests | ~208 | Validate JSON schemas and file structure |
+
+**Code Coverage: 77%** (as of latest update)
+
+| Module | Coverage |
+|--------|----------|
+| `cli/factory_cli.py` | 75% |
+| `scripts/install-hooks.py` | 94% |
+| `scripts/backup_manager.py` | 73% |
+| `scripts/repo_analyzer.py` | 82% |
+| `scripts/merge_strategy.py` | 85% |
+| `scripts/validate_readme_structure.py` | 96% |
+| `scripts/generate_project.py` | 66% |
 
 ## Quick Start
 
 ### Install Dependencies
 
 ```powershell
-# Windows (Anaconda)
-C:\App\Anaconda\Scripts\pip.exe install -r requirements-dev.txt
-
-# Linux/macOS
+# Create and activate conda environment
+conda create -n cursor-factory python=3.11 -y
+conda activate cursor-factory
 pip install -r requirements-dev.txt
 ```
 
 ### Run All Tests
 
 ```powershell
-# Windows
-C:\App\Anaconda\python.exe -m pytest tests/ -v
-
-# Linux/macOS
+# With cursor-factory environment
 python -m pytest tests/ -v
+
+# With coverage report
+python -m pytest tests/ --cov=scripts --cov=cli --cov-report=term-missing
 ```
 
 ## Test Structure
@@ -43,27 +54,42 @@ python -m pytest tests/ -v
 tests/
 ├── __init__.py
 ├── conftest.py                     # Shared fixtures
-├── unit/                           # Unit tests
+├── unit/                           # Unit tests (~200 tests)
 │   ├── __init__.py
 │   ├── test_project_config.py      # ProjectConfig dataclass
 │   ├── test_project_generator.py   # ProjectGenerator class
-│   └── test_pattern_loading.py     # Pattern/blueprint loading
-├── integration/                    # Integration tests
+│   ├── test_pattern_loading.py     # Pattern/blueprint loading
+│   ├── test_factory_cli.py         # CLI function tests
+│   ├── test_install_hooks.py       # Git hooks installation
+│   ├── test_backup_manager.py      # Backup/rollback system
+│   ├── test_repo_analyzer.py       # Repository analysis
+│   ├── test_merge_strategy.py      # Merge conflict handling
+│   ├── test_validate_readme.py     # README validation
+│   ├── test_pm_adapters.py         # PM backend adapters
+│   └── test_pm_config.py           # PM configuration
+├── integration/                    # Integration tests (~50 tests)
 │   ├── __init__.py
 │   ├── test_cli.py                 # CLI commands
+│   ├── test_cli_pm.py              # PM CLI integration
 │   └── test_generation.py          # End-to-end generation
-├── validation/                     # Schema validation
+├── validation/                     # Schema validation (~208 tests)
 │   ├── __init__.py
 │   ├── test_blueprint_schema.py    # Blueprint JSON schema
 │   ├── test_pattern_schema.py      # Pattern JSON schemas
-│   └── test_knowledge_schema.py    # Knowledge file schemas
+│   ├── test_knowledge_schema.py    # Knowledge file schemas
+│   ├── test_pm_schema.py           # PM configuration schema
+│   └── test_readme_structure.py    # README structure validation
 └── fixtures/                       # Test data files
     ├── README.md
     ├── sample_config.yaml
     ├── sample_config.json
     ├── minimal_blueprint.json
     ├── empty_config.json
-    └── invalid_config.json
+    ├── invalid_config.json
+    ├── pm/                          # PM test fixtures
+    │   ├── sample_pm_config.json
+    │   └── sample_pm_config.yaml
+    └── existing_repo_*/            # Onboarding test fixtures
 ```
 
 ## Unit Tests
@@ -79,12 +105,6 @@ Tests for the `ProjectConfig` dataclass in `scripts/generate_project.py`.
 | `TestProjectConfigFromYaml` | 4 | `from_yaml_file()` factory method |
 | `TestProjectConfigFromJson` | 5 | `from_json_file()` factory method |
 | `TestProjectConfigDefaults` | 2 | Default value handling |
-
-**Key scenarios tested:**
-- Minimal vs full configuration
-- Default value consistency
-- Error handling for missing/invalid files
-- Mutable default isolation
 
 ### test_project_generator.py (28 tests)
 
@@ -103,11 +123,106 @@ Tests for the `ProjectGenerator` class in `scripts/generate_project.py`.
 | `TestMcpServerSection` | 2 | MCP server configuration |
 | `TestFullGeneration` | 3 | Complete generation workflow |
 
-**Key scenarios tested:**
-- All expected directories created
-- Correct markdown structure with frontmatter
-- UTF-8 encoding for generated files
-- File tracking for all created files
+### test_factory_cli.py (44 tests)
+
+Tests for the CLI interface functions in `cli/factory_cli.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestGetFactoryRoot` | 3 | Factory root path detection |
+| `TestDisplayWelcome` | 1 | Welcome message display |
+| `TestDisplayTour` | 1 | Post-generation tour display |
+| `TestDisplayErrorWithHelp` | 1 | Error message formatting |
+| `TestListBlueprints` | 2 | Blueprint listing |
+| `TestListPatterns` | 2 | Pattern listing |
+| `TestRunQuickstart` | 4 | Quickstart functionality |
+| `TestInteractiveMode` | 3 | Interactive requirements gathering |
+| `TestGenerateFromBlueprint` | 4 | Blueprint-based generation |
+| `TestGenerateFromConfigFile` | 2 | Config file generation |
+| `TestAnalyzeRepository` | 2 | Repository analysis |
+| `TestOnboardRepository` | 3 | Onboarding workflow |
+| `TestRollbackSession` | 2 | Session rollback |
+| `TestCreateDefaultConfig` | 1 | Default config creation |
+| `TestInteractiveConflictResolver` | 2 | Conflict resolution UI |
+| `TestMain` | 11 | Main CLI entry point |
+
+### test_install_hooks.py (11 tests)
+
+Tests for Git hook installation in `scripts/install-hooks.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestPreCommitHookContent` | 8 | Hook script content validation |
+| `TestInstallHooks` | 3 | Hook installation logic |
+
+### test_backup_manager.py (30 tests)
+
+Tests for backup and rollback in `scripts/backup_manager.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestBackupEntry` | 2 | Backup entry dataclass |
+| `TestBackupManifest` | 4 | Manifest serialization |
+| `TestBackupSession` | 6 | Session management |
+| `TestBackupManager` | 12 | Manager operations |
+| `TestEnsureGitignoreExcludesBackup` | 3 | Gitignore handling |
+| `TestMainEntry` | 3 | CLI interface |
+
+### test_repo_analyzer.py (27 tests)
+
+Tests for repository analysis in `scripts/repo_analyzer.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestOnboardingScenario` | 1 | Scenario enum values |
+| `TestCursorruleAnalysis` | 1 | Cursorrules dataclass |
+| `TestMcpAnalysis` | 1 | MCP analysis dataclass |
+| `TestTechStackDetection` | 1 | Tech stack dataclass |
+| `TestRepoInventory` | 2 | Inventory summary |
+| `TestRepoAnalyzer` | 19 | Full analysis workflow |
+| `TestGetFileHash` | 4 | File hashing utility |
+| `TestMainEntry` | 2 | CLI interface |
+
+### test_merge_strategy.py (41 tests)
+
+Tests for merge conflict handling in `scripts/merge_strategy.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestConflictResolution` | 1 | Resolution enum values |
+| `TestArtifactType` | 1 | Artifact type enum |
+| `TestMergeStrategy` | 1 | Strategy enum |
+| `TestDefaultStrategies` | 4 | Default strategy mappings |
+| `TestConflict` | 3 | Conflict dataclass |
+| `TestConflictPrompt` | 1 | Prompt formatting |
+| `TestMergeResult` | 2 | Result dataclass |
+| `TestMergeEngine` | 14 | Engine operations |
+| `TestMergeJsonFiles` | 6 | JSON merge logic |
+| `TestDeepMerge` | 4 | Deep merge helper |
+
+### test_validate_readme.py (43 tests)
+
+Tests for README validation in `scripts/validate_readme_structure.py`.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestStructureValidatorInit` | 2 | Initialization |
+| `TestShouldIgnore` | 5 | Path ignore logic |
+| `TestCountFilesByExtension` | 3 | File counting |
+| `TestScanAgents` | 2 | Agent scanning |
+| `TestScanSkills` | 2 | Skill scanning |
+| `TestScanBlueprints` | 2 | Blueprint scanning |
+| `TestScanPatterns` | 2 | Pattern scanning |
+| `TestScanKnowledge` | 2 | Knowledge scanning |
+| `TestScanTemplates` | 2 | Template scanning |
+| `TestScanAll` | 1 | Full scan |
+| `TestRoundToThreshold` | 3 | Threshold rounding |
+| `TestGenerateCountsSummary` | 1 | Summary generation |
+| `TestExtractReadmeCounts` | 3 | README parsing |
+| `TestValidate` | 2 | Validation logic |
+| `TestUpdateReadme` | 3 | README update |
+| `TestGenerateStructureMarkdown` | 2 | Markdown generation |
+| `TestMain` | 6 | CLI interface |
 
 ### test_pattern_loading.py (13 tests)
 
@@ -136,12 +251,6 @@ Tests for the CLI interface in `cli/factory_cli.py`.
 | `TestConfigGeneration` | 4 | `--config` generation |
 | `TestCLIErrorHandling` | 2 | Error cases |
 
-**Key scenarios tested:**
-- CLI exits with correct codes
-- Output contains expected content
-- Error messages for invalid inputs
-- Generation creates expected files
-
 ### test_generation.py (18 tests)
 
 End-to-end tests for project generation.
@@ -155,9 +264,19 @@ End-to-end tests for project generation.
 | `TestGenerationErrors` | 2 | Error handling |
 | `TestFileTracking` | 2 | File tracking accuracy |
 
+### test_cli_pm.py
+
+Tests for Project Management CLI integration.
+
+| Test | Description |
+|------|-------------|
+| PM backend configuration | GitHub, Jira, Azure DevOps, Linear |
+| PM workflow integration | Sprint planning, task creation |
+| PM artifact generation | PM-specific agents and skills |
+
 ## Validation Tests
 
-### test_blueprint_schema.py (6 tests)
+### test_blueprint_schema.py (7 tests)
 
 JSON schema validation for blueprint files.
 
@@ -193,6 +312,16 @@ Validation for knowledge files.
 | `TestBestPracticesSchema` | 2 | best-practices.json |
 | `TestKnowledgeFileNaming` | 2 | Naming conventions |
 
+### test_readme_structure.py (29 tests)
+
+README structure validation against actual filesystem.
+
+| Test Class | Tests | Description |
+|------------|-------|-------------|
+| `TestReadmeStructureCounts` | 6 | Component count validation |
+| `TestStructureValidatorFunctionality` | 10 | Validator methods |
+| `TestProjectComponentsExist` | 9 | Directory existence |
+
 ## Fixtures
 
 ### conftest.py
@@ -223,6 +352,11 @@ Shared fixtures available to all tests:
 | `minimal_blueprint.json` | Minimal valid blueprint |
 | `empty_config.json` | Empty config for default testing |
 | `invalid_config.json` | Invalid JSON for error testing |
+| `pm/sample_pm_config.json` | PM configuration sample |
+| `pm/sample_pm_config.yaml` | PM YAML configuration |
+| `existing_repo_fresh/` | Fresh repo for onboarding tests |
+| `existing_repo_minimal/` | Minimal repo for onboarding tests |
+| `existing_repo_partial/` | Partial repo for onboarding tests |
 
 ## Running Specific Tests
 
@@ -238,19 +372,34 @@ python -m pytest tests/unit/test_project_generator.py::TestFileWriting -v
 
 # Run a specific test method
 python -m pytest tests/unit/test_project_config.py::TestProjectConfigFromDict::test_from_dict_valid_full -v
+
+# Run with parallel execution
+python -m pytest tests/ -n auto -v
 ```
 
 ## Code Coverage
 
 ```powershell
-# Generate coverage report
+# Generate coverage report (terminal)
+python -m pytest tests/ --cov=scripts --cov=cli --cov-report=term-missing
+
+# Generate HTML coverage report
 python -m pytest tests/ --cov=scripts --cov=cli --cov-report=html
 
-# View HTML report
+# View HTML report (Windows)
 start htmlcov/index.html
+
+# View HTML report (macOS/Linux)
+open htmlcov/index.html
 ```
 
-Coverage reports show which lines of code are exercised by tests.
+### Coverage Goals
+
+| Target | Goal | Current |
+|--------|------|---------|
+| Overall | 80% | 77% |
+| Critical paths | 90% | ~85% |
+| New code | 100% | - |
 
 ## CI/CD Integration
 
@@ -284,6 +433,11 @@ class TestMyFeature:
         """Test description."""
         result = sample_config.some_method()
         assert result == expected
+    
+    def test_edge_case(self):
+        """Test edge case handling."""
+        with pytest.raises(ValueError):
+            some_function(invalid_input)
 ```
 
 ### Adding Integration Tests
@@ -292,11 +446,36 @@ class TestMyFeature:
 2. Use `subprocess` for CLI tests
 3. Use `temp_output_dir` fixture for file generation tests
 
+```python
+import subprocess
+
+class TestCLIIntegration:
+    def test_cli_command(self, cli_path, python_executable, temp_output_dir):
+        result = subprocess.run(
+            [python_executable, cli_path, "--blueprint", "python-fastapi", "--output", str(temp_output_dir)],
+            capture_output=True,
+            text=True
+        )
+        assert result.returncode == 0
+```
+
 ### Adding Validation Tests
 
 1. Create test file in `tests/validation/`
 2. Define JSON schema using `jsonschema`
 3. Iterate over files in target directories
+
+```python
+import json
+from jsonschema import validate, ValidationError
+
+class TestMySchema:
+    def test_all_files_valid(self, target_dir):
+        for file_path in target_dir.glob("*.json"):
+            with open(file_path) as f:
+                data = json.load(f)
+            validate(data, MY_SCHEMA)
+```
 
 ## Troubleshooting
 
@@ -318,6 +497,10 @@ class TestMyFeature:
 - Use `pytest-xdist` for parallel execution: `pytest -n auto`
 - Mark slow tests with `@pytest.mark.slow`
 
+**Timeout errors:**
+- Default timeout is 120 seconds (configured in `pytest.ini`)
+- Use `@pytest.mark.timeout(300)` for longer tests
+
 ## Best Practices
 
 1. **Test isolation**: Each test should be independent
@@ -326,3 +509,7 @@ class TestMyFeature:
 4. **Test edge cases**: Include error conditions and boundary cases
 5. **Keep tests fast**: Mock external dependencies when possible
 6. **Document tests**: Use docstrings to explain complex tests
+7. **Use temporary directories**: Always use `tempfile.TemporaryDirectory()` for file operations
+8. **Verify cleanup**: Ensure tests clean up after themselves
+9. **Test both success and failure paths**: Cover happy path and error handling
+10. **Use parametrize**: For testing multiple inputs, use `@pytest.mark.parametrize`
