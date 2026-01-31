@@ -134,7 +134,25 @@ Express Lane is fast but not shallow. Every question is designed to capture some
 ║  • {VALUE_3}                                                 ║
 ║                                                              ║
 ║  These will be embedded in your agents' decision-making.     ║
+║                                                              ║
+║  💫 Your Integrity Guardian will protect these values.       ║
 ╚══════════════════════════════════════════════════════════════╝
+```
+
+### Guardian Introduction
+
+After confirming values, briefly introduce the Guardian:
+
+```
+Your project will include an **Integrity Guardian** - a protective layer
+that ensures your AI agents always align with these values and the core
+axioms (Verifiability, User Primacy, Transparency, Non-Harm, Consistency).
+
+The Guardian operates with minimal overhead but can intervene when
+something seems wrong. Think of it as a wise advisor watching over
+your agents' work.
+
+Motto: SDG • Love • Trust
 ```
 
 ---
@@ -401,19 +419,47 @@ Execute generation using collected configuration.
 ║   Project: {PROJECT_NAME}                                    ║
 ║   Location: {OUTPUT_PATH}                                    ║
 ║                                                              ║
+║   🛡️ INTEGRITY GUARDIAN: Active                              ║
+║   Protecting: {VALUES}                                       ║
+║   Motto: SDG • Love • Trust                                  ║
+║                                                              ║
 ║   What's next?                                               ║
 ║   1. Open the project folder in Cursor                       ║
 ║   2. Try: "Review my code for issues"                        ║
-║   3. Extend knowledge: "extend knowledge for [topic]"        ║
-║   4. Check for updates: "check for Factory updates"          ║
+║   3. Say: "Guardian, check my alignment"                     ║
+║   4. Extend knowledge: "extend knowledge for [topic]"        ║
 ║   5. See FIRST_WEEK_GUIDE.md for more                        ║
 ║                                                              ║
 ║   Your mission: {MISSION}                                    ║
-║   Your values: {VALUES}                                      ║
 ║                                                              ║
 ║   Go build something amazing!                                ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
+```
+
+### Guardian Awareness Message
+
+After celebration, explain the Guardian:
+
+```
+🛡️ Your Integrity Guardian
+
+Your project includes the Layer 0 Integrity Guardian - an ever-present
+protector that ensures your AI agents align with core values.
+
+How it works:
+• Normal operation: Zero overhead, agents self-monitor
+• When needed: Guardian pauses and asks before proceeding
+• Invoke manually: "Guardian, check this" or "check my alignment"
+
+Response levels:
+• Flow (0): Natural alignment - continue
+• Nudge (1): Slight drift - self-correct
+• Pause (2): Boundary approached - ask user
+• Block (3): Clear violation - stop and explain
+• Protect (4): Imminent harm - prevent and explain
+
+The Guardian operates with love, not force. It helps, not punishes.
 ```
 
 ---

@@ -50,6 +50,7 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 
 | Agent | Purpose | Key Skills | Knowledge Files |
 |-------|---------|------------|-----------------|
+| `integrity-guardian` | Layer 0 protector - monitors all operations for axiom alignment, intervenes when needed | (embedded awareness) | `guardian-protocol.json` |
 | `requirements-architect` | Orchestrate systematic requirements gathering for new Cursor agent system projects | `requirements-gathering`, `stack-configuration` | `stack-capabilities.json`, `workflow-patterns.json`, `mcp-servers-catalog.json` |
 | `stack-builder` | Configure technology stack and select appropriate blueprints for new projects | `stack-configuration` | `stack-capabilities.json`, `blueprints/` |
 | `template-generator` | Generate code and document templates for the target project | `template-generation`, `cursorrules-generation` | `stack-capabilities.json`, `best-practices.json` |
@@ -63,6 +64,38 @@ For team onboarding, the **Workshop Facilitator** orchestrates a 5-workshop seri
 ---
 
 ## 3. Detailed Agent Descriptions
+
+### Integrity Guardian
+
+**Name and Description**: The Integrity Guardian is the Layer 0 protector that ensures all operations align with core axioms (A1-A5). Unlike other agents, the Guardian is embedded in the Constitutional Preamble of `.cursorrules` and operates through presence, not explicit invocation. It monitors all operations and intervenes when axiom boundaries are approached.
+
+**Motto**: SDG • Love • Trust
+
+**When Activated**: 
+- Always active (embedded in system prompt)
+- Explicitly via "Guardian, check this" or "check my alignment"
+- Automatically when axiom boundaries are detected
+- When multi-agent conflicts need resolution
+
+**Workflow**: The Guardian uses a Wu Wei (effortless action) response protocol with 5 levels:
+- **Level 0 (Flow)**: Natural alignment → continue normally
+- **Level 1 (Nudge)**: Slight drift → subtle self-correction
+- **Level 2 (Pause)**: Boundary approached → explain, ask user
+- **Level 3 (Block)**: Clear violation → stop, explain with love
+- **Level 4 (Protect)**: Imminent harm → prevent, then explain
+
+**Skills Used**: (embedded awareness) - The Guardian operates through the Constitutional Preamble, not through explicit skill invocation.
+
+**Knowledge Files Referenced**: `guardian-protocol.json` (coordination wisdom, response protocols, philosophical foundations)
+
+**Technical Components**:
+- `scripts/guardian/axiom_checker.py` - Pattern-based axiom validation
+- `scripts/guardian/secret_scanner.py` - Credential detection
+- `scripts/guardian/harm_detector.py` - Comprehensive harm analysis
+
+**Reference**: See [GUARDIAN_COORDINATION.md](GUARDIAN_COORDINATION.md) for complete documentation.
+
+---
 
 ### Requirements Architect
 

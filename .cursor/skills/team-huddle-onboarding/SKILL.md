@@ -546,6 +546,32 @@ End with appreciation and connection.
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
+### Guardian Introduction
+
+Before closing, introduce the Integrity Guardian:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║  🛡️ YOUR INTEGRITY GUARDIAN                                  ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  Your project includes the Layer 0 Integrity Guardian -      ║
+║  a protective layer that ensures your AI agents always       ║
+║  align with the values you chose today.                      ║
+║                                                              ║
+║  Motto: SDG • Love • Trust                                   ║
+║                                                              ║
+║  The Guardian:                                               ║
+║  • Watches over all agent operations                         ║
+║  • Intervenes when values might be compromised               ║
+║  • Operates with love, not force                             ║
+║                                                              ║
+║  Invoke it: "Guardian, check this"                           ║
+║             "Check my alignment"                             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
 ### Optional: Meaningful Milestones
 
 If time permits and the team is interested, share this reflection on recognizing meaningful moments:

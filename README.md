@@ -1,4 +1,4 @@
-# Cursor Agent Factory
+﻿# Cursor Agent Factory
 
 **Build AI-powered development systems that truly understand your project.**
 
@@ -156,6 +156,30 @@ Generated projects include:
 - **Structured knowledge files** (`knowledge/`) - Domain expertise in JSON format
 - **Code and document templates** (`templates/`) - Consistent starting points
 - **Methodology configuration** (`workflows/methodology.yaml`) - How your team works
+- **Integrity Guardian** - Layer 0 protection for all operations
+
+### Layer 0: Integrity Guardian
+
+Every generated project includes an **Integrity Guardian** - an active Layer 0 protector that ensures AI agents align with core axioms.
+
+**Motto**: SDG â€¢ Love â€¢ Trust
+
+| Level | Name | Trigger | Response |
+|-------|------|---------|----------|
+| 0 | Flow | Natural alignment | Continue normally |
+| 1 | Nudge | Slight drift | Self-correct subtly |
+| 2 | Pause | Boundary approached | Explain, ask user |
+| 3 | Block | Clear violation | Stop, explain with love |
+| 4 | Protect | Imminent harm | Prevent, then explain |
+
+The Guardian monitors for:
+- ðŸ›¡ï¸ Destructive commands (`rm -rf /`, `DROP DATABASE`)
+- ðŸ”‘ Exposed secrets (API keys, passwords, connection strings)
+- âš ï¸ Axiom violations (hidden logic, deception, instruction overrides)
+
+**Invoke manually**: `"Guardian, check this"` or `"check my alignment"`
+
+See [GUARDIAN_COORDINATION.md](docs/reference/GUARDIAN_COORDINATION.md) for complete documentation.
 
 ## Knowledge Evolution System
 
@@ -191,7 +215,7 @@ Configure in `.cursor/config/settings.json` or use the `system-configuration` sk
 
 See [docs/KNOWLEDGE_EVOLUTION.md](docs/KNOWLEDGE_EVOLUTION.md) for complete documentation.
 
-### Factory → Generated Project Updates
+### Factory â†’ Generated Project Updates
 
 Generated projects can receive updates from the Factory:
 
@@ -226,8 +250,8 @@ For visual documentation, see the [diagrams/](diagrams/) folder:
 ```
 cursor-agent-factory/
 ├── .cursor/
-│   ├── agents/                  # Factory's own agents (9 agents)
-│   │   └── *.md                 # knowledge-evolution, knowledge-extender, knowledge-manager, etc.
+│   ├── agents/                  # Factory's own agents (10 agents)
+│   │   └── *.md                 # integrity-guardian, knowledge-evolution, knowledge-extender, etc.
 │   └── skills/                  # Factory's own skills (33 skills)
 │       ├── agent-generation/
 │       ├── algo-trading/
@@ -237,7 +261,7 @@ cursor-agent-factory/
 │       ├── cursorrules-generation/
 │       ├── enforcement-selection/
 │       └── ...                       # + more skills
-├── patterns/                    # Reusable patterns (50+ files)
+├── patterns/                    # Reusable patterns (75+ files)
 │   ├── axioms/                  # Layer 0 axiom definitions
 │   ├── principles/              # Layer 2 principle patterns
 │   ├── methodologies/           # Layer 3 methodology templates
@@ -584,21 +608,21 @@ Generated projects include all 5-layer artifacts:
 
 ```
 {PROJECT_NAME}/
-├── .cursor/
-│   ├── agents/               # AI agent definitions
-│   └── skills/               # Reusable skill definitions
-├── knowledge/                # Structured reference data (JSON)
-├── templates/                # Code and document templates
-├── workflows/
-│   └── methodology.yaml      # Layer 3: Methodology config
-├── src/                      # Source code
-├── tests/                    # Test files
-├── docs/                     # User documentation
-├── .cursorrules              # 5-layer agent rules (L0-L4)
-├── PURPOSE.md                # Layer 1: Mission & purpose
-├── enforcement.yaml          # Enforcement patterns (Comprehensive)
-├── practices.yaml            # Team practices (Comprehensive)
-└── README.md                 # Project documentation
+â”œâ”€â”€ .cursor/
+â”‚   â”œâ”€â”€ agents/               # AI agent definitions
+â”‚   â””â”€â”€ skills/               # Reusable skill definitions
+â”œâ”€â”€ knowledge/                # Structured reference data (JSON)
+â”œâ”€â”€ templates/                # Code and document templates
+â”œâ”€â”€ workflows/
+â”‚   â””â”€â”€ methodology.yaml      # Layer 3: Methodology config
+â”œâ”€â”€ src/                      # Source code
+â”œâ”€â”€ tests/                    # Test files
+â”œâ”€â”€ docs/                     # User documentation
+â”œâ”€â”€ .cursorrules              # 5-layer agent rules (L0-L4)
+â”œâ”€â”€ PURPOSE.md                # Layer 1: Mission & purpose
+â”œâ”€â”€ enforcement.yaml          # Enforcement patterns (Comprehensive)
+â”œâ”€â”€ practices.yaml            # Team practices (Comprehensive)
+â””â”€â”€ README.md                 # Project documentation
 ```
 
 ### Key Generated Files
@@ -779,22 +803,22 @@ For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md).
 
 ```
 tests/
-├── conftest.py                 # Shared pytest fixtures
-├── unit/                       # Unit tests (60 tests)
-│   ├── test_project_config.py  # ProjectConfig dataclass tests
-│   ├── test_project_generator.py # ProjectGenerator class tests
-│   └── test_pattern_loading.py # Pattern/blueprint loading tests
-├── integration/                # Integration tests (38 tests)
-│   ├── test_cli.py             # CLI command tests
-│   └── test_generation.py      # End-to-end generation tests
-├── validation/                 # Schema validation tests (33 tests)
-│   ├── test_blueprint_schema.py
-│   ├── test_pattern_schema.py
-│   └── test_knowledge_schema.py
-└── fixtures/                   # Test fixture files
-    ├── sample_config.yaml
-    ├── sample_config.json
-    └── minimal_blueprint.json
+â”œâ”€â”€ conftest.py                 # Shared pytest fixtures
+â”œâ”€â”€ unit/                       # Unit tests (60 tests)
+â”‚   â”œâ”€â”€ test_project_config.py  # ProjectConfig dataclass tests
+â”‚   â”œâ”€â”€ test_project_generator.py # ProjectGenerator class tests
+â”‚   â””â”€â”€ test_pattern_loading.py # Pattern/blueprint loading tests
+â”œâ”€â”€ integration/                # Integration tests (38 tests)
+â”‚   â”œâ”€â”€ test_cli.py             # CLI command tests
+â”‚   â””â”€â”€ test_generation.py      # End-to-end generation tests
+â”œâ”€â”€ validation/                 # Schema validation tests (33 tests)
+â”‚   â”œâ”€â”€ test_blueprint_schema.py
+â”‚   â”œâ”€â”€ test_pattern_schema.py
+â”‚   â””â”€â”€ test_knowledge_schema.py
+â””â”€â”€ fixtures/                   # Test fixture files
+    â”œâ”€â”€ sample_config.yaml
+    â”œâ”€â”€ sample_config.json
+    â””â”€â”€ minimal_blueprint.json
 ```
 
 ### Manual CLI Testing
@@ -914,7 +938,7 @@ This project incorporates ideas and patterns from several valuable sources:
 
 | Source | Contribution |
 |--------|--------------|
-| **[Augmented Coding Patterns](https://lexler.github.io/augmented-coding-patterns/)** | Active Partner, Check Alignment, Chain of Small Steps, and other AI collaboration patterns. Created by Lada Kesseler, Nitsan Avni, Ivett Ördög, Llewellyn Falco, and contributors. |
+| **[Augmented Coding Patterns](https://lexler.github.io/augmented-coding-patterns/)** | Active Partner, Check Alignment, Chain of Small Steps, and other AI collaboration patterns. Created by Lada Kesseler, Nitsan Avni, Ivett Ã–rdÃ¶g, Llewellyn Falco, and contributors. |
 | **[Leon Chlon](https://github.com/lchlon)** | Inspiration for the Strawberry Verification skill - information-theoretic approach to hallucination detection in AI outputs. |
 | **[ai-dev-agent](https://github.com/gitwalter/ai-dev-agent)** | Pedagogical toolkit for AI agent systems that inspired the layered architecture and methodology integration concepts. |
 
@@ -924,7 +948,7 @@ MIT License
 
 ---
 
-*Cursor Agent Factory v3.1.0*  
+*Cursor Agent Factory v3.3.0*  
 *Meta-system for generating Cursor AI agent development systems*  
-*Now with 5-layer architecture: Integrity → Purpose → Principles → Methodology → Technical*  
+*Now with 5-layer architecture: Integrity â†’ Purpose â†’ Principles â†’ Methodology â†’ Technical*  
 *50+ MCP servers across 6 categories with starter packs and role-based recommendations*

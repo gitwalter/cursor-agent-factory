@@ -75,6 +75,9 @@ Or use the skill directly:
 - `PURPOSE.md` capturing your mission
 - Custom agents and skills for your stack
 - `knowledge/team-wisdom.json` with your captured insights
+- **Integrity Guardian** - Layer 0 protection for all AI operations
+
+> 🛡️ **Guardian Active**: Your project includes the Integrity Guardian (SDG • Love • Trust) that monitors all operations for axiom alignment and intervenes when needed.
 
 ---
 
@@ -118,6 +121,7 @@ Or use the skill directly:
 - `knowledge/team-wisdom.json` - Collective knowledge
 - Custom agents reflecting team personality
 - Shared values embedded in `.cursorrules`
+- **Integrity Guardian** protecting your team's values
 
 ---
 
@@ -242,5 +246,5 @@ Every onboarding path is designed to capture not just *what* you're building, bu
 
 ---
 
-*Cursor Agent Factory v2.0*  
+*Cursor Agent Factory v3.3.0*  
 *Start with purpose. Build with excellence. Serve with love.*

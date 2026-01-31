@@ -5,6 +5,96 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-01-31
+
+### Added - Layer 0 Integrity Guardian
+
+Major feature: Active constitutional protection for all Factory operations.
+
+#### Philosophy and Foundation
+
+| Element | Description |
+|---------|-------------|
+| Motto | SDG - Love - Trust |
+| Pattern | "Sleeping Dragon" - lightweight but powerful when awakened |
+| Inspiration | Sun Tzu (Art of War), Lao Tzu (Tao Te Ching) |
+| Principle | Wu Wei - minimum intervention for maximum alignment |
+
+#### New Files
+
+| File | Purpose |
+|------|---------|
+| `.cursor/agents/integrity-guardian.md` | Guardian agent definition (awakened state) |
+| `knowledge/guardian-protocol.json` | Coordination wisdom, response protocols |
+| `patterns/agents/guardian-aware-agent.json` | Base template with Guardian awareness |
+| `docs/reference/GUARDIAN_COORDINATION.md` | Complete Guardian reference |
+| `scripts/guardian/__init__.py` | Guardian module initialization |
+| `scripts/guardian/axiom_checker.py` | Core axiom violation detection |
+| `scripts/guardian/secret_scanner.py` | Credential/secret detection |
+| `scripts/guardian/harm_detector.py` | Comprehensive harm analysis |
+
+#### Modified Files
+
+| File | Changes |
+|------|---------|
+| `.cursorrules` | Added Constitutional Preamble as FIRST section |
+| `docs/research/AXIOM_BASED_AGENT_ARCHITECTURE.md` | Added Section 9: Active Layer 0 |
+
+#### Wu Wei Response Levels
+
+| Level | Name | Trigger | Action |
+|-------|------|---------|--------|
+| 0 | Flow | Natural alignment | Continue normally |
+| 1 | Nudge | Slight drift | Subtle self-correction |
+| 2 | Pause | Boundary approached | Explain, ask user |
+| 3 | Block | Clear violation | Stop, explain, present options |
+| 4 | Protect | Imminent harm | Prevent harm, then explain |
+
+#### Efficiency Guarantees
+
+| State | API Calls | Latency | Token Overhead |
+|-------|-----------|---------|----------------|
+| Normal | 0 extra | 0ms | ~500-800 tokens |
+| Awakened | 0 extra | Variable | Uses existing context |
+| Scripts | 0 | <50ms | 0 |
+
+#### Test Coverage (163 tests)
+
+| Suite | Tests | Purpose |
+|-------|-------|---------|
+| Unit: Axiom Checker | 55 | Pattern matching correctness |
+| Unit: Secret Scanner | 37 | Secret detection accuracy |
+| Unit: Harm Detector | 30 | Combined harm analysis |
+| Integration: Behavior | 26 | Wu Wei levels trigger correctly |
+| Integration: Real Effect | 15 | Guardian ACTUALLY prevents harm |
+
+#### Generated Projects
+
+| Change | Description |
+|--------|-------------|
+| `.cursorrules` template | Constitutional Preamble now included |
+| `guardian-protocol.json` template | Lightweight Guardian for generated projects |
+| `generate_project.py` | Generates Guardian knowledge file |
+
+#### Onboarding Integration
+
+| Skill | Changes |
+|-------|---------|
+| `express-onboarding` | Guardian introduced in Steps 2 and 7 |
+| `team-huddle-onboarding` | Guardian introduced in Activity 8 |
+
+#### Documentation Updates
+
+| File | Changes |
+|------|---------|
+| `README.md` | Added Layer 0: Integrity Guardian section |
+| `docs/GETTING_STARTED.md` | Added Guardian to "What You'll Get" sections |
+| `docs/reference/FACTORY_COMPONENTS.md` | Added integrity-guardian agent details |
+| `docs/reference/KNOWLEDGE_FILES.md` | Added guardian-protocol.json |
+| `knowledge/manifest.json` | Registered guardian-protocol.json |
+
+---
+
 ## [3.2.5] - 2026-01-31
 
 ### Added - External Resources and Workshop Integration

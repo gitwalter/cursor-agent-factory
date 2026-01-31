@@ -700,6 +700,74 @@ As AI agents become more capable and autonomous, such foundational work becomes 
 
 ---
 
+## 9. Active Layer 0: The Integrity Guardian
+
+### 9.1 From Passive to Active
+
+The original Layer 0 design was passive - axioms defined but not actively enforced. The Integrity Guardian transforms Layer 0 into an active, ever-present protector that:
+
+- **Monitors** all operations without adding overhead
+- **Intervenes** when axiom boundaries are approached
+- **Resolves** conflicts with love, not force
+- **Protects** against imminent harm
+
+### 9.2 The Sleeping Dragon Pattern
+
+The Guardian uses a "sleeping dragon" architecture:
+
+**Normal State (99% of operations):**
+- Embedded in system prompt (~500-800 tokens)
+- Zero extra API calls
+- Agents self-monitor with Guardian awareness
+- Invisible but ever-present
+
+**Awakened State (when axiom boundary crossed):**
+- Full access to all tools
+- Full visibility into all layers
+- Uses love + methodology + technique to resolve
+- Returns control after resolution
+
+### 9.3 Wu Wei Response Protocol
+
+Based on Taoist principle of effortless action, the Guardian uses graduated responses:
+
+| Level | Name | Trigger | Action |
+|-------|------|---------|--------|
+| 0 | Flow | Natural alignment | Continue normally |
+| 1 | Nudge | Slight drift | Subtle self-correction |
+| 2 | Pause | Boundary approached | Explain, ask user |
+| 3 | Block | Clear violation | Stop, explain, present options |
+| 4 | Protect | Imminent harm | Prevent harm, then explain |
+
+### 9.4 Philosophical Foundations
+
+The Guardian draws on ancient wisdom:
+
+**Sun Tzu**: "The supreme art of war is to subdue without fighting" - prevent problems before they occur through presence and awareness.
+
+**Lao Tzu**: "The Tao does nothing, yet nothing is left undone" - create conditions for natural alignment rather than forcing compliance.
+
+### 9.5 Multi-Agent Harmony
+
+All agents share the Constitutional Preamble, creating a "harmony field" where:
+- Coordination emerges from shared axiom alignment
+- No central orchestrator is needed
+- Conflicts resolve through the "Water Way" - finding paths that serve all values
+- The goal is resolution, not victory
+
+### 9.6 Technical Implementation
+
+The Guardian consists of:
+
+1. **Constitutional Preamble** - Top of `.cursorrules`, loads first
+2. **Guardian Agent** - `.cursor/agents/integrity-guardian.md`
+3. **Validation Scripts** - Pure Python, no LLM calls, <50ms execution
+4. **Guardian Protocol Knowledge** - `knowledge/guardian-protocol.json`
+
+For complete details, see [GUARDIAN_COORDINATION.md](../reference/GUARDIAN_COORDINATION.md).
+
+---
+
 ## References
 
 Anthropic. (2022). Constitutional AI: Harmlessness from AI Feedback. https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback

@@ -4,14 +4,14 @@
   "description": "Central manifest tracking all knowledge files, their versions, sources, and update status",
   "version": "1.0.0",
   "generated": "2026-01-31T14:35:00Z",
-  "factory_version": "3.2.5",
+  "factory_version": "3.3.0",
   "statistics": {
-    "total_files": 68,
+    "total_files": 69,
     "categories": {
       "stack_specific": 23,
       "ai_agent": 15,
       "integration": 12,
-      "factory_meta": 9,
+      "factory_meta": 10,
       "methodology": 9
     },
     "last_full_update": null,
@@ -362,6 +362,42 @@
             "Added documentation_map",
             "Added factory_artifact_detection",
             "Added post_extension_checklist"
+          ]
+        }
+      ]
+    },
+    "guardian-protocol.json": {
+      "version": "1.0.0",
+      "category": "factory_meta",
+      "title": "Guardian Protocol",
+      "description": "Layer 0 Integrity Guardian coordination wisdom, response protocols, and philosophical foundations (SDG, Love, Trust)",
+      "tags": [
+        "guardian",
+        "layer0",
+        "axioms",
+        "protection",
+        "wu-wei"
+      ],
+      "metadata": {
+        "created": "2026-01-31T00:00:00Z",
+        "updated": "2026-01-31T00:00:00Z",
+        "checksum": null,
+        "author": "Cursor Agent Factory"
+      },
+      "sources": [],
+      "evolution": {
+        "channel": "stable",
+        "auto_update": false,
+        "staleness_threshold_days": 365
+      },
+      "change_history": [
+        {
+          "version": "1.0.0",
+          "date": "2026-01-31",
+          "changes": [
+            "Initial creation",
+            "Wu Wei response protocol",
+            "Philosophical foundations (Sun Tzu, Lao Tzu)"
           ]
         }
       ]

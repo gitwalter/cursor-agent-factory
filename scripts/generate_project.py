@@ -744,14 +744,56 @@ Before implementation:
         """
         knowledge_dir = self.target_dir / 'knowledge'
         
-        # Copy relevant knowledge files from factory
+        # Generate guardian-protocol.json from template
+        self._generate_guardian_protocol(knowledge_dir)
+        
+        # Copy selected knowledge files from factory (not all)
         source_knowledge = self.factory_root / 'knowledge'
         
+        # Files to copy to generated projects
+        files_to_copy = [
+            'best-practices.json',
+            'workflow-patterns.json',
+        ]
+        
+        # Add stack-specific knowledge based on primary language
+        stack_files = {
+            'python': ['fastapi-patterns.json', 'langchain-patterns.json'],
+            'typescript': ['nextjs-patterns.json'],
+            'java': ['spring-patterns.json'],
+            'csharp': ['dotnet-patterns.json'],
+        }
+        
+        lang = self.config.primary_language.lower()
+        if lang in stack_files:
+            files_to_copy.extend(stack_files[lang])
+        
         if source_knowledge.exists():
-            for file in source_knowledge.glob('*.json'):
-                dest = knowledge_dir / file.name
-                shutil.copy2(file, dest)
-                self.generated_files.append(str(dest))
+            for filename in files_to_copy:
+                src_file = source_knowledge / filename
+                if src_file.exists():
+                    dest = knowledge_dir / filename
+                    shutil.copy2(src_file, dest)
+                    self.generated_files.append(str(dest))
+    
+    def _generate_guardian_protocol(self, knowledge_dir: Path) -> None:
+        """Generate the guardian-protocol.json file.
+        
+        Args:
+            knowledge_dir: Path to knowledge directory.
+        """
+        template_path = self.factory_root / 'templates' / 'knowledge' / 'guardian-protocol.json.tmpl'
+        
+        if not template_path.exists():
+            print("Warning: guardian-protocol.json.tmpl not found")
+            return
+        
+        content = template_path.read_text(encoding='utf-8')
+        content = content.replace('{PROJECT_NAME}', self.config.project_name)
+        content = content.replace('{GENERATED_DATE}', datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'))
+        
+        output_path = knowledge_dir / 'guardian-protocol.json'
+        self._write_file(output_path, content)
     
     def _generate_templates(self, blueprint: Optional[Dict[str, Any]]) -> None:
         """Generate template files.
@@ -1368,7 +1410,7 @@ To render diagrams to PNG, use a Mermaid CLI tool or the diagram rendering scrip
 # CURSOR AGENT FACTORY INTEGRATION
 # Generated: {datetime.now().strftime('%Y-%m-%d')}
 # Blueprint: {self.config.blueprint_id or 'custom'}
-# Factory Version: 2.0.0
+# Factory Version: 3.3.0
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
