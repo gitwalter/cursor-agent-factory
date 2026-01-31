@@ -9,6 +9,17 @@
     "default"
   ],
   "tools": {
+    "git": {
+      "env_var": "GIT_PATH",
+      "auto_detect": ["git", "git.exe"],
+      "fallbacks": [
+        "C:\\Program Files\\Git\\bin\\git.exe",
+        "C:\\Program Files (x86)\\Git\\bin\\git.exe",
+        "C:\\App\\Git\\bin\\git.exe"
+      ],
+      "description": "Git version control for repository operations",
+      "docs": "https://git-scm.com/docs"
+    },
     "gh": {
       "env_var": "GH_CLI_PATH",
       "auto_detect": ["gh", "gh.exe"],
