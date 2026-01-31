@@ -57,7 +57,7 @@ Key design principles:
 
 ### Credits
 
-- [Leon Chlon](https://github.com/lchlon) - Original Pythea/Strawberry concept
+- [Leon Chlon](https://github.com/leochlon) - Original Pythea/Strawberry concept
 
 ---
 
