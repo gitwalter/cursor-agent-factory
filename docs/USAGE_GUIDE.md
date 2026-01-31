@@ -5,10 +5,14 @@ This guide explains how to use the Cursor Agent Factory to generate complete Cur
 > **Tool Paths:** Commands in this document use default Windows paths from `.cursor/config/tools.json`.
 > See [Configuration Guide](CONFIGURATION.md) to customize for your environment.
 
+> **New to the Factory?** Start with [GETTING_STARTED.md](GETTING_STARTED.md) to find your ideal onboarding path.
+>
 > **Looking for comprehensive reference documentation?**  
 > See [FACTORY_REFERENCE.md](FACTORY_REFERENCE.md) for complete documentation of blueprints, patterns, knowledge files, and factory components.
 >
 > **Quick Links:**
+> - [Getting Started](GETTING_STARTED.md) - Find your onboarding path
+> - [First Week Guide](FIRST_WEEK_GUIDE.md) - Post-onboarding coaching
 > - [Blueprints Reference](reference/BLUEPRINTS.md) - All 12 technology blueprints
 > - [Patterns Reference](reference/PATTERNS.md) - Agent, skill, axiom, and methodology patterns
 > - [Knowledge Files Reference](reference/KNOWLEDGE_FILES.md) - All 32 knowledge files

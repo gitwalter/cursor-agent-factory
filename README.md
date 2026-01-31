@@ -21,13 +21,15 @@ Not sure where to begin? We've got you covered.
 
 | I want to... | Here's your path |
 |--------------|------------------|
+| **Find my best path** | [Getting Started Guide](docs/GETTING_STARTED.md) - Our unified onboarding portal |
 | **See it work in 5 minutes** | [Quickstart Guide](docs/QUICKSTART.md) or `python cli/factory_cli.py --quickstart` |
-| **Build my own project** | `python cli/factory_cli.py --interactive` |
+| **Quick personal setup (10-15 min)** | [Express Lane](docs/GETTING_STARTED.md#express-lane) - Guided individual onboarding |
+| **Small team alignment (1-2 hours)** | [Team Huddle](docs/GETTING_STARTED.md#team-huddle) - Condensed collaborative workshop |
+| **Full team transformation** | [Workshop Series](docs/TEAM_WORKSHOP_GUIDE.md) - 5 workshops with games |
 | **Enhance an existing repo** | [Onboarding Guide](docs/ONBOARDING_GUIDE.md) |
-| **Align my team** | [Team Workshop Guide](docs/TEAM_WORKSHOP_GUIDE.md) |
-| **Configure MCP servers** | [MCP Servers Guide](docs/MCP-SERVERS.md) |
+| **Just finished setup?** | [First Week Guide](docs/FIRST_WEEK_GUIDE.md) - Post-onboarding coaching |
 
-New to all this? Start with the [Quickstart Guide](docs/QUICKSTART.md) - you'll have a working demo in minutes, and we'll explain everything along the way.
+New to all this? Start with [Getting Started](docs/GETTING_STARTED.md) to find your ideal path, or run the [Quickstart](docs/QUICKSTART.md) to see the factory in action.
 
 **Need help?** See [Prerequisites](docs/PREREQUISITES.md) for setup or [Troubleshooting](docs/TROUBLESHOOTING.md) if you run into issues.
 
@@ -173,14 +175,14 @@ cursor-agent-factory/
 ├── .cursor/
 │   ├── agents/                  # Factory's own agents (7 agents)
 │   │   └── *.md                 # knowledge-manager, onboarding-architect, requirements-architect, etc.
-│   └── skills/                  # Factory's own skills (25 skills)
+│   └── skills/                  # Factory's own skills (28 skills)
 │       ├── agent-generation/
 │       ├── alignment-check/
 │       ├── axiom-selection/
 │       ├── cursorrules-generation/
 │       ├── enforcement-selection/
+│       ├── express-onboarding/
 │       ├── grounding-verification/
-│       ├── knowledge-generation/
 │       └── ...                       # + more skills
 ├── patterns/                    # Reusable patterns (50+ files)
 │   ├── axioms/                  # Layer 0 axiom definitions

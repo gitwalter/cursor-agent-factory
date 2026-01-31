@@ -5,6 +5,49 @@ All notable changes to the Cursor Agent Factory project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-01-31
+
+### Added - Enhanced Onboarding Experience
+
+This release transforms the onboarding experience into a more delightful, professional journey that captures team spirit and wisdom.
+
+#### New Onboarding Paths
+
+- **Unified Portal** (`docs/GETTING_STARTED.md`) - Single entry point that guides users to their ideal onboarding path
+- **Express Lane** (`.cursor/skills/express-onboarding/SKILL.md`) - 10-15 minute individual onboarding with guided prompts and celebrations
+- **Team Huddle** (`.cursor/skills/team-huddle-onboarding/SKILL.md`) - 1-2 hour condensed workshop for small teams (2-5 people)
+- **Wisdom Harvest** (`.cursor/skills/wisdom-harvest/SKILL.md`) - Structured knowledge capture for team lessons learned and best practices
+
+#### New Documentation
+
+- `docs/GETTING_STARTED.md` - Unified onboarding portal with path selection guide
+- `docs/FIRST_WEEK_GUIDE.md` - Post-onboarding coaching for days 1-5
+- `templates/factory/celebration-messages.json` - Celebration moments and visual elements
+
+#### New Skills
+
+| Skill | Duration | Description |
+|-------|----------|-------------|
+| `express-onboarding` | 10-15 min | Fast individual setup with values, stack, and wisdom capture |
+| `team-huddle-onboarding` | 1-2 hours | Condensed team workshop with mini-games |
+| `wisdom-harvest` | 5-30 min | Structured capture of team knowledge and lessons |
+
+#### Improvements
+
+- Added celebration moments throughout onboarding flows
+- Updated README.md with new onboarding paths
+- Updated QUICKSTART.md with cross-references
+- Updated USAGE_GUIDE.md with new quick links
+- Updated .cursorrules with new skills
+
+### Path Comparison
+
+| Path | Team Size | Duration | Best For |
+|------|-----------|----------|----------|
+| Express Lane | 1 person | 10-15 min | Quick personal setup |
+| Team Huddle | 2-5 people | 1-2 hours | Small team alignment |
+| Workshop Series | 6+ people | 11-15 hours | Enterprise transformation |
+
 ## [3.0.0] - 2026-01-31
 
 ### Added - AI/ML Factory Expansion

@@ -51,6 +51,9 @@ FACTORY_MODE = interactive | cli
 
 | Skill | Description |
 |-------|-------------|
+| `express-onboarding` | Fast 10-15 min individual onboarding with guided prompts |
+| `team-huddle-onboarding` | Condensed 1-2 hour team workshop with mini-games |
+| `wisdom-harvest` | Structured capture of team knowledge and lessons learned |
 | `requirements-gathering` | 5-phase interactive requirements elicitation |
 | `stack-configuration` | Technology stack selection and configuration |
 | `workflow-generation` | Workflow pattern generation and customization |

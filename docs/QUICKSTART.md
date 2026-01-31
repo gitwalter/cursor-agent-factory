@@ -2,6 +2,11 @@
 
 Welcome to Cursor Agent Factory! This guide will have you up and running in just a few minutes.
 
+> **Looking for more options?** See [GETTING_STARTED.md](GETTING_STARTED.md) for all onboarding paths:
+> - **Express Lane** (10-15 min) - Guided individual setup
+> - **Team Huddle** (1-2 hours) - Small team alignment
+> - **Workshop Series** (11-15 hours) - Full team transformation
+
 ---
 
 ## The Fastest Way to Start
@@ -236,10 +241,11 @@ See the [Team Workshop Guide](TEAM_WORKSHOP_GUIDE.md) for details.
 
 You've taken the first step! Here are some paths forward:
 
-1. **Explore the examples** - See complete walkthroughs in [docs/examples/](examples/)
-2. **Read the architecture** - Understand the 5-layer system in [LAYERED_ARCHITECTURE.md](LAYERED_ARCHITECTURE.md)
-3. **Customize patterns** - Learn to extend the factory in [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md)
-4. **Join the community** - Contribute blueprints, patterns, and skills!
+1. **Your first week** - Follow the [First Week Guide](FIRST_WEEK_GUIDE.md) to get the most out of your system
+2. **Explore the examples** - See complete walkthroughs in [docs/examples/](examples/)
+3. **Read the architecture** - Understand the 5-layer system in [LAYERED_ARCHITECTURE.md](LAYERED_ARCHITECTURE.md)
+4. **Customize patterns** - Learn to extend the factory in [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md)
+5. **Join the community** - Contribute blueprints, patterns, and skills!
 
 ---
 
